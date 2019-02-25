@@ -1,0 +1,110 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% load humanize %}
+
+{% block content %}
+
+    <!--Topic name section-->
+
+    <div class="dark-background py-5">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-5 text-light">
+                  <h2>{{ topic.topicName }}</h2>
+                  <ol class="breadcrumb px-0 dark-background">
+                    <li class="breadcrumb-item">
+                      <a class="" href="#">Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                      <a class="" href="{% url 'topics' %}">Topics</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                      <a href="{% url 'topic' topic.topicName %}" class="">{{ topic.topicName }}</a>
+                    </li>
+                    <li class="breadcrumb-item active">Q&A</li>
+                  </ol>
+                </div>
+                <div class="col-lg-7">
+                  <form action="{% url 'questions' %}?topic_name={{ topic.topicName }}" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group mb-2">
+                      <input
+                        type="text"
+                        placeholder="Question Title"
+                        name="question"
+                        class="form-control"
+                      />
+                    </div>
+                    <div class="form-group mb-0">
+                      <textarea
+                        name="details"
+                        rows="3"
+                        class="form-control"
+                        placeholder="Describe your question here"
+                      ></textarea>
+                    </div>
+                      <div class="pt-2">
+                        <input
+                          type="submit"
+                          class="btn btn-danger bg-deep-pink"
+                          value="Post Question"
+                        />
+                      </div>
+                  </form>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <div class="bg-qa">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-9 col-lg-10 py-4">
+                  <div class="px-md-5 px-2 pt-3">
+                    
+                    {% if questions %}
+                      {% for question in questions %}
+                        <div class="border py-3 px-4 bg-light">
+                          <a href="{% url 'question' %}?topic_name={{ topic.topicName }}&questionID={{ question.id }}" class="no-underline text-dark"
+                            >{{ question.question }}</a
+                          >
+                          <div class="text-small">
+                            <i class="fas fa-clock"></i> {{ question.date | timesince }} ago
+                            <i class="fas fa-user ml-3"></i> {{ question.user.username }}
+                            <i class="fas fa-comments ml-3"></i> {{ question.noOfComments }}
+                          </div>
+                        </div>
+                      {% endfor %}
+                    {% else %}
+                      <div class="border py-3 px-4 bg-light">
+                        <p class="text-center mb-0">No questions posted yet</p>
+                      </div>
+                    {% endif %}
+                    
+                    <div class="border border-unread py-3 px-4 bg-light">
+                      <a href="" class="no-underline text-dark"
+                        >Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Necessitatibus, rerum repudiandam soluta eveniet.</a
+                      >
+      
+                      <div class="text-small">
+                        <i class="fas fa-clock"></i> 3 hours ago
+                        <i class="fas fa-user ml-3"></i> John Doe
+                        <i class="fas fa-comments ml-3"></i> 6
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="col-md-3 col-lg-2 pl-md-0 pr-md-1 px-2 mt-3 pt-3">
+                  <div class="bg-light2 py-2">
+                    {% include 'partials/_sidebar.html' %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+
+{% endblock %}

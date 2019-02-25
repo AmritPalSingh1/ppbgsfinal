@@ -1,0 +1,362 @@
+.dark-background {
+  background-color: #24292e;
+}
+
+.text-pink {
+  color: #ff214f;
+}
+
+.alt-font {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+}
+.text-small {
+  font-size: 12px;
+  line-height: 20px;
+  color: #6f6f6f;
+}
+.font-weight-700 {
+  font-weight: 700;
+}
+.text-extra-dark-gray {
+  color: #232323;
+}
+.width-100px {
+  width: 100px;
+}
+.display-table {
+  display: table !important;
+}
+.separator-line-horrizontal-medium-light2 {
+  height: 1px;
+}
+.bg-deep-pink {
+  background-color: #ff214f;
+}
+.margin-auto {
+  margin: 0 auto !important;
+}
+.double-height {
+  height: 45px;
+}
+.single-height {
+  height: 20px;
+}
+.gallery-wrapper {
+  overflow: hidden;
+}
+
+/* Images On hover effect */
+.content {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.content .content-overlay {
+  background: rgba(255, 33, 79, 0.9);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  -webkit-transition: all 0.4s ease-in-out 0s;
+  -moz-transition: all 0.4s ease-in-out 0s;
+  transition: all 0.4s ease-in-out 0s;
+}
+
+.content:hover .content-overlay {
+  opacity: 1;
+}
+
+.content-image {
+  width: 100%;
+}
+
+.content-details {
+  position: absolute;
+  text-align: left;
+  padding-left: 2rem;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, 0%);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.topic-name{
+  position: absolute;
+  left: 9%;
+  -webkit-transition: all 0.4s ease-in-out 0s;
+  -moz-transition: all 0.4s ease-in-out 0s;
+  transition: all 0.4s ease-in-out 0s;
+}
+
+.content:hover .topic-name{
+  opacity:0;
+}
+
+
+.content:hover .content-details {
+  top: 65%;
+  opacity: 1;
+}
+
+.content-title {
+  color: #fff;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 1.5%;
+  text-transform: uppercase;
+}
+
+.content-text {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.fadeIn-bottom {
+  top: 80%;
+}
+
+/*Topic Page CSS*/
+.topic-images {
+  display: block;
+  border-radius: 100%;
+  width: 100%;
+  max-width: 320px;
+  max-height: 320px;
+}
+
+.image-border {
+  box-shadow: 0 0 0 4px #ffffff, 0 0 0 5px #e6e6e6;
+  border-radius: 100%;
+  max-width: 320px;
+  max-height: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.border-dark-pink {
+  border-bottom: 1px solid #ff214f !important;
+}
+
+.btn-outline-dark-pink {
+  color: #ff214f;
+  border-color: #ff214f;
+}
+.btn-outline-dark-pink:hover,
+.btn-outline-dark-pink:active,
+.btn-outline-dark-pink:visited,
+.btn-outline-dark-pink:focus {
+  color: white;
+  background-color: #ff214f !important;
+}
+
+.text-outline-pink {
+  color: #ff214f !important;
+}
+.text-outline-pink:hover {
+  color: white !important;
+}
+
+/*Sign up Css*/
+.col-container {
+  display: table;
+  width: 100%;
+}
+.col-item {
+  display: table-cell;
+}
+
+.image-container-signUp {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+/*Used in Learning Pages*/
+
+.background-topic {
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.video-owner {
+  color: #aaa;
+  font-size: 12px;
+}
+
+.arrow_box {
+  position: relative;
+  background: #ff214f;
+}
+.arrow_box:after {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-top-color: #ff214f;
+  border-width: 15px;
+  margin-left: -15px;
+}
+
+/* Used in Practice Page*/
+/*
+.bg-image {
+  background-image: url("https://images.pexels.com/photos/169573/pexels-photo-169573.jpeg?auto=compress&cs=tinysrgb&h=650&w=940");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 95vh;
+}
+
+.dark-overlay {
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 100%;
+  width: 100%;
+}
+
+.quiz-box {
+  max-width: 83%;
+  max-height: 90vh;
+}
+
+.quiz-option-outer {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.quiz-option-outer:hover {
+  background-color: #ff214f;
+  color: #fff;
+}
+
+.quiz-option-outer:active,
+.quiz-option-outer:visited,
+.quiz-option-outer:focus {
+  background-color: #ff214f;
+  color: #fff;
+}
+*/
+/*Sidebar CSS*/
+
+.bg-deep-dark {
+  background-color: #24292e;
+}
+
+.profile-heading {
+  font-weight: normal;
+  font-size: 20px;
+}
+
+.badges {
+  max-width: 70px;
+  max-height: 70px;
+  border-radius: 100%;
+  padding: 2px;
+}
+
+.subheader {
+  font-size: 18px;
+  font-family: "PremierSans-Bold", Arial, "Helvetica Neue", Helvetica,
+    sans-serif;
+  font-weight: 550;
+}
+
+.subheader-small {
+  font-size: 14px;
+}
+
+.border-top-pink {
+  border-top: 4px solid #ff214f;
+}
+
+.border-bottom-white {
+  border-bottom: 2px solid #fff;
+}
+
+.table-heading {
+  font-size: 10px;
+  font-weight: 50;
+  color: #666;
+}
+
+/*Practice Page*/
+.bg-image-quiz {
+  background-image: url("https://images.pexels.com/photos/169573/pexels-photo-169573.jpeg?auto=compress&cs=tinysrgb&h=650&w=940");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 100%;
+  min-height: 92vh;
+}
+
+.dark-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 100%;
+  width: 100%;
+  min-height: 92vh;
+}
+
+.over-radio {
+  opacity: 0;
+}
+
+.quiz-option-outer {
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.quiz-option-outer:focus {
+  outline: none;
+}
+
+.quiz-option-outer:hover {
+  background-color: #ff214f !important;
+  color: #fff !important;
+}
+
+.option {
+  cursor: pointer;
+}
+
+@media (min-width: 992px) {
+  .quiz-box {
+    max-width: 67%;
+  }
+}
+
+.bg-light2 {
+  background-color: #fff;
+}
+
+
+.no-underline:hover {
+  text-decoration: none;
+}
+
+.bg-qa {
+  background-color: #f2f3f5;
+}
+
+.border-unread {
+  border: 1px solid #b0b3b6 !important;
+}

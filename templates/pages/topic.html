@@ -1,0 +1,269 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-9 col-lg-10 pt-5">
+      <!--Content Heading-->
+      <div class="container p-0 pb-3">
+        <div class="row text-center">
+          <div class="col-12">
+            <p class="mb-2 text-uppercase alt-font text-small">
+              topic Number {{ topic.id }}
+            </p>
+            <h5
+              class="text-uppercase alt-font text-extra-dark-gray mb-3 font-weight-700"
+            >
+              {{ topic.topicName }}
+            </h5>
+            <span
+              class="separator-line-horrizontal-medium-light2 bg-deep-pink display-table margin-auto width-100px"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="container py-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a class="text-dark" href="#">Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a class="text-dark" href="{% url 'topics' %}">Topics</a>
+          </li>
+          <li class="breadcrumb-item active">{{ topic.topicName }}</li>
+        </ol>
+      </div>
+
+      <div class="container">
+        <div class="row mx-0">
+          <div
+            class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-12 py-5 px-md-0 px-sm-4 border-dark-pink"
+          >
+            <div class="container">
+              <div class="row mx-0 align-items-center">
+                <div class="col-md-4">
+                  <div class="image-border">
+                    <img
+                      class="topic-images"
+                      src="{% static 'images/pexels-photo-158834.jpeg' %}"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div class="col-md-8 pt-md-0 pt-5">
+                  <div class="pl-sm-4">
+                    <h5 class="mb-3 alt-font font-weight-700 ">
+                      Learn about this topic
+                    </h5>
+                    <p class="alt-font">
+                      {{ topic.description }}
+                    </p>
+                    <!-- Button trigger modal -->
+                    <button
+                      type="button"
+                      class="btn btn-outline-dark-pink"
+                      data-toggle="modal"
+                      data-target="#learningModalCenter"
+                    >
+                      Start Learning
+                    </button>
+
+                    <!-- Modal -->
+                    <div
+                      class="modal fade"
+                      id="learningModalCenter"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="exampleModalCenterTitle"
+                      aria-hidden="true"
+                    >
+                      <div
+                        class="modal-dialog modal-dialog-centered"
+                        role="document"
+                      >
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">
+                              Learning Methods
+                            </h5>
+                            <button
+                              type="button"
+                              class="close"
+                              data-dismiss="modal"
+                              aria-label="Close"
+                            >
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            Choose the method of learning
+                            <hr />
+                            <div class="py-1">
+                              <form action="{% url 'notes' %}">
+                                <input
+                                  type="hidden"
+                                  name="topic_name"
+                                  value="{{ topic.topicName }}"
+                                />
+                                <button
+                                  type="submit"
+                                  class="btn btn-outline-dark-pink btn-block text-outline-pink"
+                                >
+                                  Lecture Notes
+                                </button>
+                              </form>
+                            </div>
+                            <div class="py-1">
+                              <form action="{% url 'videos' %}">
+                                <input
+                                  type="hidden"
+                                  name="topic_name"
+                                  value="{{ topic.topicName }}"
+                                />
+                                <input type="hidden" name="key" value="{{ video }}">
+                                <button
+                                  type="submit"
+                                  class="btn btn-outline-dark-pink btn-block text-outline-pink"
+                                >
+                                  Video Tutorials
+                                </button>
+                              </form>
+                            </div>
+                            <div class="py-1">
+                              <form action="">
+                                <input
+                                  type="hidden"
+                                  name="topic_name"
+                                  value="{{ topic.topicName }}"
+                                />
+                                <button
+                                  type="submit"
+                                  class="btn btn-outline-dark-pink btn-block text-outline-pink"
+                                >
+                                  Other Sources
+                                </button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mx-0">
+          <div
+            class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-12 py-5 px-md-0 px-sm-4 border-dark-pink"
+          >
+            <div class="container">
+              <div class="row mx-0 align-items-center ">
+                <div class="col-md-4 order-md-2">
+                  <div class="image-border">
+                    <img
+                      class="topic-images"
+                      src="{% static 'images/practice.jpeg'%}"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div class="col-md-8 pt-md-0 order-md-1 pt-5">
+                  <div class="pl-sm-4">
+                    <h5 class="mb-3 alt-font font-weight-700 ">
+                      Solve practice problems
+                    </h5>
+                    <p class="alt-font">
+                      Morbi mattis ornare ornare. Duis quam turpis, gravida at
+                      leo elementum elit fusce accumsan dui libero, quis
+                      vehicula lectus ultricies eu. In convallis amet leo non
+                      sapien iaculis efficitur consequat lorem ipsum.
+                    </p>
+                    <form action="{% url 'quiz' %}">
+                        <input
+                          type="hidden"
+                          name="topic_name"
+                          value="{{ topic.topicName }}"
+                        />
+                        <button
+                          type="submit"
+                          class="btn btn-outline-dark-pink text-outline-pink"
+                        >
+                          Self Assesment
+                        </button>
+                      </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mx-0">
+          <div
+            class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-12 py-5 px-md-0 px-sm-4"
+          >
+            <div class="container">
+              <div class="row mx-0 align-items-center">
+                <div class="col-md-4">
+                  <div class="image-border">
+                    <img
+                      class="topic-images"
+                      src="{% static 'images/challenges.jpeg' %}"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div class="col-md-8 pt-md-0 pt-5">
+                  <div class="pl-sm-4">
+                    <h5 class="mb-3 alt-font font-weight-700 ">
+                      Challenges
+                    </h5>
+                    <p class="alt-font">
+                      Morbi mattis ornare ornare. Duis quam turpis, gravida at
+                      leo elementum elit fusce accumsan dui libero, quis
+                      vehicula lectus ultricies eu. In convallis amet leo non
+                      sapien iaculis efficitur consequat lorem ipsum.
+                    </p>
+                    <button class="btn btn-outline-dark-pink">
+                      View Challenges
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Sidebar-->
+    <div class="col-md-3 col-lg-2 mt-4 pl-md-0 pr-md-1 px-2">
+      {% include 'partials/_sidebar.html' %}
+    </div>
+  </div>
+</div>
+
+<section class="dark-background py-5 text-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+          <h2>Discussion page</h2>
+          <p class="mb-0">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet
+            laboriosam ali
+          </p>
+          <p></p>
+        </div>
+        <div class="col-md-3 d-flex align-items-center">
+          <p class="mb-0">
+            <a href="{% url 'questions' %}?topic_name={{ topic.topicName }}" class="btn btn-light px-4 py-3"
+              >Discussion Page</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

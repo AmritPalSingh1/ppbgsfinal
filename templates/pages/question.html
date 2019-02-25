@@ -1,0 +1,102 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+
+    <!--Topic name and breadcrumb section-->
+
+    <div class="dark-background py-5">
+            <div class="container text-light">
+              <h2>{{ topic.topicName }}</h2>
+              <ol class="breadcrumb px-0 pb-0 dark-background">
+                <li class="breadcrumb-item">
+                  <a class="" href="#">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a class="" href="{% url 'topics' %}">Topics</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="{% url 'topic' topic.topicName %}" class="">{{ topic.topicName }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="{% url 'questions' %}?topic_name={{ topic.topicName }}">Q&A</a>
+                </li>
+              </ol>
+            </div>
+          </div>
+      
+          <div class="bg-qa">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-9 col-lg-10 py-4">
+                  <div class="container pt-2">
+                    <div class="border py-3 px-4 bg-light">
+                      <p href="" class="question text-dark mb-1">
+                        {{ query.question }}
+                      </p>
+      
+                      <div class="text-small">
+                        <i class="fas fa-clock ml-3"></i> {{ query.date | timesince }} ago
+                        <i class="fas fa-user ml-3"></i> {{ query.user.username }}
+                      </div>
+                      <div class="border p-3 mt-2 bg-qa">
+                        {{ query.details }}
+                      </div>
+                      <div class="text-small mt-2">
+                        {{ query.noOfComments }} comments
+                      </div>
+                      <hr />
+                      <form action="{% url 'question' %}?topic_name={{ topic.topicName }}&questionID={{ query.id }}" method="POST">
+                      {% csrf_token %}
+                        <div class="form-group mb-0">
+                          <textarea
+                            name="comment"
+                            rows="3"
+                            class="form-control"
+                            placeholder="Add an Answer"
+                          ></textarea>
+                        </div>
+                        <div class="pt-2">
+                          <input
+                            type="submit"
+                            class="btn btn-danger bg-deep-pink py-1"
+                            value="Save"
+                          />
+                        </div>
+                      </form>
+                      <hr />
+                      {% if comments %}
+                        {% for comment in comments %}
+                          <div class="border p-3 my-2">
+                            <a
+                              href=""
+                              class="text-dark no-underline subheader subheader-small"
+                            >
+                              {{ comment.user.username }}
+                            </a>
+                            <span class="text-small">
+                              <i class="fas fa-clock ml-3"></i> {{ comment.date | timesince }} ago
+                            </span>
+                            <p
+                              class="subheader subheader-small font-weight-light pt-3 px-2"
+                            >
+                              {{ comment.comment }}
+                            </p>
+                          </div>
+                        {% endfor %}
+                      {% else %}
+                        <div class="text-info">No answer posted yet</div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="col-md-3 col-lg-2 pl-md-0 pr-md-1 px-2 mt-3 pt-3">
+                  <div class="bg-light2 py-2">
+                    {% include 'partials/_sidebar.html' %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+
+{% endblock %}

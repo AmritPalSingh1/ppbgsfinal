@@ -1,0 +1,185 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!--Topic name section-->
+<section>
+  <div
+    class="background-topic"
+    style="background-image:url(https://images.pexels.com/photos/129208/pexels-photo-129208.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)"
+  >
+    <div class="py-5">
+      <div class="container text-center">
+        <h1 class="display-5 text-light my-5 d-inline">
+          {{ topic.topicName }}
+        </h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Main content-->
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col-md-9 col-lg-10">
+        <div class="pb-3">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a class="text-dark" href="#">Home</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a class="text-dark" href="{% url 'topics' %}">Topics</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="{% url 'topic' topic.topicName %}" class="text-dark">{{ topic.topicName }}</a>
+              </li>
+              <li class="breadcrumb-item active">Videos</li>
+            </ol>
+          </div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-4 order-xl-1 order-2">
+            <div class="arrow_box text-light text-center">
+              <p class="py-1 text-uppercase">More Videos</p>
+            </div>
+            {% if videos %} {% for video in videos %}
+            <div class="my-4"></div>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-xl-6 col-4">
+                  <img
+                    src="https://img.youtube.com/vi/{{ video.key }}/hqdefault.jpg"
+                    alt=""
+                    class="img-fluid bg-dark"
+                  />
+                </div>
+                <div class="col-xl-6 col-8 px-0">
+                  <div class="">
+                    <form action="{% url 'videos' %}">
+                      <input type="hidden" value="{{ video.key }}" name="key">
+                      <input type="hidden" value="{{ topic.topicName }}" name="topic_name">
+                      <button class="font-weight-bold btn btn-link text-dark px-0 text-left">{{ video.title }} </button>
+                    </form>
+                    <p class="video-owner">{{ video.channelName }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %} {% endif %}
+          </div>
+          <div class="col-xl-8 order-xl-2 order-1">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe
+                class="embed-responsive-item"
+                src="https://www.youtube.com/embed/{{ key }}"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="container-fluid py-4">
+              <div class="row">
+                <div class="col text-center">
+                  <!-- Button trigger modal -->
+                  <button
+                    type="button"
+                    class="btn btn-outline-dark mr-sm-4 mr-0"
+                    data-toggle="modal"
+                    data-target="#learningModalCenter"
+                  >
+                    Want to learn more?
+                  </button>
+
+                  <!-- Modal -->
+                  <div
+                    class="modal fade"
+                    id="learningModalCenter"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalCenterTitle"
+                    aria-hidden="true"
+                  >
+                    <div
+                      class="modal-dialog modal-dialog-centered"
+                      role="document"
+                    >
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">
+                            Learning Methods
+                          </h5>
+                          <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          Choose the method of learning
+                          <hr />
+                          <div class="py-1">
+                              <form action="{% url 'notes' %}">
+                                <input
+                                  type="hidden"
+                                  name="topic_name"
+                                  value="{{ topic.topicName }}"
+                                />
+                                <button
+                                  type="submit"
+                                  class="btn btn-outline-dark-pink btn-block text-outline-pink"
+                                >
+                                  Lecture Notes
+                                </button>
+                              </form>
+                            </div>
+                            <div class="py-1">
+                                <form action="">
+                                  <input
+                                    type="hidden"
+                                    name="topic_name"
+                                    value="{{ topic.topicName }}"
+                                  />
+                                  <button
+                                    type="submit"
+                                    class="btn btn-outline-dark-pink btn-block text-outline-pink"
+                                  >
+                                    Other Sources
+                                  </button>
+                                </form>
+                              </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col text-center">
+                        <form action="{% url 'quiz' %}">
+                          <input
+                            type="hidden"
+                            name="topic_name"
+                            value="{{ topic.topicName }}"
+                          />
+                          <button
+                            type="submit"
+                            class="btn btn-outline-dark"
+                          >
+                            Test Your Knowledge
+                          </button>
+                        </form>
+                </div>
+              </div>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Sidebar-->
+    <div class="col-md-3 col-lg-2 mt-md-0 mt-4 pl-md-0 pr-md-1 px-2">
+      {% include 'partials/_sidebar.html' %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

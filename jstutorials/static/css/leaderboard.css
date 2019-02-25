@@ -1,0 +1,31 @@
+/* Leaderboard page */
+
+.leaderboard-text {
+  font-size: 14px;
+  color: #72777a;
+  letter-spacing: 0.2px;
+  overflow-x: hidden;
+  font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, Segoe UI,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, Arial,
+    sans-serif;
+  line-height: 1.5;
+}
+
+.bgc-grey-100,
+.bgcH-grey-100:hover {
+  background-color: #f1f6fa !important;
+}
+
+.c-grey-900,
+.cH-grey-900:hover {
+  color: #313435 !important;
+}
+
+.dataTables_wrapper {
+  overflow: hidden;
+  padding-bottom: 5px;
+}
+
+.bg-white {
+  background-color: #fff;
+}

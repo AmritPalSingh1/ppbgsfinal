@@ -1,0 +1,151 @@
+{% load static %} <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>SignUp</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+      integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/all.css' %}" />
+  </head>
+  <body>
+    <div class="container-fluid pl-0">
+      <div class="row row1">
+        <div class="col-md-6 col-0 d-none d-md-block">
+          <img
+            height="100%"
+            width="100%"
+            src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            alt=""
+          />
+        </div>
+        <div class="col-md-6 col-12 mb-5">
+          <div class="container">
+            <h2 class="mt-5 text-center">Sign Up</h2>
+            <hr />
+            {% include 'partials/_alerts.html' %}
+            <form action="{% url 'register' %}" method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="name">First Name</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="first_name"
+                  placeholder="Enter first name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="name">Last Name</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="last_name"
+                  placeholder="Enter last name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="name">User Name</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="username"
+                  placeholder="Enter user name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email address</label>
+                <input
+                  class="form-control form-control-lg"
+                  type="email"
+                  name="email"
+                  placeholder="Enter email"
+                  required
+                />
+                <small class="form-text text-muted"
+                  >Your email will not ever be shared</small
+                >
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  class="form-control"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Confirm Password</label>
+                <input
+                  class="form-control"
+                  type="password"
+                  name="password2"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <hr />
+              <div class="form-group">
+                <label for="membership">How Well do you know JavaScript?</label>
+                <input
+                  class="custom-range"
+                  min="1"
+                  max="100"
+                  step="1"
+                  value="50"
+                  type="range"
+                />
+              </div>
+              <div class="form-group">
+                <label for="gender">Select your Experience Level</label>
+                <select class="form-control" id="gender">
+                  <option>Beginner</option>
+                  <option>Intermediate</option>
+                  <option>Professional</option>
+                </select>
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <input type="submit" class="btn btn-primary btn-block" value="Register">
+                  </button>
+                </div>
+                <div class="col-6 pt-1">
+                  <a class="text-secondary" href="{% url 'login' %}"
+                    >I am already a member</a
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+{% load static %}
+<section class="dark-background text-light d-none d-sm-block">
+  <div class="container py-1">
+    <div class="d-flex">
+      <div>
+        <small>
+          <span class="pr-5">
+            <i class="fas text-light fa-envelope-open"></i>
+            support@gmail.com</span
+          >
+          <span class="pr-2 ">
+            <i class="fas text-light fa-phone"></i> (333)-444-5555</span
+          ></small
+        >
+      </div>
+      <div class="ml-auto">
+        <a href="javascript:{document.getElementById('logout').submit()}">
+          <small><i class="fas fa-sign-out-alt"></i> Logout </small>
+        </a>
+        <form action="{% url 'logout' %}" method="POST" id="logout">
+          {% csrf_token %} <input type="hidden" />
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">Logo</a>
+    <button
+      class="navbar-toggler"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'topics' %}">Topics</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+            >Rankings</a
+          >
+          <div class="dropdown-menu">
+            <a href="{% url 'leaderboards' %}" class="dropdown-item"
+              >Leaderboards</a
+            >
+            <a href="#" class="dropdown-item">Table</a>
+          </div>
+        </li>
+
+        <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+        <li class="nav-item">
+          <a class="nav-link d-block d-sm-none" href="#">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,242 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!--Main Content-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-9 col-lg-10">
+      <div class="pt-5 mt-3">
+        <div class="container p-0">
+          <div class="row text-center">
+            <div class="col-12">
+              <p class="mb-2 text-uppercase alt-font text-small">
+                A roadmap to
+              </p>
+              <h5
+                class="text-uppercase alt-font text-extra-dark-gray mb-3 font-weight-700"
+              >
+                Learn JavaScript
+              </h5>
+              <span
+                class="separator-line-horrizontal-medium-light2 bg-deep-pink display-table margin-auto width-100px"
+              ></span>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-5 text-light row1 mx-0">
+          <div class="col-12">
+            <div class="gallery-wrapper">
+              <div class="col-lg-4 col-sm-6 col-12 grid-sizer"></div>
+              <div class=" col-lg-4 col-sm-6 col-12 p-1 grid-item">
+                <div class="content">
+                  <a href="{% url 'topic' topic1 %}">
+                    <div class="content-overlay"></div>
+                    <img
+                      class="content-image image-fluid"
+                      src="{% static 'images/html.jpeg' %}"
+                    />
+                    <div class="topic-name fadeIn-bottom">
+                        <p class="content-title">Intro to Html</p>
+                    </div>
+                    <div class="content-details fadeIn-bottom">
+                      <p class="content-title">Intro to Html</p>
+                      <p class="content-text">
+                        This is a short description
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class=" col-lg-4 col-sm-6 col-12 p-1 grid-item">
+                <div class="content">
+                  <a href="{% url 'topic' topic2 %}">
+                    <div class="content-overlay"></div>
+                    <img
+                      class="content-image image-fluid"
+                      src="{% static 'images/different.jpeg' %}"
+                    />
+                    <div class="topic-name fadeIn-bottom">
+                      <p class="content-title">JavaScript Expressions</p>
+                    </div>
+                    <div class="content-details fadeIn-bottom">
+                      <p class="content-title">JavaScript Expressions</p>
+                      <p class="content-text">
+                        This is a short description
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class=" col-lg-4 col-sm-6 col-12 p-1 grid-item">
+                <div class="content">
+                  <a href="{% url 'topic' topic3 %}">
+                    <div class="content-overlay"></div>
+                    <img
+                      class="content-image image-fluid"
+                      src="{% static 'images/layout.jpeg' %}"
+                    />
+                    <div class="topic-name fadeIn-bottom">
+                        <p class="content-title">DOM Manipulation</p>
+                    </div>
+                    <div class="content-details fadeIn-bottom">
+                      <p class="content-title">DOM Manipulation</p>
+                      <p class="content-text">
+                        This is a short description
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class=" col-lg-4 col-sm-6 col-12 p-1 grid-item">
+                <div class="content">
+                  <a href="{% url 'topic' topic4 %}">
+                    <div class="content-overlay"></div>
+                    <img
+                      class="content-image image-fluid"
+                      src="{% static 'images/decision.png' %}"
+                    />
+                    <div class="topic-name fadeIn-bottom">
+                      <p class="content-title">JavaScript Conditionals</p>
+                    </div>
+                    <div class="content-details fadeIn-bottom">
+                      <p class="content-title">JavaScript Conditionals</p>
+                      <p class="content-text">
+                        This is a short description
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class=" col-lg-4 col-sm-6 col-12 p-1 grid-item">
+                <div class="content">
+                  <a href="{% url 'topic' topic5 %}">
+                    <div class="content-overlay"></div>
+                    <img
+                      class="content-image image-fluid"
+                      src="{% static 'images/loops.jpeg' %}"
+                    />
+                    <div class="topic-name fadeIn-bottom">
+                      <p class="content-title">Loops</p>
+                    </div>
+                    <div class="content-details fadeIn-bottom">
+                      <p class="content-title">Loops</p>
+                      <p class="content-text">
+                        This is a short description
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class=" col-lg-4 col-sm-6 col-12 p-1 grid-item">
+                <div class="content">
+                  <a href="{% url 'topic' topic6 %}">
+                    <div class="content-overlay"></div>
+                    <img
+                      class="content-image
+                          image-fluid"
+                      src="{% static 'images/drawing.jpeg' %}"
+                    />
+                    <div class="topic-name fadeIn-bottom">
+                      <p class="content-title">Drawing with Canvas</p>
+                    </div>
+                    <div class="content-details fadeIn-bottom">
+                      <p class="content-title">Drawing with Canvas</p>
+                      <p class="content-text">
+                        This is a short description
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class=" col-lg-4 col-sm-6 col-12 p-1 grid-item">
+                <div class="content">
+                  <a href="{% url 'topic' topic7 %}">
+                    <div class="content-overlay"></div>
+                    <img
+                      class="content-image image-fluid"
+                      src="{% static 'images/blocks.jpeg' %}"
+                    />
+                    <div class="topic-name fadeIn-bottom">
+                      <p class="content-title">Functions</p>
+                    </div>
+                    <div class="content-details fadeIn-bottom">
+                      <p class="content-title">Functions</p>
+                      <p class="content-text">
+                        This is a short description
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class=" col-lg-4 col-sm-6 col-12 p-1 grid-item">
+                <div class="content">
+                  <a href="{% url 'topic' topic8 %}">
+                    <div class="content-overlay"></div>
+                    <img
+                      class="content-image image-fluid"
+                      src="{% static 'images/events.jpeg' %}"
+                    />
+                    <div class="topic-name fadeIn-bottom">
+                      <p class="content-title">Functions and Events</p>
+                    </div>
+                    <div class="content-details fadeIn-bottom">
+                      <p class="content-title">Functions and Events</p>
+                      <p class="content-text">
+                        This is a short description
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class=" col-lg-4 col-sm-6 col-12 p-1 grid-item">
+                <div class="content">
+                  <a href="{% url 'topic' topic9 %}">
+                    <div class="content-overlay"></div>
+                    <img
+                      class="content-image image-fluid"
+                      src="{% static 'images/array.jpeg' %}"
+                    />
+                    <div class="topic-name fadeIn-bottom">
+                      <p class="content-title">Arrays</p>
+                    </div>
+                    <div class="content-details fadeIn-bottom">
+                      <p class="content-title">Arrays</p>
+                      <p class="content-text">
+                        This is a short description
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class=" col-lg-4 col-sm-6 col-12 p-1 grid-item">
+                <div class="content">
+                  <a href="{% url 'topic' topic10 %}">
+                    <div class="content-overlay"></div>
+                    <img
+                      class="content-image image-fluid"
+                      src="{% static 'images/objects.jpeg' %}"
+                    />
+                    <div class="topic-name fadeIn-bottom">
+                      <p class="content-title">Objects</p>
+                    </div>
+                    <div class="content-details fadeIn-bottom">
+                      <p class="content-title">Objects</p>
+                      <p class="content-text">
+                        This is a short description
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Sidebar-->
+    <div class="col-md-3 col-lg-2 mt-5 pl-md-0 pr-md-1 px-2">
+      {% include 'partials/_sidebar.html' %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

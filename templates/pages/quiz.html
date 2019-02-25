@@ -1,0 +1,368 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div class="bg-image-quiz">
+  <div class="dark-overlay">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-9 col-lg-10 py-5">
+            <div class="py-2 container">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a class="text-dark" href="#">Home</a>
+                  </li>
+                  <li class="breadcrumb-item">
+                    <a class="text-dark" href="{% url 'topics' %}">Topics</a>
+                  </li>
+                  <li class="breadcrumb-item">
+                    <a href="{% url 'topic' topic.topicName %}" class="text-dark">{{ topic.topicName }}</a>
+                  </li>
+                  <li class="breadcrumb-item active">Quiz</li>
+                </ol>
+            </div>
+          <div class="container pb-5 pt-4 quiz-box">
+            <div class="bg-light m-auto">
+              <div class="container py-3 px-4">
+                {% if questions %} {% for question in questions %}
+                <form action="{% url 'quiz' %}?topic_name={{ topic.topicName }}&page={{ questions.number }}" method="POST">
+                    {% csrf_token %}
+                    <input
+                      type="hidden"
+                      name="user_id"
+                      value="{{ user.id }}"
+                    />
+                    <input
+                      type="hidden"
+                      name="question_number"
+                      value="{{ question.id }}"
+                    />
+
+                <p class="text-small">
+                  Question {{ questions.number }} of
+                  {{ questions.paginator.num_pages }}
+                </p>
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if '/' == request.path %}
+                            <div class="pt-3"></div>
+                        {% endif %}
+                        <div id="quizMessage" class="container">
+                            <div class="alert alert-{{ message.tags }} alert-dismissible text-center" roll="alert">
+                                <button class="close" type="button" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                                <strong>
+                                    {{ message }}
+                                </strong>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <h5>
+                  {{ question.question }}
+                </h5>
+                
+                <div class="py-4">
+                  <div
+                    class="alert d-flex quiz-option-outer border"
+                    id="radio1"
+                    onclick="quizItem('radio1')"
+                    tabindex="1"
+                  >
+                    <label for="radio1" class="option">
+                        {% if submitted_question %}
+                          {% if user_answer == 1 and user_answer != submitted_question.answer %}
+                            <i class="far fa-times-circle text-danger"></i>  
+                          {% endif %}
+                          {% if submitted_question.answer == 1 %}
+                            <i class="far fa-check-circle text-success"></i>
+                          {% endif %}
+                        {% endif %}
+                      {{ question.option1 }}</label>
+                    <div class="over-radio">
+                      <input
+                        class="quiz-option"
+                        name="radio"
+                        value="1"
+                        type="radio"
+                        required
+                    />
+                    </div>
+                  </div>
+                  <div
+                    class="alert border d-flex quiz-option-outer"
+                    id="radio2"
+                    onclick="quizItem('radio2')"
+                    tabindex="2"
+                  >
+                    <label for="radio2" class="option">
+                        {% if submitted_question %}
+                          {% if user_answer == 2 and user_answer != submitted_question.answer %}
+                            <i class="far fa-times-circle text-danger"></i>  
+                          {% endif %}
+                          {% if submitted_question.answer == 2 %}
+                            <i class="far fa-check-circle text-success"></i>
+                          {% endif %}
+                        {% endif %}
+                      {{ question.option2 }}</label>
+                    <div class="over-radio">
+                      <input
+                        class="quiz-option"
+                        name="radio"
+                        value="2"
+                        type="radio"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="alert border d-flex quiz-option-outer"
+                    id="radio3"
+                    onclick="quizItem('radio3')"
+                    tabindex="3"
+                  >
+                    <label for="radio3" class="option">
+                      {% if submitted_question %}
+                        {% if user_answer == 3 and user_answer != submitted_question.answer %}
+                          <i class="far fa-times-circle text-danger"></i>  
+                        {% endif %}
+                        {% if submitted_question.answer == 3 %}
+                          <i class="far fa-check-circle text-success"></i>
+                        {% endif %}
+                      {% endif %}
+                      {{ question.option3 }}
+                    </label>
+                    <div class="over-radio">
+                      <input
+                        class="quiz-option"
+                        name="radio"
+                        value="3"
+                        type="radio"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="alert border d-flex quiz-option-outer"
+                    id="radio4"
+                    onclick="quizItem('radio4')"
+                    tabindex="4"
+                  >
+                    <label for="radio4" class="option">
+                        {% if submitted_question %}
+                          {% if user_answer == 4 and user_answer != submitted_question.answer %}
+                            <i class="far fa-times-circle text-danger"></i>  
+                          {% endif %}
+                          {% if submitted_question.answer == 4 %}
+                            <i class="far fa-check-circle text-success"></i>
+                          {% endif %}
+                        {% endif %}
+                      {{ question.option4 }}
+                    </label>
+                    <div class="over-radio">
+                      <input
+                        class="quiz-option"
+                        name="radio"
+                        value="4"
+                        type="radio"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex">
+                  <!-- link trigger modal -->
+                  {% if submitted_question %}
+                  <a href="" class="text-dark" data-toggle="modal" data-target="#solution"> <i class="fas fa-eye"></i> Solution</a>
+                  {% endif %}
+                      
+                  <!-- Modal -->
+                  <div class="modal fade" id="solution" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">{{ question.question }}</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          {{ question.solution }}
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% if submitted_question %}
+                    {% if questions.has_next %}
+                      <a href="?topic_name={{ topic.topicName }}&page={{ questions.next_page_number }}" class="btn btn-outline-dark ml-auto">Next Question</a>
+                    {% else %}
+                      <a href="" class="ml-auto btn btn-outline-dark disabled">Next Question</a>
+                    {% endif %}
+                  {% else %}
+                    <input type="submit" class="btn btn-outline-dark ml-auto" value="Submit Answer">
+                  {% endif %}
+
+                </div>
+              </form>
+                {% endfor %} {% endif %}
+
+                <div class="row pt-2">
+                  <div class="col-md-12">
+                    {% if questions.has_other_pages %}
+                    <ul class="pagination justify-content-center flex-wrap">
+                      {% if questions.has_previous %}
+                      <li class="page-item">
+                        <a
+                          class="page-link text-dark"
+                          href="?topic_name={{ topic.topicName }}&page={{
+                            questions.previous_page_number
+                          }}"
+                          >Previous</a
+                        >
+                      </li>
+                      {% else %}
+                      <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                      </li>
+                      {% endif %} {% for i in questions.paginator.page_range %}
+                      {% if questions.number == i %}
+                      <li class="page-item active">
+                        <a class="page-link">{{ i }}</a>
+                      </li>
+                      {% else %}
+                      <li class="page-item">
+                        <a
+                          class="page-link"
+                          href="?topic_name={{ topic.topicName }}&page={{ i }}"
+                          >{{ i }}</a
+                        >
+                      </li>
+                      {% endif %} {% endfor %} {% if questions.has_next %}
+                      <li class="page-item">
+                        <a
+                          class="page-link"
+                          href="?topic_name={{ topic.topicName }}&page={{ questions.next_page_number }}"
+                          >Next</a
+                        >
+                      </li>
+                      {% else %}
+                      <li class="page-item disabled">
+                        <a class="page-link">Next</a>
+                      </li>
+                      {% endif %}
+                    </ul>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid pt-3">
+              <div class="row">
+              <div class="col">
+                <button
+                  type="button"
+                  class="btn btn-outline-light"
+                  data-toggle="modal"
+                  data-target="#learningModalCenter"
+                >
+                  Back to Learning
+                </button>
+
+                <!-- Modal -->
+                <div
+                  class="modal fade"
+                  id="learningModalCenter"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="exampleModalCenterTitle"
+                  aria-hidden="true"
+                >
+                  <div
+                    class="modal-dialog modal-dialog-centered"
+                    role="document"
+                  >
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                          Learning Methods
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        Choose the method of learning
+                        <hr />
+                        <div class="py-1">
+                          <form action="{% url 'notes' %}">
+                            <input
+                              type="hidden"
+                              name="topic_name"
+                              value="{{ topic.topicName }}"
+                            />
+                            <button
+                              type="submit"
+                              class="btn btn-outline-dark-pink btn-block text-outline-pink"
+                            >
+                              Lecture Notes
+                            </button>
+                          </form>
+                        </div>
+                        <div class="py-1">
+                          <form action="{% url 'videos' %}">
+                            <input
+                              type="hidden"
+                              name="topic_name"
+                              value="{{ topic.topicName }}"
+                            />
+                            <input type="hidden" name="key" value="{{ video }}">
+                            <button
+                              type="submit"
+                              class="btn btn-outline-dark-pink btn-block text-outline-pink"
+                            >
+                              Video Tutorials
+                            </button>
+                          </form>
+                        </div>
+                        <div class="py-1">
+                          <form action="">
+                            <input
+                              type="hidden"
+                              name="topic_name"
+                              value="{{ topic.topicName }}"
+                            />
+                            <button
+                              type="submit"
+                              class="btn btn-outline-dark-pink btn-block text-outline-pink"
+                            >
+                              Other Sources
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col d-flex justify-content-around">
+                <a href="" class="btn btn-outline-light ml-auto">Challenges</a>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-lg-2 pl-md-0 pr-md-1 px-2 mt-3 pt-3">
+          <div class="bg-light2 py-2">
+            {% include 'partials/_sidebar.html' %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
