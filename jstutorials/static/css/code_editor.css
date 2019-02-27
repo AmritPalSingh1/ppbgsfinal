@@ -1,4 +1,45 @@
-iframe {
-  width: 100%;
-  height: 25em;
+:root {
+  --editor-label-height: 30px;
+}
+
+/* split view classes with split.js */
+.gutter {
+  background-color: #ddd;
+}
+
+.gutter-horizontal {
+  cursor: col-resize;
+}
+
+.gutter-vertical {
+  cursor: row-resize;
+}
+
+.split-horizontal, .gutter-horizontal {
+  height: 100%;
+  float: left;
+}
+
+/* codemirror instance */
+.CodeMirror {
+  height: 100%;
+}
+
+/* page layout */
+.code--page-container {
+  height: 100vh;
+}
+
+.pane-label {
+  height: var(--editor-label-height);
+  padding: 4px;
+  padding-left: 16px;
+}
+
+.pane-content {
+  height: calc(100% - var(--editor-label-height) - 8px);
+}
+
+#console-output {
+  overflow-y: auto;
 }

@@ -1,0 +1,30 @@
+---
+task: Display "Hello World!" to the console
+html: |
+  <h1>Hello World!</h1>
+  <p>Look at the JS code editor on the right. Between the brackets, type <code>"Hello World!"</code></p>
+  <p>To try out your code, click the Run button at the top of the screen</p>
+  <p>You can also use <code>Ctrl+Enter</code> instead of clicking Run.</p>
+  <p>When you complete the task, click on the Submit button</p>
+js: console.log();
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+  run: |
+    consoleOutput = consoleOutput.trim();
+    if (consoleOutput !== 'Hello World!') {
+      consoleOutput = consoleOutput.replace(/\n/g, '<br />');
+      fail(`The console output should be "Hello World!". Got "${consoleOutput}"`);
+    }
+  cleanup: console.log = oldLog;
+  has:
+  - regex: console.log\(['"]Hello World!['"]\)
+    message: 'Your code is missing: console.log("Hello World!")'
+  hasNot: []
+  maxLines: 1

@@ -9,5 +9,6 @@ urlpatterns = [
     path('topic/quiz', views.quiz, name='quiz'),
     path('topic/questions', views.questions, name='questions'),
     path('topic/question', views.question, name='question'),
+    path('topic/challenge', views.challenge, name='challenge'),
     path('leaderboards/', views.leaderboards, name='leaderboards'),
 ]
