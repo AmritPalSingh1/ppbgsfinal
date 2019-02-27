@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %}
+{% load static %} 
+{% load humanize %}
+{% block content %}
 
 
     <!--Topic name and breadcrumb section-->
@@ -34,7 +37,7 @@
                       </p>
       
                       <div class="text-small">
-                        <i class="fas fa-clock ml-3"></i> {{ query.date | timesince }} ago
+                        <i class="fas fa-clock ml-3"></i> {{ query.date | naturaltime }}
                         <i class="fas fa-user ml-3"></i> {{ query.user.username }}
                       </div>
                       <div class="border p-3 mt-2 bg-qa">
@@ -73,7 +76,7 @@
                               {{ comment.user.username }}
                             </a>
                             <span class="text-small">
-                              <i class="fas fa-clock ml-3"></i> {{ comment.date | timesince }} ago
+                              <i class="fas fa-clock ml-3"></i> {{ comment.date | naturaltime }}
                             </span>
                             <p
                               class="subheader subheader-small font-weight-light pt-3 px-2"

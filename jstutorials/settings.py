@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'topics.apps.TopicsConfig',
     'userprogress.apps.UserprogressConfig',
     'accounts.apps.AccountsConfig',
+    'flowchart.apps.FlowchartConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

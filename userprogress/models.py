@@ -16,3 +16,6 @@ class UserAttemptedQuestion(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     isCorrect = models.BooleanField()
 
+class TotalPoints(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    points = models.IntegerField(default=0)

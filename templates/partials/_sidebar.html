@@ -1,3 +1,4 @@
+{% load static %}
 <h2 class="subheader px-2 text-capitalize">{{ user.username }}</h2>
 <div class="border-top-pink border-left border-right border-bottom">
   <h2 class="subheader py-2 text-center bg-light">Level 3</h2>
@@ -9,7 +10,7 @@
     >
       <tr class="border-bottom-white">
         <td width="70%" class="py-1 pl-1">Overall Points:</td>
-        <th width="30%" class="py-1 pl-1">120</th>
+        <th width="30%" class="py-1 pl-1">{{ userPoints.points }}</th>
       </tr>
       <tr class="border-bottom-white">
         <td width="70%" class="py-1 pl-1">Overall Rank:</td>
@@ -20,6 +21,13 @@
         <th width="30%" class="py-1 pl-1">36</th>
       </tr>
     </table>
+  </div>
+  <div class="bg-light mt-4 pb-3">
+    <h3 class="subheader subheader-small pt-3 px-2">Coins</h3>
+    <div class="border mx-2 py-2 bg-none text-center d-flex align-items-center justify-content-center">
+      <i class="fas fa-coins fa-3x text-coin"></i>
+      <span class="pl-3 subheader subheader-small">45</span>
+    </div>
   </div>
   <h3 class="subheader subheader-small pt-4 px-2">Best Overall</h3>
   <table width="100%" class="subheader subheader-small font-weight-light">

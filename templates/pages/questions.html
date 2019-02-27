@@ -70,7 +70,7 @@
                             >{{ question.question }}</a
                           >
                           <div class="text-small">
-                            <i class="fas fa-clock"></i> {{ question.date | timesince }} ago
+                            <i class="fas fa-clock"></i> {{ question.date | naturaltime }}
                             <i class="fas fa-user ml-3"></i> {{ question.user.username }}
                             <i class="fas fa-comments ml-3"></i> {{ question.noOfComments }}
                           </div>
@@ -82,7 +82,7 @@
                       </div>
                     {% endif %}
                     
-                    <div class="border border-unread py-3 px-4 bg-light">
+                    <!-- <div class="border border-unread py-3 px-4 bg-light">
                       <a href="" class="no-underline text-dark"
                         >Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Necessitatibus, rerum repudiandam soluta eveniet.</a
@@ -93,7 +93,7 @@
                         <i class="fas fa-user ml-3"></i> John Doe
                         <i class="fas fa-comments ml-3"></i> 6
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
       

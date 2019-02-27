@@ -4,12 +4,11 @@ from .models import Topic, Video, Question, Pdf, Query, Comment
 from userprogress.models import UserAttemptedQuestion
 from django.contrib.auth.models import User
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.utils import timezone
-import datetime
+from django.contrib.auth.decorators import login_required
 
 
 
-
+@login_required
 def topic(request, topic_name):
     topic = get_object_or_404(Topic, topicName=topic_name)
     videos = Video.objects.filter(topic=topic)
@@ -20,7 +19,7 @@ def topic(request, topic_name):
 
     return render(request, 'pages/topic.html', context)
 
-
+@login_required
 def videos(request):
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -37,7 +36,7 @@ def videos(request):
 
     return render(request, 'pages/videos.html', context)
 
-
+@login_required
 def notes(request):
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -53,7 +52,7 @@ def notes(request):
     }
     return render(request, 'pages/notes.html', context)
 
-
+@login_required
 def quiz(request):
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -111,6 +110,7 @@ def quiz(request):
     
     return render(request, 'pages/quiz.html', context)
 
+@login_required
 def questions(request):
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -132,6 +132,7 @@ def questions(request):
 
     return render(request, 'pages/questions.html', context)
 
+@login_required
 def question(request):
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -160,5 +161,6 @@ def question(request):
     return render(request, 'pages/question.html', context)
 
 
+@login_required
 def leaderboards(request):
     return render(request, 'pages/leaderboards.html')

@@ -6,6 +6,15 @@
   color: #ff214f;
 }
 
+.text-coin{
+  color: #d9a760;
+}
+
+
+.bg-none{
+  background-color: #fff;
+}
+
 .alt-font {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
