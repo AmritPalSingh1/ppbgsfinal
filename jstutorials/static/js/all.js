@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // Formatting topics page images
 var $grid = $(".gallery-wrapper").masonry({
   itemSelector: ".grid-item",

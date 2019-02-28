@@ -1,4 +1,94 @@
-iframe {
-  width: 100%;
-  height: 25em;
+:root {
+  --editor-label-height: 30px;
+}
+
+/* split view classes with split.js */
+.gutter {
+  background-color: #eee;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+.gutter-horizontal {
+  cursor: col-resize;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+}
+
+.gutter-vertical {
+  cursor: row-resize;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
+}
+
+.split-horizontal, .gutter-horizontal {
+  height: 100%;
+  float: left;
+}
+
+/* codemirror instance */
+#html-editor, #js-editor {
+  position: relative;
+}
+
+.CodeMirror {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+}
+
+/* page layout */
+.code--page-container {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header"
+    "main"
+    "tail";
+}
+
+header {
+  grid-area: header;
+}
+
+main {
+  grid-area: main;
+}
+
+#tail-content {
+  grid-area: tail;
+  background-color: var(--light);
+}
+
+/* pane layout */
+.pane-label {
+  height: var(--editor-label-height);
+  padding: 4px;
+  padding-left: 16px;
+}
+
+.pane-content {
+  height: calc(100% - var(--editor-label-height) - 8px);
+}
+
+#console-output-wrapper {
+  overflow-y: auto;
+  position: relative;
+}
+
+/*
+  When a pane's height is too large, the page layout messes up.
+  Create a wrapping div with `position: relative`,
+  then add this class to the element.
+  This bug also occurred with `.CodeMirror`
+*/
+.pane-overflow-fix {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
 }

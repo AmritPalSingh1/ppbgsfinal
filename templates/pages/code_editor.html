@@ -1,4 +1,114 @@
 {% extends 'base.html' %}
-{% block content %}
+{% load static %}
 
+{% block content %}
+<div class="code--page-container">
+  <header>
+    <!-- navbar displaying task and buttons -->
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="/">Logo</a>
+      <div><strong>Task:</strong> <span id="task-placeholder"></span></div>
+    </nav>
+  </header>
+  <main>
+    <!-- left half of the page shows HTML and JS editor -->
+    <div class="split-horizontal" id="editors">
+      <!-- html editor -->
+      <div id="html-editor-parent">
+        <h4 class="pane-label">HTML</h4>
+        <div class="pane-content" id="html-editor"></div>
+      </div>
+      <div class="gutter gutter-vertical"></div>
+      <!-- js editor -->
+      <div id="js-editor-parent">
+        <h4 class="pane-label">JS</h4>
+        <div class="pane-content" id="js-editor"></div>
+      </div>
+    </div>
+    <div class="gutter gutter-horizontal"></div>
+    <!-- right half shows html page and the console -->
+    <div class="split-horizontal" id="code-output">
+      <!-- html page view -->
+      <div id="html-frame-view">
+        <iframe class="w-100 h-100" frameborder="0"></iframe>
+      </div>
+      <div class="gutter gutter-vertical"></div>
+      <!-- console output -->
+      <div id="console-area">
+        <h4 class="pane-label">Console</h4>
+        <div class="pane-content" id="console-output-wrapper">
+          <div class="pane-overflow-fix px-3" id="console-output"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div class="d-flex justify-content-end p-2" id="tail-content">
+    <button class="btn btn-outline-secondary mx-1" id="toggle-console-button">
+      Toggle Console
+    </button>
+    <button class="btn btn-outline-primary mx-1" id="submit-button">
+      Submit
+    </button>
+  </div>
+</div>
+{% endblock %}
+
+{% block stylesheet %}
+<!-- use fontawesome icons -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+  integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous" />
+
+<!-- use bootstrap css -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+  integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+
+<!-- codemirror css -->
+<link href="{% static 'codemirror/lib/codemirror.css' %}" rel="stylesheet" />
+<link href="{% static 'codemirror/theme/neo.css' %}" rel="stylesheet" />
+<link href="{% static 'codemirror/addon/lint/lint.css' %}" rel="stylesheet" />
+
+<!-- project's css -->
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/all.css' %}" />
+<link rel="stylesheet" href="{% static 'css/code_editor.css' %}" />
+{% endblock %}
+
+{% block javascript %}
+<!-- parse yaml -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.12.1/js-yaml.min.js"
+  integrity="sha256-xYfEFU0LN08iGcGajx1rqWTnYWIdaCHYME9C46FGIwE=" crossorigin="anonymous"></script>
+
+<!-- use bootstrap js -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+  integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+  integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<!-- use split.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.5.10/split.min.js"
+  integrity="sha256-voAP1SafVzHBtUVXxB6ZuQB5mIZu6h0veHhhzwXcthQ=" crossorigin="anonymous"></script>
+
+<!-- use jshint -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jshint/2.10.1/jshint.min.js"
+  integrity="sha256-AnRo6ofeMX/ySgINPlWrw/wgAp8WtuOLhJk7rpvr7dM=" crossorigin="anonymous"></script>
+
+<!-- use htmlhint -->
+<script src="{% static 'js/htmlhint.min.js' %}"></script>
+
+<!-- use codemirror -->
+<script src="{% static 'codemirror/lib/codemirror.js' %}"></script>
+<script src="{% static 'codemirror/mode/css/css.js' %}"></script>
+<script src="{% static 'codemirror/mode/javascript/javascript.js' %}"></script>
+<script src="{% static 'codemirror/mode/xml/xml.js' %}"></script>
+<script src="{% static 'codemirror/mode/htmlmixed/htmlmixed.js' %}"></script>
+
+<!-- codemirror addons -->
+<script src="{% static 'codemirror/addon/lint/lint.js' %}"></script>
+<script src="{% static 'codemirror/addon/lint/html-lint.js' %}"></script>
+<script src="{% static 'codemirror/addon/lint/javascript-lint.js' %}"></script>
+
+<!-- javascript entry point -->
+<script src="{% static 'js/code_editor.js' %}" type="module" defer></script>
 {% endblock %}

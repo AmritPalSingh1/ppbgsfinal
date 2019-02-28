@@ -1,0 +1,57 @@
+---
+task: "Draw overlapping boxes on a HTML canvas"
+html: |
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+  <h4>Your canvas:</h4>
+  <canvas id="my-canvas"></canvas>
+  <h4>What your canvas should look like:</h4>
+  <canvas id="demo-canvas"></canvas>
+js: |
+  var canvas = document.getElementById("my-canvas");
+  var ctx = canvas.getContext("2d");
+
+  // both rectangles are 100 pixels wide and 50 pixels tall
+  // the blue rectangle's top left corner is located at (30, 30)
+  // the red rectangle's top left corner is located at (100, 50)
+secret: |
+  const canvas = document.getElementById("demo-canvas");
+  const ctx = canvas.getContext("2d");
+
+  ctx.fillStyle = "blue";
+  ctx.fillRect(30, 30, 100, 50);
+  ctx.fillStyle = "red";
+  ctx.fillRect(100, 50, 100, 50);
+test:
+  setup: |
+    const userCanvas = document.querySelector('#my-canvas');
+    const demoCanvas = document.querySelector('#demo-canvas');
+
+    const userContext = userCanvas.getContext('2d');
+    const demoContext = demoCanvas.getContext('2d');
+  run: |
+    const userData = userContext.getImageData(0, 0, userCanvas.width, userCanvas.height).data;
+    const demoData = demoContext.getImageData(0, 0, demoCanvas.width, demoCanvas.height).data;
+
+    let squares = 0;
+
+    for (let i = 0; i < userData.length; i++) {
+      squares += (userData[i] - demoData[i]) ** 2;
+    }
+
+    const perc = (255 - Math.sqrt(squares / userData.length)) / 255;
+
+    if (perc < .9) {
+      fail('Your image and the image shown aren\'t similar enough');
+    }
+  cleanup: ''
+  has:
+    - regex: fillStyle
+      message: Your code should use "ctx.fillStyle" to change colors
+    - regex: fillRect
+      message: Your code should use "ctx.fillRect" to draw rectangles
+  hasNot: []
+  maxLines: 20
