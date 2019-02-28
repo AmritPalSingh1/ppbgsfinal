@@ -1,5 +1,55 @@
-/* global $, CodeMirror, jsyaml, Split */
+/* global $, CodeMirror, jsyaml, React, ReactDOM, Split */
 /* eslint-disable no-console */
+
+const App = () => (
+  <div className="code--page-container">
+    <header>
+      <nav className="navbar navbar-light bg-light">
+        <a className="navbar-brand" href="/">Logo</a>
+        <div>
+          <strong>Task:</strong>
+          <span id="task-placeholder" />
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div className="split-horizontal" id="editors">
+        <div id="html-editor-parent">
+          <h4 className="pane-label">HTML</h4>
+          <div className="pane-content" id="html-editor" />
+        </div>
+        <div className="gutter gutter-vertical" />
+        <div id="js-editor-parent">
+          <h4 className="pane-label">JS</h4>
+          <div className="pane-content" id="js-editor" />
+        </div>
+      </div>
+      <div className="gutter gutter-horizontal" />
+      <div className="split-horizontal" id="code-output">
+        <div id="html-frame-view">
+          <iframe className="w-100 h-100" frameBorder="0" title="Code Output" />
+        </div>
+        <div className="gutter gutter-vertical" />
+        <div id="console-area">
+          <h4 className="pane-label">Console</h4>
+          <div className="pane-content" id="console-output-wrapper">
+            <div className="pane-overflow-fix px-3" id="console-output" />
+          </div>
+        </div>
+      </div>
+    </main>
+    <div className="d-flex justify-content-end p-2" id="tail-content">
+      <button type="button" className="btn btn-outline-secondary mx-1" id="toggle-console-button">
+        Toggle Console
+      </button>
+      <button type="button" className="btn btn-outline-primary mx-1" id="submit-button">
+        Submit
+      </button>
+    </div>
+  </div>
+);
+
+ReactDOM.render(<App />, document.querySelector('#root'));
 
 const state = {
   // used to get query string parameters
