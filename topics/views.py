@@ -5,6 +5,7 @@ from userprogress.models import UserAttemptedQuestion
 from django.contrib.auth.models import User
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.auth.decorators import login_required
+from challenges.models import Challenge
 
 from userprogress.models import TotalPoints, TotalCoins
 
@@ -336,5 +337,17 @@ def leaderboards(request):
 
 @login_required
 def challenge(request):
-    return render(request, 'pages/challenge.html')
+    if 'topic_name' in request.GET:
+        topic_name = request.GET['topic_name']
+
+    # Fetch current topic
+    topic = Topic.objects.get(topicName=topic_name)
+
+    challenge = Challenge.objects.filter(topic=topic)
+
+    context = {
+        'challenge': challenge,
+    }
+
+    return render(request, 'pages/challenge.html', context)
 

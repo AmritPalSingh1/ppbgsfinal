@@ -226,9 +226,8 @@
                       sapien iaculis efficitur consequat lorem ipsum.
                     </p>
                     <form action="{% url 'challenge' %}">
-                      <button class="btn btn-outline-dark-pink">
-                        View Challenges
-                      </button>
+                      <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
+                      <input type="submit" class="btn btn-outline-dark-pink" value="View Challenges">
                     </form>
                   </div>
                 </div>
