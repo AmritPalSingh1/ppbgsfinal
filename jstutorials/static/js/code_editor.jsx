@@ -1,51 +1,91 @@
 /* global $, CodeMirror, jsyaml, React, ReactDOM, Split */
 /* eslint-disable no-console */
 
+const Header = () => (
+  <header>
+    <nav className="navbar navbar-light bg-light">
+      <a className="navbar-brand" href="/">
+        Logo
+      </a>
+      <div>
+        <strong>Task:</strong>
+        <span id="task-placeholder" />
+      </div>
+    </nav>
+  </header>
+);
+
+const VerticalSplitGutter = () => <div className="gutter gutter-vertical" />;
+
+const HorizontalSplitGutter = () => (
+  <div className="gutter gutter-horizontal" />
+);
+
+const Pane = ({ label, children }) => (
+  <div>
+    <h4 className="pane-label">{label}</h4>
+    <div className="pane-content">{children}</div>
+  </div>
+);
+
+const Editors = () => (
+  <div id="editors">
+    <Pane label="HTML" id="html-editor-parent">
+      <div id="html-editor" />
+    </Pane>
+    <VerticalSplitGutter />
+    <Pane label="JS" id="js-editor-parent">
+      <div id="js-editor" />
+    </Pane>
+  </div>
+);
+
+const CodeOutput = () => (
+  <div id="code-output">
+    <div id="html-frame-view">
+      <iframe className="w-100 h-100" frameBorder="0" title="Code Output" />
+    </div>
+    <VerticalSplitGutter />
+    <Pane label="Console" id="console-area">
+      <div id="console-output-wrapper">
+        <div className="pane-overflow-fix px-3" id="console-output" />
+      </div>
+    </Pane>
+  </div>
+);
+
+const CodingArea = () => (
+  <main>
+    <Editors className="split-horizontal" />
+    <HorizontalSplitGutter />
+    <CodeOutput className="split-horizontal" />
+  </main>
+);
+
+const Footer = () => (
+  <div className="d-flex justify-content-end p-2" id="tail-content">
+    <button
+      type="button"
+      className="btn btn-outline-secondary mx-1"
+      id="toggle-console-button"
+    >
+      Toggle Console
+    </button>
+    <button
+      type="button"
+      className="btn btn-outline-primary mx-1"
+      id="submit-button"
+    >
+      Submit
+    </button>
+  </div>
+);
+
 const App = () => (
   <div className="code--page-container">
-    <header>
-      <nav className="navbar navbar-light bg-light">
-        <a className="navbar-brand" href="/">Logo</a>
-        <div>
-          <strong>Task:</strong>
-          <span id="task-placeholder" />
-        </div>
-      </nav>
-    </header>
-    <main>
-      <div className="split-horizontal" id="editors">
-        <div id="html-editor-parent">
-          <h4 className="pane-label">HTML</h4>
-          <div className="pane-content" id="html-editor" />
-        </div>
-        <div className="gutter gutter-vertical" />
-        <div id="js-editor-parent">
-          <h4 className="pane-label">JS</h4>
-          <div className="pane-content" id="js-editor" />
-        </div>
-      </div>
-      <div className="gutter gutter-horizontal" />
-      <div className="split-horizontal" id="code-output">
-        <div id="html-frame-view">
-          <iframe className="w-100 h-100" frameBorder="0" title="Code Output" />
-        </div>
-        <div className="gutter gutter-vertical" />
-        <div id="console-area">
-          <h4 className="pane-label">Console</h4>
-          <div className="pane-content" id="console-output-wrapper">
-            <div className="pane-overflow-fix px-3" id="console-output" />
-          </div>
-        </div>
-      </div>
-    </main>
-    <div className="d-flex justify-content-end p-2" id="tail-content">
-      <button type="button" className="btn btn-outline-secondary mx-1" id="toggle-console-button">
-        Toggle Console
-      </button>
-      <button type="button" className="btn btn-outline-primary mx-1" id="submit-button">
-        Submit
-      </button>
-    </div>
+    <Header />
+    <CodingArea />
+    <Footer />
   </div>
 );
 
@@ -208,7 +248,7 @@ const runCode = () => {
   testCode(jsCode);
 };
 
-editors.js.on("change", () => {
+editors.js.on('change', () => {
   runCode();
 });
 
@@ -227,14 +267,11 @@ $('#toggle-console-button').click(() => {
   state.consoleShowned = !state.consoleShowned;
 });
 
-fetch(
-  `../../static/code_exercises/ex${state.urlParams.get('task')}.yml`,
-  {
-    headers: {
-      'Content-Type': 'text/plain',
-    },
+fetch(`../../static/code_exercises/ex${state.urlParams.get('task')}.yml`, {
+  headers: {
+    'Content-Type': 'text/plain',
   },
-)
+})
   .then(data => data.text())
   .then(jsyaml.load)
   .then(data => {
@@ -263,6 +300,3 @@ fetch(
 
     runCode();
   });
-
-window.fail = fail;
-window.log = log;
