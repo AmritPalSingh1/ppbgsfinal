@@ -1,5 +1,25 @@
-/* global $, CodeMirror, jsyaml, Split */
-/* eslint-disable no-console */
+const state = {
+  // used to get query string parameters
+  urlParams: new URLSearchParams(window.location.search),
+  // secret javascript code not shown to the user
+  secret: '',
+  // a testing 'suite' ran against user code
+  codeChecks: {
+    setup: '', // run before user code
+    run: '', // run after user code
+    cleanup: '', // runs last
+    has: [], // checks if code contains a pattern
+    hasNot: [], // opposite of 'has'
+    maxLines: 200, // max number of lines user should code
+  },
+  // when user submits code, test it
+  // if any tests fail, set true
+  codeFailedTests: false,
+  // console pane visible state
+  consoleShowned: false,
+  // save split size between html view and console
+  consoleSplitSize: [60, 40],
+};
 
 // references to page elements
 const DOMElements = {
@@ -7,30 +27,24 @@ const DOMElements = {
   console: $('#console-output')[0],
 };
 
-const log = x => {
-  $(DOMElements.console).append(`<samp>${x}</samp><br />`);
-  console.log(x);
-};
-
-// when user submits code, test it
-// if any tests fail, set true
-let codeFailedTests = false;
-
-const fail = x => {
-  codeFailedTests = true;
-  $(DOMElements.console).append(`<code>${x}</code><br />`);
-  console.error(x);
-};
-
 // make editors and code output resizable
-Split(['#html-editor-parent', '#js-editor-parent']);
-Split(['#html-frame-view', '#console-area']);
-
-// split editors and code ouput vertically
-Split(['#editors', '#code-output'], {
-  direction: 'vertical',
-  sizes: [40, 60],
-});
+const splits = {
+  left: Split(['#html-editor-parent', '#js-editor-parent'], {
+    direction: 'vertical',
+    sizes: [50, 50],
+  }),
+  right: Split(['#html-frame-view', '#console-area'], {
+    direction: 'vertical',
+    sizes: [100, 0],
+    minSize: 0,
+    onDrag() {
+      state.consoleSplitSize = splits.right.getSizes();
+    },
+  }),
+  cols: Split(['#editors', '#code-output'], {
+    minSize: 200,
+  }),
+};
 
 // create codemirror instances.
 const editors = {
@@ -52,105 +66,115 @@ const editors = {
   }),
 };
 
+const log = x => {
+  $(DOMElements.console).append(`<samp>${x}</samp><br />`);
+  console.log(x);
+};
+
+const fail = x => {
+  state.codeFailedTests = true;
+  $(DOMElements.console).append(`<code>${x}</code><br />`);
+  console.error(x);
+};
+
 // write code to the iframe
-// precondition: fn :: (html code, js code) -> string
-const writeToFrame = fn => {
+const writeToFrame = code => {
   const iframeDocument = DOMElements.iframe.contentWindow.document;
-  const htmlCode = editors.html.getValue();
-  const jsCode = editors.js.getValue();
-  const cbCode = fn(htmlCode, jsCode);
 
   iframeDocument.open();
-  iframeDocument.write(cbCode);
+  iframeDocument.write(code);
   iframeDocument.close();
-
-  return {
-    html: htmlCode,
-    js: jsCode,
-    cb: cbCode,
-  };
 };
 
-// Run the HTML and JS code
-const runCode = secret => {
-  $(DOMElements.console).empty();
-
-  writeToFrame(
-    (html, js) => `
-      ${html}
-      <script>
-        console.log = window.parent.log;
-        {${secret}}
-        try {
-          {
-            ${js}
-          }
-        } catch (e) {
-          window.parent.fail(e.message);
-        }
-      </script>`,
-  );
-};
-
-// Test to see if user completed the exercise
-const testCode = (secret, test) => {
-  codeFailedTests = false;
-
-  $(DOMElements.console).empty();
-
-  const code = writeToFrame(
-    (html, js) => `
-      ${html}
-      <script>
-        console.log = window.parent.log;
-        {${secret}}
-        {
-          const fail = window.parent.fail;
-          ${test.setup}
-          try {
-            {${js}}
-          } catch (e) {
-            window.parent.fail(e.message);
-          }
-          ${test.run}
-          ${test.cleanup}
-        }
-      </script>`,
-  );
-
+const testCode = jsCode => {
   // test if code exceeds maxLines
-  if (test.maxLines < code.js.trim().split('\n').length) {
+  if (state.codeChecks.maxLines < jsCode.trim().split('\n').length) {
     fail(
       `You must complete this exercise with ${
-        test.maxLines
+        state.codeChecks.maxLines
       } lines of JavaScript or less.`,
     );
   }
 
   // test if code contains certain strings
-  test.has.forEach(piece => {
+  state.codeChecks.has.forEach(piece => {
     const re = new RegExp(piece.regex);
 
-    if (!re.test(code.js)) {
+    if (!re.test(jsCode)) {
       fail(piece.message);
     }
   });
 
   // test if code does not contain certain strings
-  test.hasNot.forEach(piece => {
+  state.codeChecks.hasNot.forEach(piece => {
     const re = new RegExp(piece.regex);
 
-    if (re.test(code.js)) {
+    if (re.test(jsCode)) {
       fail(piece.message);
     }
   });
 
-  if (!codeFailedTests) {
+  if (!state.codeFailedTests) {
     log('<span style="color: var(--green)">Yay! All tests passed!</span>');
   }
 };
 
-fetch('../../static/mock_data/exercise2.yml', {
+// run the user's code against some tests
+const runCode = () => {
+  state.codeFailedTests = false;
+
+  $(DOMElements.console).empty();
+
+  const htmlCode = editors.html.getValue();
+  const jsCode = editors.js.getValue();
+
+  writeToFrame(`
+    ${htmlCode}
+    <script>
+      {
+        const fail = window.parent.fail;
+        try {
+          console.log = window.parent.log;
+          {
+            ${state.secret}
+          }
+          {
+            ${state.codeChecks.setup}
+            {
+              ${jsCode}
+            }
+            ${state.codeChecks.run}
+            ${state.codeChecks.cleanup}
+          }
+        } catch (e) {
+          fail(e.message);
+        }
+      }
+    </script>`);
+
+  testCode(jsCode);
+};
+
+editors.js.on('change', () => {
+  runCode();
+});
+
+$('#toggle-console-button').click(() => {
+  $(this).toggleClass('active');
+
+  // if the console is visible, save the size and make hidden
+  if (state.consoleShowned) {
+    splits.right.setSizes([100, 0]);
+  }
+  // else, restore the previous size
+  else {
+    splits.right.setSizes(state.consoleSplitSize);
+  }
+
+  state.consoleShowned = !state.consoleShowned;
+});
+
+fetch(`../../static/mock_data/exercise${state.urlParams.get('task')}.yml`, {
   headers: {
     'Content-Type': 'text/plain',
   },
@@ -158,24 +182,28 @@ fetch('../../static/mock_data/exercise2.yml', {
   .then(data => data.text())
   .then(jsyaml.load)
   .then(data => {
-    $('#run-button').click(() => runCode(data.secret));
-    $('#submit-button').click(() => testCode(data.secret, data.test));
+    state.secret = data.secret;
+    state.codeChecks = data.test;
 
-    // run code when ctrl + enter is pressed down
+    $('#submit-button').click(() => {
+      state.consoleShowned = true;
+      splits.right.setSizes(state.consoleSplitSize);
+      runCode();
+    });
+
+    // test code when ctrl + enter is pressed down
     $(document).keydown(e => {
       if ((e.ctrlKey || e.metaKey) && (e.keyCode === 10 || e.keyCode === 13)) {
-        runCode(data.secret);
+        runCode();
       }
     });
 
     // insert task to the page
     $('#task-placeholder').html(data.task);
+
     // insert code to the editors
     editors.html.setValue(data.html);
     editors.js.setValue(data.js);
 
-    runCode(data.secret);
+    runCode();
   });
-
-window.fail = fail;
-window.log = log;

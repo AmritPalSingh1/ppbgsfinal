@@ -40,3 +40,6 @@ def topics(request):
         'userCoins': userCoins
     }
     return render(request, 'pages/topics.html', context)
+
+def code_editor(request):
+    return render(request, 'pages/code_editor.html')
