@@ -1,3 +1,6 @@
+/* global $, CodeMirror, jsyaml, Split */
+/* eslint-disable no-console */
+
 const state = {
   // used to get query string parameters
   urlParams: new URLSearchParams(window.location.search),
@@ -174,7 +177,7 @@ $('#toggle-console-button').click(() => {
   state.consoleShowned = !state.consoleShowned;
 });
 
-fetch(`../../static/mock_data/exercise${state.urlParams.get('task')}.yml`, {
+fetch(`/static/mock_data/exercise${state.urlParams.get('task')}.yml`, {
   headers: {
     'Content-Type': 'text/plain',
   },
