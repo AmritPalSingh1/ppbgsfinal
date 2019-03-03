@@ -1,6 +1,12 @@
 /* global $, CodeMirror, jsyaml, Split */
 /* eslint-disable no-console */
 
+const constants = {
+  // the percentage view for the console to be considered closed
+  consoleClosedThreshold: 97.5,
+  consoleDefaultSplitSize: [60, 40],
+};
+
 const state = {
   // used to get query string parameters
   urlParams: new URLSearchParams(window.location.search),
@@ -19,9 +25,9 @@ const state = {
   // if any tests fail, set true
   codeFailedTests: false,
   // console pane visible state
-  consoleShowned: false,
+  consoleShowned: true,
   // save split size between html view and console
-  consoleSplitSize: [60, 40],
+  consoleSplitSize: constants.consoleDefaultSplitSize,
 };
 
 // references to page elements
@@ -38,10 +44,12 @@ const splits = {
   }),
   right: Split(['#html-frame-view', '#console-area'], {
     direction: 'vertical',
-    sizes: [100, 0],
+    sizes: state.consoleSplitSize,
     minSize: 0,
     onDrag() {
       state.consoleSplitSize = splits.right.getSizes();
+      state.consoleShowned =
+        state.consoleSplitSize[0] < constants.consoleClosedThreshold;
     },
   }),
   cols: Split(['#editors', '#code-output'], {
@@ -142,9 +150,9 @@ const runCode = () => {
       ${state.codeChecks.run}
       ${state.codeChecks.cleanup}
     }`
-      .replace(/\\/g, '\\\\') // preserve backslash
-      .replace(/[\n\r]/g, '\\n') // escape new lines
-      .replace(/'/g, '\\\''); // escape quotes
+    .replace(/\\/g, '\\\\') // preserve backslash
+    .replace(/[\n\r]/g, '\\n') // escape new lines
+    .replace(/'/g, "\\'"); // escape quotes
 
   writeToFrame(`
     ${htmlCode}
@@ -155,7 +163,7 @@ const runCode = () => {
           console.log = window.parent.log;
           eval('${scriptToRun}');
         } catch (e) {
-          fail(e.message);
+          fail(e);
         }
       }
     </script>`);
@@ -170,13 +178,16 @@ editors.js.on('change', () => {
 $('#toggle-console-button').click(() => {
   $(this).toggleClass('active');
 
-  // if the console is visible, save the size and make hidden
+  // if the console is visible, make hidden
   if (state.consoleShowned) {
     splits.right.setSizes([100, 0]);
   }
   // else, restore the previous size
-  else {
+  else if (state.consoleSplitSize[0] < constants.consoleClosedThreshold) {
     splits.right.setSizes(state.consoleSplitSize);
+  }
+  else {
+    splits.right.setSizes(constants.consoleDefaultSplitSize);
   }
 
   state.consoleShowned = !state.consoleShowned;
@@ -218,3 +229,4 @@ fetch(`/static/mock_data/exercise${state.urlParams.get('task')}.yml`, {
 
 window.fail = fail;
 window.log = log;
+window.state = state;
