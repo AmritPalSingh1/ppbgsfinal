@@ -130,6 +130,21 @@ const runCode = () => {
 
   const htmlCode = editors.html.getValue();
   const jsCode = editors.js.getValue();
+  const scriptToRun = `
+    {
+      ${state.secret}
+    }
+    {
+      ${state.codeChecks.setup}
+      {
+        ${jsCode}
+      }
+      ${state.codeChecks.run}
+      ${state.codeChecks.cleanup}
+    }`
+      .replace(/\\/g, '\\\\') // preserve backslash
+      .replace(/[\n\r]/g, '\\n') // escape new lines
+      .replace(/'/g, '\\\''); // escape quotes
 
   writeToFrame(`
     ${htmlCode}
@@ -138,17 +153,7 @@ const runCode = () => {
         const fail = window.parent.fail;
         try {
           console.log = window.parent.log;
-          {
-            ${state.secret}
-          }
-          {
-            ${state.codeChecks.setup}
-            {
-              ${jsCode}
-            }
-            ${state.codeChecks.run}
-            ${state.codeChecks.cleanup}
-          }
+          eval('${scriptToRun}');
         } catch (e) {
           fail(e.message);
         }
@@ -210,3 +215,6 @@ fetch(`/static/mock_data/exercise${state.urlParams.get('task')}.yml`, {
 
     runCode();
   });
+
+window.fail = fail;
+window.log = log;
