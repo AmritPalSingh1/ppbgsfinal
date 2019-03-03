@@ -73,6 +73,10 @@ main {
   height: calc(100% - var(--editor-label-height) - 8px);
 }
 
+.pane-content > div {
+  height: 100%;
+}
+
 #console-output-wrapper {
   overflow-y: auto;
   position: relative;

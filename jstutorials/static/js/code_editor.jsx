@@ -21,15 +21,15 @@ const HorizontalSplitGutter = () => (
   <div className="gutter gutter-horizontal" />
 );
 
-const Pane = ({ label, children }) => (
-  <div>
+const Pane = ({ label, children, ...rest }) => (
+  <div {...rest}>
     <h4 className="pane-label">{label}</h4>
     <div className="pane-content">{children}</div>
   </div>
 );
 
-const Editors = () => (
-  <div id="editors">
+const Editors = ({ ...rest }) => (
+  <div id="editors" {...rest}>
     <Pane label="HTML" id="html-editor-parent">
       <div id="html-editor" />
     </Pane>
@@ -40,8 +40,8 @@ const Editors = () => (
   </div>
 );
 
-const CodeOutput = () => (
-  <div id="code-output">
+const CodeOutput = ({...rest}) => (
+  <div id="code-output" {...rest}>
     <div id="html-frame-view">
       <iframe className="w-100 h-100" frameBorder="0" title="Code Output" />
     </div>
@@ -220,30 +220,39 @@ const runCode = () => {
 
   const htmlCode = editors.html.getValue();
   const jsCode = editors.js.getValue();
+  const jsCodeToWrite = `
+    console.log = window.parent.log;
+    {
+      ${state.secret}
+    }
+    {
+      ${state.codeChecks.setup}
+      {
+        ${jsCode}
+      }
+      ${state.codeChecks.run}
+      ${state.codeChecks.cleanup}
+    }
+  `;
 
-  writeToFrame(`
+  const codeToRun = `
     ${htmlCode}
     <script>
       {
         const fail = window.parent.fail;
         try {
-          console.log = window.parent.log;
-          {
-            ${state.secret}
-          }
-          {
-            ${state.codeChecks.setup}
-            {
-              ${jsCode}
-            }
-            ${state.codeChecks.run}
-            ${state.codeChecks.cleanup}
-          }
+          ${jsCodeToWrite}
         } catch (e) {
           fail(e.message);
         }
       }
-    </script>`);
+    </script>`;
+
+  try {
+    writeToFrame(codeToRun);
+  } catch (e) {
+    fail(e.message);
+  }
 
   testCode(jsCode);
 };
