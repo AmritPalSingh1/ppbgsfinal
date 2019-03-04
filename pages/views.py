@@ -4,6 +4,11 @@ from django.contrib.auth.decorators import login_required
 from userprogress.models import TotalPoints, TotalCoins
 
 
+
+@login_required
+def index(request):
+    return render(request, 'pages/index.html')
+
 @login_required
 def topics(request):
 
