@@ -8,8 +8,6 @@ const constants = {
 };
 
 const state = {
-  // used to get query string parameters
-  urlParams: new URLSearchParams(window.location.search),
   // secret javascript code not shown to the user
   secret: '',
   // a testing 'suite' ran against user code
@@ -130,6 +128,12 @@ const testCode = jsCode => {
   }
 };
 
+const escapeCode = str => 
+  str
+    .replace(/\\/g, '\\\\') // preserve backslash
+    .replace(/[\n\r]/g, '\\n') // escape new lines
+    .replace(/'/g, "\\'"); // escape quotes
+
 // run the user's code against some tests
 const runCode = () => {
   state.codeFailedTests = false;
@@ -137,7 +141,7 @@ const runCode = () => {
   $(DOMElements.console).empty();
 
   const htmlCode = editors.html.getValue();
-  const jsCode = editors.js.getValue();
+  const jsCode = escapeCode(editors.js.getValue());
   const scriptToRun = `
     {
       ${state.secret}
@@ -145,26 +149,23 @@ const runCode = () => {
     {
       ${state.codeChecks.setup}
       {
-        ${jsCode}
+        try {
+          eval('${jsCode}');
+        } catch (e) {
+          fail(e);
+        }
       }
       ${state.codeChecks.run}
       ${state.codeChecks.cleanup}
-    }`
-    .replace(/\\/g, '\\\\') // preserve backslash
-    .replace(/[\n\r]/g, '\\n') // escape new lines
-    .replace(/'/g, "\\'"); // escape quotes
+    }`;
 
   writeToFrame(`
     ${htmlCode}
     <script>
       {
         const fail = window.parent.fail;
-        try {
-          console.log = window.parent.log;
-          eval('${scriptToRun}');
-        } catch (e) {
-          fail(e);
-        }
+        console.log = window.parent.log;
+        ${scriptToRun}
       }
     </script>`);
 
@@ -193,7 +194,8 @@ $('#toggle-console-button').click(() => {
   state.consoleShowned = !state.consoleShowned;
 });
 
-fetch(`/static/mock_data/exercise${state.urlParams.get('task')}.yml`, {
+const urlParams = new URLSearchParams(window.location.search);
+fetch(`/static/mock_data/exercise${urlParams.get('task')}.yml`, {
   headers: {
     'Content-Type': 'text/plain',
   },

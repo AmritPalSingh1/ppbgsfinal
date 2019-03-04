@@ -12,6 +12,7 @@
   <link href="{% static 'codemirror/addon/lint/lint.css' %}" rel="stylesheet" />
 
   <!-- project's css -->
+  <link rel="stylesheet" href="{% static 'css/all.css' %}" />
   <link rel="stylesheet" href="{% static 'css/code_editor.css' %}" />
 {% endblock %}
 
@@ -58,13 +59,6 @@
 
 {% block content %}
   <div class="code--page-container">
-    <header>
-      <!-- navbar displaying task and buttons -->
-      <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="/">Logo</a>
-        <div><strong>Task:</strong> <span id="task-placeholder"></span></div>
-      </nav>
-    </header>
     <main>
       <!-- left half of the page shows HTML and JS editor -->
       <div class="split-horizontal" id="editors">
@@ -97,13 +91,18 @@
         </div>
       </div>
     </main>
-    <div class="d-flex justify-content-end p-2" id="tail-content">
-      <button class="btn btn-outline-secondary mx-1" id="toggle-console-button">
-        Toggle Console
-      </button>
-      <button class="btn btn-outline-primary mx-1" id="submit-button">
-        Submit
-      </button>
+    <div class="p-2" id="tail-content">
+      <div class="d-inline"><strong>Task:</strong> <span id="task-placeholder"></span></div>
+      <div class="float-right">
+        <button class="btn btn-outline-secondary mx-1" id="toggle-console-button">
+          <i class="fas fa-eye"></i>
+          Toggle Console
+        </button>
+        <button class="btn btn-outline-primary mx-1" id="submit-button">
+          <i class="fas fa-file-upload"></i>
+          Submit
+        </button>
+      </div>
     </div>
   </div>
 {% endblock %}
