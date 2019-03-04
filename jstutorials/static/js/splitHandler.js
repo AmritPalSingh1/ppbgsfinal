@@ -17,10 +17,12 @@ const state = {
 const splits = {
   left: Split(['#html-editor-parent', '#js-editor-parent'], {
     direction: 'vertical',
+    gutterSize: 5,
     sizes: [50, 50],
   }),
   right: Split(['#html-frame-view', '#console-area'], {
     direction: 'vertical',
+    gutterSize: 5,
     sizes: state.consoleSplitSize,
     minSize: 0,
     onDrag() {
@@ -30,6 +32,7 @@ const splits = {
     },
   }),
   cols: Split(['#editors', '#code-output'], {
+    gutterSize: 5,
     minSize: 200,
   }),
 };

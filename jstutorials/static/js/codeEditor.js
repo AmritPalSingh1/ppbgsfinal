@@ -3,20 +3,29 @@
 import './splitHandler.js';
 import { runCode, setState } from './codeRunner.js';
 
+const sharedConfig = {
+  autoCloseBrackets: true,
+  extraKeys: {
+    Tab: 'insertSoftTab',
+  },
+  gutters: ['CodeMirror-lint-markers'],
+  lineNumbers: true,
+  scrollbarStyle: 'simple',
+  tabSize: 2,
+  theme: 'neo',
+};
+
 // create codemirror instances.
 const editors = {
   html: CodeMirror($('#html-editor')[0], {
-    lineNumbers: true,
-    theme: 'neo',
+    ...sharedConfig,
     mode: 'htmlmixed',
-    gutters: ['CodeMirror-lint-markers'],
+    autoCloseTags: true,
     lint: true,
   }),
   js: CodeMirror($('#js-editor')[0], {
-    lineNumbers: true,
-    theme: 'neo',
+    ...sharedConfig,
     mode: 'javascript',
-    gutters: ['CodeMirror-lint-markers'],
     lint: {
       esversion: 6,
     },
@@ -36,8 +45,7 @@ fetch(`/static/mock_data/exercise${urlParams.get('task')}.yml`, {
   .then(data => {
     setState({ secret: data.secret, codeChecks: data.test });
 
-    $('#submit-button').click(() => {
-    });
+    $('#submit-button').click(() => {});
 
     // insert task to the page
     $('#task-placeholder').html(data.task);
