@@ -225,8 +225,10 @@
                       vehicula lectus ultricies eu. In convallis amet leo non
                       sapien iaculis efficitur consequat lorem ipsum.
                     </p>
-                    <form action="{% url 'challenge' %}">
+                    <form action="{% url 'challenge' %}" method="POST">
+                      {% csrf_token %}
                       <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
+                      <input type="hidden" name="ch_id" value="1">
                       <input type="submit" class="btn btn-outline-dark-pink" value="View Challenges">
                     </form>
                   </div>

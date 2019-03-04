@@ -20,7 +20,7 @@ def topic(request, topic_name):
     allUsers = TotalPoints.objects.order_by('-points')
 
     # current user's rank
-    rank=1
+    rank = 1
     for singleUser in allUsers:
         if singleUser.user == request.user:
             break
@@ -28,7 +28,6 @@ def topic(request, topic_name):
 
     # current user's coins
     userCoins = TotalCoins.objects.get(user=request.user)
-
 
     # get current topic otherwise 404 page
     topic = get_object_or_404(Topic, topicName=topic_name)
@@ -58,7 +57,7 @@ def videos(request):
     allUsers = TotalPoints.objects.order_by('-points')
 
     # current user's rank
-    rank=1
+    rank = 1
     for singleUser in allUsers:
         if singleUser.user == request.user:
             break
@@ -103,7 +102,7 @@ def notes(request):
     allUsers = TotalPoints.objects.order_by('-points')
 
     # current user's rank
-    rank=1
+    rank = 1
     for singleUser in allUsers:
         if singleUser.user == request.user:
             break
@@ -112,7 +111,7 @@ def notes(request):
     # current user's coins
     userCoins = TotalCoins.objects.get(user=request.user)
 
-    # retreive topic name from GET request    
+    # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
 
@@ -147,7 +146,7 @@ def quiz(request):
     allUsers = TotalPoints.objects.order_by('-points')
 
     # current user's rank
-    rank=1
+    rank = 1
     for singleUser in allUsers:
         if singleUser.user == request.user:
             break
@@ -156,7 +155,7 @@ def quiz(request):
     # current user's coins
     userCoins = TotalCoins.objects.get(user=request.user)
 
-    # retreive topic name from GET request    
+    # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
 
@@ -177,7 +176,8 @@ def quiz(request):
         # check if user has previously submitted the question
         if request.user.is_authenticated:
             current_user = request.user
-            already_attempted_question = UserAttemptedQuestion.objects.filter(question=submitted_question, user=current_user)
+            already_attempted_question = UserAttemptedQuestion.objects.filter(
+                question=submitted_question, user=current_user)
 
         # when user is attempting question again
         if already_attempted_question:
@@ -193,13 +193,15 @@ def quiz(request):
         # when user is attempting the question for first time
         else:
             if (user_answer == submitted_question.answer):
-                attemptedQuestion = UserAttemptedQuestion(question=submitted_question, user=request.user, isCorrect=True)
+                attemptedQuestion = UserAttemptedQuestion(
+                    question=submitted_question, user=request.user, isCorrect=True)
                 attemptedQuestion.save()
                 messages.success(request, 'Correct answer! +1 pts')
             else:
-                attemptedQuestion = UserAttemptedQuestion(question=submitted_question, user=request.user, isCorrect=False)
-                attemptedQuestion.save()   
-                messages.error(request, 'Incorrect answer :(')  
+                attemptedQuestion = UserAttemptedQuestion(
+                    question=submitted_question, user=request.user, isCorrect=False)
+                attemptedQuestion.save()
+                messages.error(request, 'Incorrect answer :(')
 
     # Fetch current topic
     topic = Topic.objects.get(topicName=topic_name)
@@ -217,7 +219,7 @@ def quiz(request):
 
     context = {
         'topic': topic,
-        'questions': paged_questions,  
+        'questions': paged_questions,
         'submitted_question': submitted_question,
         'video': videos[0].key,
         'user_answer': user_answer,
@@ -226,8 +228,9 @@ def quiz(request):
         'allUsers': allUsers,
         'userCoins': userCoins
     }
-    
+
     return render(request, 'pages/quiz.html', context)
+
 
 @login_required
 def questions(request):
@@ -239,7 +242,7 @@ def questions(request):
     allUsers = TotalPoints.objects.order_by('-points')
 
     # current user's rank
-    rank=1
+    rank = 1
     for singleUser in allUsers:
         if singleUser.user == request.user:
             break
@@ -248,10 +251,10 @@ def questions(request):
     # current user's coins
     userCoins = TotalCoins.objects.get(user=request.user)
 
-    # retreive topic name from GET request    
+    # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
-    
+
     # Fetch current topic
     topic = Topic.objects.get(topicName=topic_name)
 
@@ -259,7 +262,8 @@ def questions(request):
     if 'question' in request.POST:
         question = request.POST['question']
         details = request.POST['details']
-        query = Query(topic=topic, user=request.user, question=question, details=details)
+        query = Query(topic=topic, user=request.user,
+                      question=question, details=details)
         query.save()
 
     # list of all the questions of current topic
@@ -287,7 +291,7 @@ def question(request):
     allUsers = TotalPoints.objects.order_by('-points')
 
     # current user's rank
-    rank=1
+    rank = 1
     for singleUser in allUsers:
         if singleUser.user == request.user:
             break
@@ -296,7 +300,7 @@ def question(request):
     # current user's coins
     userCoins = TotalCoins.objects.get(user=request.user)
 
-    # retreive topic name from GET request    
+    # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
 
@@ -314,7 +318,7 @@ def question(request):
         comment = request.POST['comment']
         new_comment = Comment(user=request.user, query=query, comment=comment)
         new_comment.save()
-    
+
     # list of all the comments of current topic
     comments = Comment.objects.filter(query=query)
 
@@ -335,19 +339,27 @@ def question(request):
 def leaderboards(request):
     return render(request, 'pages/leaderboards.html')
 
+
 @login_required
 def challenge(request):
-    if 'topic_name' in request.GET:
-        topic_name = request.GET['topic_name']
+    if 'topic_name' in request.POST:
+        topic_name = request.POST['topic_name']
+
+    if 'ch_id' in request.POST:
+        ch_id = request.POST['ch_id']
+    else:
+        return redirect('topics')
+
 
     # Fetch current topic
     topic = Topic.objects.get(topicName=topic_name)
 
-    challenge = Challenge.objects.filter(topic=topic)
+    # Current challenge
+    challenge = Challenge.objects.get(topic=topic, id=ch_id)
+    print(challenge.mock_data.url)
 
     context = {
         'challenge': challenge,
     }
 
     return render(request, 'pages/challenge.html', context)
-
