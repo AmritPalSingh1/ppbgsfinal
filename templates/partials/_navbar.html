@@ -23,9 +23,12 @@
       </div>
     </div>
   </section>
-  <nav class="navbar navbar-expand-sm navbar-light bg-light py-3">
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container alt-font nav-text">
-      <a class="navbar-brand" href="{% url 'index' %}">Logo</a>
+      <a class="navbar-brand " href="{% url 'index' %}"
+        ><img src="{% static 'images/logo.png' %}" alt="" height="50" width="50" />
+        PPBGS
+      </a>
       <button
         class="navbar-toggler"
         data-toggle="collapse"
@@ -35,7 +38,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Home</a>
+          </li>
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'topics' %}">Topics</a>
           </li>
@@ -53,7 +58,11 @@
 
           <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
           <li class="nav-item">
-            <a class="nav-link d-block d-sm-none" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+            <a
+              class="nav-link d-block d-sm-none"
+              href="javascript:{document.getElementById('logout').submit()}"
+              >Logout</a
+            >
           </li>
         </ul>
       </div>
