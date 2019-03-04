@@ -1,12 +1,12 @@
 :root {
-  --editor-label-height: 30px;
+  --editor-label-height: 36px;
 }
 
 /* split view classes with split.js */
 .gutter {
-  background-color: #eee;
-    background-repeat: no-repeat;
-    background-position: 50%;
+  background-color: #f0f0f0;
+  background-repeat: no-repeat;
+  background-position: 50%;
 }
 
 .gutter-horizontal {
@@ -62,14 +62,15 @@ main {
 }
 
 #tail-content > * {
-  margin-right: 1em;
+  margin-right: 0.5rem;
 }
 
 /* pane layout */
 .pane-label {
+  border-bottom: 1px solid var(--light);
   height: var(--editor-label-height);
   padding: 4px;
-  padding-left: 16px;
+  padding-left: 8px;
 }
 
 .pane-content {

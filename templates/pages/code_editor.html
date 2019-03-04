@@ -10,6 +10,7 @@
   <link href="{% static 'codemirror/lib/codemirror.css' %}" rel="stylesheet" />
   <link href="{% static 'codemirror/theme/neo.css' %}" rel="stylesheet" />
   <link href="{% static 'codemirror/addon/lint/lint.css' %}" rel="stylesheet" />
+  <link href="{% static 'codemirror/addon/scroll/simplescrollbars.css' %}" rel="stylesheet" />
 
   <!-- project's css -->
   <link rel="stylesheet" href="{% static 'css/all.css' %}" />
@@ -52,6 +53,10 @@
   <script src="{% static 'codemirror/addon/lint/lint.js' %}"></script>
   <script src="{% static 'codemirror/addon/lint/html-lint.js' %}"></script>
   <script src="{% static 'codemirror/addon/lint/javascript-lint.js' %}"></script>
+  <script src="{% static 'codemirror/addon/scroll/simplescrollbars.js' %}"></script>
+  <script src="{% static 'codemirror/addon/scroll/scrollpastend.js' %}"></script>
+  <script src="{% static 'codemirror/addon/edit/closetag.js' %}"></script>
+  <script src="{% static 'codemirror/addon/edit/closebrackets.js' %}"></script>
 
   <!-- javascript entry point -->
   <script src="{% static 'js/codeEditor.js' %}" type="module" defer></script>
