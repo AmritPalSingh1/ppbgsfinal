@@ -4,6 +4,7 @@ const constants = {
   // the percentage view for the console to be considered closed
   consoleClosedThreshold: 97.5,
   consoleDefaultSplitSize: [60, 40],
+  gutterSize: 8,
 };
 
 const state = {
@@ -17,12 +18,11 @@ const state = {
 const splits = {
   left: Split(['#html-editor-parent', '#js-editor-parent'], {
     direction: 'vertical',
-    gutterSize: 5,
-    sizes: [50, 50],
+    gutterSize: constants.gutterSize,
   }),
   right: Split(['#html-frame-view', '#console-area'], {
     direction: 'vertical',
-    gutterSize: 5,
+    gutterSize: constants.gutterSize,
     sizes: state.consoleSplitSize,
     minSize: 0,
     onDrag() {
@@ -32,8 +32,7 @@ const splits = {
     },
   }),
   cols: Split(['#editors', '#code-output'], {
-    gutterSize: 5,
-    minSize: 200,
+    gutterSize: constants.gutterSize,
   }),
 };
 
