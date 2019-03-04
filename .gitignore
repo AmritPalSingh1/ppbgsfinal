@@ -9,4 +9,3 @@ venv
 /static
 .vscode
 node_modules
-jstutorials/static/dist

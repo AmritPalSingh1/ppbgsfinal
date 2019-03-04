@@ -2,10 +2,9 @@
   "env": {
     "browser": true
   },
-  "extends": ["airbnb", "prettier"],
+  "extends": ["airbnb-base", "prettier"],
   "rules": {
     "no-param-reassign": 0,
-    "import/extensions": 0,
-    "no-shadow": 0
+    "import/extensions": 0
   }
 }
