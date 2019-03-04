@@ -71,7 +71,7 @@ def videos(request):
         topic_name = request.GET['topic_name']
 
     # Fetch current topic
-    topic = Topic.objects.get(topicName=topic_name)
+    topic = get_object_or_404(Topic, topicName=topic_name)
 
     # Fetch all the videos related to current topic
     videos = Video.objects.filter(topic=topic)
@@ -116,7 +116,7 @@ def notes(request):
         topic_name = request.GET['topic_name']
 
     # Fetch current topic
-    topic = Topic.objects.get(topicName=topic_name)
+    topic = get_object_or_404(Topic, topicName=topic_name)
 
     # Fetch current topic's pdf
     pdf = Pdf.objects.get(topic=topic)
@@ -204,7 +204,7 @@ def quiz(request):
                 messages.error(request, 'Incorrect answer :(')
 
     # Fetch current topic
-    topic = Topic.objects.get(topicName=topic_name)
+    topic = get_object_or_404(Topic, topicName=topic_name)
 
     # Fetching all the questions of current topic
     questions = Question.objects.filter(topic=topic)
@@ -256,7 +256,7 @@ def questions(request):
         topic_name = request.GET['topic_name']
 
     # Fetch current topic
-    topic = Topic.objects.get(topicName=topic_name)
+    topic = get_object_or_404(Topic, topicName=topic_name)
 
     # if user posts a question
     if 'question' in request.POST:
@@ -305,7 +305,7 @@ def question(request):
         topic_name = request.GET['topic_name']
 
     # Fetch current topic
-    topic = Topic.objects.get(topicName=topic_name)
+    topic = get_object_or_404(Topic, topicName=topic_name)
 
     # current question/query
     if 'questionID' in request.GET:
@@ -352,7 +352,7 @@ def challenge(request):
 
 
     # Fetch current topic
-    topic = Topic.objects.get(topicName=topic_name)
+    topic = get_object_or_404(Topic, topicName=topic_name)
 
     # Current challenge
     challenge = Challenge.objects.get(topic=topic, id=ch_id)

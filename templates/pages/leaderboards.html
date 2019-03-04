@@ -1,13 +1,21 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 
-<div class="bgc-grey-100 leaderboard-text">
-  <div class="container">
-    <h5 class="alt-font text-extra-dark-gray py-4 font-weight-700">Rankings</h5>
-    <div class="">
-      <div class="row border border-secondary bg-white">
+<div class="leaderboard-text">
+    <div class="container py-4">
+      <h5
+        class="text-uppercase alt-font text-extra-dark-gray mb-3 font-weight-700"
+      >
+        Rankings
+      </h5>
+      <span
+        class="separator-line-horrizontal-medium-light2 bg-deep-pink display-table width-100px"
+      ></span>
+    </div>
+    <div class="container">
+      <div class="row border border-secondary bg-blue">
         <div class="col-md-12">
           <h5 class="alt-font text-extra-dark-gray pt-4 pb-2 font-weight-700">
-            Leaderboards
+            <span class="text-light text-uppercase"> Leaderboards</span>
           </h5>
           <div class="d-flex mb-2">
             <label class="mr-auto">
@@ -21,7 +29,7 @@
             </label>
             <label for="">Search: <input type="text"/></label>
           </div>
-          <table class="table table-striped table-bordered">
+          <table class="table table-striped table-bordered bg-light">
             <thead>
               <tr>
                 <th>#</th>
@@ -123,8 +131,12 @@
                 <li class="page-item active">
                   <a class="page-link" href="#">1</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">3</a>
+                </li>
                 <li class="page-item">
                   <a class="page-link" href="#">Next</a>
                 </li>
@@ -135,6 +147,5 @@
       </div>
     </div>
   </div>
-</div>
 
 {% endblock %}
