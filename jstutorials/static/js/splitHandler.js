@@ -38,14 +38,12 @@ $('#toggle-console-button').click(() => {
   $(this).toggleClass('active');
 
   // if the console is visible, make hidden
+  // else, restore the previous size
   if (state.consoleShowned) {
     splits.right.setSizes([100, 0]);
-  }
-  // else, restore the previous size
-  else if (state.consoleSplitSize[0] < constants.consoleClosedThreshold) {
+  } else if (state.consoleSplitSize[0] < constants.consoleClosedThreshold) {
     splits.right.setSizes(state.consoleSplitSize);
-  }
-  else {
+  } else {
     splits.right.setSizes(constants.consoleDefaultSplitSize);
   }
 

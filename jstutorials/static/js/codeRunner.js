@@ -74,7 +74,9 @@ const testCode = jsCode => {
 
   if (state.errorCount === 0) {
     log(
-      '<span class="text-success"><i class="fas fa-check-circle"></i> Yay! All tests passed!</span>',
+      `<span class="text-success">
+        <i class="fas fa-check-circle"></i> Yay! All tests passed!
+      </span>`,
     );
   }
 };
@@ -115,9 +117,20 @@ export const runCode = editors => {
     </script>`);
 
   testCode(jsCode);
+
+  // show error count on the footer
   $('#error-count-container').html(
-    `<i class="fas fa-times-circle"></i> ${state.errorCount} Errors`,
+    `<span class="${state.errorCount ? 'text-danger' : ''}">
+      <i class="fas fa-times-circle"></i> ${state.errorCount} Errors
+    </span>`,
   );
+
+  // warn user about errors in modal
+  if (state.errorCount) {
+    $('#modal-body-optional-info').html(
+      `You currently have ${state.errorCount} errors in your JavaScript code!`,
+    );
+  }
 };
 
 export const setState = newState => {

@@ -37,7 +37,6 @@ fetch(`/static/mock_data/exercise${urlParams.get('task')}.yml`, {
     setState({ secret: data.secret, codeChecks: data.test });
 
     $('#submit-button').click(() => {
-      // TODO
     });
 
     // insert task to the page
@@ -53,7 +52,9 @@ fetch(`/static/mock_data/exercise${urlParams.get('task')}.yml`, {
 fetch(`/static/mock_data/user.json`)
   .then(data => data.json())
   .then(data => {
-    $('#coin-count-container').html(`<i class="fas fa-coins"></i> ${data.coins} Coins`);
+    $('#coin-count-container').html(
+      `<i class="fas fa-coins"></i> ${data.coins} Coins`,
+    );
   });
 
 const updatePageHeight = () =>

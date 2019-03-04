@@ -6,14 +6,10 @@ html: |-
       border: 1px solid black;
     }
   </style>
-  <div>
-    <h4>Your canvas:</h4>
-    <canvas id="my-canvas"></canvas>
-  </div>
-  <div>
-    <h4>What your canvas should look like:</h4>
-    <canvas id="demo-canvas"></canvas>
-  </div>
+  <h4>Your canvas:</h4>
+  <canvas id="my-canvas"></canvas>
+  <h4>What your canvas should look like:</h4>
+  <canvas id="demo-canvas"></canvas>
 js: |
   var canvas = document.getElementById("my-canvas");
   var ctx = canvas.getContext("2d");
