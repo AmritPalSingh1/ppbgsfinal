@@ -58,7 +58,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="code--page-container">
+  <div id="code--page-container">
     <main>
       <!-- left half of the page shows HTML and JS editor -->
       <div class="split-horizontal" id="editors">
@@ -91,18 +91,22 @@
         </div>
       </div>
     </main>
-    <div class="p-2" id="tail-content">
-      <div class="d-inline"><strong>Task:</strong> <span id="task-placeholder"></span></div>
-      <div class="float-right">
-        <button class="btn btn-outline-secondary mx-1" id="toggle-console-button">
-          <i class="fas fa-eye"></i>
-          Toggle Console
-        </button>
-        <button class="btn btn-outline-primary mx-1" id="submit-button">
-          <i class="fas fa-file-upload"></i>
-          Submit
-        </button>
-      </div>
+    <div class="bg-light d-flex p-2" id="tail-content">
+      <div class="align-self-center mr-auto"><strong>Task:</strong> <span id="task-placeholder"></span></div>
+      <div class="align-self-center text-secondary" id="coin-count-container"></div>
+      <div class="align-self-center text-muted" id="error-count-container"></div>
+      <button class="btn btn-outline-secondary" id="use-hint-button">
+        <i class="fas fa-lightbulb"></i>
+        Use Hint
+      </button>
+      <button class="btn btn-outline-secondary" id="toggle-console-button">
+        <i class="fas fa-eye"></i>
+        Toggle Console
+      </button>
+      <button class="btn btn-outline-primary" id="submit-button">
+        <i class="fas fa-file-upload"></i>
+        Submit
+      </button>
     </div>
   </div>
 {% endblock %}

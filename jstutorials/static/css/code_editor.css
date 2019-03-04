@@ -39,7 +39,7 @@
 }
 
 /* page layout */
-.code--page-container {
+#code--page-container {
   height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -59,7 +59,10 @@ main {
 
 #tail-content {
   grid-area: tail;
-  background-color: var(--light);
+}
+
+#tail-content > * {
+  margin-right: 1em;
 }
 
 /* pane layout */
