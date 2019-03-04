@@ -2,15 +2,15 @@
 
 <div id="navbar-component">
   <section class="dark-background text-light d-none d-sm-block">
-    <div class="container py-1">
+    <div class="container py-1 alt-font">
       <div class="d-flex">
         <div>
           <small>
             <span class="pr-5">
               <i class="fas text-light fa-envelope-open"></i>
-              support@gmail.com</span>
-            <span class="pr-2 ">
-              <i class="fas text-light fa-phone"></i> (333)-444-5555</span></small>
+              support@gmail.com</span
+            >
+          </small>
         </div>
         <div class="ml-auto">
           <a href="javascript:{document.getElementById('logout').submit()}">
@@ -23,10 +23,14 @@
       </div>
     </div>
   </section>
-  <nav class="navbar navbar-expand-sm navbar-light bg-light">
-    <div class="container">
+  <nav class="navbar navbar-expand-sm navbar-light bg-light py-3">
+    <div class="container alt-font nav-text">
       <a class="navbar-brand" href="#">Logo</a>
-      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
+      <button
+        class="navbar-toggler"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
@@ -36,9 +40,13 @@
             <a class="nav-link" href="{% url 'topics' %}">Topics</a>
           </li>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Rankings</a>
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+              >Rankings</a
+            >
             <div class="dropdown-menu">
-              <a href="{% url 'leaderboards' %}" class="dropdown-item">Leaderboards</a>
+              <a href="{% url 'leaderboards' %}" class="dropdown-item"
+                >Leaderboards</a
+              >
               <a href="#" class="dropdown-item">Table</a>
             </div>
           </li>
