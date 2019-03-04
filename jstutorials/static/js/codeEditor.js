@@ -11,6 +11,7 @@ const sharedConfig = {
   gutters: ['CodeMirror-lint-markers'],
   lineNumbers: true,
   scrollbarStyle: 'simple',
+  scrollPastEnd: true,
   tabSize: 2,
   theme: 'neo',
 };
