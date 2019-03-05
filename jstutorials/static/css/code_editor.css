@@ -19,13 +19,15 @@
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
 }
 
-.split-horizontal, .gutter-horizontal {
+.split-horizontal,
+.gutter-horizontal {
   height: 100%;
   float: left;
 }
 
 /* codemirror instance */
-#html-editor, #js-editor {
+#html-editor,
+#js-editor {
   position: relative;
 }
 
@@ -38,15 +40,20 @@
   height: 100%;
 }
 
+.CodeMirror-simplescroll-horizontal,
+.CodeMirror-simplescroll-vertical {
+  background-color: transparent;
+}
+
 /* page layout */
 #code--page-container {
   height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
-    "header"
-    "main"
-    "tail";
+    'header'
+    'main'
+    'tail';
 }
 
 header {

@@ -130,6 +130,8 @@ export const runCode = editors => {
     $('#modal-body-optional-info').html(
       `You currently have ${state.errorCount} errors in your JavaScript code!`,
     );
+  } else {
+    $('#modal-body-optional-info').empty();
   }
 };
 
