@@ -372,4 +372,4 @@ def challenge(request):
         'challenge': challenge,
     }
 
-    return render(request, 'pages/challenge.html', context)
+    return render(request, 'pages/code_editor.html', context)
