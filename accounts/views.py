@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 
+from userprogress.models import TotalCoins, TotalPoints
+
 
 def register(request):
     if request.method == 'POST':
@@ -29,6 +31,15 @@ def register(request):
                         username=username, password=password, email=email, first_name=first_name, last_name=last_name)
 
                     user.save()
+
+                    # add user to total points table
+                    user_total_points = TotalPoints(user=user)
+                    user_total_points.save()
+
+                    # add user to total coins table
+                    user_total_coins = TotalCoins(user=user)
+                    user_total_coins.save()
+
                     messages.success(
                         request, 'You are now registered and can log in')
                     return redirect('login')

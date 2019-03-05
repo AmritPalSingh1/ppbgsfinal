@@ -3,6 +3,31 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from userprogress.models import TotalPoints, TotalCoins
 
+def user_info(request):
+    # current user's total points
+    userPoints = TotalPoints.objects.get(user=request.user)
+
+    # list of all the users
+    allUsers = TotalPoints.objects.order_by('-points')
+
+    # current user's rank
+    rank = 1
+    for singleUser in allUsers:
+        if singleUser.user == request.user:
+            break
+        rank += 1
+
+    # current user's coins
+    userCoins = TotalCoins.objects.get(user=request.user)
+
+    user_data = {
+        'userPoints': userPoints,
+        'rank': rank,
+        'allUsers': allUsers,
+        'userCoins': userCoins
+    }
+
+    return user_data
 
 
 @login_required
@@ -11,6 +36,8 @@ def index(request):
 
 @login_required
 def topics(request):
+
+    user_data = user_info(request)
 
     # current user's total points
     userPoints = TotalPoints.objects.get(user=request.user)
@@ -39,10 +66,7 @@ def topics(request):
         'topic8': 'Functions and Events',
         'topic9': 'Arrays',
         'topic10': 'Objects',
-        'userPoints': userPoints,
-        'rank': rank,
-        'allUsers': allUsers,
-        'userCoins': userCoins
+        'user_data': user_data
     }
     return render(request, 'pages/topics.html', context)
 

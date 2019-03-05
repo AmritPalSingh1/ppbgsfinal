@@ -10,23 +10,23 @@
     >
       <tr class="border-bottom-white">
         <td width="70%" class="py-1 pl-1">Overall Points:</td>
-        <th width="30%" class="py-1 pl-1">{{ userPoints.points }}</th>
+        <th width="30%" class="py-1 pl-1">{{ user_data.userPoints.points }}</th>
       </tr>
       <tr class="border-bottom-white">
         <td width="70%" class="py-1 pl-1">Overall Rank:</td>
-        <th width="30%" class="py-1 pl-1">{{ rank }}</th>
+        <th width="30%" class="py-1 pl-1">{{ user_data.rank }}</th>
       </tr>
       <tr>
         <td width="70%" class="py-1 pl-1">Total Students:</td>
-        <th width="30%" class="py-1 pl-1">{{ allUsers.count }}</th>
+        <th width="30%" class="py-1 pl-1">{{ user_data.allUsers.count }}</th>
       </tr>
     </table>
   </div>
-  <div class="bg-light mt-4 pb-3">
+    <div class="bg-light mt-4 pb-3">
     <h3 class="subheader subheader-small pt-3 px-2">Coins</h3>
     <div class="border mx-2 py-2 bg-none text-center d-flex align-items-center justify-content-center">
       <i class="fas fa-coins fa-3x text-coin"></i>
-      <span class="pl-3 subheader subheader-small">{{ userCoins.coins }}</span>
+      <span class="pl-3 subheader subheader-small">{{ user_data.userCoins.coins }}</span>
     </div>
   </div>
   <h3 class="subheader subheader-small pt-4 px-2">Best Overall</h3>
@@ -39,37 +39,37 @@
     <tr class="border-bottom">
       <td width="15%" class="py-1 text-center">1</td>
       <td width="60%" class="py-1">
-        <a href="" class="text-dark">{{ allUsers.0.user.username }}</a>
+        <a href="" class="text-dark">{{ user_data.allUsers.0.user.username }}</a>
       </td>
-      <td width="25%" class="py-1 text-center">{{ allUsers.0.points }}</td>
+      <td width="25%" class="py-1 text-center">{{ user_data.allUsers.0.points }}</td>
     </tr>
     <tr class="border-bottom">
       <td width="15%" class="py-1 text-center">2</td>
       <td width="60%" class="py-1">
-        <a href="" class="text-dark">{{ allUsers.1.user.username }}</a>
+        <a href="" class="text-dark">{{ user_data.allUsers.1.user.username }}</a>
       </td>
-      <td width="25%" class="py-1 text-center">{{ allUsers.1.points }}</td>
+      <td width="25%" class="py-1 text-center">{{ user_data.allUsers.1.points }}</td>
     </tr>
     <tr class="border-bottom">
       <td width="15%" class="py-1 text-center">3</td>
       <td width="60%" class="py-1">
-        <a href="" class="text-dark">{{ allUsers.2.user.username }}</a>
+        <a href="" class="text-dark">{{ user_data.allUsers.2.user.username }}</a>
       </td>
-      <td width="25%" class="py-1 text-center">{{ allUsers.2.points }}</td>
+      <td width="25%" class="py-1 text-center">{{ user_data.allUsers.2.points }}</td>
     </tr>
     <tr class="border-bottom">
       <td width="15%" class="py-1 text-center">4</td>
       <td width="60%" class="py-1">
-        <a href="" class="text-dark">{{ allUsers.3.user.username }}</a>
+        <a href="" class="text-dark">{{ user_data.allUsers.3.user.username }}</a>
       </td>
-      <td width="25%" class="py-1 text-center">{{ allUsers.3.points }}</td>
+      <td width="25%" class="py-1 text-center">{{ user_data.allUsers.3.points }}</td>
     </tr>
     <tr class="border-bottom">
       <td width="15%" class="py-1 text-center">5</td>
       <td width="60%" class="py-1">
-        <a href="" class="text-dark">{{ allUsers.4.user.username }}</a>
+        <a href="" class="text-dark">{{ user_data.allUsers.4.user.username }}</a>
       </td>
-      <td width="25%" class="py-1 text-center">{{ allUsers.4.points }}</td>
+      <td width="25%" class="py-1 text-center">{{ user_data.allUsers.4.points }}</td>
     </tr>
   </table>
 
