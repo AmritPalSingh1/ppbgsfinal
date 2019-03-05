@@ -9,10 +9,7 @@ from challenges.models import Challenge
 
 from userprogress.models import TotalPoints, TotalCoins
 
-
-@login_required
-def topic(request, topic_name):
-
+def user_info(request):
     # current user's total points
     userPoints = TotalPoints.objects.get(user=request.user)
 
@@ -29,6 +26,21 @@ def topic(request, topic_name):
     # current user's coins
     userCoins = TotalCoins.objects.get(user=request.user)
 
+    user_data = {
+        'userPoints': userPoints,
+        'rank': rank,
+        'allUsers': allUsers,
+        'userCoins': userCoins
+    }
+
+    return user_data
+
+
+@login_required
+def topic(request, topic_name):
+
+    user_data = user_info(request)
+
     # get current topic otherwise 404 page
     topic = get_object_or_404(Topic, topicName=topic_name)
 
@@ -38,10 +50,7 @@ def topic(request, topic_name):
     context = {
         'topic': topic,
         'video': videos[0].key,
-        'userPoints': userPoints,
-        'rank': rank,
-        'allUsers': allUsers,
-        'userCoins': userCoins
+        'user_data': user_data
     }
 
     return render(request, 'pages/topic.html', context)
@@ -50,6 +59,7 @@ def topic(request, topic_name):
 @login_required
 def videos(request):
 
+    user_data = user_info(request)
     # current user's total points
     userPoints = TotalPoints.objects.get(user=request.user)
 
@@ -83,10 +93,7 @@ def videos(request):
         'topic': topic,
         'videos': videos,
         'key': key,
-        'userPoints': userPoints,
-        'rank': rank,
-        'allUsers': allUsers,
-        'userCoins': userCoins
+        'user_data': user_data
     }
 
     return render(request, 'pages/videos.html', context)
@@ -95,6 +102,7 @@ def videos(request):
 @login_required
 def notes(request):
 
+    user_data = user_info(request)
     # current user's total points
     userPoints = TotalPoints.objects.get(user=request.user)
 
@@ -128,10 +136,7 @@ def notes(request):
         'topic': topic,
         'video': videos[0].key,
         'pdf': pdf,
-        'userPoints': userPoints,
-        'rank': rank,
-        'allUsers': allUsers,
-        'userCoins': userCoins
+        'user_data': user_data
     }
     return render(request, 'pages/notes.html', context)
 
@@ -139,6 +144,7 @@ def notes(request):
 @login_required
 def quiz(request):
 
+    user_data = user_info(request)
     # current user's total points
     userPoints = TotalPoints.objects.get(user=request.user)
 
@@ -223,10 +229,7 @@ def quiz(request):
         'submitted_question': submitted_question,
         'video': videos[0].key,
         'user_answer': user_answer,
-        'userPoints': userPoints,
-        'rank': rank,
-        'allUsers': allUsers,
-        'userCoins': userCoins
+        'user_data': user_data
     }
 
     return render(request, 'pages/quiz.html', context)
@@ -235,6 +238,7 @@ def quiz(request):
 @login_required
 def questions(request):
 
+    user_data = user_info(request)
     # current user's total points
     userPoints = TotalPoints.objects.get(user=request.user)
 
@@ -272,10 +276,7 @@ def questions(request):
     context = {
         'topic': topic,
         'questions': questions,
-        'userPoints': userPoints,
-        'rank': rank,
-        'allUsers': allUsers,
-        'userCoins': userCoins
+        'user_data': user_data
     }
 
     return render(request, 'pages/questions.html', context)
@@ -284,6 +285,7 @@ def questions(request):
 @login_required
 def question(request):
 
+    user_data = user_info(request)
     # current user's total points
     userPoints = TotalPoints.objects.get(user=request.user)
 
@@ -326,10 +328,7 @@ def question(request):
         'topic': topic,
         'query': query,
         'comments': comments,
-        'userPoints': userPoints,
-        'rank': rank,
-        'allUsers': allUsers,
-        'userCoins': userCoins
+        'user_data': user_data
     }
 
     return render(request, 'pages/question.html', context)
@@ -347,9 +346,15 @@ def challenges(request):
 
 @login_required
 def challenge(request):
+
+    # data related to user: coins, points, rank
+    user_data = user_info(request)
+
+    # get current topic name
     if 'topic_name' in request.POST:
         topic_name = request.POST['topic_name']
 
+    # get current challenge id
     if 'ch_id' in request.POST:
         ch_id = request.POST['ch_id']
     else:
