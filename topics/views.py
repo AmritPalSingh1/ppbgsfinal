@@ -341,6 +341,11 @@ def leaderboards(request):
 
 
 @login_required
+def challenges(request):
+    return render(request, 'pages/challenges.html')
+
+
+@login_required
 def challenge(request):
     if 'topic_name' in request.POST:
         topic_name = request.POST['topic_name']
@@ -356,7 +361,7 @@ def challenge(request):
 
     # Current challenge
     challenge = Challenge.objects.get(topic=topic, id=ch_id)
-    print(challenge.mock_data.url)
+    print(challenge.difficulty)
 
     context = {
         'challenge': challenge,
