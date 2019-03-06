@@ -6,7 +6,7 @@ from topics.models import Topic
 
 class Challenge(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
-    mock_data = models.FileField(upload_to='mock_data/%Y/%m/%d/')
+    exercise = models.FileField(upload_to='exercises/%Y/%m/%d/', blank=True)
     EASY = 'easy'
     MEDIUM = 'medium'
     HARD = 'hard'
