@@ -35,8 +35,7 @@ const editors = {
 
 editors.js.on('change', () => runCode(editors));
 
-const urlParams = new URLSearchParams(window.location.search);
-fetch(`/static/mock_data/exercise${urlParams.get('task')}.yml`, {
+fetch($('#task-data').html(), {
   headers: {
     'Content-Type': 'text/plain',
   },
