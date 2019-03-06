@@ -1,5 +1,12 @@
 ---
 task: "Draw overlapping boxes on a HTML canvas"
+hint: |
+  To draw the red rectangle
+
+  <pre><code>
+  ctx.fillStyle = "red";
+  ctx.fillRect(100, 50, 100, 50);
+  </code></pre>
 html: |-
   <style>
     canvas {
@@ -55,3 +62,4 @@ test:
       message: Your code should use "ctx.fillRect" to draw rectangles
   hasNot: []
   maxLines: 20
+  errorThreshold: 3

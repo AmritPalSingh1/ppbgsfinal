@@ -1,10 +1,9 @@
 ---
 task: Display "Hello World!" to the console
+hint: The Javascript editor should contain 'console.log("Hello World!");'.
 html: |
   <h1>Hello World!</h1>
-  <p>Look at the JS code editor on the right. Between the brackets, type <code>"Hello World!"</code></p>
-  <p>To try out your code, click the Run button at the top of the screen</p>
-  <p>You can also use <code>Ctrl+Enter</code> instead of clicking Run.</p>
+  <p>Look at the JS code editor on the left. Between the brackets, type <code>"Hello World!"</code></p>
   <p>When you complete the task, click on the Submit button</p>
 js: console.log();
 secret: ''
@@ -28,3 +27,4 @@ test:
     message: 'Your code is missing: console.log("Hello World!")'
   hasNot: []
   maxLines: 1
+  errorThreshold: 2

@@ -1,0 +1,14 @@
+---
+task: ''
+hint: ''
+html: ''
+js: ''
+secret: ''
+test:
+  setup: ''
+  run: ''
+  cleanup: ''
+  has: []
+  hasNot: []
+  maxLines: 20
+  errorThreshold: 2
