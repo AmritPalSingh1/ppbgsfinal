@@ -1,12 +1,13 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.contrib.auth.decorators import login_required
+
+# Import required modals
 from .models import Topic, Video, Question, Pdf, Query, Comment
 from userprogress.models import UserAttemptedQuestion
 from django.contrib.auth.models import User
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.contrib.auth.decorators import login_required
 from challenges.models import Challenge
-
 from userprogress.models import TotalPoints, TotalCoins
 
 def user_info(request):
@@ -60,22 +61,7 @@ def topic(request, topic_name):
 def videos(request):
 
     user_data = user_info(request)
-    # current user's total points
-    userPoints = TotalPoints.objects.get(user=request.user)
-
-    # list of all the users
-    allUsers = TotalPoints.objects.order_by('-points')
-
-    # current user's rank
-    rank = 1
-    for singleUser in allUsers:
-        if singleUser.user == request.user:
-            break
-        rank += 1
-
-    # current user's coins
-    userCoins = TotalCoins.objects.get(user=request.user)
-
+    
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -103,22 +89,7 @@ def videos(request):
 def notes(request):
 
     user_data = user_info(request)
-    # current user's total points
-    userPoints = TotalPoints.objects.get(user=request.user)
-
-    # list of all the users
-    allUsers = TotalPoints.objects.order_by('-points')
-
-    # current user's rank
-    rank = 1
-    for singleUser in allUsers:
-        if singleUser.user == request.user:
-            break
-        rank += 1
-
-    # current user's coins
-    userCoins = TotalCoins.objects.get(user=request.user)
-
+    
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -145,22 +116,7 @@ def notes(request):
 def quiz(request):
 
     user_data = user_info(request)
-    # current user's total points
-    userPoints = TotalPoints.objects.get(user=request.user)
-
-    # list of all the users
-    allUsers = TotalPoints.objects.order_by('-points')
-
-    # current user's rank
-    rank = 1
-    for singleUser in allUsers:
-        if singleUser.user == request.user:
-            break
-        rank += 1
-
-    # current user's coins
-    userCoins = TotalCoins.objects.get(user=request.user)
-
+    
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -239,22 +195,7 @@ def quiz(request):
 def questions(request):
 
     user_data = user_info(request)
-    # current user's total points
-    userPoints = TotalPoints.objects.get(user=request.user)
-
-    # list of all the users
-    allUsers = TotalPoints.objects.order_by('-points')
-
-    # current user's rank
-    rank = 1
-    for singleUser in allUsers:
-        if singleUser.user == request.user:
-            break
-        rank += 1
-
-    # current user's coins
-    userCoins = TotalCoins.objects.get(user=request.user)
-
+    
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -286,21 +227,6 @@ def questions(request):
 def question(request):
 
     user_data = user_info(request)
-    # current user's total points
-    userPoints = TotalPoints.objects.get(user=request.user)
-
-    # list of all the users
-    allUsers = TotalPoints.objects.order_by('-points')
-
-    # current user's rank
-    rank = 1
-    for singleUser in allUsers:
-        if singleUser.user == request.user:
-            break
-        rank += 1
-
-    # current user's coins
-    userCoins = TotalCoins.objects.get(user=request.user)
 
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
@@ -341,7 +267,34 @@ def leaderboards(request):
 
 @login_required
 def challenges(request):
-    return render(request, 'pages/challenges.html')
+    user_data = user_info(request)
+
+    # retreive topic name from GET request
+    if 'topic_name' in request.GET:
+        topic_name = request.GET['topic_name']
+
+    # Fetch current topic
+    topic = get_object_or_404(Topic, topicName=topic_name)
+
+    # Fetch easy challenges
+    easy_challenges = Challenge.objects.filter(topic=topic, difficulty="easy")
+
+    # Fetch medium challenges
+    medium_challenges = Challenge.objects.filter(topic=topic, difficulty="medium")
+
+    # Fetch hard challenges
+    hard_challenges = Challenge.objects.filter(topic=topic, difficulty="hard")
+
+
+    context = {
+        'topic': topic,
+        'easy_challenges': easy_challenges,
+        'medium_challenges': medium_challenges,
+        'hard_challenges': hard_challenges,
+        'user_data': user_data,
+    }
+
+    return render(request, 'pages/challenges.html', context)
 
 
 @login_required

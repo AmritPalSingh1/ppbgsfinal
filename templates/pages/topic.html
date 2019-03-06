@@ -225,12 +225,7 @@
                       vehicula lectus ultricies eu. In convallis amet leo non
                       sapien iaculis efficitur consequat lorem ipsum.
                     </p>
-                    <form action="{% url 'challenge' %}" method="POST">
-                      {% csrf_token %}
-                      <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
-                      <input type="hidden" name="ch_id" value="1">
-                      <input type="submit" class="btn btn-outline-dark-pink" value="View Challenges">
-                    </form>
+                    <a href="{% url 'challenges' %}?topic_name={{ topic.topicName }}" class="btn btn-outline-dark-pink text-pink">View Challenges</a>
                   </div>
                 </div>
               </div>
@@ -247,12 +242,12 @@
   </div>
 </div>
 
-<section class="dark-background py-5 text-light">
+<section class="bg-blue py-5 text-light">
     <div class="container">
       <div class="row">
         <div class="col-md-9">
-          <h2>Discussion page</h2>
-          <p class="mb-0">
+          <h2 class="alt-font">Discussion page</h2>
+          <p class="mb-0 alt-font">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet
             laboriosam ali
           </p>
