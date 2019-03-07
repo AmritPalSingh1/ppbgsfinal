@@ -34,13 +34,7 @@ const editors = {
 
 editors.js.on('change', () => runCode(editors));
 
-const exerciseFile = '/static/mock_data/exercise_canvas.yml';
-
-fetch(exerciseFile, {
-  headers: {
-    'Content-Type': 'text/plain',
-  },
-})
+fetch('/static/mock_data/exercise_canvas.yml')
   .then(data => data.text())
   .then(jsyaml.load)
   .then(data => {
@@ -48,9 +42,11 @@ fetch(exerciseFile, {
 
     $('#submit-button').click(() => {
       const { errorCount } = getState();
+      const threshold = data.test.errorThreshold;
       const submitData = {
         errorCount,
-        usedHint: localStorage.getItem('usedHint'),
+        grade: Math.max((threshold - errorCount), 0) / threshold,
+        usedHint: localStorage.getItem('usedHint') === 'true',
       };
 
       console.log(submitData);
