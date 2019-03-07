@@ -58,8 +58,12 @@
   <script src="{% static 'codemirror/addon/edit/closetag.js' %}"></script>
   <script src="{% static 'codemirror/addon/edit/closebrackets.js' %}"></script>
 
+  <!-- transpile with loop protection -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"
+    integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
+
   <!-- javascript entry point -->
-  <script src="{% static 'js/code_editor/index.js' %}" type="module" defer></script>
+  <script src="{% static 'js/code_editor.js' %}" type="module" defer></script>
 {% endblock %}
 
 {% block content %}

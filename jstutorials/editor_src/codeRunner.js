@@ -1,5 +1,7 @@
-/* global $ */
+/* global $, Babel */
 /* eslint-disable no-console */
+
+import protect from 'loop-protect';
 
 let state = {
   // secret javascript code not shown to the user
@@ -29,6 +31,17 @@ export const fail = x => {
   );
   console.error(x);
 };
+
+Babel.registerPlugin('loopProtection', protect(200, line => {
+  const err = new Error(`Possible infinite loop on line ${line}`);
+  throw err;
+}));
+
+const transform = source => Babel.transform(source, {
+  plugins: ['loopProtection'],
+}).code;
+
+window.transform = transform;
 
 // write code to the iframe
 const writeToFrame = code => {
@@ -89,7 +102,7 @@ export const runCode = editors => {
   $('#console-output').empty();
 
   const htmlCode = editors.html.getValue();
-  const jsCode = escapeCode(editors.js.getValue());
+  const jsCode = escapeCode(transform(editors.js.getValue()));
   const scriptToRun = `
     {
       ${state.secret}
