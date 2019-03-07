@@ -3,12 +3,13 @@ from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.auth.decorators import login_required
 
-# Import required modals
+# Import required models
 from .models import Topic, Video, Question, Pdf, Query, Comment
-from userprogress.models import UserAttemptedQuestion
+from userprogress.models import UserAttemptedQuestion, UserWatchedVideo, UserReadNotes, TotalCoins, TotalPoints
 from django.contrib.auth.models import User
 from challenges.models import Challenge
 from userprogress.models import TotalPoints, TotalCoins
+
 
 def user_info(request):
     # current user's total points
@@ -36,6 +37,17 @@ def user_info(request):
 
     return user_data
 
+def update_user_points(request, points):
+    # update total points
+    total_points = TotalPoints.objects.get(user=request.user)
+    total_points.points = total_points.points + points
+    total_points.save()
+
+def update_user_coins(request, coins):
+    # update total coins
+    total_coins = TotalCoins.objects.get(user=request.user)
+    total_coins.coins = total_coins.coins + coins
+    total_coins.save()
 
 @login_required
 def topic(request, topic_name):
@@ -57,11 +69,10 @@ def topic(request, topic_name):
     return render(request, 'pages/topic.html', context)
 
 
+
 @login_required
 def videos(request):
 
-    user_data = user_info(request)
-    
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -72,8 +83,23 @@ def videos(request):
     # Fetch all the videos related to current topic
     videos = Video.objects.filter(topic=topic)
 
-    # key of the default video to display
+    # key of the current video to display
     key = request.GET['key']
+
+    #current video
+    current_video = Video.objects.get(topic=topic, key=key)
+
+    already_watched_video = UserWatchedVideo.objects.filter(video=current_video, user=request.user)
+
+    if not already_watched_video:
+        # add video to user watched history
+        watched_video = UserWatchedVideo(video=current_video, user=request.user)
+        watched_video.save()
+
+        update_user_points(request, 2)
+        update_user_coins(request, 4)
+
+    user_data = user_info(request)
 
     context = {
         'topic': topic,
@@ -88,8 +114,6 @@ def videos(request):
 @login_required
 def notes(request):
 
-    user_data = user_info(request)
-    
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -100,8 +124,19 @@ def notes(request):
     # Fetch current topic's pdf
     pdf = Pdf.objects.get(topic=topic)
 
+
+    already_read_notes = UserReadNotes.objects.filter(pdf=pdf, user=request.user)
+    if not already_read_notes:
+        read_notes = UserReadNotes(pdf=pdf, user=request.user)
+        read_notes.save()
+
+        update_user_points(request, 4)
+        update_user_coins(request, 8)
+
     # default video for videos page
     videos = Video.objects.filter(topic=topic)
+
+    user_data = user_info(request)
 
     context = {
         'topic': topic,
@@ -114,8 +149,6 @@ def notes(request):
 
 @login_required
 def quiz(request):
-
-    user_data = user_info(request)
     
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
@@ -149,6 +182,8 @@ def quiz(request):
                 else:
                     already_attempted_question[0].isCorrect = True
                     already_attempted_question[0].save()
+                    update_user_points(request, 1)
+                    update_user_coins(request, 2)
                     messages.success(request, 'Correct answer! +1 pts')
             else:
                 messages.error(request, 'Incorrect answer :(')
@@ -158,6 +193,8 @@ def quiz(request):
                 attemptedQuestion = UserAttemptedQuestion(
                     question=submitted_question, user=request.user, isCorrect=True)
                 attemptedQuestion.save()
+                update_user_points(request, 1)
+                update_user_coins(request, 2)
                 messages.success(request, 'Correct answer! +1 pts')
             else:
                 attemptedQuestion = UserAttemptedQuestion(
@@ -178,6 +215,8 @@ def quiz(request):
 
     # default video for videos page
     videos = Video.objects.filter(topic=topic)
+
+    user_data = user_info(request)
 
     context = {
         'topic': topic,
@@ -319,7 +358,7 @@ def challenge(request):
 
     # Current challenge
     challenge = Challenge.objects.get(topic=topic, id=ch_id)
-    print(challenge.difficulty)
+    print(challenge.exercise.url)
 
     context = {
         'challenge': challenge,
