@@ -99,7 +99,9 @@
     <!-- footer. shows task, number of errors, submit button, etc -->
     <div class="bg-light d-flex p-2" id="tail-content">
       <!-- show the task -->
-      <div class="align-self-center mr-auto"><strong>Task:</strong> <span id="task-placeholder">None</span></div>
+      <div class="align-self-center mr-auto">
+        <strong>Task:</strong> <span id="task-placeholder">None</span>
+      </div>
       <!-- Show coin and error count -->
       <div class="align-self-center text-secondary" id="coin-count-container"></div>
       <div class="align-self-center text-muted" id="error-count-container"></div>
@@ -117,28 +119,10 @@
         Submit
       </button>
     </div>
-    <!-- modal. confirm user before code sumbit -->
-    <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Confirm Submit</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Are you sure you want to submit your code?
-            <div id="modal-body-optional-info"></div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">No. Go back!</button>
-            <button type="button" class="btn btn-primary" id="submit-button">Yep! I&apos;m done coding!</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- confirm user before code sumbit -->
+    {% include 'partials/_modal.html' with title='Submit Code' body='Are you sure you want to submit your code? <div id="modal-body-optional-info"></div>' footer='<button type="button" class="btn btn-secondary" data-dismiss="modal">No. Go back!</button><button type="button" class="btn btn-primary" id="submit-button">Yep! I&apos;m done coding!</button>' %}
+    {% include 'partials/_modal.html' with title='Use Hint' body='Are you sure you want to use a hint?' %}
+    {% include 'partials/_modal.html' with title='Hint' body='<div id="hint-body">test</div>' %}
   </div>
-  <div id="task-data" hidden>{{ challenge.mock_data.url }}</div>
+  <div id="task-data" hidden>{{ challenge.exercise.url }}</div>
 {% endblock %}
