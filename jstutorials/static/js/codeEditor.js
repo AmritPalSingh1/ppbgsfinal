@@ -1,7 +1,11 @@
 /* global $, CodeMirror, jsyaml */
 
 import './splitHandler.js';
-import { runCode, setState } from './codeRunner.js';
+import { runCode, setState, getState } from './codeRunner.js';
+
+if (localStorage.getItem('usedHint') == null) {
+  localStorage.setItem('usedHint', false);
+}
 
 const sharedConfig = {
   autoCloseBrackets: true,
@@ -35,7 +39,9 @@ const editors = {
 
 editors.js.on('change', () => runCode(editors));
 
-fetch($('#task-data').html(), {
+const exerciseFile = '/static/mock_data/exercise_canvas.yml';
+
+fetch(exerciseFile, {
   headers: {
     'Content-Type': 'text/plain',
   },
@@ -45,12 +51,19 @@ fetch($('#task-data').html(), {
   .then(data => {
     setState({ secret: data.secret, codeChecks: data.test });
 
-    $('#submit-button').click(() => {});
+    $('#submit-button').click(() => {
+      const { errorCount } = getState();
+      const submitData = {
+        errorCount,
+        usedHint: localStorage.getItem('usedHint'),
+      };
 
-    // insert task to the page
+      console.log(submitData);
+    });
+
+    // insert data to the page
     $('#task-placeholder').html(data.task);
-
-    // insert code to the editors
+    $('#hint-body').html(data.hint);
     editors.html.setValue(data.html);
     editors.js.setValue(data.js);
 
@@ -60,10 +73,26 @@ fetch($('#task-data').html(), {
 fetch(`/static/mock_data/user.json`)
   .then(data => data.json())
   .then(data => {
-    $('#coin-count-container').html(
-      `<i class="fas fa-coins"></i> ${data.coins} Coins`,
-    );
+    const updateCoinCount = () => {
+      const usedHint = localStorage.getItem('usedHint') === 'true';
+      $('#coin-count-container').html(
+        `<i class="fas fa-coins"></i> ${data.coins - usedHint} Coins`,
+      );
+    };
+
+    updateCoinCount();
+
+    $('#use-hint-button').click(() => {
+      $('#hintModal').modal('show');
+      localStorage.setItem('usedHint', true);
+      updateCoinCount();
+    });
   });
+
+$('#ask-for-hint-button').click(() => {
+  const usedHint = localStorage.getItem('usedHint') === 'true';
+  $(usedHint ? '#hintModal' : '#hintPrompt').modal('show');
+});
 
 const updatePageHeight = () =>
   $('#code--page-container').height(

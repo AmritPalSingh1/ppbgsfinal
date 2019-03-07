@@ -12,6 +12,7 @@ let state = {
     has: [], // checks if code contains a pattern
     hasNot: [], // opposite of 'has'
     maxLines: 200, // max number of lines user should code
+    errorThreshold: 0, // (errorThreshold - errorCount) / errorThreshold = grade
   },
   errorCount: 0,
 };
@@ -138,6 +139,8 @@ export const runCode = editors => {
 export const setState = newState => {
   state = { ...state, ...newState };
 };
+
+export const getState = () => state;
 
 window.fail = fail;
 window.log = log;
