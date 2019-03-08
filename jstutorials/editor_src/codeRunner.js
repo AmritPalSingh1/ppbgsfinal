@@ -30,12 +30,10 @@ export const fail = x => {
   $('#console-output').append(
     `<code><i class="fas fa-times-circle"></i> ${x}</code><br />`,
   );
-  console.error(x);
 };
 
 Babel.registerPlugin('loopProtection', protect(200, line => {
-  const err = new Error(`Possible infinite loop on line ${line}`);
-  throw err;
+  throw new Error(`Possible infinite loop on line ${line}`);
 }));
 
 const transform = source => Babel.transform(source, {
@@ -103,14 +101,14 @@ export const runCode = editors => {
   $('#console-output').empty();
 
   const htmlCode = editors.html.getValue();
-  // eslint-disable-next-line consistent-return
   const jsCode = (() => {
+    let code = '';
     try {
-      return escapeCode(transform(editors.js.getValue()));
+      code = escapeCode(transform(editors.js.getValue()));
     } catch (e) {
-      window.e = e;
       fail(nl2br(e.message));
     }
+    return code;
   })();
 
   const scriptToRun = `

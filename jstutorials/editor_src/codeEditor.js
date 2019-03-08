@@ -31,10 +31,15 @@ const js = CodeMirror($('#js-editor')[0], {
   },
 });
 
-const run = () => runCode({ html, js });
+let timer;
 
-js.on('change', run);
-html.on('change', run);
+const handleChange = () => {
+  clearTimeout(timer);
+  timer = setTimeout(() => runCode({ html, js }), 1000);
+};
+
+js.on('change', handleChange);
+html.on('change', handleChange);
 
 const submitCode = () => {
   const { errorCount, codeChecks } = getState();
