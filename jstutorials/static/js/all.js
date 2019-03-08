@@ -50,3 +50,20 @@ function quizItem(radio) {
   document.getElementById(radio).style.backgroundColor = "#ff214f";
   document.getElementById(radio).style.color = "white";
 }
+
+// Points pop messages
+setTimeout(function() {
+  $("#pop-message").fadeOut("slow");
+}, 5000);
+
+$('.countup').each(function () {
+  $(this).prop('Counter',0).animate({
+      Counter: $(this).text()
+  }, {
+      duration: 1500,
+      easing: 'swing',
+      step: function (now) {
+          $(this).text(Math.ceil(now));
+      }
+  });
+});

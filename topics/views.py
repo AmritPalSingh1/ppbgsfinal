@@ -72,6 +72,9 @@ def topic(request, topic_name):
 
 @login_required
 def videos(request):
+    message_title = None
+    points_up = None
+    coins_up = None
 
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
@@ -99,13 +102,20 @@ def videos(request):
         update_user_points(request, 2)
         update_user_coins(request, 4)
 
+        message_title = "Great! you started to watch a new Video"
+        points_up = 2
+        coins_up = 4
+
     user_data = user_info(request)
 
     context = {
         'topic': topic,
         'videos': videos,
         'key': key,
-        'user_data': user_data
+        'user_data': user_data,
+        'message_title': message_title,
+        'points_up': points_up,
+        'coins_up': coins_up
     }
 
     return render(request, 'pages/videos.html', context)

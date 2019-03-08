@@ -22,8 +22,14 @@
 </head>
 
 <body>
+  
+  <!--Pop messages-->
+  {% include 'partials/_messages.html' %}
+
+  <!--Navbar-->
   {% include 'partials/_navbar.html' %}
 
+  <!--Main content-->
   {% block content %}
   {% endblock %}
 
