@@ -89,6 +89,10 @@ main {
   position: relative;
 }
 
+#console-output {
+  white-space: pre;
+}
+
 /*
   When a pane's height is too large, the page layout messes up.
   Create a wrapping div with `position: relative`,

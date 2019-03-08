@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 
 import protect from 'loop-protect';
+import { nl2br } from './utils.js';
 
 let state = {
   // secret javascript code not shown to the user
@@ -102,7 +103,16 @@ export const runCode = editors => {
   $('#console-output').empty();
 
   const htmlCode = editors.html.getValue();
-  const jsCode = escapeCode(transform(editors.js.getValue()));
+  // eslint-disable-next-line consistent-return
+  const jsCode = (() => {
+    try {
+      return escapeCode(transform(editors.js.getValue()));
+    } catch (e) {
+      window.e = e;
+      fail(nl2br(e.message));
+    }
+  })();
+
   const scriptToRun = `
     {
       ${state.secret}

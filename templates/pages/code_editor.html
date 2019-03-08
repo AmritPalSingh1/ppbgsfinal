@@ -127,7 +127,7 @@
     {% include 'partials/_modal.html' with id='submitModal' title='Submit Code' body='Are you sure you want to submit your code? <div id="modal-body-optional-info"></div>' footer='<button type="button" class="btn btn-secondary" data-dismiss="modal">No. Go back!</button><button type="button" class="btn btn-primary" id="submit-button">Yep! I&apos;m done coding!</button>' %}
     {% include 'partials/_modal.html' with id='hintPrompt' title='Use Hint' body='Are you sure you want to use a hint?' footer='<button type="button" class="btn btn-secondary" data-dismiss="modal">No thanks</button><button type="button" class="btn btn-primary" id="use-hint-button" data-dismiss="modal">Yes! Help!</button>' %}
     {% include 'partials/_modal.html' with id='hintModal' title='Hint' body='<div id="hint-body"></div>' %}
-    {% include 'partials/_modal.html' with id='noCoinsModal' title='No Coins' body='You need 20 coins to get a hint!' footer='<button type="button" class="btn btn-primary" data-dismiss="modal">Aw. Okay</button>' %}
+    {% include 'partials/_modal.html' with id='noCoinsModal' title='No Coins' body='You need <span id="hint-cost"></span> coins to get a hint!' footer='<button type="button" class="btn btn-primary" data-dismiss="modal">Aw. Okay</button>' %}
   </div>
   <div id="task-data" hidden>{{ challenge.exercise.url }}</div>
 {% endblock %}

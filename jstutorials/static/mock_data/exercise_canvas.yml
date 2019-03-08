@@ -1,7 +1,7 @@
 ---
 task: "Draw overlapping boxes on a HTML canvas"
 hint: |
-  To draw the red rectangle
+  To draw the red square
 
   <pre><code>
   ctx.fillStyle = "red";
@@ -21,7 +21,7 @@ js: |
   var canvas = document.getElementById("my-canvas");
   var ctx = canvas.getContext("2d");
 
-  // both rectangles are 100 pixels wide and 50 pixels tall
+  // the squares are 100 pixels in length
   // the blue rectangle's top left corner is located at (30, 30)
   // the red rectangle's top left corner is located at (100, 50)
 secret: |-
@@ -29,9 +29,9 @@ secret: |-
   const ctx = canvas.getContext("2d");
 
   ctx.fillStyle = "blue";
-  ctx.fillRect(30, 30, 100, 50);
+  ctx.fillRect(40, 10, 100, 100);
   ctx.fillStyle = "red";
-  ctx.fillRect(100, 50, 100, 50);
+  ctx.fillRect(100, 40, 100, 100);
 test:
   setup: |
     const userCanvas = document.querySelector('#my-canvas');

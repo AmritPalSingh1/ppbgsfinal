@@ -1,7 +1,7 @@
 /* global $ */
 
 const constants = {
-  hintCost: 10,
+  hintCost: 20,
   coins: $('#coin-count-container').html(),
 };
 
@@ -37,3 +37,5 @@ $('#ask-for-hint-button').click(() => {
     $('#hintPrompt').modal('show');
   }
 });
+
+$('#hint-cost').html(constants.hintCost);

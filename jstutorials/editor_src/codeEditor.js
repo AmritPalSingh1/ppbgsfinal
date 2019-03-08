@@ -36,12 +36,13 @@ const run = () => runCode({ html, js });
 js.on('change', run);
 html.on('change', run);
 
-const submit = errorThreshold => {
-  const { errorCount } = getState();
-
+const submitCode = () => {
+  const { errorCount, codeChecks } = getState();
+  const threshold = codeChecks.errorThreshold;
+  
   const submitData = {
     errorCount,
-    grade: Math.max(errorThreshold - errorCount, 0) / errorThreshold,
+    grade: Math.max(threshold - errorCount, 0) / threshold,
     usedHint: localStorage.getItem('usedHint') === 'true',
   };
 
@@ -54,7 +55,7 @@ fetch('/static/mock_data/exercise_canvas.yml')
   .then(data => {
     setState({ secret: data.secret, codeChecks: data.test });
 
-    $('#submit-button').click(submit);
+    $('#submit-button').click(submitCode);
 
     // insert data to the page
     $('#task-placeholder').html(data.task);
