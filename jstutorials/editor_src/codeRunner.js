@@ -1,5 +1,8 @@
-/* global $ */
+/* global $, Babel */
 /* eslint-disable no-console */
+
+import protect from 'loop-protect';
+import { nl2br } from './utils.js';
 
 let state = {
   // secret javascript code not shown to the user
@@ -12,6 +15,7 @@ let state = {
     has: [], // checks if code contains a pattern
     hasNot: [], // opposite of 'has'
     maxLines: 200, // max number of lines user should code
+    errorThreshold: 0, // (errorThreshold - errorCount) / errorThreshold = grade
   },
   errorCount: 0,
 };
@@ -26,8 +30,17 @@ export const fail = x => {
   $('#console-output').append(
     `<code><i class="fas fa-times-circle"></i> ${x}</code><br />`,
   );
-  console.error(x);
 };
+
+Babel.registerPlugin('loopProtection', protect(200, line => {
+  throw new Error(`Possible infinite loop on line ${line}`);
+}));
+
+const transform = source => Babel.transform(source, {
+  plugins: ['loopProtection'],
+}).code;
+
+window.transform = transform;
 
 // write code to the iframe
 const writeToFrame = code => {
@@ -88,7 +101,16 @@ export const runCode = editors => {
   $('#console-output').empty();
 
   const htmlCode = editors.html.getValue();
-  const jsCode = escapeCode(editors.js.getValue());
+  const jsCode = (() => {
+    let code = '';
+    try {
+      code = escapeCode(transform(editors.js.getValue()));
+    } catch (e) {
+      fail(nl2br(e.message));
+    }
+    return code;
+  })();
+
   const scriptToRun = `
     {
       ${state.secret}
@@ -138,6 +160,8 @@ export const runCode = editors => {
 export const setState = newState => {
   state = { ...state, ...newState };
 };
+
+export const getState = () => state;
 
 window.fail = fail;
 window.log = log;

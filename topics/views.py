@@ -368,10 +368,10 @@ def challenge(request):
 
     # Current challenge
     challenge = Challenge.objects.get(topic=topic, id=ch_id)
-    print(challenge.exercise.url)
 
     context = {
         'challenge': challenge,
+        'user_data': user_data,
     }
 
     return render(request, 'pages/code_editor.html', context)

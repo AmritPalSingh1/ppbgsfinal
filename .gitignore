@@ -9,3 +9,4 @@ venv
 /static
 .vscode
 node_modules
+jstutorials/static/js/code_editor.js
