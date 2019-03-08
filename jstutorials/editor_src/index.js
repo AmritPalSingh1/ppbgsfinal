@@ -1,5 +1,7 @@
 /* global $ */
 
+// I am so sorry that you're reading my code
+
 import './coinsHandler.js';
 import './splitHandler.js';
 import './codeEditor.js';
