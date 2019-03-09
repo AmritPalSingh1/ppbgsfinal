@@ -40,21 +40,7 @@
                   Question {{ questions.number }} of
                   {{ questions.paginator.num_pages }}
                 </p>
-                {% if messages %}
-                    {% for message in messages %}
-                        {% if '/' == request.path %}
-                            <div class="pt-3"></div>
-                        {% endif %}
-                        <div id="quizMessage" class="container">
-                            <div class="alert alert-{{ message.tags }} alert-dismissible text-center" roll="alert">
-                                <button class="close" type="button" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-                                <strong>
-                                    {{ message }}
-                                </strong>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% endif %}
+                
                 <h5>
                   {{ question.question }}
                 </h5>

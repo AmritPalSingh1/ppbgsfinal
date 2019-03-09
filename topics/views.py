@@ -72,6 +72,8 @@ def topic(request, topic_name):
 
 @login_required
 def videos(request):
+
+    # Initializing points update message
     message_title = None
     points_up = None
     coins_up = None
@@ -102,7 +104,7 @@ def videos(request):
         update_user_points(request, 2)
         update_user_coins(request, 4)
 
-        message_title = "Great! you started to watch a new Video"
+        message_title = "Explored new Video!"
         points_up = 2
         coins_up = 4
 
@@ -123,6 +125,10 @@ def videos(request):
 
 @login_required
 def notes(request):
+    # Initializing points update message
+    message_title = None
+    points_up = None
+    coins_up = None
 
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
@@ -143,6 +149,10 @@ def notes(request):
         update_user_points(request, 4)
         update_user_coins(request, 8)
 
+        message_title = "Started to read notes!"
+        points_up = 4
+        coins_up = 8
+
     # default video for videos page
     videos = Video.objects.filter(topic=topic)
 
@@ -152,14 +162,22 @@ def notes(request):
         'topic': topic,
         'video': videos[0].key,
         'pdf': pdf,
-        'user_data': user_data
+        'user_data': user_data,
+        'message_title': message_title,
+        'points_up': points_up,
+        'coins_up': coins_up
     }
     return render(request, 'pages/notes.html', context)
 
 
 @login_required
 def quiz(request):
-    
+    # Initializing points update message
+    message_title = None
+    points_up = None
+    coins_up = None
+    danger_message = None
+
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -188,15 +206,17 @@ def quiz(request):
         if already_attempted_question:
             if (user_answer == submitted_question.answer):
                 if already_attempted_question[0].isCorrect:
-                    messages.success(request, 'Correct answer! +0 pts')
+                    message_title = "Correct Answer!"
                 else:
                     already_attempted_question[0].isCorrect = True
                     already_attempted_question[0].save()
                     update_user_points(request, 1)
                     update_user_coins(request, 2)
-                    messages.success(request, 'Correct answer! +1 pts')
+                    message_title = "Correct answer!"
+                    points_up = 1
+                    coins_up = 2
             else:
-                messages.error(request, 'Incorrect answer :(')
+                danger_message = "Incorrect answer!"
         # when user is attempting the question for first time
         else:
             if (user_answer == submitted_question.answer):
@@ -205,12 +225,15 @@ def quiz(request):
                 attemptedQuestion.save()
                 update_user_points(request, 1)
                 update_user_coins(request, 2)
-                messages.success(request, 'Correct answer! +1 pts')
+                message_title = "Correct answer!"
+                points_up = 1
+                coins_up = 2
             else:
                 attemptedQuestion = UserAttemptedQuestion(
                     question=submitted_question, user=request.user, isCorrect=False)
                 attemptedQuestion.save()
                 messages.error(request, 'Incorrect answer :(')
+                danger_message = "Incorrect answer!"
 
     # Fetch current topic
     topic = get_object_or_404(Topic, topicName=topic_name)
@@ -234,7 +257,11 @@ def quiz(request):
         'submitted_question': submitted_question,
         'video': videos[0].key,
         'user_answer': user_answer,
-        'user_data': user_data
+        'user_data': user_data,
+        'message_title': message_title,
+        'points_up': points_up,
+        'coins_up': coins_up,
+        'danger_message': danger_message
     }
 
     return render(request, 'pages/quiz.html', context)
