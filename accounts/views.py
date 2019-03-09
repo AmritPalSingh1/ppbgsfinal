@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 
-from userprogress.models import TotalCoins, TotalPoints
+from userprogress.models import TotalCoins, TotalPoints, UserLastLocation
+from topics.models import Topic
 
 
 def register(request):
@@ -39,6 +40,12 @@ def register(request):
                     # add user to total coins table
                     user_total_coins = TotalCoins(user=user)
                     user_total_coins.save()
+
+                    # set up user's last visited location
+                    first_topic = Topic.objects.get(topicName="Intro to Html")
+
+                    user_last_location = UserLastLocation(user=user, topic=first_topic, location="videos")
+                    user_last_location.save()
 
                     messages.success(
                         request, 'You are now registered and can log in')

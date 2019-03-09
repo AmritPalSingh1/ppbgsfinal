@@ -5,7 +5,7 @@
 <section id="home-heading" class="py-5">
     <div class="container py-5">
       <p class="alt-font text-dark-gray mt-5">
-        JavaScript Expressions (Challenges)
+        {{ user_last_location.topic.topicName }} <span class="text-capitalize">({{ user_last_location.location }})</span> 
       </p>
       <h1 class="alt-font text-extra-dark-gray font-weight-700">
         Continue where you left off
@@ -13,9 +13,21 @@
       <span
         class="separator-line-horrizontal-medium-light2 bg-deep-pink display-table my-3 width-100px"
       ></span>
-      <button class="btn btn-blue mt-4 mb-5">
-        Continue <i class="fas fa-arrow-right text-small text-light"></i>
-      </button>
+      {% if user_last_location.location == 'notes' %}
+        <form action="{% url 'notes' %}">
+      {% elif user_last_location.location == 'quiz' %}
+        <form action="{% url 'quiz' %}">
+      {% elif user_last_location.location == 'videos' %}
+        <form action="{% url 'videos' %}">
+            <input type="hidden" name="key" value="{{ video }}">
+      {% elif user_last_location.location == 'challenges' %}
+        <form action="{% url 'challenges' %}">
+      {% endif %}
+          <input type="hidden" value="{{ user_last_location.topic.topicName }}" name="topic_name">
+          <button type="submit" class="btn btn-blue mt-4 mb-5">
+            Continue <i class="fas fa-arrow-right text-small text-light"></i>        
+          </button>
+        </form>
     </div>
   </section>
 

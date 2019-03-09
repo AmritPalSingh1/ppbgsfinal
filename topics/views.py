@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 # Import required models
 from .models import Topic, Video, Question, Pdf, Query, Comment
-from userprogress.models import UserAttemptedQuestion, UserWatchedVideo, UserReadNotes, TotalCoins, TotalPoints
+from userprogress.models import UserAttemptedQuestion, UserWatchedVideo, UserReadNotes, TotalCoins, TotalPoints, UserLastLocation
 from django.contrib.auth.models import User
 from challenges.models import Challenge
 from userprogress.models import TotalPoints, TotalCoins
@@ -48,6 +48,14 @@ def update_user_coins(request, coins):
     total_coins = TotalCoins.objects.get(user=request.user)
     total_coins.coins = total_coins.coins + coins
     total_coins.save()
+
+def update_user_last_location(request, location, topic):       
+    # update user's last visited location
+    user_last_location = UserLastLocation.objects.get(user=request.user)
+    user_last_location.topic = topic
+    user_last_location.location = location
+    user_last_location.save()
+
 
 @login_required
 def topic(request, topic_name):
@@ -110,6 +118,8 @@ def videos(request):
 
     user_data = user_info(request)
 
+    update_user_last_location(request, 'videos', topic)
+
     context = {
         'topic': topic,
         'videos': videos,
@@ -157,6 +167,8 @@ def notes(request):
     videos = Video.objects.filter(topic=topic)
 
     user_data = user_info(request)
+
+    update_user_last_location(request, 'notes', topic)
 
     context = {
         'topic': topic,
@@ -250,6 +262,8 @@ def quiz(request):
     videos = Video.objects.filter(topic=topic)
 
     user_data = user_info(request)
+
+    update_user_last_location(request, 'quiz', topic)
 
     context = {
         'topic': topic,
@@ -361,6 +375,7 @@ def challenges(request):
     # Fetch hard challenges
     hard_challenges = Challenge.objects.filter(topic=topic, difficulty="hard")
 
+    update_user_last_location(request, 'challenges', topic)
 
     context = {
         'topic': topic,

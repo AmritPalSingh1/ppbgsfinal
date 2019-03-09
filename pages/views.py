@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from userprogress.models import TotalPoints, TotalCoins
+from userprogress.models import TotalPoints, TotalCoins, UserLastLocation
+from topics.models import Video
 
 def user_info(request):
     # current user's total points
@@ -32,7 +33,16 @@ def user_info(request):
 
 @login_required
 def index(request):
-    return render(request, 'pages/index.html')
+    user_last_location = UserLastLocation.objects.get(user=request.user)
+
+    # default video for videos page link
+    videos = Video.objects.filter(topic=user_last_location.topic)
+
+    context = {
+        'user_last_location': user_last_location,
+        'video': videos[0].key,
+    }
+    return render(request, 'pages/index.html', context)
 
 @login_required
 def topics(request):
