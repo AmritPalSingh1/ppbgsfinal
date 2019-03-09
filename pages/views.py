@@ -2,7 +2,23 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from userprogress.models import TotalPoints, TotalCoins, UserLastLocation
-from topics.models import Video
+from topics.models import Video, Topic
+
+def get_all_topics():
+    all_topics = {
+        'topic1': 'Intro to Html',
+        'topic2': 'JavaScript Expressions',
+        'topic3': 'DOM Manipulation',
+        'topic4': 'JavaScript Conditionals',
+        'topic5': 'Loops',
+        'topic6': 'Drawing With Canvas',
+        'topic7': 'Functions',
+        'topic8': 'Functions and Events',
+        'topic9': 'Arrays',
+        'topic10': 'Objects',
+    }
+
+    return all_topics
 
 def user_info(request):
     # current user's total points
@@ -38,9 +54,13 @@ def index(request):
     # default video for videos page link
     videos = Video.objects.filter(topic=user_last_location.topic)
 
+
+    all_topics = get_all_topics()
+
     context = {
         'user_last_location': user_last_location,
         'video': videos[0].key,
+        'all_topics': all_topics
     }
     return render(request, 'pages/index.html', context)
 
@@ -65,17 +85,10 @@ def topics(request):
     # current user's coins
     userCoins = TotalCoins.objects.get(user=request.user)
 
+    all_topics = get_all_topics()
+
     context = {
-        'topic1': 'Intro to Html',
-        'topic2': 'JavaScript Expressions',
-        'topic3': 'DOM Manipulation',
-        'topic4': 'JavaScript Conditionals',
-        'topic5': 'Loops',
-        'topic6': 'Drawing With Canvas',
-        'topic7': 'Functions',
-        'topic8': 'Functions and Events',
-        'topic9': 'Arrays',
-        'topic10': 'Objects',
+        'all_topics': all_topics,
         'user_data': user_data
     }
     return render(request, 'pages/topics.html', context)
