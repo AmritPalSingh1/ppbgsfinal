@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from userprogress.models import TotalPoints, TotalCoins, UserLastLocation
 from topics.models import Video, Topic
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 def get_all_topics():
     all_topics = {
@@ -92,3 +93,28 @@ def topics(request):
         'user_data': user_data
     }
     return render(request, 'pages/topics.html', context)
+
+
+@login_required
+def leaderboards(request):
+
+    # all users total points
+    all_total_points = TotalPoints.objects.order_by('-points')
+
+    entries = 10
+
+    if 'entries' in request.GET:
+        entries = request.GET['entries']
+        username = request.GET['username']
+        #all_total_points = all_total_points.filter(user__icontains=username)
+
+    # allow only one question to display on each page
+    paginator = Paginator(all_total_points, entries)
+    page = request.GET.get('page')
+    paged_all_total_points = paginator.get_page(page)
+
+    context = {
+        'all_total_points': paged_all_total_points,
+    }
+
+    return render(request, 'pages/leaderboards.html', context)

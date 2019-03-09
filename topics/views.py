@@ -350,9 +350,6 @@ def question(request):
     return render(request, 'pages/question.html', context)
 
 
-@login_required
-def leaderboards(request):
-    return render(request, 'pages/leaderboards.html')
 
 
 @login_required
