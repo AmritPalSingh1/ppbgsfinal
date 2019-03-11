@@ -66,6 +66,45 @@
   <script src="{% static 'js/code_editor.js' %}" type="module" defer></script>
 {% endblock %}
 
+{% block navbar %}
+  <div id="navbar-component">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+      <div class="container alt-font nav-text">
+        <a class="navbar-brand " href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="" height="50"
+            width="50" />
+        </a>
+        <strong>Task:</strong> <span id="task-placeholder">None</span>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'topics' %}">Topics</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Rankings</a>
+              <div class="dropdown-menu">
+                <a href="{% url 'leaderboards' %}" class="dropdown-item">Leaderboards</a>
+                <a href="#" class="dropdown-item">Table</a>
+              </div>
+            </li>
+  
+            <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+            <li class="nav-item">
+              <a class="nav-link d-block d-sm-none"
+                href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+{% endblock %}
+
 {% block content %}
   <div id="code--page-container">
     <main>
@@ -100,19 +139,15 @@
         </div>
       </div>
     </main>
-    <!-- footer. shows task, number of errors, submit button, etc -->
-    <div class="bg-light d-flex p-2" id="tail-content">
-      <!-- show the task -->
-      <div class="align-self-center mr-auto">
-        <strong>Task:</strong> <span id="task-placeholder">None</span>
-      </div>
+    <!-- footer. shows number of errors, submit button, etc -->
+    <div class="bg-light d-flex justify-content-end p-2" id="tail-content">
       <!-- Show coin and error count -->
       <div class="align-self-center text-secondary" id="coin-count-container">{{ user_data.userCoins.coins }}</div>
       <div class="align-self-center text-muted" id="error-count-container"></div>
       <!-- hint, toggle console, and submit buttons -->
       <button class="btn btn-outline-secondary" id="ask-for-hint-button" data-toggle="modal">
         <i class="fas fa-lightbulb"></i>
-        Use Hint
+        Buy Hint
       </button>
       <button class="btn btn-outline-secondary" id="toggle-console-button">
         <i class="fas fa-eye"></i>
@@ -133,4 +168,5 @@
     {% include 'partials/_modal.html' with id='noCoinsModal' title='No Coins' body='You need <span id="hint-cost"></span> coins to get a hint!' footer='<button type="button" class="btn btn-primary" data-dismiss="modal">Aw. Okay</button>' %}
   </div>
   <div id="task-data" hidden>{{ challenge.exercise.url }}</div>
+  <div id="task-id" hidden>{{ challenge.id }}</div>
 {% endblock %}
