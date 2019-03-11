@@ -11,4 +11,5 @@ urlpatterns = [
     path('topic/question', views.question, name='question'),
     path('topic/challenge', views.challenge, name='challenge'),
     path('topic/challenges', views.challenges, name='challenges'),
+    path('topic/result', views.result, name='result'),
 ]

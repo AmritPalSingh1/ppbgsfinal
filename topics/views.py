@@ -414,3 +414,6 @@ def challenge(request):
     }
 
     return render(request, 'pages/code_editor.html', context)
+
+def result(request):
+    return render(request, 'pages/result.html')
