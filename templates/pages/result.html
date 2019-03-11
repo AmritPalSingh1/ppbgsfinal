@@ -1,0 +1,240 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-2 px-1">
+        <div class="card border-green px-3 py-2 shadow">
+          <span class="text-small alt-font"
+            ><i class="fas fa-trophy"></i> Overall Rank</span
+          >
+          <div class="alt-font text-center text-dark-gray h2">
+            <span class="countup">23</span>
+          </div>
+          <div class="alt-font subheader subheader-small font-weight-light">
+            <span class="text-green"><i class="fas fa-caret-up"></i> 3</span>
+            (Old rank: 26)
+          </div>
+        </div>
+      </div>
+      <div class="col-2 px-1">
+        <div class="card border-green px-3 py-2 shadow">
+          <span class="text-small alt-font"
+            ><i class="fas fa-star"></i> Total Points</span
+          >
+          <div class="alt-font text-center text-dark-gray h2">
+            <span class="countup">54</span>
+          </div>
+          <div class="alt-font subheader subheader-small font-weight-light">
+            <span class="text-green"><i class="fas fa-caret-up"></i> 7</span>
+            (Previously 47)
+          </div>
+        </div>
+      </div>
+      <div class="col-2 px-1">
+        <div class="card border-danger px-3 py-2 shadow">
+          <span class="text-small alt-font"
+            ><i class="fas fa-coins"></i> Coins Remaining</span
+          >
+          <div class="alt-font text-center text-dark-gray h2">
+            <span class="countup">30</span>
+          </div>
+          <div class="alt-font subheader subheader-small font-weight-light">
+            <span class="text-danger"
+              ><i class="fas fa-caret-down"></i> 25</span
+            >
+            (Previously 55)
+          </div>
+        </div>
+      </div>
+      <div class="col-2 px-1">
+        <div class="card border-blue px-3 py-2 shadow">
+          <span class="text-small alt-font"
+            ><i class="fas fa-user"></i> Total Users</span
+          >
+          <div class="alt-font text-center text-dark-gray h2">
+            <span class="countup">26</span>
+          </div>
+          <div class="alt-font subheader subheader-small font-weight-light">
+            Your Rank: 10
+          </div>
+        </div>
+      </div>
+      <div class="col-2 px-1">
+        <div class="card border-danger px-3 py-2 shadow">
+          <span class="text-small alt-font"
+            ><i class="fas fa-star"></i> Average Points</span
+          >
+          <div class="alt-font text-center text-dark-gray h2">
+            <span class="countup">8</span>
+          </div>
+          <div class="alt-font subheader subheader-small font-weight-light">
+            <span class="text-danger"
+              ><i class="fas fa-caret-down"></i> 7%</span
+            >
+            Below Average
+          </div>
+        </div>
+      </div>
+      <div class="col-2 px-1">
+        <div class="card border-green px-3 py-2 shadow">
+          <span class="text-small alt-font"
+            ><i class="fas fa-clock"></i> Average Time Taken</span
+          >
+          <div class="alt-font text-center text-dark-gray h2">
+            <span class="countup">2</span> min
+          </div>
+          <div class="alt-font subheader subheader-small font-weight-light">
+            <span class="text-green"
+              ><i class="fas fa-caret-up"></i> 17%</span
+            >
+            Above Average
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row py-4">
+      <div class="col-8">
+        <div
+          class="bg-lightblue rounded text-dark-gray px-2 py-4 alt-font text-uppercase d-flex justify-content-around align-items-center"
+        >
+          <div class="text-center subheader font-weight-light">
+            Kathy Smith
+            <div class=" py-2 text-capitalize text-small">
+              <div class="text-green">Score: 7</div>
+              <div class="text-danger">Time taken: 102 sec</div>
+            </div>
+          </div>
+          <div class="display-4 text-center">
+            <span class="text-green"> 7 </span>:
+            <span class="text-danger"> 4</span>
+          </div>
+          <div class="text-center subheader font-weight-light">
+            John Doe
+            <div class=" py-2 text-capitalize text-small">
+              <div class="text-danger">Score: 4</div>
+              <div class="text-green">Time taken: 90 sec</div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-lightblue mt-3">
+          <div class="bg-dark text-light px-3 py-1 alt-font d-flex">
+            <div class="mr-auto">Level 4</div>
+            <div class="">Challenges Remaining: 3/5</div>
+          </div>
+          <div class="px-2 py-3">
+            <div class="progress bg-dark subheader" style="height: 5rem;">
+              <div
+                class="progress-bar bg-deep-pink content-relative"
+                style="width: 26.66%;"
+              >
+                Level 3
+                <div class="background" style="width: 100%;"></div>
+              </div>
+              <div
+                class="progress-bar bg-blue content-relative"
+                style="width: 33.33%"
+              >
+                Level 4
+                <div class="background" style="width: 40%;"></div>
+              </div>
+              <div class="progress-bar bg-green" style="width: 40%">
+                Level 5
+              </div>
+            </div>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-3"></div>
+                <div class="col-4 px-0">4 pts</div>
+                <div class="col px-0">9 pts</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 border px-0">
+        <div
+          class="alt-font text-center subheader pb-3 border-bottom-pink pt-3 bg-lightblue"
+        >
+          Top Performers
+        </div>
+
+        <table
+          class="table table-striped-lightblue table-borderless subheader subheader-small text-dark-gray mt-3"
+        >
+          <tr>
+            <td class="px-3">
+              <a href="" class="text-dark">John Doe</a>
+              <span class="mx-2 font-weight-light"
+                >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
+                3)</span
+              >
+              <div class="font-weight-light pt-1">
+                <span class="mx-2">Score: 7</span>
+                <span class="mx-2">Time taken: 2min</span>
+                <span class="mx-2">Level: 5</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="px-3">
+              <a href="" class="text-dark">John Doe</a>
+              <span class="mx-2 font-weight-light"
+                >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
+                3)</span
+              >
+              <div class="font-weight-light pt-1">
+                <span class="mx-2">Score: 7</span>
+                <span class="mx-2">Time taken: 2min</span>
+                <span class="mx-2">Level: 5</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="px-3">
+              <a href="" class="text-dark">John Doe</a>
+              <span class="mx-2 font-weight-light"
+                >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
+                3)</span
+              >
+              <div class="font-weight-light pt-1">
+                <span class="mx-2">Score: 7</span>
+                <span class="mx-2">Time taken: 2min</span>
+                <span class="mx-2">Level: 5</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="px-3">
+              <a href="" class="text-dark">John Doe</a>
+              <span class="mx-2 font-weight-light"
+                >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
+                3)</span
+              >
+              <div class="font-weight-light pt-1">
+                <span class="mx-2">Score: 7</span>
+                <span class="mx-2">Time taken: 2min</span>
+                <span class="mx-2">Level: 5</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="px-3">
+              <a href="" class="text-dark">John Doe</a>
+              <span class="mx-2 font-weight-light"
+                >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
+                3)</span
+              >
+              <div class="font-weight-light pt-1">
+                <span class="mx-2">Score: 7</span>
+                <span class="mx-2">Time taken: 2min</span>
+                <span class="mx-2">Level: 5</span>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
