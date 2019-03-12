@@ -1,12 +1,5 @@
 /* global $, CodeMirror */
 
-import jsyaml from 'js-yaml';
-import {
-  runCode,
-  setState as setRunnerState,
-  getState as getRunnerState,
-} from './codeRunner.js';
-
 const sharedConfig = {
   autoCloseBrackets: true,
   extraKeys: {
@@ -21,14 +14,14 @@ const sharedConfig = {
 };
 
 // create codemirror instances.
-const html = CodeMirror($('#html-editor')[0], {
+export const html = CodeMirror($('#html-editor')[0], {
   ...sharedConfig,
   mode: 'htmlmixed',
   autoCloseTags: true,
   lint: true,
 });
 
-const js = CodeMirror($('#js-editor')[0], {
+export const js = CodeMirror($('#js-editor')[0], {
   ...sharedConfig,
   mode: 'javascript',
   lint: {
@@ -36,6 +29,7 @@ const js = CodeMirror($('#js-editor')[0], {
   },
 });
 
+/*
 let timer;
 
 const handleChange = () => {
@@ -73,3 +67,4 @@ fetch('/static/mock_data/exercise_canvas.yml')
 
     runCode({ html, js });
   });
+  */

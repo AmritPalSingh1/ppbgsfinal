@@ -2,23 +2,9 @@
 /* eslint-disable no-console */
 
 import protect from 'loop-protect';
+import store from './store.js';
+import { incError, resetError } from './actions.js';
 import { nl2br, escapeCode } from './utils.js';
-
-let state = {
-  // secret javascript code not shown to the user
-  secret: '',
-  // a testing 'suite' ran against user code
-  codeChecks: {
-    setup: '', // run before user code
-    run: '', // run after user code
-    cleanup: '', // runs last
-    has: [], // checks if code contains a pattern
-    hasNot: [], // opposite of 'has'
-    maxLines: 200, // max number of lines user should code
-    errorThreshold: 0, // (errorThreshold - errorCount) / errorThreshold = grade
-  },
-  errorCount: 0,
-};
 
 export const log = x => {
   $('#console-output').append(`<samp>${x}</samp><br />`);
@@ -26,7 +12,7 @@ export const log = x => {
 };
 
 export const fail = x => {
-  state.errorCount++;
+  store.dispatch(incError());
   $('#console-output').append(
     `<code><i class="fas fa-times-circle"></i> ${x}</code><br />`,
   );
@@ -54,17 +40,20 @@ const writeToFrame = code => {
 };
 
 const testCode = jsCode => {
+  const { exercise, errorCount } = store.getState();
+  const { test } = exercise;
+
   // test if code exceeds maxLines
-  if (state.codeChecks.maxLines < jsCode.trim().split('\n').length) {
+  if (test.maxLines < jsCode.trim().split('\n').length) {
     fail(
       `You must complete this exercise with ${
-        state.codeChecks.maxLines
+        test.maxLines
       } lines of JavaScript or less.`,
     );
   }
 
   // test if code contains certain strings
-  state.codeChecks.has.forEach(piece => {
+  test.has.forEach(piece => {
     const re = new RegExp(piece.regex);
 
     if (!re.test(jsCode)) {
@@ -73,7 +62,7 @@ const testCode = jsCode => {
   });
 
   // test if code does not contain certain strings
-  state.codeChecks.hasNot.forEach(piece => {
+  test.hasNot.forEach(piece => {
     const re = new RegExp(piece.regex);
 
     if (re.test(jsCode)) {
@@ -81,7 +70,7 @@ const testCode = jsCode => {
     }
   });
 
-  if (state.errorCount === 0) {
+  if (errorCount === 0) {
     log(
       `<span class="text-success">
         <i class="fas fa-check-circle"></i> Yay! All tests passed!
@@ -92,7 +81,10 @@ const testCode = jsCode => {
 
 // run the user's code against some tests
 export const runCode = editors => {
-  state.errorCount = 0;
+  store.dispatch(resetError());
+
+  const { exercise, errorCount } = store.getState();
+  const { secret, test } = exercise;
 
   $('#console-output').empty();
 
@@ -109,10 +101,10 @@ export const runCode = editors => {
 
   const scriptToRun = `
     {
-      ${state.secret}
+      ${secret}
     }
     {
-      ${state.codeChecks.setup}
+      ${test.setup}
       {
         try {
           eval('${jsCode}');
@@ -120,8 +112,8 @@ export const runCode = editors => {
           fail(e);
         }
       }
-      ${state.codeChecks.run}
-      ${state.codeChecks.cleanup}
+      ${test.run}
+      ${test.cleanup}
     }`;
 
   writeToFrame(`
@@ -138,26 +130,20 @@ export const runCode = editors => {
 
   // show error count on the footer
   $('#error-count-container').html(
-    `<span class="${state.errorCount ? 'text-danger' : ''}">
-      <i class="fas fa-times-circle"></i> ${state.errorCount} Errors
+    `<span class="${errorCount ? 'text-danger' : ''}">
+      <i class="fas fa-times-circle"></i> ${errorCount} Errors
     </span>`,
   );
 
   // warn user about errors in modal
-  if (state.errorCount) {
+  if (errorCount) {
     $('#modal-body-optional-info').html(
-      `You currently have ${state.errorCount} errors in your JavaScript code!`,
+      `You currently have ${errorCount} errors in your JavaScript code!`,
     );
   } else {
     $('#modal-body-optional-info').empty();
   }
 };
-
-export const setState = newState => {
-  state = { ...state, ...newState };
-};
-
-export const getState = () => state;
 
 window.fail = fail;
 window.log = log;

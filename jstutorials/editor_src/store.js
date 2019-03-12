@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 const exercise = {
   // exercise description
@@ -32,11 +33,24 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'fetch-success':
+      return { ...state, exercise: action.data };
+    case 'inc-error':
+      return { ...state, errorCount: state.errorCount + 1 };
+    case 'reset-error':
+      return { ...state, errorCount: 0 };
+    case 'noOp':
+      return state;
     default:
+      console.warn(`Action type: ${action.type} not recognized.`);
       return state;
   }
 };
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
+
+// AHAHAHA
+// I RULE THE UNIVERSE
+window.store = store;
 
 export default store;

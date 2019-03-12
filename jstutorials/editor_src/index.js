@@ -2,13 +2,11 @@
 
 // I am so sorry that you're reading my code
 
-import './coinsHandler.js';
+import store from './store.js';
+import { fetchExercise } from './actions.js';
+import './view.js';
 import './splitHandler.js';
+import './coinsHandler.js';
 import './codeEditor.js';
 
-const updatePageHeight = () =>
-  $('#code--page-container').height(
-    $(window).height() - $('#navbar-component').height(),
-  );
-updatePageHeight();
-$(window).resize(updatePageHeight);
+store.dispatch(fetchExercise('/static/mock_data/exercise_canvas.yml'));
