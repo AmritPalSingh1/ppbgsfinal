@@ -1,6 +1,11 @@
-/* global $, CodeMirror, jsyaml */
+/* global $, CodeMirror */
 
-import { runCode, setState, getState } from './codeRunner.js';
+import jsyaml from 'js-yaml';
+import {
+  runCode,
+  setState as setRunnerState,
+  getState as getRunnerState,
+} from './codeRunner.js';
 
 const sharedConfig = {
   autoCloseBrackets: true,
@@ -42,13 +47,12 @@ js.on('change', handleChange);
 html.on('change', handleChange);
 
 const submitCode = () => {
-  const { errorCount, codeChecks } = getState();
+  const { errorCount, codeChecks } = getRunnerState();
   const threshold = codeChecks.errorThreshold;
-  
+
   const submitData = {
     errorCount,
     grade: Math.max(threshold - errorCount, 0) / threshold,
-    usedHint: localStorage.getItem('usedHint') === 'true',
   };
 
   console.log(submitData);
@@ -58,13 +62,12 @@ fetch('/static/mock_data/exercise_canvas.yml')
   .then(data => data.text())
   .then(jsyaml.load)
   .then(data => {
-    setState({ secret: data.secret, codeChecks: data.test });
+    setRunnerState({ secret: data.secret, codeChecks: data.test });
 
     $('#submit-button').click(submitCode);
 
     // insert data to the page
     $('#task-placeholder').html(data.task);
-    $('#hint-body').html(data.hint);
     html.setValue(data.html);
     js.setValue(data.js);
 

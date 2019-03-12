@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 
 import protect from 'loop-protect';
-import { nl2br } from './utils.js';
+import { nl2br, escapeCode } from './utils.js';
 
 let state = {
   // secret javascript code not shown to the user
@@ -32,15 +32,17 @@ export const fail = x => {
   );
 };
 
-Babel.registerPlugin('loopProtection', protect(200, line => {
-  throw new Error(`Possible infinite loop on line ${line}`);
-}));
+Babel.registerPlugin(
+  'loopProtection',
+  protect(200, line => {
+    throw new Error(`Possible infinite loop on line ${line}`);
+  }),
+);
 
-const transform = source => Babel.transform(source, {
-  plugins: ['loopProtection'],
-}).code;
-
-window.transform = transform;
+const transform = source =>
+  Babel.transform(source, {
+    plugins: ['loopProtection'],
+  }).code;
 
 // write code to the iframe
 const writeToFrame = code => {
@@ -50,12 +52,6 @@ const writeToFrame = code => {
   iframeDocument.write(code);
   iframeDocument.close();
 };
-
-const escapeCode = str =>
-  str
-    .replace(/\\/g, '\\\\') // preserve backslash
-    .replace(/[\n\r]/g, '\\n') // escape new lines
-    .replace(/'/g, "\\'"); // escape quotes
 
 const testCode = jsCode => {
   // test if code exceeds maxLines

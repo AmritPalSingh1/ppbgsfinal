@@ -1,12 +1,22 @@
 ---
 task: "Draw overlapping boxes on a HTML canvas"
-hint: |
-  To draw the red square
+hints: 
+  - hintContent: |
+      To draw the red square
 
-  <pre><code>
-  ctx.fillStyle = "red";
-  ctx.fillRect(100, 50, 100, 50);
-  </code></pre>
+      <pre><code>
+      ctx.fillStyle = "red";
+      ctx.fillRect(100, 50, 100, 50);
+      </code></pre>
+    hintCost: 2
+  - hintContent: |
+      To draw the blue square
+
+      <pre><code>
+      ctx.fillStyle = "blue";
+      ctx.fillRect(30, 30, 100, 50);
+      </code></pre>
+    hintCost: 3
 html: |-
   <style>
     canvas {

@@ -18,10 +18,6 @@
 {% endblock %}
 
 {% block javascript %}
-  <!-- parse yaml -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.12.1/js-yaml.min.js"
-    integrity="sha256-xYfEFU0LN08iGcGajx1rqWTnYWIdaCHYME9C46FGIwE=" crossorigin="anonymous"></script>
-
   <!-- use bootstrap js -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -63,7 +59,7 @@
     integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
 
   <!-- javascript entry point -->
-  <script src="{% static 'js/code_editor.js' %}" type="module" defer></script>
+  <script src="{% static 'js/code_editor.js' %}" defer></script>
 {% endblock %}
 
 {% block navbar %}
