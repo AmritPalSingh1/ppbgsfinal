@@ -3,6 +3,7 @@
 
 import protect from 'loop-protect';
 import store from './store.js';
+import { html, js } from './codeEditor.js';
 import { incError, resetError } from './actions.js';
 import { nl2br, escapeCode } from './utils.js';
 
@@ -80,19 +81,19 @@ const testCode = jsCode => {
 };
 
 // run the user's code against some tests
-export const runCode = editors => {
+export const runCode = () => {
   store.dispatch(resetError());
 
-  const { exercise, errorCount } = store.getState();
+  const { exercise } = store.getState();
   const { secret, test } = exercise;
 
   $('#console-output').empty();
 
-  const htmlCode = editors.html.getValue();
+  const htmlCode = html.getValue();
   const jsCode = (() => {
     let code = '';
     try {
-      code = escapeCode(transform(editors.js.getValue()));
+      code = escapeCode(transform(js.getValue()));
     } catch (e) {
       fail(nl2br(e.message));
     }
@@ -127,22 +128,6 @@ export const runCode = editors => {
     </script>`);
 
   testCode(jsCode);
-
-  // show error count on the footer
-  $('#error-count-container').html(
-    `<span class="${errorCount ? 'text-danger' : ''}">
-      <i class="fas fa-times-circle"></i> ${errorCount} Errors
-    </span>`,
-  );
-
-  // warn user about errors in modal
-  if (errorCount) {
-    $('#modal-body-optional-info').html(
-      `You currently have ${errorCount} errors in your JavaScript code!`,
-    );
-  } else {
-    $('#modal-body-optional-info').empty();
-  }
 };
 
 window.fail = fail;

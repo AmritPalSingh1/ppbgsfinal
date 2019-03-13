@@ -6,8 +6,8 @@ export const fetchExercise = endpoint => dispatch =>
     .then(jsyaml.load)
     .then(data => dispatch({ type: 'fetch-success', data }));
 
-export const incError = () => dispatch => dispatch({ type: 'inc-error' });
+export const incError = () => ({ type: 'inc-error' });
 
-export const resetError = () => dispatch => dispatch({ type: 'reset-error' });
+export const resetError = () => ({ type: 'reset-error' });
 
-export const noOp = () => dispatch => dispatch({ type: 'noOp' });
+export const noOp = () => ({ type: 'no-op' });

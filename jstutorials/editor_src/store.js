@@ -25,6 +25,7 @@ const exercise = {
 };
 
 const initialState = {
+  dataFetched: false,
   exercise,
   coins: 0,
   hintsUsed: 0,
@@ -34,14 +35,15 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'fetch-success':
-      return { ...state, exercise: action.data };
+      return { ...state, dataFetched: true, exercise: action.data };
     case 'inc-error':
       return { ...state, errorCount: state.errorCount + 1 };
     case 'reset-error':
       return { ...state, errorCount: 0 };
-    case 'noOp':
+    case 'no-op':
       return state;
     default:
+      // eslint-disable-next-line no-console
       console.warn(`Action type: ${action.type} not recognized.`);
       return state;
   }
