@@ -48,10 +48,9 @@
                     {% for easy_challenge in easy_challenges %}
                       <div class="card border-left-easy mb-4 shadow">
                         <div class="card-body mb-0 pb-0 px-0">
-                          <form action="{% url 'challenge' %}" method="POST">
-                            {% csrf_token %}
+                          <form action="{% url 'challenge' %}" method="GET">
                             <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
-                            <input type="hidden" name="ch_id" value="{{ easy_challenge.id }}">
+                            <input type="hidden" name="exercise" value="{{ easy_challenge.id }}">
                             <button type="submit" class="btn btn-link w-100 text-xs no-underline font-weight-bold text-green text-uppercase mb-3 px-3 d-flex">
                                 <span>Problem {{ forloop.counter }} </span>
                                 <span class="ml-auto"
@@ -67,23 +66,69 @@
                                     >Double Points</span
                                   >
                                 </div>
-                                <button
-                                  class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
-                                >
-                                  <span>32 <i class="fas fa-coins"></i></span>
-                                  <span> buy</span>
-                                </button>
+                                <form action="{% url 'challenges' %}">
+                                  <input type="hidden" name="dp" value="{{ easy_challenge.id }}">
+                                  <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
+                                  {% if easy_challenge in dp_challenge_list %}
+                                    <button
+                                    class="btn btn-dark dark-on-disabled btn-block ch-info text-uppercase d-flex justify-content-around"
+                                    disabled
+                                  >
+                                    <span> Chip Active!</span>
+                                  </button>
+                                  {% else %}
+                                    {% if user_data.userCoins.coins >= 32 %}
+                                    <button type="submit"
+                                      class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
+                                    >
+                                      <span>32 <i class="fas fa-coins"></i></span>
+                                      <span> buy</span>
+                                    </button>
+                                    {% else %}
+                                    <button type="submit"
+                                      class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around" disabled
+                                    >
+                                      <span>32 <i class="fas fa-coins"></i></span>
+                                      <span> buy</span>
+                                    </button>
+                                    {% endif %}
+                                  {% endif %}
+                                  
+                                </form>
                               </div>
                               <div class="col border py-1 text-center">
                                 <div class="ch-info mb-1">
-                                  <span class="border-bottom-dotted">Free Hit</span>
+                                  <span class="border-bottom-dotted">Free Win</span>
                                 </div>
-                                <button
-                                  class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
-                                >
-                                  <span>24 <i class="fas fa-coins"></i></span>
-                                  <span> buy</span>
-                                </button>
+                                <form action="{% url 'challenges' %}">
+                                  <input type="hidden" name="fw" value="{{ easy_challenge.id }}">
+                                  <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
+                                  {% if easy_challenge in fw_challenge_list %}
+                                    <button
+                                    class="btn btn-dark dark-on-disabled btn-block ch-info text-uppercase d-flex justify-content-around"
+                                    disabled
+                                  >
+                                    <span> Chip Active!</span>
+                                  </button>
+                                  {% else %}
+                                    {% if user_data.userCoins.coins >= 24 %}
+                                    <button type="submit"
+                                      class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
+                                    >
+                                      <span>24 <i class="fas fa-coins"></i></span>
+                                      <span> buy</span>
+                                    </button>
+                                    {% else %}
+                                    <button type="submit"
+                                      class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around" disabled
+                                    >
+                                      <span>24 <i class="fas fa-coins"></i></span>
+                                      <span> buy</span>
+                                    </button>
+                                    {% endif %}
+                                  {% endif %}
+                                  
+                                </form>
                               </div>
                             </div>
                           </div>
@@ -124,23 +169,69 @@
                                     >Double Points</span
                                   >
                                 </div>
-                                <button
-                                  class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
-                                >
-                                  <span>32 <i class="fas fa-coins"></i></span>
-                                  <span> buy</span>
-                                </button>
+                                <form action="{% url 'challenges' %}">
+                                  <input type="hidden" name="dp" value="{{ medium_challenge.id }}">
+                                  <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
+                                  {% if medium_challenge in dp_challenge_list %}
+                                    <button
+                                    class="btn btn-dark dark-on-disabled btn-block ch-info text-uppercase d-flex justify-content-around"
+                                    disabled
+                                  >
+                                    <span> Chip Active!</span>
+                                  </button>
+                                  {% else %}
+                                    {% if user_data.userCoins.coins >= 32 %}
+                                    <button type="submit"
+                                      class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
+                                    >
+                                      <span>32 <i class="fas fa-coins"></i></span>
+                                      <span> buy</span>
+                                    </button>
+                                    {% else %}
+                                    <button type="submit"
+                                      class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around" disabled
+                                    >
+                                      <span>32 <i class="fas fa-coins"></i></span>
+                                      <span> buy</span>
+                                    </button>
+                                    {% endif %}
+                                  {% endif %}
+                                  
+                                </form>
                               </div>
                               <div class="col border py-1 text-center">
                                 <div class="ch-info mb-1">
-                                  <span class="border-bottom-dotted">Free Hit</span>
+                                  <span class="border-bottom-dotted">Free Win</span>
                                 </div>
-                                <button
-                                  class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
-                                >
-                                  <span>24 <i class="fas fa-coins"></i></span>
-                                  <span> buy</span>
-                                </button>
+                                <form action="{% url 'challenges' %}">
+                                  <input type="hidden" name="fw" value="{{ medium_challenge.id }}">
+                                  <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
+                                  {% if medium_challenge in fw_challenge_list %}
+                                    <button
+                                    class="btn btn-dark dark-on-disabled btn-block ch-info text-uppercase d-flex justify-content-around"
+                                    disabled
+                                  >
+                                    <span> Chip Active!</span>
+                                  </button>
+                                  {% else %}
+                                    {% if user_data.userCoins.coins >= 24 %}
+                                    <button type="submit"
+                                      class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
+                                    >
+                                      <span>24 <i class="fas fa-coins"></i></span>
+                                      <span> buy</span>
+                                    </button>
+                                    {% else %}
+                                    <button type="submit"
+                                      class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around" disabled
+                                    >
+                                      <span>24 <i class="fas fa-coins"></i></span>
+                                      <span> buy</span>
+                                    </button>
+                                    {% endif %}
+                                  {% endif %}
+                                  
+                                </form>
                               </div>
                             </div>
                           </div>
@@ -183,23 +274,69 @@
                                     >Double Points</span
                                   >
                                 </div>
-                                <button
-                                  class="btn btn-dark dark-on-disabled btn-block ch-info text-uppercase d-flex justify-content-around"
-                                  disabled
-                                >
-                                  <span> Chip Active!</span>
-                                </button>
+                                <form action="{% url 'challenges' %}">
+                                  <input type="hidden" name="dp" value="{{ hard_challenge.id }}">
+                                  <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
+                                  {% if hard_challenge in dp_challenge_list %}
+                                    <button
+                                    class="btn btn-dark dark-on-disabled btn-block ch-info text-uppercase d-flex justify-content-around"
+                                    disabled
+                                  >
+                                    <span> Chip Active!</span>
+                                  </button>
+                                  {% else %}
+                                    {% if user_data.userCoins.coins >= 32 %}
+                                    <button type="submit"
+                                      class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
+                                    >
+                                      <span>32 <i class="fas fa-coins"></i></span>
+                                      <span> buy</span>
+                                    </button>
+                                    {% else %}
+                                    <button type="submit"
+                                      class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around" disabled
+                                    >
+                                      <span>32 <i class="fas fa-coins"></i></span>
+                                      <span> buy</span>
+                                    </button>
+                                    {% endif %}
+                                  {% endif %}
+                                  
+                                </form>
                               </div>
                               <div class="col border py-1 text-center">
                                 <div class="ch-info mb-1">
-                                  <span class="border-bottom-dotted">Free Hit</span>
+                                  <span class="border-bottom-dotted">Free Win</span>
                                 </div>
-                                <button
-                                  class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
-                                >
-                                  <span>24 <i class="fas fa-coins"></i></span>
-                                  <span> buy</span>
-                                </button>
+                                <form action="{% url 'challenges' %}">
+                                  <input type="hidden" name="fw" value="{{ hard_challenge.id }}">
+                                  <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
+                                  {% if hard_challenge in fw_challenge_list %}
+                                    <button
+                                    class="btn btn-dark dark-on-disabled btn-block ch-info text-uppercase d-flex justify-content-around"
+                                    disabled
+                                  >
+                                    <span> Chip Active!</span>
+                                  </button>
+                                  {% else %}
+                                    {% if user_data.userCoins.coins >= 24 %}
+                                    <button type="submit"
+                                      class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
+                                    >
+                                      <span>24 <i class="fas fa-coins"></i></span>
+                                      <span> buy</span>
+                                    </button>
+                                    {% else %}
+                                    <button type="submit"
+                                      class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around" disabled
+                                    >
+                                      <span>24 <i class="fas fa-coins"></i></span>
+                                      <span> buy</span>
+                                    </button>
+                                    {% endif %}
+                                  {% endif %}
+                                  
+                                </form>
                               </div>
                             </div>
                           </div>
