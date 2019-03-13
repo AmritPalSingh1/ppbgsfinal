@@ -7,6 +7,8 @@ import { html, js } from './codeEditor.js';
 import { incError, resetError } from './actions.js';
 import { nl2br, escapeCode } from './utils.js';
 
+// -- Console area --------------------------------------------------
+
 export const log = x => {
   $('#console-output').append(`<samp>${x}</samp><br />`);
   console.log(x);
@@ -19,6 +21,11 @@ export const fail = x => {
   );
 };
 
+window.fail = fail;
+window.log = log;
+
+// -- Babel ---------------------------------------------------------
+
 Babel.registerPlugin(
   'loopProtection',
   protect(200, line => {
@@ -30,6 +37,8 @@ const transform = source =>
   Babel.transform(source, {
     plugins: ['loopProtection'],
   }).code;
+
+// -- Run user code --------------------------------------------------
 
 // write code to the iframe
 const writeToFrame = code => {
@@ -80,7 +89,8 @@ const testCode = jsCode => {
   }
 };
 
-// run the user's code against some tests
+// run the user's code
+// the results appear in the console area
 export const runCode = () => {
   store.dispatch(resetError());
 
@@ -129,6 +139,3 @@ export const runCode = () => {
 
   testCode(jsCode);
 };
-
-window.fail = fail;
-window.log = log;

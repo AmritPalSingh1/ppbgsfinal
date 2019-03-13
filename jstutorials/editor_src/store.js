@@ -1,5 +1,8 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import logger from 'redux-logger';
+
+// -- Intial state --------------------------------------------------
 
 const exercise = {
   // exercise description
@@ -32,6 +35,8 @@ const initialState = {
   errorCount: 0,
 };
 
+// -- Reducer -------------------------------------------------------
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'fetch-success':
@@ -40,6 +45,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, errorCount: state.errorCount + 1 };
     case 'reset-error':
       return { ...state, errorCount: 0 };
+    case 'set-coin-count':
+      return { ...state, coins: action.coinCount };
     case 'no-op':
       return state;
     default:
@@ -49,10 +56,8 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-const store = createStore(reducer, applyMiddleware(thunk));
+// -- Store ---------------------------------------------------------
 
-// AHAHAHA
-// I RULE THE UNIVERSE
-window.store = store;
+const store = createStore(reducer, applyMiddleware(thunk, logger));
 
 export default store;

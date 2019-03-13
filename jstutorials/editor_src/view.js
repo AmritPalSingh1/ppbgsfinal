@@ -3,22 +3,30 @@
 import { once } from 'ramda';
 import store from './store.js';
 import { html, js } from './codeEditor.js';
-import { runCode } from './codeRunner.js';
+
+// -- Populate code editor ------------------------------------------
 
 const setEditorValuesAndRunCode = once((htmlCode, jsCode) => {
   html.setValue(htmlCode);
   js.setValue(jsCode);
-  runCode();
 });
 
+// -- Render page on state change -----------------------------------
+
 store.subscribe(() => {
-  const { exercise, errorCount, dataFetched } = store.getState();
+  const { coins, exercise, errorCount, dataFetched } = store.getState();
 
   if (dataFetched) {
     setEditorValuesAndRunCode(exercise.html, exercise.js);
   }
 
+  // show task in the navbar
   $('#task-placeholder').html(exercise.task);
+
+  // show coin count on the footer
+  $('#coin-count-container').html(
+    `<i class="fas fa-coins"></i> ${coins} Coins`,
+  );
 
   // show error count on the footer
   $('#error-count-container').html(
@@ -36,6 +44,8 @@ store.subscribe(() => {
     $('#modal-body-optional-info').empty();
   }
 });
+
+// -- Page takes up rest of view ------------------------------------
 
 const updatePageHeight = () =>
   $('#code--page-container').height(

@@ -10,4 +10,6 @@ export const incError = () => ({ type: 'inc-error' });
 
 export const resetError = () => ({ type: 'reset-error' });
 
+export const setCoins = coinCount => ({ type: 'set-coin-count', coinCount });
+
 export const noOp = () => ({ type: 'no-op' });
