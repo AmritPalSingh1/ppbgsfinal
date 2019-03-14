@@ -41,6 +41,3 @@ $('#submit-button').click(() => {
   // eslint-disable-next-line no-console
   console.log(submitData);
 });
-
-// -- Show hints ----------------------------------------------------
-

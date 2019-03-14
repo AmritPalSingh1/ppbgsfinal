@@ -8,10 +8,12 @@ const exercise = {
   // exercise description
   task: '',
   // store hints
-  hints: [{
-    hintContent: 'Empty hint content',
-    hintCost: 0,
-  }],
+  hints: [
+    {
+      hintContent: 'Empty hint content',
+      hintCost: 0,
+    },
+  ],
   // starter html code
   html: '',
   // starter js code
@@ -31,11 +33,18 @@ const exercise = {
 };
 
 const initialState = {
+  // exercise fetched
   dataFetched: false,
+  // exercise fetch data
   exercise,
+  // user coin count
   coins: 0,
+  // number of hints used for this exercise
   hintsUsed: 0,
+  // number of errors in user's code
   errorCount: 0,
+  // the contents of the console output
+  consoleOutput: '',
 };
 
 // -- Reducer -------------------------------------------------------
@@ -44,6 +53,10 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'fetch-success':
       return { ...state, dataFetched: true, exercise: action.data };
+    case 'log-to-console':
+      return { ...state, consoleOutput: state.consoleOutput + action.data };
+    case 'clear-console':
+      return { ...state, consoleOutput: '' };
     case 'inc-error':
       return { ...state, errorCount: state.errorCount + 1 };
     case 'reset-error':

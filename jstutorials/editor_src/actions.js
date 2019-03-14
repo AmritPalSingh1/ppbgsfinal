@@ -6,6 +6,10 @@ export const fetchExercise = endpoint => dispatch =>
     .then(jsyaml.load)
     .then(data => dispatch({ type: 'fetch-success', data }));
 
+export const logToConsole = data => ({ type: 'log-to-console', data });
+
+export const clearConsole = () => ({ type: 'clear-console' });
+
 export const incError = () => ({ type: 'inc-error' });
 
 export const resetError = () => ({ type: 'reset-error' });

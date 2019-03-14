@@ -1,7 +1,6 @@
 /* global $ */
 
 import { once } from 'ramda';
-import { add } from './utils.js';
 import store from './store.js';
 import { html, js } from './codeEditor.js';
 
@@ -15,6 +14,7 @@ const setEditorValuesAndRunCode = once((htmlCode, jsCode) => {
 
 store.subscribe(() => {
   const {
+    consoleOutput,
     coins,
     hintsUsed,
     exercise,
@@ -26,6 +26,9 @@ store.subscribe(() => {
   if (dataFetched) {
     setEditorValuesAndRunCode(exercise.html, exercise.js);
   }
+
+  // show console output
+  $('#console-output').html(consoleOutput);
 
   // show task in the navbar
   $('#task-placeholder').html(task);

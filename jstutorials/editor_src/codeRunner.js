@@ -1,23 +1,21 @@
 /* global $, Babel */
-/* eslint-disable no-console */
 
 import protect from 'loop-protect';
 import store from './store.js';
 import { html, js } from './codeEditor.js';
-import { incError, resetError } from './actions.js';
+import { logToConsole, clearConsole, incError, resetError } from './actions.js';
 import { nl2br, escapeCode } from './utils.js';
 
 // -- Console area --------------------------------------------------
 
 const log = x => {
-  $('#console-output').append(`<samp>${x}</samp><br />`);
-  console.log(x);
+  store.dispatch(logToConsole(`<samp>${x}</samp><br />`));
 };
 
 const fail = x => {
   store.dispatch(incError());
-  $('#console-output').append(
-    `<code><i class="fas fa-times-circle"></i> ${x}</code><br />`,
+  store.dispatch(
+    logToConsole(`<code><i class="fas fa-times-circle"></i> ${x}</code><br />`),
   );
 };
 
@@ -93,11 +91,10 @@ const testCode = jsCode => {
 // eslint-disable-next-line import/prefer-default-export
 export const runCode = () => {
   store.dispatch(resetError());
+  store.dispatch(clearConsole());
 
   const { exercise } = store.getState();
   const { secret, test } = exercise;
-
-  $('#console-output').empty();
 
   const htmlCode = html.getValue();
   const jsCode = (() => {
