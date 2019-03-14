@@ -55,6 +55,8 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'fetch-success':
       return { ...state, dataFetched: true, exercise: action.data };
+    case 'hint-purchase-success':
+      return {...state, ...action.data };
 
     case 'log-to-console':
       return { ...state, consoleOutput: state.consoleOutput + action.data };

@@ -1,7 +1,7 @@
 /* global $ */
 
 import { once } from 'ramda';
-import { setPage, setHints } from './actions.js';
+import { setPage, buyHint } from './actions.js';
 import store from './store.js';
 import { html, js } from './codeEditor.js';
 
@@ -17,21 +17,17 @@ const Errors = errors =>
 const $HintTabs = (hints, page, hintsUsed) =>
   $('<ul class="nav nav-tabs"/>').append(
     Array.from({ length: hints.length }).map((x, i) =>
-      $(
-        `<li class="nav-item">
-          <a class="nav-link ${(() => {
-            if (i === page) {
-              return 'active';
-            }
-            if (i > hintsUsed) {
-              return 'disabled';
-            }
-            return '';
-          })()}" href="#">
-            Hint ${i + 1}
-          </a>
-        </li>`,
-      ).click(() => i <= hintsUsed && store.dispatch(setPage(i))),
+      $('<li class="nav-item"/>')
+        .append(
+          i > hintsUsed
+            ? $('<a class="nav-link disabled"/>')
+                .attr('href', '#')
+                .append(`<i class="fas fa-lock"></i> Hint ${i + 1}`)
+            : $(`<a class="nav-link ${i === page ? 'active' : ''}"/>`)
+                .attr('href', '#')
+                .append(`Hint ${i + 1}`),
+        )
+        .click(() => i <= hintsUsed && store.dispatch(setPage(i))),
     ),
   );
 
@@ -39,17 +35,15 @@ const $Hint = ({ hintContent, hintCost }, page, hintsUsed) =>
   $('<div class="mt-4"/>').append(
     page < hintsUsed
       ? hintContent
-      : $('<button/>')
-          .html(`Buy Hint (${hintCost})`)
-          .click(() =>
-            store.dispatch(setHints(store.getState().hintsUsed + 1)),
-          ),
+      : $('<button class="btn btn-outline-primary w-100"/>')
+          .append(`Buy Hint (${hintCost})`)
+          .click(() => store.dispatch(buyHint(hintCost))),
   );
 
 // -- Render page on state change -----------------------------------
 
 // populate code editor on data fetch
-const setEditorValuesAndRunCode = once((htmlCode, jsCode) => {
+const setupCodeEditors = once((htmlCode, jsCode) => {
   html.setValue(htmlCode);
   js.setValue(jsCode);
 });
@@ -67,7 +61,7 @@ store.subscribe(() => {
   const { hints, task } = exercise;
 
   if (dataFetched) {
-    setEditorValuesAndRunCode(exercise.html, exercise.js);
+    setupCodeEditors(exercise.html, exercise.js);
   }
 
   $('#task-placeholder').html(task);
