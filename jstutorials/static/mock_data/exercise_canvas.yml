@@ -3,8 +3,8 @@ task: "Draw overlapping boxes on a HTML canvas"
 details: |
   <p><strong>Draw overlapping boxes on a HTML canvas</strong></p>
   <ul>
-    <li>The blue box top left is located at x=30 and y=30</li>
-    <li>The red box top left is located at x=100 and y=50</li>
+    <li>The blue box top left is located at x=40 and y=10</li>
+    <li>The red box top left is located at x=100 and y=40</li>
     <li>Both boxes are 100 pixels in length and in height</li>
     <li>Draw the red box over the blue box</li>
   </ul>
@@ -16,7 +16,7 @@ hints:
       ctx.fillStyle = "red";
       ctx.fillRect(100, 40, 100, 100);
       </code></pre>
-    hintCost: 2
+    hintCost: 20
   - hintContent: |
       To draw the blue square
 

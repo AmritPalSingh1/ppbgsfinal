@@ -31,13 +31,21 @@ const $HintTabs = (hints, page, hintsUsed) =>
     ),
   );
 
-const $Hint = ({ hintContent, hintCost }, page, hintsUsed) =>
+const $Hint = ({ hintContent, hintCost }, page, hintsUsed, coins) =>
   $('<div class="mt-4"/>').append(
-    page < hintsUsed
-      ? hintContent
-      : $('<button class="btn btn-outline-primary w-100"/>')
-          .append(`Buy Hint (${hintCost})`)
-          .click(() => store.dispatch(buyHint(hintCost))),
+    (() => {
+      if (page < hintsUsed) {
+        return hintContent;
+      }
+      if (coins < hintCost) {
+        return $(
+          '<button class="btn btn-outline-primary w-100" disabled/>',
+        ).append(`Not enough coins! This hint costs ${hintCost} Coins`);
+      }
+      return $('<button class="btn btn-outline-primary w-100"/>')
+        .append(`Buy Hint (${hintCost})`)
+        .click(() => store.dispatch(buyHint(hintCost)));
+    })(),
   );
 
 // -- Render page on state change -----------------------------------
@@ -77,7 +85,7 @@ store.subscribe(() => {
 
   $('#hint-modal-body')
     .html($HintTabs(hints, hintPage, hintsUsed))
-    .append($Hint(hints[hintPage], hintPage, hintsUsed));
+    .append($Hint(hints[hintPage], hintPage, hintsUsed, coins));
 
   // warn user about errors in submit modal
   $('#modal-body-optional-info').html(

@@ -13,6 +13,9 @@ export const buyHint = hintCost => dispatch =>
       coins: state.coins - hintCost,
       hintsUsed: state.hintsUsed + 1,
     }))
+    .then(data =>
+      data.coins < 0 ? Promise.reject(new Error('Not enough coins')) : data,
+    )
     .then(data => dispatch({ type: 'hint-purchase-success', data }));
 
 export const setHtmlCode = code => ({ type: 'set-html', code });
