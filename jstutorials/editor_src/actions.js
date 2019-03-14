@@ -16,6 +16,8 @@ export const resetError = () => ({ type: 'reset-error' });
 
 export const setHints = hintsUsed => ({ type: 'set-hints-used', hintsUsed });
 
+export const setPage = page => ({ type: 'set-hint-page', page });
+
 export const setCoins = coinCount => ({ type: 'set-coin-count', coinCount });
 
 export const noOp = () => ({ type: 'no-op' });

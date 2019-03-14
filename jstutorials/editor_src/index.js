@@ -41,3 +41,8 @@ $('#submit-button').click(() => {
   // eslint-disable-next-line no-console
   console.log(submitData);
 });
+
+fetch('/topics/topic/challenge_api', {
+  method: 'POST',
+  body: { topic_name: 'Intro to Html', ch_id: 3 },
+}).then(console.log.bind(console));

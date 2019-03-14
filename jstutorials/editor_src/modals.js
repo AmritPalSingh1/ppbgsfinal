@@ -30,16 +30,14 @@ createModal(
   'Submit Code',
   `
     Are you sure you want to submit your code?
-    <div id="modal-body-optional-info"></div>
-  `,
+    <div id="modal-body-optional-info"></div>`,
   `
     <button type="button" class="btn btn-secondary" data-dismiss="modal">
       No. Go back!
     </button>
     <button type="button" class="btn btn-primary" id="submit-button">
       Yep! I&apos;m done coding!
-    </button>
-  `,
+    </button>`,
 );
 
 createModal(
@@ -49,6 +47,7 @@ createModal(
   `
     <button type="button" class="btn btn-secondary" data-dismiss="modal">
       Back to code
-    </button>
-  `,
+    </button>`,
 );
+
+// thanks I hate it

@@ -1,7 +1,9 @@
 /* global $ */
 
 import { once } from 'ramda';
+import { setPage } from './actions.js';
 import store from './store.js';
+import { add } from './utils.js';
 import { html, js } from './codeEditor.js';
 
 // -- Render page on state change -----------------------------------
@@ -16,7 +18,7 @@ store.subscribe(() => {
   const {
     consoleOutput,
     coins,
-    hintsUsed,
+    hintPage,
     exercise,
     errorCount,
     dataFetched,
@@ -54,23 +56,22 @@ store.subscribe(() => {
     $('#modal-body-optional-info').empty();
   }
 
-  const hintTabsItems = Array.from({ length: hints.length }).map(
-    (x, i) => `
-      <li class="nav-item">
-        <a class="nav-link ${i === hintsUsed ? 'active' : ''}" href="#">
-          Hint ${i + 1}
-        </a>
-      </li>`,
+  const tabList = $('<ul class="nav nav-tabs"></ul>').append(
+    Array.from({ length: hints.length }).map((x, i) =>
+      $(`
+        <li class="nav-item">
+          <a class="nav-link ${i === hintPage ? 'active' : ''}" href="#">
+            Hint ${i + 1}
+          </a>
+        </li>`).click(() => store.dispatch(setPage(i))),
+    ),
   );
 
-  $('#hint-modal-body').html(`
-    <ul class="nav nav-tabs">
-      ${hintTabsItems}
-    </ul>
-    <div class="mt-4">
-      ${hints[hintsUsed].hintContent}
-    </div>
-  `);
+  $('#hint-modal-body')
+    .html(tabList).append(`
+      <div class="mt-4">
+        ${hints[hintPage].hintContent}
+      </div>`);
 });
 
 // -- Page takes up rest of view ------------------------------------
