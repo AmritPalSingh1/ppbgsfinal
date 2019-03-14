@@ -3,10 +3,10 @@ task: "Draw overlapping boxes on a HTML canvas"
 details: |
   <p><strong>Draw overlapping boxes on a HTML canvas</strong></p>
   <ul>
-    <li>The blue box top left is located at x=30 and y=30.</li>
-    <li>The red box top left is located at x=100 and y=50.</li>
-    <li>Both boxes are 100 pixels in length and in height.</li>
-    <li>Draw the red box over the blue box.</li>
+    <li>The blue box top left is located at x=30 and y=30</li>
+    <li>The red box top left is located at x=100 and y=50</li>
+    <li>Both boxes are 100 pixels in length and in height</li>
+    <li>Draw the red box over the blue box</li>
   </ul>
 hints: 
   - hintContent: |
@@ -14,7 +14,7 @@ hints:
 
       <pre><code>
       ctx.fillStyle = "red";
-      ctx.fillRect(100, 50, 100, 50);
+      ctx.fillRect(100, 40, 100, 100);
       </code></pre>
     hintCost: 2
   - hintContent: |
@@ -22,7 +22,7 @@ hints:
 
       <pre><code>
       ctx.fillStyle = "blue";
-      ctx.fillRect(30, 30, 100, 50);
+      ctx.fillRect(40, 10, 100, 100);
       </code></pre>
     hintCost: 3
 html: |-
@@ -40,8 +40,8 @@ js: |
   var ctx = canvas.getContext("2d");
 
   // the squares are 100 pixels in length
-  // the blue rectangle's top left corner is located at (30, 30)
-  // the red rectangle's top left corner is located at (100, 50)
+  // the blue rectangle's top left corner is located at (40, 10)
+  // the red rectangle's top left corner is located at (100, 40)
 htmlReadOnly: true
 jsReadOnly: false
 secret: |-

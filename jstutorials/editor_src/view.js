@@ -42,10 +42,12 @@ const $Hint = ({ hintContent, hintCost }, page, hintsUsed) =>
 
 // -- Render page on state change -----------------------------------
 
-// populate code editor on data fetch
-const setupCodeEditors = once((htmlCode, jsCode) => {
+// populate code editor on data fetch and set options
+const setupCodeEditors = once((htmlCode, jsCode, htmlReadOnly, jsReadOnly) => {
   html.setValue(htmlCode);
   js.setValue(jsCode);
+  html.setOption('readOnly', htmlReadOnly);
+  js.setOption('readOnly', jsReadOnly);
 });
 
 store.subscribe(() => {
@@ -58,12 +60,14 @@ store.subscribe(() => {
     errorCount,
     dataFetched,
   } = store.getState();
-  const { hints, task, details } = exercise;
+  const { hints, task, details, htmlReadOnly, jsReadOnly } = exercise;
 
   if (dataFetched) {
-    setupCodeEditors(exercise.html, exercise.js);
+    setupCodeEditors(exercise.html, exercise.js, htmlReadOnly, jsReadOnly);
   }
 
+  $('#html-label-read-only').html(htmlReadOnly && '(Read Only)');
+  $('#js-label-read-only').html(jsReadOnly && '(Read Only)');
   $('#task-placeholder').html(task);
   $('#console-output').html(consoleOutput);
   $('#coin-count-container').html(Coins(coins));
