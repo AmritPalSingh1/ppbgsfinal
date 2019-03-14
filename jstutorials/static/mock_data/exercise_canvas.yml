@@ -16,7 +16,7 @@ hints:
       ctx.fillStyle = "red";
       ctx.fillRect(100, 40, 100, 100);
       </code></pre>
-    hintCost: 20
+    hintCost: 2
   - hintContent: |
       To draw the blue square
 

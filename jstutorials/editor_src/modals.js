@@ -26,6 +26,8 @@ const createModal = (id, title, body, footer) => {
   );
 };
 
+// -- Ask for submit ------------------------------------------------
+
 createModal(
   'submitModal',
   'Submit Code',
@@ -39,6 +41,8 @@ createModal(
    </button>`,
 );
 
+// -- Display hints -------------------------------------------------
+
 createModal(
   'hintsModal',
   'Hints',
@@ -47,6 +51,8 @@ createModal(
      Back to code
    </button>`,
 );
+
+// -- Task details --------------------------------------------------
 
 createModal(
   'taskDetailsModal',

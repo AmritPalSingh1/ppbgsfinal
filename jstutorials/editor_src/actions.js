@@ -1,11 +1,25 @@
 import jsyaml from 'js-yaml';
 import store from './store.js';
+import {
+  FETCH_SUCCESS,
+  HINT_PURCHASE_SUCCESS,
+  SET_HTML,
+  SET_JS,
+  LOG_TO_CONSOLE,
+  CLEAR_CONSOLE,
+  INC_ERROR,
+  RESET_ERROR,
+  SET_HINTS_USED,
+  SET_HINT_PAGE,
+  SET_COIN_COUNT,
+  NO_OP,
+} from './constants.js';
 
 export const fetchExercise = endpoint => dispatch =>
   fetch(endpoint)
     .then(data => data.text())
     .then(jsyaml.load)
-    .then(data => dispatch({ type: 'fetch-success', data }));
+    .then(data => dispatch({ type: FETCH_SUCCESS, data }));
 
 export const buyHint = hintCost => dispatch =>
   Promise.resolve(store.getState())
@@ -16,19 +30,19 @@ export const buyHint = hintCost => dispatch =>
     .then(data =>
       data.coins < 0 ? Promise.reject(new Error('Not enough coins')) : data,
     )
-    .then(data => dispatch({ type: 'hint-purchase-success', data }));
+    .then(data => dispatch({ type: HINT_PURCHASE_SUCCESS, data }));
 
-export const setHtmlCode = code => ({ type: 'set-html', code });
-export const setJsCode = code => ({ type: 'set-js', code });
+export const setHtmlCode = code => ({ type: SET_HTML, code });
+export const setJsCode = code => ({ type: SET_JS, code });
 
-export const logToConsole = data => ({ type: 'log-to-console', data });
-export const clearConsole = () => ({ type: 'clear-console' });
+export const logToConsole = data => ({ type: LOG_TO_CONSOLE, data });
+export const clearConsole = () => ({ type: CLEAR_CONSOLE });
 
-export const incError = () => ({ type: 'inc-error' });
-export const resetError = () => ({ type: 'reset-error' });
+export const incError = () => ({ type: INC_ERROR });
+export const resetError = () => ({ type: RESET_ERROR });
 
-export const setHints = hintsUsed => ({ type: 'set-hints-used', hintsUsed });
-export const setPage = page => ({ type: 'set-hint-page', page });
-export const setCoins = coinCount => ({ type: 'set-coin-count', coinCount });
+export const setHintsUsed = hintsUsed => ({ type: SET_HINTS_USED, hintsUsed });
+export const setPage = page => ({ type: SET_HINT_PAGE, page });
+export const setCoins = coinCount => ({ type: SET_COIN_COUNT, coinCount });
 
-export const noOp = () => ({ type: 'no-op' });
+export const noOp = () => ({ type: NO_OP });

@@ -37,13 +37,15 @@ const $Hint = ({ hintContent, hintCost }, page, hintsUsed, coins) =>
       if (page < hintsUsed) {
         return hintContent;
       }
+
       if (coins < hintCost) {
         return $(
           '<button class="btn btn-outline-primary w-100" disabled/>',
-        ).append(`Not enough coins! This hint costs ${hintCost} Coins`);
+        ).append(`Not enough coins! This hint costs ${hintCost} coins`);
       }
+
       return $('<button class="btn btn-outline-primary w-100"/>')
-        .append(`Buy Hint (${hintCost})`)
+        .append(`Buy Hint <i class="fas fa-coins"></i> ${hintCost}`)
         .click(() => store.dispatch(buyHint(hintCost)));
     })(),
   );
@@ -80,12 +82,13 @@ store.subscribe(() => {
   $('#console-output').html(consoleOutput);
   $('#coin-count-container').html(Coins(coins));
   $('#error-count-container').html(Errors(errorCount));
-
   $('#task-detail-modal-body').html(details);
 
-  $('#hint-modal-body')
-    .html($HintTabs(hints, hintPage, hintsUsed))
-    .append($Hint(hints[hintPage], hintPage, hintsUsed, coins));
+  if (hints.length > 0) {
+    $('#hint-modal-body')
+      .html($HintTabs(hints, hintPage, hintsUsed))
+      .append($Hint(hints[hintPage], hintPage, hintsUsed, coins));
+  }
 
   // warn user about errors in submit modal
   $('#modal-body-optional-info').html(
