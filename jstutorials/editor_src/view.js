@@ -16,7 +16,7 @@ const Errors = errors =>
 
 const $HintTabs = (hints, page, hintsUsed) =>
   $('<ul class="nav nav-tabs"/>').append(
-    Array.from({ length: hints.length }).map((x, i) =>
+    hints.map((x, i) =>
       $('<li class="nav-item"/>')
         .append(
           i > hintsUsed
@@ -58,7 +58,7 @@ store.subscribe(() => {
     errorCount,
     dataFetched,
   } = store.getState();
-  const { hints, task } = exercise;
+  const { hints, task, details } = exercise;
 
   if (dataFetched) {
     setupCodeEditors(exercise.html, exercise.js);
@@ -68,6 +68,8 @@ store.subscribe(() => {
   $('#console-output').html(consoleOutput);
   $('#coin-count-container').html(Coins(coins));
   $('#error-count-container').html(Errors(errorCount));
+
+  $('#task-detail-modal-body').html(details);
 
   $('#hint-modal-body')
     .html($HintTabs(hints, hintPage, hintsUsed))

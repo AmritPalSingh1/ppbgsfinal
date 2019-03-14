@@ -69,7 +69,10 @@
         <a class="navbar-brand " href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="" height="50"
             width="50" />
         </a>
-        <strong>Task:</strong> <span id="task-placeholder">None</span>
+        <div>
+          <strong>Task:</strong> <span id="task-placeholder">None</span>
+          <button class="btn btn-link" data-toggle="modal" data-target="#taskDetailsModal">Details</button>
+        </div>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -155,7 +158,7 @@
     </div>
   </div> <!-- end of #code--page-container -->
 
-  <!-- all modals are collected here -->
+  <!-- all modals are collected here by modals.js -->
   <div id="modal-container"></div>
   <div id="task-data" hidden>{{ challenge.exercise.url }}</div>
   <div id="task-id" hidden>{{ challenge.id }}</div>

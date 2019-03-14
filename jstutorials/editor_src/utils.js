@@ -1,3 +1,5 @@
+/* global $ */
+
 import { curry } from 'ramda';
 
 export const add = curry((a, b) => a + b);
@@ -9,3 +11,8 @@ export const escapeCode = str =>
     .replace(/\\/g, '\\\\') // preserve backslash
     .replace(/[\n\r]/g, '\\n') // escape new lines
     .replace(/'/g, "\\'"); // escape quotes
+
+export const tidyHtml = code =>
+  $('<div/>')
+    .html(code)
+    .html();

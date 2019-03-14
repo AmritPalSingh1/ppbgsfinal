@@ -3,7 +3,7 @@
 // I am so sorry that you're reading my code
 
 import store from './store.js';
-import { fetchExercise, setCoins } from './actions.js';
+import { fetchExercise, setCoins, setHtmlCode, setJsCode } from './actions.js';
 import './modals.js';
 import './splitHandler.js';
 import './view.js';
@@ -24,8 +24,15 @@ const handleChange = () => {
   timer = setTimeout(runCode, 1000);
 };
 
-js.on('change', handleChange);
-html.on('change', handleChange);
+js.on('change', cm => {
+  store.dispatch(setJsCode(cm.getValue()));
+  handleChange();
+});
+
+html.on('change', cm => {
+  store.dispatch(setHtmlCode(cm.getValue()));
+  handleChange();
+});
 
 // -- Submit code ---------------------------------------------------
 

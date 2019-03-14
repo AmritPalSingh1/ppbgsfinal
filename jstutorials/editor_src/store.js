@@ -6,11 +6,13 @@ import logger from 'redux-logger';
 
 const exercise = {
   // exercise description
-  task: '',
+  task: 'None',
+  // task in detail
+  details: 'Code your own thing!',
   // store hints
   hints: [
     {
-      hintContent: 'Empty hint content',
+      hintContent: 'No hints for this exercise',
       hintCost: 0,
     },
   ],
@@ -18,6 +20,10 @@ const exercise = {
   html: '',
   // starter js code
   js: '',
+  // make html editor read only
+  htmlReadOnly: false,
+  // make js editor read only
+  jsReadOnly: false,
   // secret javascript code not shown to the user
   secret: '',
   // a testing 'suite' ran against user code
@@ -27,12 +33,16 @@ const exercise = {
     cleanup: '', // runs last
     has: [], // checks if code contains a pattern
     hasNot: [], // opposite of 'has'
-    maxLines: 200, // max number of lines user should code
+    maxLines: 1000, // max number of lines user should code
     errorThreshold: 0, // (errorThreshold - errorCount) / errorThreshold = grade
   },
 };
 
 const initialState = {
+  // user html code
+  userHtml: '',
+  // user js code
+  userJs: '',
   // exercise fetched
   dataFetched: false,
   // exercise fetch data
@@ -56,7 +66,12 @@ const reducer = (state = initialState, action) => {
     case 'fetch-success':
       return { ...state, dataFetched: true, exercise: action.data };
     case 'hint-purchase-success':
-      return {...state, ...action.data };
+      return { ...state, ...action.data };
+
+    case 'set-html':
+      return { ...state, userHtml: action.code };
+    case 'set-js':
+      return { ...state, userJs: action.code };
 
     case 'log-to-console':
       return { ...state, consoleOutput: state.consoleOutput + action.data };
@@ -87,5 +102,7 @@ const reducer = (state = initialState, action) => {
 // -- Store ---------------------------------------------------------
 
 const store = createStore(reducer, applyMiddleware(thunk, logger));
+
+window.store = store;
 
 export default store;

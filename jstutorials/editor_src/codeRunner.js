@@ -4,7 +4,7 @@ import protect from 'loop-protect';
 import store from './store.js';
 import { html, js } from './codeEditor.js';
 import { logToConsole, clearConsole, incError, resetError } from './actions.js';
-import { nl2br, escapeCode } from './utils.js';
+import { tidyHtml, nl2br, escapeCode } from './utils.js';
 
 // -- Console area --------------------------------------------------
 
@@ -96,7 +96,7 @@ export const runCode = () => {
   const { exercise } = store.getState();
   const { secret, test } = exercise;
 
-  const htmlCode = html.getValue();
+  const htmlCode = tidyHtml(html.getValue());
   const jsCode = (() => {
     let code = '';
     try {
