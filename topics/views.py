@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Topic, Video, Question, Pdf, Query, Comment
 from userprogress.models import UserAttemptedQuestion, UserWatchedVideo, UserReadNotes, TotalCoins, TotalPoints, UserLastLocation
 from django.contrib.auth.models import User
-from challenges.models import Challenge
+from challenges.models import Challenge, DoublePoint, FreeWin
 from userprogress.models import TotalPoints, TotalCoins
 
 
@@ -244,7 +244,6 @@ def quiz(request):
                 attemptedQuestion = UserAttemptedQuestion(
                     question=submitted_question, user=request.user, isCorrect=False)
                 attemptedQuestion.save()
-                messages.error(request, 'Incorrect answer :(')
                 danger_message = "Incorrect answer!"
 
     # Fetch current topic
@@ -354,6 +353,50 @@ def question(request):
 
 @login_required
 def challenges(request):
+    # pop message
+    message_title = None
+
+    if 'dp' in request.GET:
+        challenge_id = request.GET['dp']
+        # challenge 
+        dp_challenge = Challenge.objects.get(id=challenge_id)
+        # check if chip is already baught
+        dp_already_baught = DoublePoint.objects.filter(challenge=dp_challenge, user=request.user)
+
+        if not dp_already_baught:
+            double_point = DoublePoint(challenge=dp_challenge, user=request.user)
+            double_point.save()
+            update_user_coins(request, -32)
+            message_title = "Chip Activated!"
+
+    if 'fw' in request.GET:
+        challenge_id = request.GET['fw']
+        # challenge 
+        fw_challenge = Challenge.objects.get(id=challenge_id)
+        # check if chip is already baught
+        fw_already_baught = FreeWin.objects.filter(challenge=fw_challenge, user=request.user)
+
+        if not fw_already_baught:
+            free_win = FreeWin(challenge=fw_challenge, user=request.user)
+            free_win.save()
+            update_user_coins(request, -24)
+            message_title = "Chip Activated!"
+
+    user_all_dp = DoublePoint.objects.filter(user=request.user)
+
+    dp_challenge_list = []
+    
+    for user_dp in user_all_dp:
+        dp_challenge_list.append(user_dp.challenge)
+
+    user_all_fw = FreeWin.objects.filter(user=request.user)
+
+    fw_challenge_list = []
+    
+    for user_fw in user_all_fw:
+        fw_challenge_list.append(user_fw.challenge)
+
+
     user_data = user_info(request)
 
     # retreive topic name from GET request
@@ -380,6 +423,9 @@ def challenges(request):
         'medium_challenges': medium_challenges,
         'hard_challenges': hard_challenges,
         'user_data': user_data,
+        'message_title': message_title,
+        'dp_challenge_list': dp_challenge_list,
+        'fw_challenge_list': fw_challenge_list
     }
 
     return render(request, 'pages/challenges.html', context)
@@ -387,17 +433,17 @@ def challenges(request):
 
 @login_required
 def challenge(request):
-
+    
     # data related to user: coins, points, rank
     user_data = user_info(request)
 
     # get current topic name
-    if 'topic_name' in request.POST:
-        topic_name = request.POST['topic_name']
+    if 'topic_name' in request.GET:
+        topic_name = request.GET['topic_name']
 
     # get current challenge id
-    if 'ch_id' in request.POST:
-        ch_id = request.POST['ch_id']
+    if 'exercise' in request.GET:
+        exercise = request.GET['exercise']
     else:
         return redirect('topics')
 
@@ -406,7 +452,7 @@ def challenge(request):
     topic = get_object_or_404(Topic, topicName=topic_name)
 
     # Current challenge
-    challenge = Challenge.objects.get(topic=topic, id=ch_id)
+    challenge = Challenge.objects.get(topic=topic, id=exercise)
 
     context = {
         'challenge': challenge,

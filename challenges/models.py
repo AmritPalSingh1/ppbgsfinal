@@ -20,3 +20,11 @@ class Challenge(models.Model):
         choices=Difficulty_levels,
         default=MEDIUM,
     )
+
+class DoublePoint(models.Model):
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class FreeWin(models.Model):
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -2,8 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from userprogress.models import TotalPoints, TotalCoins, UserLastLocation
-from topics.models import Video, Topic
+from topics.models import Video, Topic, Question
+from challenges.models import Challenge
+from userprogress.models import UserReadNotes, UserAttemptedQuestion, UserWatchedVideo
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+
 
 def get_all_topics():
     all_topics = {
@@ -20,6 +23,7 @@ def get_all_topics():
     }
 
     return all_topics
+
 
 def user_info(request):
     # current user's total points
@@ -47,23 +51,74 @@ def user_info(request):
 
     return user_data
 
+def get_all_topics_progress(request):
+
+    all_topics = get_all_topics()
+
+    all_topics_progress = {}
+    
+
+    for topic_number in all_topics:
+        #
+        # Total progress possible per topic
+        #
+        
+        # add pdf
+        topic_total_progress = 1
+        # get topic
+        topic = Topic.objects.get(topicName=all_topics[topic_number])
+        # add videos
+        topic_total_progress = topic_total_progress + Video.objects.filter(topic=topic).count()
+        # add practice questions
+        topic_total_progress = topic_total_progress + Question.objects.filter(topic=topic).count()
+        # add challenges
+        topic_total_progress = topic_total_progress + Challenge.objects.filter(topic=topic).count()
+
+        #
+        # User Progess per topic
+        #
+
+        topic_progress = 0
+        # check if user has viewed the pdf file
+        topic_progress = topic_progress + UserReadNotes.objects.filter(user=request.user, pdf__topic=topic).count()
+
+        # add watched videos
+        topic_progress = topic_progress + UserWatchedVideo.objects.filter(user=request.user, video__topic=topic).count()
+
+        # add attempted practice questions
+        topic_progress = topic_progress + UserAttemptedQuestion.objects.filter(
+        user=request.user, question__topic=topic).count()
+
+        progress = (topic_progress / topic_total_progress) * 100
+
+        all_topics_progress[topic_number] = progress
+    
+    return all_topics_progress
+
+
 
 @login_required
 def index(request):
+    get_all_topics_progress(request)
+
     user_last_location = UserLastLocation.objects.get(user=request.user)
 
     # default video for videos page link
     videos = Video.objects.filter(topic=user_last_location.topic)
 
-
+    # just the names of all the topics
     all_topics = get_all_topics()
+
+    all_topics_progress = get_all_topics_progress(request)
 
     context = {
         'user_last_location': user_last_location,
         'video': videos[0].key,
-        'all_topics': all_topics
+        'all_topics': all_topics,
+        'all_topics_progress': all_topics_progress
     }
     return render(request, 'pages/index.html', context)
+
 
 @login_required
 def topics(request):
@@ -77,7 +132,7 @@ def topics(request):
     allUsers = TotalPoints.objects.order_by('-points')
 
     # current user's rank
-    rank=1
+    rank = 1
     for singleUser in allUsers:
         if singleUser.user == request.user:
             break

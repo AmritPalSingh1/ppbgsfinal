@@ -2,6 +2,9 @@
 <!--Main Content-->
 
 <!--Continue where you left off section-->
+<!-- <section class="background_image" style="background-image:url('https://colorlib.com/preview/theme/unicat/images/home_slider_1.jpg')">
+</section> -->
+
 <section id="home-heading" class="py-5">
     <div class="container py-5">
       <p class="alt-font text-dark-gray mt-5">
@@ -33,7 +36,17 @@
 
   <!--Daily goals section-->
   <section class="bg-none">
-    <div class="container py-5 my-5">
+    <div class="container my-5 pb-5">
+      <div class="py-4">
+        <h5
+        class="text-uppercase alt-font text-extra-dark-gray mb-3 font-weight-700"
+      >
+        Daily Tasks
+      </h5>
+      <span
+        class="separator-line-horrizontal-medium-light2 bg-deep-pink display-table width-100px"
+      ></span>
+    </div>
       <div class="row">
         <div class="col-lg-4 py-3">
           <div class="card text-center alt-font">
@@ -152,7 +165,7 @@
                       <div class="progress" style="height: 2px;">
                         <div
                           class="progress-bar bg-green"
-                          style="width: 75%;"
+                          style="width: {{ all_topics_progress.topic1 }}%;"
                         ></div>
                       </div>
                     </div>
@@ -167,7 +180,7 @@
                       <div class="progress" style="height: 2px;">
                         <div
                           class="progress-bar bg-green"
-                          style="width: 100%;"
+                          style="width: {{ all_topics_progress.topic2 }}%;"
                         ></div>
                       </div>
                     </div>
@@ -181,7 +194,7 @@
                       <div class="progress" style="height: 2px;">
                         <div
                           class="progress-bar bg-green"
-                          style="width: 20%;"
+                          style="width: {{ all_topics_progress.topic3 }}%;"
                         ></div>
                       </div>
                     </div>
@@ -195,7 +208,7 @@
                       <div class="progress" style="height: 2px;">
                         <div
                           class="progress-bar bg-green"
-                          style="width: 50%;"
+                          style="width: {{ all_topics_progress.topic4 }}%;"
                         ></div>
                       </div>
                     </div>
@@ -209,7 +222,7 @@
                       <div class="progress" style="height: 2px;">
                         <div
                           class="progress-bar bg-green"
-                          style="width: 0%;"
+                          style="width: {{ all_topics_progress.topic5 }}%;"
                         ></div>
                       </div>
                     </div>
@@ -223,7 +236,7 @@
                       <div class="progress" style="height: 2px;">
                         <div
                           class="progress-bar bg-green"
-                          style="width: 60%;"
+                          style="width: {{ all_topics_progress.topic6 }}%;"
                         ></div>
                       </div>
                     </div>
@@ -237,7 +250,7 @@
                       <div class="progress" style="height: 2px;">
                         <div
                           class="progress-bar bg-green"
-                          style="width: 10%;"
+                          style="width: {{ all_topics_progress.topic7 }}%;"
                         ></div>
                       </div>
                     </div>
@@ -251,7 +264,7 @@
                       <div class="progress" style="height: 2px;">
                         <div
                           class="progress-bar bg-green"
-                          style="width: 90%;"
+                          style="width: {{ all_topics_progress.topic8 }}%;"
                         ></div>
                       </div>
                     </div>
@@ -265,7 +278,7 @@
                       <div class="progress" style="height: 2px;">
                         <div
                           class="progress-bar bg-green"
-                          style="width: 40%;"
+                          style="width: {{ all_topics_progress.topic9 }}%;"
                         ></div>
                       </div>
                     </div>
@@ -279,7 +292,7 @@
                       <div class="progress" style="height: 2px;">
                         <div
                           class="progress-bar bg-green"
-                          style="width: 60%;"
+                          style="width: {{ all_topics_progress.topic10 }}%;"
                         ></div>
                       </div>
                     </div>
