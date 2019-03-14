@@ -1,27 +1,34 @@
 /* global $ */
 
 import { once } from 'ramda';
+import { add } from './utils.js';
 import store from './store.js';
 import { html, js } from './codeEditor.js';
 
-// -- Populate code editor ------------------------------------------
+// -- Render page on state change -----------------------------------
 
+// populate code editor on data fetch
 const setEditorValuesAndRunCode = once((htmlCode, jsCode) => {
   html.setValue(htmlCode);
   js.setValue(jsCode);
 });
 
-// -- Render page on state change -----------------------------------
-
 store.subscribe(() => {
-  const { coins, exercise, errorCount, dataFetched } = store.getState();
+  const {
+    coins,
+    hintsUsed,
+    exercise,
+    errorCount,
+    dataFetched,
+  } = store.getState();
+  const { hints, task } = exercise;
 
   if (dataFetched) {
     setEditorValuesAndRunCode(exercise.html, exercise.js);
   }
 
   // show task in the navbar
-  $('#task-placeholder').html(exercise.task);
+  $('#task-placeholder').html(task);
 
   // show coin count on the footer
   $('#coin-count-container').html(
@@ -43,6 +50,24 @@ store.subscribe(() => {
   } else {
     $('#modal-body-optional-info').empty();
   }
+
+  const hintTabsItems = Array.from({ length: hints.length }).map(
+    (x, i) => `
+      <li class="nav-item">
+        <a class="nav-link ${i === hintsUsed ? 'active' : ''}" href="#">
+          Hint ${i + 1}
+        </a>
+      </li>`,
+  );
+
+  $('#hint-modal-body').html(`
+    <ul class="nav nav-tabs">
+      ${hintTabsItems}
+    </ul>
+    <div class="mt-4">
+      ${hints[hintsUsed].hintContent}
+    </div>
+  `);
 });
 
 // -- Page takes up rest of view ------------------------------------

@@ -138,12 +138,14 @@
     <!-- footer. shows number of errors, submit button, etc -->
     <div class="bg-light d-flex justify-content-end p-2" id="tail-content">
       <!-- Show coin and error count -->
-      <div class="align-self-center text-secondary" id="coin-count-container">{{ user_data.userCoins.coins }}</div>
+      <div class="align-self-center text-secondary" id="coin-count-container">
+        {{ user_data.userCoins.coins }}
+      </div>
       <div class="align-self-center text-muted" id="error-count-container"></div>
       <!-- hint, toggle console, and submit buttons -->
-      <button class="btn btn-outline-secondary" id="ask-for-hint-button" data-toggle="modal">
+      <button class="btn btn-outline-secondary" id="show-hint-button" data-toggle="modal" data-target="#hintsModal">
         <i class="fas fa-lightbulb"></i>
-        Buy Hint
+        Show Hints
       </button>
       <button class="btn btn-outline-secondary" id="toggle-console-button">
         <i class="fas fa-eye"></i>
@@ -154,15 +156,10 @@
         Submit
       </button>
     </div>
-    <!-- confirm with user before code sumbit -->
-    {% include 'partials/_modal.html' with id='submitModal' title='Submit Code' body='Are you sure you want to submit your code? <div id="modal-body-optional-info"></div>' footer='<button type="button" class="btn btn-secondary" data-dismiss="modal">No. Go back!</button><button type="button" class="btn btn-primary" id="submit-button">Yep! I&apos;m done coding!</button>' %}
-    <!-- prompt the user if they really want to use a hint -->
-    {% include 'partials/_modal.html' with id='hintPrompt' title='Use Hint' body='Are you sure you want to use a hint?' footer='<button type="button" class="btn btn-secondary" data-dismiss="modal">No thanks</button><button type="button" class="btn btn-primary" id="use-hint-button" data-dismiss="modal">Yes! Help!</button>' %}
-    <!-- show the hint contents -->
-    {% include 'partials/_modal.html' with id='hintModal' title='Hint' body='<div id="hint-body"></div>' %}
-    <!-- alert the user if they don't have enough coins for a hint -->
-    {% include 'partials/_modal.html' with id='noCoinsModal' title='No Coins' body='You need <span id="hint-cost"></span> coins to get a hint!' footer='<button type="button" class="btn btn-primary" data-dismiss="modal">Aw. Okay</button>' %}
-  </div>
+  </div> <!-- end of #code--page-container -->
+
+  <!-- all modals are collected here -->
+  <div id="modal-container"></div>
   <div id="task-data" hidden>{{ challenge.exercise.url }}</div>
   <div id="task-id" hidden>{{ challenge.id }}</div>
 {% endblock %}

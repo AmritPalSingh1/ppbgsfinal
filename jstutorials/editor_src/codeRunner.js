@@ -9,18 +9,19 @@ import { nl2br, escapeCode } from './utils.js';
 
 // -- Console area --------------------------------------------------
 
-export const log = x => {
+const log = x => {
   $('#console-output').append(`<samp>${x}</samp><br />`);
   console.log(x);
 };
 
-export const fail = x => {
+const fail = x => {
   store.dispatch(incError());
   $('#console-output').append(
     `<code><i class="fas fa-times-circle"></i> ${x}</code><br />`,
   );
 };
 
+// expose fail and log so the iframe can use them
 window.fail = fail;
 window.log = log;
 
@@ -50,10 +51,10 @@ const writeToFrame = code => {
 };
 
 const testCode = jsCode => {
-  const { exercise, errorCount } = store.getState();
-  const { test } = exercise;
+  const { test } = store.getState().exercise;
 
-  // test if code exceeds maxLines
+  // test if number of lines exceeds maxLines
+  // fail if it does
   if (test.maxLines < jsCode.trim().split('\n').length) {
     fail(
       `You must complete this exercise with ${
@@ -62,7 +63,7 @@ const testCode = jsCode => {
     );
   }
 
-  // test if code contains certain strings
+  // fail if code does not contain certain strings
   test.has.forEach(piece => {
     const re = new RegExp(piece.regex);
 
@@ -71,7 +72,7 @@ const testCode = jsCode => {
     }
   });
 
-  // test if code does not contain certain strings
+  // fail if code contains certain strings
   test.hasNot.forEach(piece => {
     const re = new RegExp(piece.regex);
 
@@ -80,17 +81,16 @@ const testCode = jsCode => {
     }
   });
 
-  if (errorCount === 0) {
+  if (store.getState().errorCount === 0) {
     log(
-      `<span class="text-success">
-        <i class="fas fa-check-circle"></i> Yay! All tests passed!
-      </span>`,
+      '<span class="text-success"><i class="fas fa-check-circle"></i> Yay! All tests passed!</span>',
     );
   }
 };
 
 // run the user's code
 // the results appear in the console area
+// eslint-disable-next-line import/prefer-default-export
 export const runCode = () => {
   store.dispatch(resetError());
 

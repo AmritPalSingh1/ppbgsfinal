@@ -8,7 +8,10 @@ const exercise = {
   // exercise description
   task: '',
   // store hints
-  hints: [],
+  hints: [{
+    hintContent: 'Empty hint content',
+    hintCost: 0,
+  }],
   // starter html code
   html: '',
   // starter js code
@@ -47,6 +50,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, errorCount: 0 };
     case 'set-coin-count':
       return { ...state, coins: action.coinCount };
+    case 'set-hints-used':
+      return { ...state, hintsUsed: action.hintsUsed };
     case 'no-op':
       return state;
     default:
