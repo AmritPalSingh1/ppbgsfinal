@@ -67,17 +67,17 @@ test:
   setup: ''
   run: |
     let expected = '+--+\n+--+';
-    if (frame([]).trim() !== expected) {
+    if ((frame([]) || '').trim() !== expected) {
       fail('Failed case [] (Empty list)');
     }
 
     expected = '+-------+\n| Hello |\n| I am  |\n| in    |\n| a     |\n| frame |\n+-------+';
-    if (frame(["Hello", "I am", "in", "a", "frame"]).trim() !== expected) {
+    if ((frame(["Hello", "I am", "in", "a", "frame"]) || '').trim() !== expected) {
       fail('Failed case ["Hello", "I am", "in", "a", "frame"]');
     }
 
     expected = '+------------------------------------+\n| supercalifragilisticexpialidocious |\n| Even though the sound of it        |\n| Is something quite atrocious       |\n+------------------------------------+'
-    if (frame(["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]).trim() !== expected) {
+    if ((frame(["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]) || '').trim() !== expected) {
       fail('Failed case ["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]');
     }
   cleanup: ''
