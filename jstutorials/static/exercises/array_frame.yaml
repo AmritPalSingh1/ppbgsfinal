@@ -1,0 +1,79 @@
+---
+task: Print an array of strings in a frame
+details: |
+  <p><strong>Write a function that returns the contents of an array in a frame</strong></p>
+  <p>Input:<p>
+
+  <pre>
+  ["Hello", "I am", "in", "a", "frame"]
+  </pre>
+
+  <p>Output:</p>
+
+  <pre>
+  +-------+
+  | Hello |
+  | I am  |
+  | in    |
+  | a     |
+  | frame |
+  +-------+
+  <pre>
+hints:
+  - hintContent: |
+      <p>Here is one solution:</p>
+
+      <pre>
+      function longest(arr) {
+        var len = 0;
+        for (var i = 0; i < arr.length; i++) {
+          len = Math.max(len, arr[i].length);
+        }
+        return len;
+      }
+
+      function pad(str, len) {
+        while (str.length < len) {
+          str += " ";
+        }
+        return str;
+      }
+
+      function frame(arr) {
+        var length = longest(arr);
+        var verticalBorder = "+" + "-".repeat(length + 2) + "+\n";
+        var framed = verticalBorder;
+        for (var i = 0; i < arr.length; i++) {
+          framed += "| " + pad(arr[i], length) +  " |\n";
+        }
+        framed += verticalBorder;
+        return framed;
+      }
+      </pre>
+    hintCost: 1
+html: ''
+js: |
+  function frame(arr) {
+    // your code here
+    return "Not implemented";
+  }
+
+  var framed = frame(["Hello", "I am", "in", "a", "frame"]);
+  console.log(framed);
+hintReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: ''
+  run: |
+    const expected = '+-------+\n| Hello |\n| I am  |\n| in    |\n| a     |\n| frame |\n+-------+';
+    if (frame(["Hello", "I am", "in", "a", "frame"]).trim() !== expected) {
+      fail('Failed case ["Hello", "I am", "in", "a", "frame"]');
+    }
+  cleanup: ''
+  has:
+    - regex: (for|while)
+      message: Your code is missing a loop (use "for", "while", or "do... while").
+  hasNot: []
+  maxLines: 50
+  errorThreshold: 2

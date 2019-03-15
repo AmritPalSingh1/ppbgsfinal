@@ -82,7 +82,7 @@ store.subscribe(() => {
 
   $('#submit-button').attr(
     'class',
-    errorCount ? 'btn btn-outline-danger' : 'btn btn-outline-success',
+    errorCount ? 'btn btn-outline-danger' : 'btn btn-success',
   );
 
   $('#html-label-read-only').html(htmlReadOnly && '(Read Only)');
