@@ -11,8 +11,8 @@ import {
   SET_HINTS_USED,
   SET_HINT_PAGE,
   SET_COIN_COUNT,
-  NO_OP,
   SET_CSRF_TOKEN,
+  NO_OP,
 } from './constants.js';
 
 const reducer = (state = initialState, action) => {

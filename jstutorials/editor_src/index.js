@@ -14,7 +14,7 @@ import { runCode } from './codeRunner.js';
 
 store.dispatch(setCsrfToken($('[name=csrfmiddlewaretoken]').val()));
 store.dispatch(setCoins($('#coins').html()));
-store.dispatch(fetchExercise('/static/exercises/array_frame.yaml'));
+store.dispatch(fetchExercise('/static/exercises/dom_counter.yaml'));
 
 // -- Handle code change --------------------------------------------
 

@@ -37,23 +37,14 @@ const transform = source =>
     plugins: ['loopProtection'],
   }).code;
 
-// -- Run user code --------------------------------------------------
-
-// write code to the iframe
-const writeToFrame = code => {
-  const iframeDocument = $('iframe')[0].contentWindow.document;
-
-  iframeDocument.open();
-  iframeDocument.write(code);
-  iframeDocument.close();
-};
+// -- Test user code -------------------------------------------------
 
 const testCode = jsCode => {
   const { test } = store.getState().exercise;
 
   // test if number of lines exceeds maxLines
   // fail if it does
-  if (test.maxLines < jsCode.trim().split('\n').length) {
+  if (test.maxLines < jsCode.trim().split('\\n').length) {
     fail(
       `You must complete this exercise with ${
         test.maxLines
@@ -80,8 +71,17 @@ const testCode = jsCode => {
   });
 };
 
-// run the user's code
-// the results appear in the console area
+// -- Run user code --------------------------------------------------
+
+// write code to the iframe
+const writeToFrame = code => {
+  const iframeDocument = $('iframe')[0].contentWindow.document;
+
+  iframeDocument.open();
+  iframeDocument.write(code);
+  iframeDocument.close();
+};
+
 // eslint-disable-next-line import/prefer-default-export
 export const runCode = () => {
   store.dispatch(resetError());

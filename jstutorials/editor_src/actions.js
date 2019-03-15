@@ -12,8 +12,8 @@ import {
   SET_HINTS_USED,
   SET_HINT_PAGE,
   SET_COIN_COUNT,
-  NO_OP,
   SET_CSRF_TOKEN,
+  NO_OP,
 } from './constants.js';
 
 export const fetchExercise = endpoint => dispatch =>
@@ -45,7 +45,6 @@ export const resetError = () => ({ type: RESET_ERROR });
 export const setHintsUsed = hintsUsed => ({ type: SET_HINTS_USED, hintsUsed });
 export const setPage = page => ({ type: SET_HINT_PAGE, page });
 export const setCoins = coinCount => ({ type: SET_COIN_COUNT, coinCount });
-
 export const setCsrfToken = token => ({ type: SET_CSRF_TOKEN, token });
 
 export const noOp = () => ({ type: NO_OP });

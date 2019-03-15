@@ -1,0 +1,98 @@
+---
+task: Create a counter application
+details: |
+  <p><strong>Make a counter that can increment and decrement</strong></p>
+  <p>There are three buttons and a number on the page</p>
+  <p>The <code>+</code> button should increase the number displayed by 1</p>
+  <p>The <code>-</code> button should decrease the number displayed by 1</p>
+  <p>The <code>reset</code> button should set the number displayed to 0</p>
+hints: 
+  - hintContent: |
+      <p>To get a HTML element:</p>
+
+      <pre>
+      var count = document.getElementById("count");
+      </pre>
+    hintCost: 1
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      var count = document.getElementById("count");
+      var state = 0;
+
+      function increment() {
+        state++;
+        count.innerHTML = state;
+      }
+
+      function decrement() {
+        state--;
+        count.innerHTML = state;
+      }
+
+      function reset() {
+        state = 0;
+        count.innerHTML = state;
+      }
+      </pre>
+    hintCost: 1
+html: |
+  <button id="inc-button" onclick="increment()">+</button>
+  <div id="count">0</div>
+  <button id="dec-button" onclick="decrement()">-</button>
+  <br /><br />
+  <button id="reset-button" onclick="reset()">reset</button>
+js: |
+  function increment() {
+
+  }
+
+  function decrement() {
+
+  }
+
+  function reset() {
+
+  }
+htmlReadOnly: true
+jsReadOnly: false
+secret: ''
+test:
+  setup: ''
+  run: |
+    const $ = x => document.querySelector(x);
+
+    if ($('#count').innerText !== "0") {
+      fail('The counter should start at 0');
+    }
+
+    $('#inc-button').click();
+    if ($('#count').innerText !== "1") {
+      fail('The counter should be 1 after clicking + button once');
+    }
+
+    $('#inc-button').click();
+    if ($('#count').innerText !== "2") {
+      fail('The counter should be 2 after clicking + button twice');
+    }
+
+    $('#reset-button').click();
+    if ($('#count').innerText !== "0") {
+      fail('The counter should be 0 after clicking reset button');
+    }
+
+    $('#dec-button').click();
+    if ($('#count').innerText !== "-1") {
+      fail('The counter should be -1 after clicking - button once');
+    }
+
+    $('#dec-button').click();
+    if ($('#count').innerText !== "-2") {
+      fail('The counter should be -2 after clicking - button twice');
+    }
+  cleanup: ''
+  has: []
+  hasNot: []
+  maxLines: 30
+  errorThreshold: 4

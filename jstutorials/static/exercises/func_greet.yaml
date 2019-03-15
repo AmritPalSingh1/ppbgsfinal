@@ -1,0 +1,97 @@
+---
+task: Write a greeting function
+details: |
+  <p><strong>Write a function to return a greeting</strong></p>
+  <p>Sample:<p>
+  <pre>
+  console.log(greet("Hello", "Sarah"));
+  console.log(greet("Yo", "Jeremy"));
+  console.log(greet("Hello"));
+  console.log(greet("Good morning"));
+  </pre>
+
+  <p>Output:</p>
+  <pre>
+  Hello, Sarah!
+  Yo, Jeremy!
+  Hello!
+  Good morning!
+  <pre>
+hints:
+  - hintContent: |
+      <p>To check if a variable is undefined:</p>
+
+      <pre>
+      var a;
+
+      if (a === undefined) {
+        // a doesn't have a value!
+      }
+      </pre>
+    hintCost: 1
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      function greet(greeting, name) {
+        if (name === undefined) {
+          return greeting + "!";
+        }
+        return greeting + ", " + name + "!";
+      }
+      </pre>
+    hintCost: 1
+html: ''
+js: |
+  function greet(greeting, name) {
+    // your code here
+  }
+
+  console.log(greet("Hello", "Sarah"));
+  console.log(greet("Hello"));
+hintReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: greet = undefined;
+  run: |
+    if (!greet) {
+      fail('You must use the function "greet"');
+    }
+
+    try {
+      if (greet('Hello', 'Sarah') !== 'Hello, Sarah!') {
+        throw new Error();
+      }
+    } catch (e) {
+      fail('Failed case: greet("Hello", "Sarah")');
+    }
+
+    try {
+      if (greet('Yo', 'Jeremy') !== 'Yo, Jeremy!') {
+        throw new Error();
+      }
+    } catch (e) {
+      fail('Failed case: greet("Yo", "Jeremy")');
+    }
+
+    try {
+      if (greet('Hello') !== 'Hello!') {
+        throw new Error();
+      }
+    } catch (e) {
+      fail('Failed case: greet("Hello")');
+    }
+
+    try {
+      if (greet('Good morning') !== 'Good morning!') {
+        throw new Error();
+      }
+    } catch (e) {
+      fail('Failed case: greet("Good morning")');
+    }
+  cleanup: ''
+  has: []
+  hasNot: []
+  maxLines: 25
+  errorThreshold: 4

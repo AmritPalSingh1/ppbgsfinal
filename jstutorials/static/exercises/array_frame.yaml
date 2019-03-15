@@ -55,7 +55,6 @@ html: ''
 js: |
   function frame(arr) {
     // your code here
-    return "Not implemented";
   }
 
   var A = ["Hello", "I am", "in", "a", "frame"];
@@ -76,7 +75,7 @@ test:
         throw new Error();
       }
     } catch (e) {
-      fail('Failed case [] (Empty list)');
+      fail('Failed case: [] (Empty list)');
     }
 
     expected = '+-------+\n| Hello |\n| I am  |\n| in    |\n| a     |\n| frame |\n+-------+';
@@ -85,7 +84,7 @@ test:
         throw new Error();
       }
     } catch (e) {
-      fail('Failed case ["Hello", "I am", "in", "a", "frame"]');
+      fail('Failed case: ["Hello", "I am", "in", "a", "frame"]');
     }
 
     expected = '+------------------------------------+\n| supercalifragilisticexpialidocious |\n| Even though the sound of it        |\n| Is something quite atrocious       |\n+------------------------------------+'
@@ -94,7 +93,7 @@ test:
         throw new Error();
       }
     } catch (e) {
-      fail('Failed case ["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]');
+      fail('Failed case: ["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]');
     }
   cleanup: ''
   has: []
