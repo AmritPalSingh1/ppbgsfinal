@@ -59,7 +59,7 @@ createModal(
   'Task',
   '<div id="task-detail-modal-body"></div>',
   `<button type="button" class="btn btn-secondary" data-dismiss="modal">
-     Back to code
+     Close
    </button>`,
 )
 

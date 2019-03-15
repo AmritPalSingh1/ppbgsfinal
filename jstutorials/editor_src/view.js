@@ -4,6 +4,7 @@ import { once } from 'ramda';
 import { setPage, buyHint } from './actions.js';
 import store from './store.js';
 import { html, js } from './codeEditor.js';
+import { runCode } from './codeRunner.js';
 
 // -- HTML Components -----------------------------------------------
 
@@ -58,6 +59,12 @@ const setupCodeEditors = once((htmlCode, jsCode, htmlReadOnly, jsReadOnly) => {
   js.setValue(jsCode);
   html.setOption('readOnly', htmlReadOnly);
   js.setOption('readOnly', jsReadOnly);
+  runCode();
+});
+
+// show task details
+const viewTaskDetails = once(() => {
+  $('#taskDetailsModal').modal('show');
 });
 
 store.subscribe(() => {
@@ -71,10 +78,6 @@ store.subscribe(() => {
     dataFetched,
   } = store.getState();
   const { hints, task, details, htmlReadOnly, jsReadOnly } = exercise;
-
-  if (dataFetched) {
-    setupCodeEditors(exercise.html, exercise.js, htmlReadOnly, jsReadOnly);
-  }
 
   $('#html-label-read-only').html(htmlReadOnly && '(Read Only)');
   $('#js-label-read-only').html(jsReadOnly && '(Read Only)');
@@ -96,6 +99,11 @@ store.subscribe(() => {
       ? `You currently have ${errorCount} errors in your JavaScript code!`
       : '',
   );
+
+  if (dataFetched) {
+    setupCodeEditors(exercise.html, exercise.js, htmlReadOnly, jsReadOnly);
+    viewTaskDetails();
+  }
 });
 
 // -- Page takes up rest of view ------------------------------------

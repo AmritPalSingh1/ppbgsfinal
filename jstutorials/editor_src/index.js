@@ -12,7 +12,7 @@ import { runCode } from './codeRunner.js';
 
 // -- Onload dispatch -----------------------------------------------
 
-store.dispatch(fetchExercise('/static/mock_data/exercise_canvas.yml'));
+store.dispatch(fetchExercise('/static/exercises/expressions_hello.yaml'));
 store.dispatch(setCoins($('#coin-count-container').html()));
 
 // -- Handle code change --------------------------------------------

@@ -1,0 +1,62 @@
+---
+task: "Say Hello!"
+details: |
+  <p><strong>Print hello with your name to the console</strong></p>
+  <p>The console should read:</p>
+  <pre><code>Hello, &lt;Your name&gt;!</code></pre>
+  <p>For example: <code>Hello, Jason!</code></p>
+hints: 
+  - hintContent: |
+      To print something to the console, type:
+      
+      <pre>
+      console.log("This gets displayed to the console");
+      </pre>
+    hintCost: 1
+  - hintContent: |
+      <pre>
+      var name = "Jason";
+      var greeting = "Hey, " + name;
+      </pre>
+
+      The variable <code>greeting</code> contains the value: <code>"Hey, Jason"</code>
+    hintCost: 1
+  - hintContent: |
+      This is one solution: 
+
+      <pre><code>
+      var name = "Jason";
+      console.log("Hello, " + name + "!");
+      </code></pre>
+    hintCost: 1
+html: '<p>Write your code in the JS editor at the bottom left</p>'
+js: ''
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+  run: |
+    consoleOutput = consoleOutput.trim();
+    const re = /^Hello, .*\!$/;
+    if (!re.test(consoleOutput)) {
+      consoleOutput = consoleOutput.replace(/\n/g, '<br />');
+      fail('Your greeting is incorrect! Example output: "Hello, Jason!"');
+    }
+  cleanup: 'console.log = oldLog;'
+  has:
+    - regex: 'console\.log'
+      message: 'Your code is missing console.log'
+    - regex: (var|let|const)
+      message: 'Your code should declare a variable for your name'
+    - regex: '\+'
+      message: 'Your code should combine strings with the "+" sign'
+  hasNot: []
+  maxLines: 10
+  errorThreshold: 0

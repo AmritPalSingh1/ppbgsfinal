@@ -5,4 +5,6 @@ import reducer from './reducer.js';
 
 const store = createStore(reducer, applyMiddleware(thunk, logger));
 
+window.store = store;
+
 export default store;
