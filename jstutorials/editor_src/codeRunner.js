@@ -63,7 +63,7 @@ const testCode = jsCode => {
 
   // fail if code does not contain certain strings
   test.has.forEach(piece => {
-    const re = new RegExp(piece.regex);
+    const re = new RegExp(piece.regex, piece.flags || '');
 
     if (!re.test(jsCode)) {
       fail(piece.message);
@@ -72,7 +72,7 @@ const testCode = jsCode => {
 
   // fail if code contains certain strings
   test.hasNot.forEach(piece => {
-    const re = new RegExp(piece.regex);
+    const re = new RegExp(piece.regex, piece.flags || '');
 
     if (re.test(jsCode)) {
       fail(piece.message);

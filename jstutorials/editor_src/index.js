@@ -12,7 +12,7 @@ import { runCode } from './codeRunner.js';
 
 // -- Onload dispatch -----------------------------------------------
 
-store.dispatch(fetchExercise('/static/exercises/loop_intro.yaml'));
+store.dispatch(fetchExercise('/static/exercises/conditions_even_num.yaml'));
 store.dispatch(setCoins($('#coin-count-container').html()));
 
 // -- Handle code change --------------------------------------------

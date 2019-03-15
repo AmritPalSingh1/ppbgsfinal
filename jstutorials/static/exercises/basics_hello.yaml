@@ -8,7 +8,7 @@ details: |
   <p>Use a variable to store your name</p>
 hints: 
   - hintContent: |
-      To print something to the console, type:
+      <p>To print something to the console, type:</p>
       
       <pre>
       console.log("This gets displayed to the console");
