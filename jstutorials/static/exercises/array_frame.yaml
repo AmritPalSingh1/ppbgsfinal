@@ -58,22 +58,30 @@ js: |
     return "Not implemented";
   }
 
-  var framed = frame(["Hello", "I am", "in", "a", "frame"]);
-  console.log(framed);
+  var A = ["Hello", "I am", "in", "a", "frame"];
+  console.log(frame(A));
 hintReadOnly: false
 jsReadOnly: false
 secret: ''
 test:
   setup: ''
   run: |
-    const expected = '+-------+\n| Hello |\n| I am  |\n| in    |\n| a     |\n| frame |\n+-------+';
+    let expected = '+--+\n+--+';
+    if (frame([]).trim() !== expected) {
+      fail('Failed case [] (Empty list)');
+    }
+
+    expected = '+-------+\n| Hello |\n| I am  |\n| in    |\n| a     |\n| frame |\n+-------+';
     if (frame(["Hello", "I am", "in", "a", "frame"]).trim() !== expected) {
       fail('Failed case ["Hello", "I am", "in", "a", "frame"]');
     }
+
+    expected = '+------------------------------------+\n| supercalifragilisticexpialidocious |\n| Even though the sound of it        |\n| Is something quite atrocious       |\n+------------------------------------+'
+    if (frame(["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]).trim() !== expected) {
+      fail('Failed case ["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]');
+    }
   cleanup: ''
-  has:
-    - regex: (for|while)
-      message: Your code is missing a loop (use "for", "while", or "do... while").
+  has: []
   hasNot: []
   maxLines: 50
-  errorThreshold: 2
+  errorThreshold: 3
