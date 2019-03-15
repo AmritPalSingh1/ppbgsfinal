@@ -78,12 +78,6 @@ const testCode = jsCode => {
       fail(piece.message);
     }
   });
-
-  if (store.getState().errorCount === 0) {
-    log(
-      '<span class="text-success"><i class="fas fa-check-circle"></i> Yay! All tests passed!</span>',
-    );
-  }
 };
 
 // run the user's code

@@ -36,7 +36,7 @@ createModal(
   `<button type="button" class="btn btn-secondary" data-dismiss="modal">
      No. Go back!
    </button>
-   <button type="button" class="btn btn-primary" id="submit-button">
+   <button type="button" class="btn btn-primary" id="submit-results-button">
      Yep! I&apos;m done coding!
    </button>`,
 );

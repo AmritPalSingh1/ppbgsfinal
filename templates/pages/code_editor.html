@@ -145,10 +145,10 @@
     <!-- footer. shows number of errors, submit button, etc -->
     <div class="bg-light d-flex justify-content-end p-2" id="tail-content">
       <!-- Show coin and error count -->
+      <div class="align-self-center" id="error-count-container"></div>
       <div class="align-self-center text-secondary" id="coin-count-container">
         {{ user_data.userCoins.coins }}
       </div>
-      <div class="align-self-center text-muted" id="error-count-container"></div>
       <!-- hint, toggle console, and submit buttons -->
       <button class="btn btn-outline-secondary" id="show-hint-button" data-toggle="modal" data-target="#hintsModal">
         <i class="fas fa-lightbulb"></i> Show Hints
@@ -156,7 +156,7 @@
       <button class="btn btn-outline-secondary" id="toggle-console-button">
         <i class="fas fa-eye"></i> Toggle Console
       </button>
-      <button class="btn btn-outline-primary" data-toggle="modal" data-target="#submitModal">
+      <button class="btn btn-outline-primary" id="submit-button" data-toggle="modal" data-target="#submitModal">
         <i class="fas fa-file-upload"></i> Submit
       </button>
     </div>

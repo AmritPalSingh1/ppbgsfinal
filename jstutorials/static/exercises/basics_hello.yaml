@@ -5,6 +5,7 @@ details: |
   <p>The console should read:</p>
   <pre><code>Hello, &lt;Your name&gt;!</code></pre>
   <p>For example: <code>Hello, Jason!</code></p>
+  <p>Use a variable to store your name</p>
 hints: 
   - hintContent: |
       To print something to the console, type:
@@ -24,10 +25,10 @@ hints:
   - hintContent: |
       This is one solution: 
 
-      <pre><code>
+      <pre>
       var name = "Jason";
       console.log("Hello, " + name + "!");
-      </code></pre>
+      </pre>
     hintCost: 1
 html: '<p>Write your code in the JS editor at the bottom left</p>'
 js: ''

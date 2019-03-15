@@ -11,8 +11,9 @@ import { runCode } from './codeRunner.js';
 const Coins = coins => `<i class="fas fa-coins"></i> ${coins} Coins`;
 
 const Errors = errors =>
-  `<span class="${errors ? 'text-danger' : ''}">
-    <i class="fas fa-times-circle"></i> ${errors} Errors
+  `<span class="${errors ? 'text-danger' : 'text-success'}">
+    <i class="fas ${errors ? 'fa-times-circle' : 'fa-check-circle'}"></i>
+    ${errors} Errors
   </span>`;
 
 const $HintTabs = (hints, page, hintsUsed) =>
@@ -78,6 +79,11 @@ store.subscribe(() => {
     dataFetched,
   } = store.getState();
   const { hints, task, details, htmlReadOnly, jsReadOnly } = exercise;
+
+  $('#submit-button').attr(
+    'class',
+    errorCount ? 'btn btn-outline-danger' : 'btn btn-outline-success',
+  );
 
   $('#html-label-read-only').html(htmlReadOnly && '(Read Only)');
   $('#js-label-read-only').html(jsReadOnly && '(Read Only)');

@@ -12,7 +12,7 @@ import { runCode } from './codeRunner.js';
 
 // -- Onload dispatch -----------------------------------------------
 
-store.dispatch(fetchExercise('/static/exercises/expressions_hello.yaml'));
+store.dispatch(fetchExercise('/static/exercises/loop_intro.yaml'));
 store.dispatch(setCoins($('#coin-count-container').html()));
 
 // -- Handle code change --------------------------------------------
@@ -36,7 +36,7 @@ html.on('change', cm => {
 
 // -- Submit code ---------------------------------------------------
 
-$('#submit-button').click(() => {
+$('#submit-results-button').click(() => {
   const { errorCount, exercise } = store.getState();
   const threshold = exercise.test.errorThreshold;
 
