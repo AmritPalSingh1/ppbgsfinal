@@ -3,7 +3,7 @@
 // I am so sorry that you're reading my code
 
 import store from './store.js';
-import { fetchExercise, setCoins, setHtmlCode, setJsCode } from './actions.js';
+import { fetchExercise, setCoins, setHtmlCode, setJsCode,setCsrfToken } from './actions.js';
 import './modals.js';
 import './splitHandler.js';
 import './view.js';
@@ -12,8 +12,9 @@ import { runCode } from './codeRunner.js';
 
 // -- Onload dispatch -----------------------------------------------
 
+store.dispatch(setCsrfToken($('[name=csrfmiddlewaretoken]').val()));
+store.dispatch(setCoins($('#coins').html()));
 store.dispatch(fetchExercise('/static/exercises/array_frame.yaml'));
-store.dispatch(setCoins($('#coin-count-container').html()));
 
 // -- Handle code change --------------------------------------------
 

@@ -146,9 +146,7 @@
     <div class="bg-light d-flex justify-content-end p-2" id="tail-content">
       <!-- Show coin and error count -->
       <div class="align-self-center" id="error-count-container"></div>
-      <div class="align-self-center text-secondary" id="coin-count-container">
-        {{ user_data.userCoins.coins }}
-      </div>
+      <div class="align-self-center text-secondary" id="coin-count-container"></div>
       <!-- hint, toggle console, and submit buttons -->
       <button class="btn btn-outline-secondary" id="show-hint-button" data-toggle="modal" data-target="#hintsModal">
         <i class="fas fa-lightbulb"></i> Show Hints
@@ -164,6 +162,9 @@
 
   <!-- all modals are collected here by modals.js -->
   <div id="modal-container"></div>
+
+  <div id="coins" hidden>{{ user_data.userCoins.coins }}</div>
   <div id="task-data" hidden>{{ challenge.exercise.url }}</div>
   <div id="task-id" hidden>{{ challenge.id }}</div>
+  {% csrf_token %}
 {% endblock %}
