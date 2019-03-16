@@ -1,7 +1,7 @@
 /* global $ */
 
 import { once } from 'ramda';
-import store from './store.js';
+import store from './redux/store.js';
 import render from './view.js';
 import { html, js } from './codeEditor.js';
 import { runCode } from './codeRunner.js';

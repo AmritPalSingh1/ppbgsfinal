@@ -1,7 +1,7 @@
 /* global $ */
 
 import jsyaml from 'js-yaml';
-import { toFormData } from './utils.js';
+import { toFormData } from '../utils.js';
 import {
   FETCH_SUCCESS,
   HINT_PURCHASE_SUCCESS,

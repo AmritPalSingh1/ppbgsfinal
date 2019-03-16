@@ -1,7 +1,7 @@
 /* global $ */
 
-import store from './store.js';
-import { setPage, buyHint } from './actions.js';
+import store from './redux/store.js';
+import { setPage, buyHint } from './redux/actions.js';
 
 // -- HTML Components -----------------------------------------------
 

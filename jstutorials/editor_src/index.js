@@ -7,14 +7,14 @@
 // bring a 20 meter stick with you
 
 import { curry } from 'ramda';
-import store from './store.js';
+import store from './redux/store.js';
 import {
   fetchExercise,
   setCoins,
   setHintsUsed,
   setHtmlCode,
   setJsCode,
-} from './actions.js';
+} from './redux/actions.js';
 import './splitHandler.js';
 import './modals.js';
 import './subscriptions.js';
