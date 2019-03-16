@@ -447,11 +447,9 @@
   position: relative;
   min-height: 200px;
   background: url('https://colorlib.com/preview/theme/unicat/images/home_slider_1.jpg');
-  /*background: url('https://images.unsplash.com/photo-1533601017-dc61895e03c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80');*/ 
-  /* background: url('https://colorlib.com/preview/theme/educrown/assest/img/slider/slide-1.jpg'); */
+  /*background: url('https://colorlib.com/preview/theme/educrown/assest/img/slider/slide-1.jpg');*/
   background-attachment: fixed;
   background-size: auto 100%;
-  /*background-size: 100% 100%;*/
   background-repeat: no-repeat;
   background-position: 0 0px;
 }
@@ -531,11 +529,20 @@
   position: relative;
 }
 
+.dotted {
+  border-bottom: 1px dotted #000;
+}
 
-.background_image {
-  width: 100%;
-  height: 86vh;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+.border-pink {
+  border: 1px solid #ff214f !important;
+}
+
+.dotted2 {
+  border-bottom: 1px dotted white;
+}
+
+.blue-overlay{
+  background-color: rgba(16, 216, 243, 0.6);
+  height: 100%;
+  overflow: auto;
 }

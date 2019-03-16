@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 from topics.models import Video, Question, Pdf, Topic
+from challenges.models import Challenge
 
 
 class UserWatchedVideo(models.Model):
@@ -45,3 +46,11 @@ class UserLastLocation(models.Model):
         choices=Last_location,
         default=NOTES,
     )
+
+
+class UserAttemptedChallenge(models.Model):
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    start_datetime = models.DateTimeField(default=datetime.now, blank=True)
+    end_datetime = models.DateTimeField(default=datetime.now, blank=True)
+    points = models.IntegerField(default=0)

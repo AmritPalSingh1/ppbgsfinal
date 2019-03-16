@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from userprogress.models import TotalPoints, TotalCoins, UserLastLocation
-from topics.models import Video, Topic, Question
+from topics.models import Video, Topic, Question, Query
 from challenges.models import Challenge
 from userprogress.models import UserReadNotes, UserAttemptedQuestion, UserWatchedVideo
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -103,19 +103,29 @@ def index(request):
 
     user_last_location = UserLastLocation.objects.get(user=request.user)
 
+    # current user's info
+    user_data = user_info(request)
+
     # default video for videos page link
     videos = Video.objects.filter(topic=user_last_location.topic)
 
     # just the names of all the topics
     all_topics = get_all_topics()
 
+    # topics progress
     all_topics_progress = get_all_topics_progress(request)
+
+    # Latest Questions asked
+    latest_questions = Query.objects.all().order_by('-id')[:5]
+
 
     context = {
         'user_last_location': user_last_location,
         'video': videos[0].key,
         'all_topics': all_topics,
-        'all_topics_progress': all_topics_progress
+        'all_topics_progress': all_topics_progress,
+        'latest_questions': latest_questions,
+        'user_data': user_data
     }
     return render(request, 'pages/index.html', context)
 

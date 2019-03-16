@@ -2,12 +2,13 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 # Import required models
 from .models import Topic, Video, Question, Pdf, Query, Comment
 from userprogress.models import UserAttemptedQuestion, UserWatchedVideo, UserReadNotes, TotalCoins, TotalPoints, UserLastLocation
 from django.contrib.auth.models import User
-from challenges.models import Challenge, DoublePoint, FreeWin
+from challenges.models import Challenge, DoublePoint, FreeWin, Hint
 from userprogress.models import TotalPoints, TotalCoins
 
 
@@ -430,6 +431,47 @@ def challenges(request):
 
     return render(request, 'pages/challenges.html', context)
 
+
+def hint(request):
+    # current user's total coins
+    userCoins = TotalCoins.objects.get(user=request.user)
+    total_coins = userCoins.coins
+
+    # retreive challenge id
+    if 'challenge_id' in request.POST:
+        challenge_id = int(request.POST['challenge_id'])
+    else:
+        return JsonResponse({'error': 'no challenge_id'})
+
+    # retreive coins
+    if 'coins' in request.POST:
+        coins = int(request.POST['coins'])
+        if coins > total_coins:
+            return JsonResponse({'error': 'Not enough coins'})
+        if coins > 0:
+            coins = coins * (-1)
+    else:
+        return JsonResponse({'error': 'no coins'})
+    
+    challenge = Challenge.objects.get(id=challenge_id)
+
+    # check if user has already used any hint for that question
+    pre_hint = Hint.objects.filter(challenge=challenge, user=request.user)
+
+    # if hint exists
+    if pre_hint:
+        hint = Hint.objects.get(challenge=challenge, user=request.user)
+        hint.hints_baught = hint.hints_baught + 1
+        hint.save()
+        update_user_coins(request, coins)
+        hint_number = hint.hints_baught
+    else:
+        hint = Hint(challenge=challenge, user=request.user)
+        hint.save()
+        update_user_coins(request, coins)
+        hint_number = 1
+
+    return JsonResponse({'total_coins': total_coins-coins, 'hint_number': hint_number})
 
 @login_required
 def challenge(request):
