@@ -1,130 +1,8 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} 
+{% load static %}
+{% load humanize %}
+{% block content %}
 <!--Main Content-->
-
-<!--Continue where you left off section-->
-<!-- <section class="background_image" style="background-image:url('https://colorlib.com/preview/theme/unicat/images/home_slider_1.jpg')">
-</section> -->
-
-<section id="home-heading" class="py-5">
-    <div class="container py-5">
-      <p class="alt-font text-dark-gray mt-5">
-        {{ user_last_location.topic.topicName }} <span class="text-capitalize">({{ user_last_location.location }})</span> 
-      </p>
-      <h1 class="alt-font text-extra-dark-gray font-weight-700">
-        Continue where you left off
-      </h1>
-      <span
-        class="separator-line-horrizontal-medium-light2 bg-deep-pink display-table my-3 width-100px"
-      ></span>
-      {% if user_last_location.location == 'notes' %}
-        <form action="{% url 'notes' %}">
-      {% elif user_last_location.location == 'quiz' %}
-        <form action="{% url 'quiz' %}">
-      {% elif user_last_location.location == 'videos' %}
-        <form action="{% url 'videos' %}">
-            <input type="hidden" name="key" value="{{ video }}">
-      {% elif user_last_location.location == 'challenges' %}
-        <form action="{% url 'challenges' %}">
-      {% endif %}
-          <input type="hidden" value="{{ user_last_location.topic.topicName }}" name="topic_name">
-          <button type="submit" class="btn btn-blue mt-4 mb-5">
-            Continue <i class="fas fa-arrow-right text-small text-light"></i>        
-          </button>
-        </form>
-    </div>
-  </section>
-
-  <!--Daily goals section-->
-  <section class="bg-none">
-    <div class="container my-5 pb-5">
-      <div class="py-4">
-        <h5
-        class="text-uppercase alt-font text-extra-dark-gray mb-3 font-weight-700"
-      >
-        Daily Tasks
-      </h5>
-      <span
-        class="separator-line-horrizontal-medium-light2 bg-deep-pink display-table width-100px"
-      ></span>
-    </div>
-      <div class="row">
-        <div class="col-lg-4 py-3">
-          <div class="card text-center alt-font">
-            <div class="card-header bg-lightblue">
-              Task 1
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">0/2</h5>
-              <p class="card-text text-dark-gray">
-                Solve 2 challenges today
-              </p>
-              <p class="card-text">
-                <span class="p-2 dark-background text-light rounded"
-                  >5 <i class="fas fa-coins"></i
-                ></span>
-              </p>
-
-              <a href="#" class="btn bg-deep-pink text-light">Challenges </a>
-              <a href="#" class="btn btn-blue">Claim Reward </a>
-            </div>
-            <div class="card-footer text-muted bg-lightblue">
-              10 hours remaining
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 py-3">
-          <div class="card text-center alt-font">
-            <div class="card-header bg-lightblue">
-              Task 2
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">0/2</h5>
-              <p class="card-text text-dark-gray">
-                Solve 2 challenges today
-              </p>
-              <p class="card-text">
-                <span class="p-2 dark-background text-light rounded"
-                  >5 <i class="fas fa-coins"></i
-                ></span>
-              </p>
-
-              <a href="#" class="btn bg-deep-pink text-light">Challenges </a>
-              <a href="#" class="btn btn-blue">Claim Reward </a>
-            </div>
-            <div class="card-footer text-muted bg-lightblue">
-              10 hours remaining
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 py-3">
-          <div class="card text-center alt-font">
-            <div class="card-header bg-lightblue">
-              Task 3
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">0/2</h5>
-              <p class="card-text text-dark-gray">
-                Solve 2 challenges today
-              </p>
-              <p class="card-text">
-                <span class="p-2 dark-background text-light rounded"
-                  >5 <i class="fas fa-coins"></i
-                ></span>
-              </p>
-
-              <a href="#" class="btn bg-deep-pink text-light">Challenges </a>
-              <a href="#" class="btn btn-blue">Claim Reward </a>
-            </div>
-            <div class="card-footer text-muted bg-lightblue">
-              10 hours remaining
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
 
 <section class="py-5 bg-lightblue">
         <div class="container py-5">
@@ -303,5 +181,280 @@
           </div>
         </div>
       </section>
+
+
+
+<!--Continue where you left off section-->
+
+<section id="home-heading">
+  <div class="blue-overlay">
+    <div class="container py-5">
+      <p class="alt-font  text-light text-muted mt-5">
+        {{ user_last_location.topic.topicName }} <span class="text-capitalize">({{ user_last_location.location }})</span> 
+      </p>
+      <h1 class="alt-font text-light font-weight-700">
+        Continue where you left off
+      </h1>
+      <span
+        class="separator-line-horrizontal-medium-light2 bg-deep-pink display-table my-3 width-100px"
+      ></span>
+      {% if user_last_location.location == 'notes' %}
+        <form action="{% url 'notes' %}">
+      {% elif user_last_location.location == 'quiz' %}
+        <form action="{% url 'quiz' %}">
+      {% elif user_last_location.location == 'videos' %}
+        <form action="{% url 'videos' %}">
+            <input type="hidden" name="key" value="{{ video }}">
+      {% elif user_last_location.location == 'challenges' %}
+        <form action="{% url 'challenges' %}">
+      {% endif %}
+          <input type="hidden" value="{{ user_last_location.topic.topicName }}" name="topic_name">
+          <button type="submit" class="btn btn-dark mt-4 mb-5">
+            Continue <i class="fas fa-arrow-right text-small text-light"></i>        
+          </button>
+        </form>
+    </div>
+  </div>
+  </section>
+
+  <!--Daily goals section-->
+  <section class="bg-none">
+    <div class="container my-5 pb-5">
+      <div class="py-4">
+        <h5
+        class="text-uppercase alt-font text-extra-dark-gray mb-3 font-weight-700"
+      >
+        Daily Tasks
+      </h5>
+      <span
+        class="separator-line-horrizontal-medium-light2 bg-deep-pink display-table width-100px"
+      ></span>
+    </div>
+      <div class="row">
+        <div class="col-lg-4 py-3">
+          <div class="card text-center alt-font">
+            <div class="card-header bg-lightblue">
+              Task 1
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">0/2</h5>
+              <p class="card-text text-dark-gray">
+                Solve 2 challenges today
+              </p>
+              <p class="card-text">
+                <span class="p-2 dark-background text-light rounded"
+                  >5 <i class="fas fa-coins"></i
+                ></span>
+              </p>
+
+              <a href="#" class="btn bg-deep-pink text-light">Challenges </a>
+              <a href="#" class="btn btn-blue">Claim Reward </a>
+            </div>
+            <div class="card-footer text-muted bg-lightblue">
+              10 hours remaining
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 py-3">
+          <div class="card text-center alt-font">
+            <div class="card-header bg-lightblue">
+              Task 2
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">0/2</h5>
+              <p class="card-text text-dark-gray">
+                Solve 2 challenges today
+              </p>
+              <p class="card-text">
+                <span class="p-2 dark-background text-light rounded"
+                  >5 <i class="fas fa-coins"></i
+                ></span>
+              </p>
+
+              <a href="#" class="btn bg-deep-pink text-light">Challenges </a>
+              <a href="#" class="btn btn-blue">Claim Reward </a>
+            </div>
+            <div class="card-footer text-muted bg-lightblue">
+              10 hours remaining
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 py-3">
+          <div class="card text-center alt-font">
+            <div class="card-header bg-lightblue">
+              Task 3
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">0/2</h5>
+              <p class="card-text text-dark-gray">
+                Solve 2 challenges today
+              </p>
+              <p class="card-text">
+                <span class="p-2 dark-background text-light rounded"
+                  >5 <i class="fas fa-coins"></i
+                ></span>
+              </p>
+
+              <a href="#" class="btn bg-deep-pink text-light">Challenges </a>
+              <a href="#" class="btn btn-blue">Claim Reward </a>
+            </div>
+            <div class="card-footer text-muted bg-lightblue">
+              10 hours remaining
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!--Info section-->
+    <section class="py-5 bg-lightblue">
+      <div class="container py-2">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="container bg-none alt-font">
+              <div class="jumbotron bg-none jumbotron-fluid py-3 mb-0">
+                <p class="pt-0 alt-font text-muted">
+                  <span class="dotted subheader-small">Account Info</span>
+                </p>
+                <div class="container">
+                  <h1 class="h2">
+                    {{ request.user.username }}
+                  </h1>
+                  <button class="btn btn-blue px-5">
+                    View Profile
+                  </button>
+                </div>
+              </div>
+              <div class="row dark-background">
+                <div class="col-md-4 col-6 border border-light">
+                  <p class="text-green text-center pt-2 mb-0">
+                    Your rank
+                  </p>
+                  <p class="text-light text-center">2</p>
+                </div>
+                <div class="col-md-4 col-6 border border-light">
+                  <p class="text-green text-center pt-2 mb-0">
+                    Your Points
+                  </p>
+                  <p class="text-light text-center">{{ user_data.userPoints.points }}</p>
+                </div>
+                <div class="col-md-4 col-6 border border-light">
+                  <p class="text-green text-center pt-2 mb-0">
+                    Your Coins
+                  </p>
+                  <p class="text-light text-center">{{ user_data.userCoins.coins }}</p>
+                </div>
+                <div class="col-md-4 col-6 border border-light">
+                  <p class="text-green text-center pt-2 mb-0">
+                    Current Level
+                  </p>
+                  <p class="text-light text-center">4</p>
+                </div>
+                <div class="col-md-4 col-6 border border-light">
+                  <p class="text-green text-center pt-2 mb-0">
+                    Your Coins
+                  </p>
+                  <p class="text-light text-center">144</p>
+                </div>
+                <div class="col-md-4 col-6 border border-light">
+                  <p class="text-green text-center pt-2 mb-0">
+                    Date Joined
+                  </p>
+                  <p class="text-light text-center">{{ request.user.date_joined | date:"d M Y" }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="container py-4 my-5 bg-none alt-font">
+              <h4 class="px-3">Top Users</h4>
+              <table class="table table-borderless">
+                <thead>
+                  <tr class="">
+                    <td class="text-muted text-monospace">
+                      <span class="dotted">Username</span>
+                    </td>
+                    <td class="text-muted text-monospace dotted">
+                      <span class="dotted">Points </span>
+                    </td>
+                    <td class="text-muted text-monospace dotted">
+                      <span class="dotted"> Level </span>
+                    </td>
+                  </tr>
+                </thead>
+                <tbody class="text-dark-gray">
+                  <tr>
+                    <td scope="row">
+                      <a href="" class="text-dark">User 1</a>
+                    </td>
+                    <td class="text-success2">12</td>
+                    <td class="text-success2">10</td>
+                  </tr>
+                  <tr class="bg-lightblue">
+                    <td><a href="" class="text-dark">User 2</a></td>
+                    <td class="text-success2">20</td>
+                    <td class="text-success2">10</td>
+                  </tr>
+                  <tr>
+                    <td><a href="" class="text-dark">User 3</a></td>
+                    <td class="text-success2">10</td>
+                    <td class="text-success2">10</td>
+                  </tr>
+                  <tr class="dark-background">
+                    <td class="text-light">
+                      <span class="dotted2">Your name </span>
+                    </td>
+                    <td class="text-green">3</td>
+                    <td class="text-green">10</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="bg-none py-4 px-3 alt-font">
+              <h5 class="text-uppercase subheader text-extra-dark-gray mb-2">
+                Latest Posts
+              </h5>
+              <span
+                class="separator-line-horrizontal-medium-light2 bg-deep-pink display-table width-100px mb-2"
+              ></span>
+              <div class="py-2">
+                <a href="{% url 'question' %}?topic_name={{ latest_questions.0.topic.topicName }}&questionID={{ latest_questions.0.id }}" class="text-dark no-underline">
+                  {{ latest_questions.0.question }}</a
+                >
+              </div>
+              <div class="text-muted text-small mb-2">{{ latest_questions.0.user}} | {{ latest_questions.0.date | naturaltime }}</div>
+              <div class="py-2">
+                <a href="{% url 'question' %}?topic_name={{ latest_questions.1.topic.topicName }}&questionID={{ latest_questions.1.id }}" class="text-dark no-underline">
+                    {{ latest_questions.1.question }}</a
+                >
+              </div>
+              <div class="text-muted text-small mb-2">{{ latest_questions.1.user}} | {{ latest_questions.1.date | naturaltime }}</div>
+              <div class="py-2">
+                <a href="{% url 'question' %}?topic_name={{ latest_questions.2.topic.topicName }}&questionID={{ latest_questions.2.id }}" class="text-dark no-underline">
+                    {{ latest_questions.2.question }}</a
+                >
+              </div>
+              <div class="text-muted text-small mb-2">{{ latest_questions.2.user}} | {{ latest_questions.2.date | naturaltime }}</div>
+              <div class="py-2">
+                <a href="{% url 'question' %}?topic_name={{ latest_questions.3.topic.topicName }}&questionID={{ latest_questions.3.id }}" class="text-dark no-underline">
+                    {{ latest_questions.3.question }}</a
+                >
+              </div>
+              <div class="text-muted text-small mb-2">{{ latest_questions.3.user}} | {{ latest_questions.3.date | naturaltime }}</div>
+              <div class="py-2">
+                <a href="{% url 'question' %}?topic_name={{ latest_questions.4.topic.topicName }}&questionID={{ latest_questions.4.id }}" class="text-dark no-underline">
+                    {{ latest_questions.4.question }}</a
+                >
+              </div>
+              <div class="text-muted text-small mb-2">{{ latest_questions.4.user}} | {{ latest_questions.4.date | naturaltime }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
   
 {% endblock %}
