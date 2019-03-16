@@ -3,7 +3,12 @@
 import protect from 'loop-protect';
 import store from './redux/store.js';
 import { html, js } from './codeEditor.js';
-import { logToConsole, clearConsole, incError, resetError } from './redux/actions.js';
+import {
+  logToConsole,
+  clearConsole,
+  incError,
+  resetError,
+} from './redux/actions.js';
 import { tidyHtml, nl2br, escapeCode } from './utils.js';
 
 // -- Console area --------------------------------------------------

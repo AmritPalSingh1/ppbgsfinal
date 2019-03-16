@@ -51,7 +51,7 @@ const $Hint = ({ hintContent, hintCost }, page, hintsUsed, coins) =>
 
 // -- Render page with new state ------------------------------------
 
-const render  = () => {
+const render = () => {
   const {
     consoleOutput,
     coins,

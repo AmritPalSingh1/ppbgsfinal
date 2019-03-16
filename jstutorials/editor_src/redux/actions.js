@@ -46,12 +46,12 @@ export const buyHint = hintCost => dispatch =>
     .then(data => dispatch({ type: HINT_PURCHASE_SUCCESS, data }));
 
 export const resetHtml = () => {
-  html.setValue(store.getState().exercise.html)
+  html.setValue(store.getState().exercise.html);
   return { type: NO_OP };
 };
 
 export const resetJs = () => {
-  js.setValue(store.getState().exercise.js)
+  js.setValue(store.getState().exercise.js);
   return { type: NO_OP };
 };
 
