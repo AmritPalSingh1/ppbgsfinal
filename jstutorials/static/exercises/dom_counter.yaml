@@ -15,6 +15,14 @@ hints:
       </pre>
     hintCost: 1
   - hintContent: |
+      <p>Change the content for a HTML element</p>
+
+      <pre>
+      var count = document.getElementById("count");
+      count.innerHTML = "Hey!";
+      </pre>
+    hintCost: 1
+  - hintContent: |
       <p>Solution:</p>
 
       <pre>

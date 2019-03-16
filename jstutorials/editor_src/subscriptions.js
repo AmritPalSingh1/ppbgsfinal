@@ -14,11 +14,15 @@ const OnDataFetched = once((htmlCode, jsCode, htmlReadOnly, jsReadOnly) => {
   // otherwise, the editors get their default value
   // I don't know why. I don't think this code is asynchronous...
   // just one of those things...
-  const realHtmlCode = localStorage.getItem('htmlCode') || htmlCode;
-  const realJsCode = localStorage.getItem('jsCode') || jsCode;
+  if ($('#task-id').html() === localStorage.getItem('for-task')) {
+    htmlCode = localStorage.getItem('htmlCode') || htmlCode;
+    jsCode = localStorage.getItem('jsCode') || jsCode;
+  }
+  // set the current task
+  localStorage.setItem('for-task', $('#task-id').html());
   // populate code editor on data fetch and set options
-  html.setValue(realHtmlCode);
-  js.setValue(realJsCode);
+  html.setValue(htmlCode);
+  js.setValue(jsCode);
   html.setOption('readOnly', htmlReadOnly);
   js.setOption('readOnly', jsReadOnly);
   // show task details

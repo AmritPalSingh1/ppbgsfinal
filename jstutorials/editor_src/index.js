@@ -27,7 +27,7 @@ import { runCode } from './codeRunner.js';
 
 store.dispatch(setCoins($('#coins').html()));
 store.dispatch(setHintsUsed($('#hints-used').html()));
-store.dispatch(fetchExercise('/static/exercises/dom_counter.yaml'));
+store.dispatch(fetchExercise('/static/exercises/array_frame.yaml'));
 
 // -- Handle code change --------------------------------------------
 

@@ -44,11 +44,13 @@ const testCode = jsCode => {
 
   // test if number of lines exceeds maxLines
   // fail if it does
-  if (test.maxLines < jsCode.trim().split('\\n').length) {
+  const lines = jsCode.trim().split('\n').length;
+  if (test.maxLines < lines) {
     fail(
-      `You must complete this exercise with ${
+      `You must complete this exercise within ${
         test.maxLines
-      } lines of JavaScript or less.`,
+      } lines of JavaScript.
+  (Your code has ${lines} lines)`,
     );
   }
 
@@ -128,5 +130,5 @@ export const runCode = () => {
       }
     </script>`);
 
-  testCode(jsCode);
+  testCode(js.getValue());
 };
