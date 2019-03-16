@@ -1,5 +1,7 @@
+/* global $ */
+
 import jsyaml from 'js-yaml';
-import store from './store.js';
+import { toFormData } from './utils.js';
 import {
   FETCH_SUCCESS,
   HINT_PURCHASE_SUCCESS,
@@ -23,14 +25,22 @@ export const fetchExercise = endpoint => dispatch =>
     .then(data => dispatch({ type: FETCH_SUCCESS, data }));
 
 export const buyHint = hintCost => dispatch =>
-  Promise.resolve(store.getState())
-    .then(state => ({
-      coins: state.coins - hintCost,
-      hintsUsed: state.hintsUsed + 1,
+  fetch('/topics/topic/challenge/hint', {
+    method: 'post',
+    headers: {
+      'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val(),
+    },
+    body: toFormData({
+      challenge_id: $('#task-id').html(),
+      coins: hintCost,
+    }),
+  })
+    .then(data => data.json())
+    // eslint-disable-next-line camelcase
+    .then(({ total_coins, hint_number }) => ({
+      coins: total_coins,
+      hintsUsed: hint_number,
     }))
-    .then(data =>
-      data.coins < 0 ? Promise.reject(new Error('Not enough coins')) : data,
-    )
     .then(data => dispatch({ type: HINT_PURCHASE_SUCCESS, data }));
 
 export const setHtmlCode = code => ({ type: SET_HTML, code });
