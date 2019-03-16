@@ -2,38 +2,43 @@
 
 // I am so sorry that you're reading my code
 
+// if you're looking for bad code
+// please look at modals.js
+// bring a 20 meter stick with you
+
+import { curry } from 'ramda';
 import store from './store.js';
-import { fetchExercise, setCoins, setHtmlCode, setJsCode,setCsrfToken } from './actions.js';
-import './modals.js';
+import {
+  fetchExercise,
+  setCoins,
+  setHintsUsed,
+  setHtmlCode,
+  setJsCode,
+} from './actions.js';
 import './splitHandler.js';
-import './view.js';
+import './modals.js';
+import './subscriptions.js';
 import { html, js } from './codeEditor.js';
 import { runCode } from './codeRunner.js';
 
 // -- Onload dispatch -----------------------------------------------
 
-store.dispatch(setCsrfToken($('[name=csrfmiddlewaretoken]').val()));
 store.dispatch(setCoins($('#coins').html()));
+store.dispatch(setHintsUsed($('#hints-used').html()));
 store.dispatch(fetchExercise('/static/exercises/dom_counter.yaml'));
 
 // -- Handle code change --------------------------------------------
 
 let timer;
 
-const handleChange = () => {
+const handleChange = curry((action, cm) => {
+  store.dispatch(action(cm.getValue()));
   clearTimeout(timer);
   timer = setTimeout(runCode, 1000);
-};
-
-js.on('change', cm => {
-  store.dispatch(setJsCode(cm.getValue()));
-  handleChange();
 });
 
-html.on('change', cm => {
-  store.dispatch(setHtmlCode(cm.getValue()));
-  handleChange();
-});
+js.on('change', handleChange(setJsCode));
+html.on('change', handleChange(setHtmlCode));
 
 // -- Submit code ---------------------------------------------------
 

@@ -111,17 +111,19 @@
       <div class="split-horizontal" id="editors">
         <!-- html editor -->
         <div id="html-editor-parent">
-          <h4 class="pane-label">
-            HTML <span class="text-secondary" id="html-label-read-only"></span>
-          </h4>
+          <div class="pane-label">
+            <h4 class="d-inline">HTML</h4>
+            <span class="text-secondary" id="html-label-read-only"></span>
+          </div>
           <div class="pane-content" id="html-editor"></div>
         </div>
         <div class="gutter gutter-vertical"></div>
         <!-- js editor -->
         <div id="js-editor-parent">
-          <h4 class="pane-label">
-            JS <span class="text-secondary" id="js-label-read-only"></span>
-          </h4>
+          <div class="pane-label">
+            <h4 class="d-inline">JS</h4>
+            <span class="text-secondary" id="js-label-read-only"></span>
+          </div>
           <div class="pane-content" id="js-editor"></div>
         </div>
       </div>
@@ -164,6 +166,7 @@
   <div id="modal-container"></div>
 
   <div id="coins" hidden>{{ user_data.userCoins.coins }}</div>
+  <div id="hints-used" hidden>{{ hint.hints_baught }}</div>
   <div id="task-data" hidden>{{ challenge.exercise.url }}</div>
   <div id="task-id" hidden>{{ challenge.id }}</div>
   {% csrf_token %}

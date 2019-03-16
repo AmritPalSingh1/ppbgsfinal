@@ -7,6 +7,8 @@ import {
   HINT_PURCHASE_SUCCESS,
   SET_HTML,
   SET_JS,
+  RESET_HTML,
+  RESET_JS,
   LOG_TO_CONSOLE,
   CLEAR_CONSOLE,
   INC_ERROR,
@@ -45,6 +47,8 @@ export const buyHint = hintCost => dispatch =>
 
 export const setHtmlCode = code => ({ type: SET_HTML, code });
 export const setJsCode = code => ({ type: SET_JS, code });
+export const resetHtml = () => ({ type: RESET_HTML });
+export const resetJs = () => ({ type: RESET_JS });
 
 export const logToConsole = data => ({ type: LOG_TO_CONSOLE, data });
 export const clearConsole = () => ({ type: CLEAR_CONSOLE });

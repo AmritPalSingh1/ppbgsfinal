@@ -471,7 +471,7 @@ def hint(request):
         update_user_coins(request, coins)
         hint_number = 1
 
-    return JsonResponse({'total_coins': total_coins-coins, 'hint_number': hint_number})
+    return JsonResponse({'total_coins': total_coins+coins, 'hint_number': hint_number})
 
 @login_required
 def challenge(request):
@@ -496,9 +496,13 @@ def challenge(request):
     # Current challenge
     challenge = Challenge.objects.get(topic=topic, id=exercise)
 
+    # get hints bought for this challenge
+    hint = Hint.objects.get(challenge=challenge, user=request.user)
+
     context = {
         'challenge': challenge,
         'user_data': user_data,
+        'hint': hint,
     }
 
     return render(request, 'pages/code_editor.html', context)
