@@ -63,4 +63,15 @@ createModal(
    </button>`,
 )
 
+// -- Settings ------------------------------------------------------
+
+createModal(
+  'settingsModal',
+  'Settings',
+  '<div id="settings-modal-body"></div>',
+  `<button type="button" class="btn btn-secondary" data-dismiss="modal">
+     Close
+   </button>`,
+)
+
 // thanks I hate it
