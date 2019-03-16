@@ -80,9 +80,9 @@ const testCode = jsCode => {
 
 // -- Run user code --------------------------------------------------
 
-// write code to the iframe
-const writeToFrame = code => {
-  const iframeDocument = $('iframe')[0].contentWindow.document;
+// write code to an iframe
+const writeToFrame = (id, code) => {
+  const iframeDocument = $(id)[0].contentWindow.document;
 
   iframeDocument.open();
   iframeDocument.write(code);
@@ -108,7 +108,17 @@ export const runCode = () => {
     return code;
   })();
 
-  const scriptToRun = `
+  // code ran in the visible iframe
+  const visibleScriptToRun = `
+    {
+      ${secret}
+    }
+    {
+      eval('${jsCode}');
+    }`;
+
+  // code ran in the hidden iframe
+  const hiddenScriptToRun = `
     {
       ${secret}
     }
@@ -125,13 +135,21 @@ export const runCode = () => {
       ${test.cleanup}
     }`;
 
-  writeToFrame(`
+  writeToFrame('#visible-iframe', `
+    ${htmlCode}
+    <script>
+      {
+        console.log = window.parent.log;
+        ${visibleScriptToRun}
+      }
+    </script>`);
+
+  writeToFrame('#hidden-iframe', `
     ${htmlCode}
     <script>
       {
         const fail = window.parent.fail;
-        console.log = window.parent.log;
-        ${scriptToRun}
+        ${hiddenScriptToRun}
       }
     </script>`);
 

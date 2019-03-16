@@ -132,7 +132,7 @@
       <div class="split-horizontal" id="code-output">
         <!-- html page view -->
         <div id="html-frame-view">
-          <iframe class="w-100 h-100" frameborder="0"></iframe>
+          <iframe class="w-100 h-100" id="visible-iframe" frameborder="0"></iframe>
         </div>
         <div class="gutter gutter-vertical"></div>
         <!-- console output -->
@@ -164,6 +164,9 @@
       </button>
     </div>
   </div> <!-- end of #code--page-container -->
+
+  <!-- hidden iframe to test code -->
+  <iframe id="hidden-iframe" hidden></iframe>
 
   <!-- all modals are collected here by modals.js -->
   <div id="modal-container"></div>
