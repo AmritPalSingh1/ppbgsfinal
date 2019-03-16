@@ -14,6 +14,8 @@ import {
   setHintsUsed,
   setHtmlCode,
   setJsCode,
+  resetHtml,
+  resetJs,
 } from './redux/actions.js';
 import './splitHandler.js';
 import './modals.js';
@@ -39,6 +41,11 @@ const handleChange = curry((action, cm) => {
 
 js.on('change', handleChange(setJsCode));
 html.on('change', handleChange(setHtmlCode));
+
+// -- Settings ------------------------------------------------------
+
+$('#reset-html-button').click(() => store.dispatch(resetHtml()));
+$('#reset-js-button').click(() => store.dispatch(resetJs()));
 
 // -- Submit code ---------------------------------------------------
 

@@ -28,10 +28,11 @@ const OnDataFetched = once((htmlCode, jsCode, htmlReadOnly, jsReadOnly) => {
 });
 
 const unsubscribeFromDataFetch = store.subscribe(() => {
-  const { exercise, dataFetched, htmlReadOnly, jsReadOnly } = store.getState();
+  const { exercise, dataFetched } = store.getState();
+  const { html: htmlCode, js: jsCode, htmlReadOnly, jsReadOnly } = exercise;
 
   if (dataFetched) {
-    OnDataFetched(exercise.html, exercise.js, htmlReadOnly, jsReadOnly);
+    OnDataFetched(htmlCode, jsCode, htmlReadOnly, jsReadOnly);
     unsubscribeFromDataFetch();
   }
 });

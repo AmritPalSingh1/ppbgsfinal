@@ -1,14 +1,14 @@
 /* global $ */
 
 import jsyaml from 'js-yaml';
+import store from './store.js';
+import { html, js } from '../codeEditor.js';
 import { toFormData } from '../utils.js';
 import {
   FETCH_SUCCESS,
   HINT_PURCHASE_SUCCESS,
   SET_HTML,
   SET_JS,
-  RESET_HTML,
-  RESET_JS,
   LOG_TO_CONSOLE,
   CLEAR_CONSOLE,
   INC_ERROR,
@@ -45,10 +45,18 @@ export const buyHint = hintCost => dispatch =>
     }))
     .then(data => dispatch({ type: HINT_PURCHASE_SUCCESS, data }));
 
+export const resetHtml = () => {
+  html.setValue(store.getState().exercise.html)
+  return { type: NO_OP };
+};
+
+export const resetJs = () => {
+  js.setValue(store.getState().exercise.js)
+  return { type: NO_OP };
+};
+
 export const setHtmlCode = code => ({ type: SET_HTML, code });
 export const setJsCode = code => ({ type: SET_JS, code });
-export const resetHtml = () => ({ type: RESET_HTML });
-export const resetJs = () => ({ type: RESET_JS });
 
 export const logToConsole = data => ({ type: LOG_TO_CONSOLE, data });
 export const clearConsole = () => ({ type: CLEAR_CONSOLE });
