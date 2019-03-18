@@ -503,6 +503,7 @@ def challenge(request):
         'challenge': challenge,
         'user_data': user_data,
         'hint': hint,
+        'topic': topic,
     }
 
     return render(request, 'pages/code_editor.html', context)

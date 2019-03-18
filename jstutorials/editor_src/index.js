@@ -22,12 +22,21 @@ import './modals.js';
 import './subscriptions.js';
 import { html, js } from './codeEditor.js';
 import { runCode } from './codeRunner.js';
+import { toFormData } from './utils.js';
 
 // -- Onload dispatch -----------------------------------------------
 
+// const ex = 'array_frame.yaml';
+const ex = 'basics_hello.yaml';
+// const ex = 'canvas_rect.yaml';
+// const ex = 'cond_even_num.yaml';
+// const ex = 'dom_counter.yaml';
+// const ex = 'func_greet.yaml';
+// const ex = 'loop_1to20.yaml';
+
 store.dispatch(setCoins($('#coins').html()));
 store.dispatch(setHintsUsed($('#hints-used').html()));
-store.dispatch(fetchExercise('/static/exercises/basics_hello.yaml'));
+store.dispatch(fetchExercise(`/static/exercises/${ex}`));
 
 // -- Handle code change --------------------------------------------
 
@@ -53,11 +62,16 @@ $('#submit-results-button').click(() => {
   const { errorCount, exercise } = store.getState();
   const threshold = exercise.test.errorThreshold;
 
-  const submitData = {
-    errorCount,
-    grade: Math.max(threshold - errorCount, 0) / threshold,
-  };
-
-  // eslint-disable-next-line no-console
-  console.log(submitData);
+  fetch('/topics/topic/result', {
+    method: 'post',
+    headers: {
+      'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val(),
+    },
+    body: toFormData({
+      topic_name: $('#topic-name').html(),
+      challenge_id: $('#task-id').html(),
+      grade: Math.max(threshold - errorCount, 0) / threshold,
+      errors: errorCount,
+    }),
+  });
 });
