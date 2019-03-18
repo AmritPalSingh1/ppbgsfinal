@@ -21,6 +21,36 @@ details: |
   <pre>
 hints:
   - hintContent: |
+      <p>Repeat a string by using <code>repeat</code> from a string</p>
+
+      <pre>
+      "l" + "ol".repeat(3);
+      // returns "lololol"
+      </pre>
+    hintCost: 99
+  - hintContent: |
+      <p>Add padding by using <code>padEnd</code></p>
+
+      <pre>
+      "My love".padEnd(10, '.');
+      // returns "My love..."
+      </pre>
+    hintCost: 1
+  - hintContent: |
+      <p>Use <code>"\n"</code> to add a new line to a string</p>
+
+      <pre>
+      console.log("Multiple\nLines!");
+      </pre>
+
+      <p><strong>Output:</strong></p>
+
+      <pre>
+      Multiple
+      Lines!
+      </pre>
+    hintCost: 1
+  - hintContent: |
       <p>Here is one solution:</p>
 
       <pre>

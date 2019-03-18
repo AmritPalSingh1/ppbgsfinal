@@ -68,12 +68,11 @@ createModal(
 createModal(
   'settingsModal',
   'Settings',
-  `
-  <div id="settings-modal-body">
-    <h6>Reset Editors</h6>
-    <button class="btn btn-outline-danger" id="reset-html-button">Reset HTML editor</button>
-    <button class="btn btn-outline-danger" id="reset-js-button">Reset JS editor</button>
-  </div>`,
+  `<div id="settings-modal-body">
+     <h6>Reset Editors</h6>
+     <button class="btn btn-outline-danger" id="reset-html-button">Reset HTML editor</button>
+     <button class="btn btn-outline-danger" id="reset-js-button">Reset JS editor</button>
+   </div>`,
   `<button type="button" class="btn btn-secondary" data-dismiss="modal">
      Close
    </button>`,
