@@ -21,6 +21,36 @@ details: |
   <pre>
 hints:
   - hintContent: |
+      <p>Repeat a string by using <code>repeat</code> from a string</p>
+
+      <pre>
+      "l" + "ol".repeat(3);
+      // returns "lololol"
+      </pre>
+    hintCost: 99
+  - hintContent: |
+      <p>Add padding by using <code>padEnd</code></p>
+
+      <pre>
+      "My love".padEnd(10, '.');
+      // returns "My love..."
+      </pre>
+    hintCost: 1
+  - hintContent: |
+      <p>Use <code>"\n"</code> to add a new line to a string</p>
+
+      <pre>
+      console.log("Multiple\nLines!");
+      </pre>
+
+      <p><strong>Output:</strong></p>
+
+      <pre>
+      Multiple
+      Lines!
+      </pre>
+    hintCost: 1
+  - hintContent: |
       <p>Here is one solution:</p>
 
       <pre>
@@ -55,7 +85,6 @@ html: ''
 js: |
   function frame(arr) {
     // your code here
-    return "Not implemented";
   }
 
   var A = ["Hello", "I am", "in", "a", "frame"];
@@ -64,21 +93,37 @@ hintReadOnly: false
 jsReadOnly: false
 secret: ''
 test:
-  setup: ''
+  setup: frame = undefined;
   run: |
+    if (!frame) {
+      fail('You must use the function "frame"');
+    }
+
     let expected = '+--+\n+--+';
-    if ((frame([]) || '').trim() !== expected) {
-      fail('Failed case [] (Empty list)');
+    try {
+      if (frame([]).trim() !== expected) {
+        throw new Error();
+      }
+    } catch (e) {
+      fail('Failed case: [] (Empty list)');
     }
 
     expected = '+-------+\n| Hello |\n| I am  |\n| in    |\n| a     |\n| frame |\n+-------+';
-    if ((frame(["Hello", "I am", "in", "a", "frame"]) || '').trim() !== expected) {
-      fail('Failed case ["Hello", "I am", "in", "a", "frame"]');
+    try {
+      if ((frame(["Hello", "I am", "in", "a", "frame"]) || '').trim() !== expected) {
+        throw new Error();
+      }
+    } catch (e) {
+      fail('Failed case: ["Hello", "I am", "in", "a", "frame"]');
     }
 
     expected = '+------------------------------------+\n| supercalifragilisticexpialidocious |\n| Even though the sound of it        |\n| Is something quite atrocious       |\n+------------------------------------+'
-    if ((frame(["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]) || '').trim() !== expected) {
-      fail('Failed case ["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]');
+    try {
+      if ((frame(["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]) || '').trim() !== expected) {
+        throw new Error();
+      }
+    } catch (e) {
+      fail('Failed case: ["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]');
     }
   cleanup: ''
   has: []

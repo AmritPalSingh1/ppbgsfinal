@@ -1,5 +1,9 @@
+/* global $ */
+
 import jsyaml from 'js-yaml';
 import store from './store.js';
+import { html, js } from '../codeEditor.js';
+import { toFormData } from '../utils.js';
 import {
   FETCH_SUCCESS,
   HINT_PURCHASE_SUCCESS,
@@ -12,6 +16,7 @@ import {
   SET_HINTS_USED,
   SET_HINT_PAGE,
   SET_COIN_COUNT,
+  SET_CSRF_TOKEN,
   NO_OP,
 } from './constants.js';
 
@@ -22,15 +27,33 @@ export const fetchExercise = endpoint => dispatch =>
     .then(data => dispatch({ type: FETCH_SUCCESS, data }));
 
 export const buyHint = hintCost => dispatch =>
-  Promise.resolve(store.getState())
-    .then(state => ({
-      coins: state.coins - hintCost,
-      hintsUsed: state.hintsUsed + 1,
+  fetch('/topics/topic/challenge/hint', {
+    method: 'post',
+    headers: {
+      'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val(),
+    },
+    body: toFormData({
+      challenge_id: $('#task-id').html(),
+      coins: hintCost,
+    }),
+  })
+    .then(data => data.json())
+    // eslint-disable-next-line camelcase
+    .then(({ total_coins, hint_number }) => ({
+      coins: total_coins,
+      hintsUsed: hint_number,
     }))
-    .then(data =>
-      data.coins < 0 ? Promise.reject(new Error('Not enough coins')) : data,
-    )
     .then(data => dispatch({ type: HINT_PURCHASE_SUCCESS, data }));
+
+export const resetHtml = () => {
+  html.setValue(store.getState().exercise.html);
+  return { type: NO_OP };
+};
+
+export const resetJs = () => {
+  js.setValue(store.getState().exercise.js);
+  return { type: NO_OP };
+};
 
 export const setHtmlCode = code => ({ type: SET_HTML, code });
 export const setJsCode = code => ({ type: SET_JS, code });
@@ -44,5 +67,6 @@ export const resetError = () => ({ type: RESET_ERROR });
 export const setHintsUsed = hintsUsed => ({ type: SET_HINTS_USED, hintsUsed });
 export const setPage = page => ({ type: SET_HINT_PAGE, page });
 export const setCoins = coinCount => ({ type: SET_COIN_COUNT, coinCount });
+export const setCsrfToken = token => ({ type: SET_CSRF_TOKEN, token });
 
 export const noOp = () => ({ type: NO_OP });

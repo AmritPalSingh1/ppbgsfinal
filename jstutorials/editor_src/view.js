@@ -1,10 +1,7 @@
 /* global $ */
 
-import { once } from 'ramda';
-import { setPage, buyHint } from './actions.js';
-import store from './store.js';
-import { html, js } from './codeEditor.js';
-import { runCode } from './codeRunner.js';
+import store from './redux/store.js';
+import { setPage, buyHint } from './redux/actions.js';
 
 // -- HTML Components -----------------------------------------------
 
@@ -52,23 +49,9 @@ const $Hint = ({ hintContent, hintCost }, page, hintsUsed, coins) =>
     })(),
   );
 
-// -- Render page on state change -----------------------------------
+// -- Render page with new state ------------------------------------
 
-// populate code editor on data fetch and set options
-const setupCodeEditors = once((htmlCode, jsCode, htmlReadOnly, jsReadOnly) => {
-  html.setValue(htmlCode);
-  js.setValue(jsCode);
-  html.setOption('readOnly', htmlReadOnly);
-  js.setOption('readOnly', jsReadOnly);
-  runCode();
-});
-
-// show task details
-const viewTaskDetails = once(() => {
-  $('#taskDetailsModal').modal('show');
-});
-
-store.subscribe(() => {
+const render = () => {
   const {
     consoleOutput,
     coins,
@@ -76,7 +59,6 @@ store.subscribe(() => {
     hintsUsed,
     exercise,
     errorCount,
-    dataFetched,
   } = store.getState();
   const { hints, task, details, htmlReadOnly, jsReadOnly } = exercise;
 
@@ -105,12 +87,9 @@ store.subscribe(() => {
       ? `You currently have ${errorCount} errors in your JavaScript code!`
       : '',
   );
+};
 
-  if (dataFetched) {
-    setupCodeEditors(exercise.html, exercise.js, htmlReadOnly, jsReadOnly);
-    viewTaskDetails();
-  }
-});
+export default render;
 
 // -- Page takes up rest of view ------------------------------------
 

@@ -4,6 +4,8 @@ import {
   HINT_PURCHASE_SUCCESS,
   SET_HTML,
   SET_JS,
+  RESET_HTML,
+  RESET_JS,
   LOG_TO_CONSOLE,
   CLEAR_CONSOLE,
   INC_ERROR,
@@ -11,6 +13,7 @@ import {
   SET_HINTS_USED,
   SET_HINT_PAGE,
   SET_COIN_COUNT,
+  SET_CSRF_TOKEN,
   NO_OP,
 } from './constants.js';
 
@@ -25,6 +28,10 @@ const reducer = (state = initialState, action) => {
       return { ...state, userHtml: action.code };
     case SET_JS:
       return { ...state, userJs: action.code };
+    case RESET_HTML:
+      return { ...state, userHtml: state.exercise.html };
+    case RESET_JS:
+      return { ...state, userJs: state.exercise.js };
 
     case LOG_TO_CONSOLE:
       return { ...state, consoleOutput: state.consoleOutput + action.data };
@@ -42,6 +49,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, hintsUsed: action.hintsUsed };
     case SET_HINT_PAGE:
       return { ...state, hintPage: action.page };
+    case SET_CSRF_TOKEN:
+      return { ...state, csrfToken: action.token };
 
     case NO_OP:
       return state;

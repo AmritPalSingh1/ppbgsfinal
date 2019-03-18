@@ -2,37 +2,59 @@
 
 // I am so sorry that you're reading my code
 
-import store from './store.js';
-import { fetchExercise, setCoins, setHtmlCode, setJsCode } from './actions.js';
-import './modals.js';
+// if you're looking for bad code
+// please look at modals.js
+// bring a 20 meter stick with you
+
+import { curry } from 'ramda';
+import store from './redux/store.js';
+import {
+  fetchExercise,
+  setCoins,
+  setHintsUsed,
+  setHtmlCode,
+  setJsCode,
+  resetHtml,
+  resetJs,
+} from './redux/actions.js';
 import './splitHandler.js';
-import './view.js';
+import './modals.js';
+import './subscriptions.js';
 import { html, js } from './codeEditor.js';
 import { runCode } from './codeRunner.js';
+import { toFormData } from './utils.js';
 
 // -- Onload dispatch -----------------------------------------------
 
-store.dispatch(fetchExercise('/static/exercises/array_frame.yaml'));
-store.dispatch(setCoins($('#coin-count-container').html()));
+// const ex = 'array_frame.yaml';
+const ex = 'basics_hello.yaml';
+// const ex = 'canvas_rect.yaml';
+// const ex = 'cond_even_num.yaml';
+// const ex = 'dom_counter.yaml';
+// const ex = 'func_greet.yaml';
+// const ex = 'loop_1to20.yaml';
+
+store.dispatch(setCoins($('#coins').html()));
+store.dispatch(setHintsUsed($('#hints-used').html()));
+store.dispatch(fetchExercise(`/static/exercises/${ex}`));
 
 // -- Handle code change --------------------------------------------
 
 let timer;
 
-const handleChange = () => {
+const handleChange = curry((action, cm) => {
+  store.dispatch(action(cm.getValue()));
   clearTimeout(timer);
   timer = setTimeout(runCode, 1000);
-};
-
-js.on('change', cm => {
-  store.dispatch(setJsCode(cm.getValue()));
-  handleChange();
 });
 
-html.on('change', cm => {
-  store.dispatch(setHtmlCode(cm.getValue()));
-  handleChange();
-});
+js.on('change', handleChange(setJsCode));
+html.on('change', handleChange(setHtmlCode));
+
+// -- Settings ------------------------------------------------------
+
+$('#reset-html-button').click(() => store.dispatch(resetHtml()));
+$('#reset-js-button').click(() => store.dispatch(resetJs()));
 
 // -- Submit code ---------------------------------------------------
 
@@ -40,11 +62,16 @@ $('#submit-results-button').click(() => {
   const { errorCount, exercise } = store.getState();
   const threshold = exercise.test.errorThreshold;
 
-  const submitData = {
-    errorCount,
-    grade: Math.max(threshold - errorCount, 0) / threshold,
-  };
-
-  // eslint-disable-next-line no-console
-  console.log(submitData);
+  fetch('/topics/topic/result', {
+    method: 'post',
+    headers: {
+      'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val(),
+    },
+    body: toFormData({
+      topic_name: $('#topic-name').html(),
+      challenge_id: $('#task-id').html(),
+      grade: Math.max(threshold - errorCount, 0) / threshold,
+      errors: errorCount,
+    }),
+  });
 });

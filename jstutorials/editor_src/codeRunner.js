@@ -1,9 +1,14 @@
 /* global $, Babel */
 
 import protect from 'loop-protect';
-import store from './store.js';
+import store from './redux/store.js';
 import { html, js } from './codeEditor.js';
-import { logToConsole, clearConsole, incError, resetError } from './actions.js';
+import {
+  logToConsole,
+  clearConsole,
+  incError,
+  resetError,
+} from './redux/actions.js';
 import { tidyHtml, nl2br, escapeCode } from './utils.js';
 
 // -- Console area --------------------------------------------------
@@ -37,27 +42,20 @@ const transform = source =>
     plugins: ['loopProtection'],
   }).code;
 
-// -- Run user code --------------------------------------------------
-
-// write code to the iframe
-const writeToFrame = code => {
-  const iframeDocument = $('iframe')[0].contentWindow.document;
-
-  iframeDocument.open();
-  iframeDocument.write(code);
-  iframeDocument.close();
-};
+// -- Test user code -------------------------------------------------
 
 const testCode = jsCode => {
   const { test } = store.getState().exercise;
 
   // test if number of lines exceeds maxLines
   // fail if it does
-  if (test.maxLines < jsCode.trim().split('\n').length) {
+  const lines = jsCode.trim().split('\n').length;
+  if (test.maxLines < lines) {
     fail(
-      `You must complete this exercise with ${
+      `You must complete this exercise within ${
         test.maxLines
-      } lines of JavaScript or less.`,
+      } lines of JavaScript.
+  (Your code has ${lines} lines)`,
     );
   }
 
@@ -80,8 +78,17 @@ const testCode = jsCode => {
   });
 };
 
-// run the user's code
-// the results appear in the console area
+// -- Run user code --------------------------------------------------
+
+// write code to an iframe
+const writeToFrame = (id, code) => {
+  const iframeDocument = $(id)[0].contentWindow.document;
+
+  iframeDocument.open();
+  iframeDocument.write(code);
+  iframeDocument.close();
+};
+
 // eslint-disable-next-line import/prefer-default-export
 export const runCode = () => {
   store.dispatch(resetError());
@@ -101,7 +108,17 @@ export const runCode = () => {
     return code;
   })();
 
-  const scriptToRun = `
+  // code ran in the visible iframe
+  const visibleScriptToRun = `
+    {
+      ${secret}
+    }
+    {
+      eval('${jsCode}');
+    }`;
+
+  // code ran in the hidden iframe
+  const hiddenScriptToRun = `
     {
       ${secret}
     }
@@ -118,15 +135,23 @@ export const runCode = () => {
       ${test.cleanup}
     }`;
 
-  writeToFrame(`
+  writeToFrame('#visible-iframe', `
+    ${htmlCode}
+    <script>
+      {
+        console.log = window.parent.log;
+        ${visibleScriptToRun}
+      }
+    </script>`);
+
+  writeToFrame('#hidden-iframe', `
     ${htmlCode}
     <script>
       {
         const fail = window.parent.fail;
-        console.log = window.parent.log;
-        ${scriptToRun}
+        ${hiddenScriptToRun}
       }
     </script>`);
 
-  testCode(jsCode);
+  testCode(js.getValue());
 };

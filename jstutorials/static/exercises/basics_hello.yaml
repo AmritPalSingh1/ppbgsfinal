@@ -20,10 +20,10 @@ hints:
       var greeting = "Hey, " + name;
       </pre>
 
-      The variable <code>greeting</code> contains the value: <code>"Hey, Jason"</code>
+      <p>The variable <code>greeting</code> contains the value:<code> "Hey, Jason"</code></p>
     hintCost: 1
   - hintContent: |
-      This is one solution: 
+      <p>This is one solution:</p>
 
       <pre>
       var name = "Jason";

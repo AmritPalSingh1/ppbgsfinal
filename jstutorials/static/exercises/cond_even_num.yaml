@@ -54,9 +54,8 @@ test:
     };
   run: |
     consoleOutput = consoleOutput.trim();
-    const re = /even/i
-    if (!re.test(consoleOutput)) {
-      fail('Expected console output to contain "even"');
+    if (consoleOutput !== "even") {
+      fail('Expected console output to be "even"');
     }
   cleanup: console.log = oldLog;
   has:
@@ -66,7 +65,7 @@ test:
       message: 'Your code should have a condition to test if n is even or odd'
     - regex: 'console\.log'
       message: 'Your code is missing console.log'
-    - regex: (['"]even['"].*['"]odd['"]|['"]odd['"].*['"]even['"])
+    - regex: (['"].*even.*['"].*['"].*odd.*['"]|['"].*odd.*['"].*['"].*even.*['"])
       flags: i
       message: 'Your code should cover both even and odd cases'
   hasNot: []
