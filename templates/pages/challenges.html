@@ -150,10 +150,10 @@
                     {% for medium_challenge in medium_challenges %}
                       <div class="card border-left-medium shadow mb-4">
                         <div class="card-body mb-0 pb-0 px-0">
-                            <form action="{% url 'challenge' %}" method="POST">
+                            <form action="{% url 'challenge' %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
-                                <input type="hidden" name="ch_id" value="{{ medium_challenge.id }}">
+                                <input type="hidden" name="exercise" value="{{ medium_challenge.id }}">
                                 <button type="submit" class="btn btn-link w-100 text-xs no-underline font-weight-bold text-secondary text-uppercase mb-3 px-3 d-flex">
                                     <span>Problem {{ forloop.counter }} </span>
                                     <span class="ml-auto"
@@ -255,10 +255,10 @@
                     {% for hard_challenge in hard_challenges %}
                       <div class="card border-left-hard shadow mb-4">
                         <div class="card-body mb-0 pb-0 px-0">
-                            <form action="{% url 'challenge' %}" method="POST">
+                            <form action="{% url 'challenge' %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
-                                <input type="hidden" name="ch_id" value="{{ hard_challenge.id }}">
+                                <input type="hidden" name="exercise" value="{{ hard_challenge.id }}">
                                 <button type="submit" class="btn btn-link w-100 text-xs no-underline font-weight-bold text-pink text-uppercase mb-3 px-3 d-flex">
                                     <span>Problem {{ forloop.counter }} </span>
                                     <span class="ml-auto"
