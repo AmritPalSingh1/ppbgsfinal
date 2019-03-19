@@ -15,19 +15,22 @@ const Errors = errors =>
 
 const $HintTabs = (hints, page, hintsUsed) =>
   $('<ul class="nav nav-tabs"/>').append(
-    hints.map((x, i) =>
-      $('<li class="nav-item"/>')
-        .append(
-          i > hintsUsed
-            ? $('<a class="nav-link disabled"/>')
-                .attr('href', '#')
-                .append(`<i class="fas fa-lock"></i> Hint ${i + 1}`)
-            : $(`<a class="nav-link ${i === page ? 'active' : ''}"/>`)
-                .attr('href', '#')
-                .append(`Hint ${i + 1}`),
-        )
-        .click(() => i <= hintsUsed && store.dispatch(setPage(i))),
-    ),
+    hints.map((x, i, arr) => {
+      const label = i === arr.length - 1 ? 'Solution' : `Hint ${i + 1}`;
+
+      const link =
+        i > hintsUsed
+          ? $('<a class="nav-link disabled"/>')
+              .attr('href', '#')
+              .append(`<i class="fas fa-lock"></i> ${label}`)
+          : $(`<a class="nav-link ${i === page ? 'active' : ''}"/>`)
+              .attr('href', '#')
+              .append(label);
+
+      return $('<li class="nav-item"/>')
+        .append(link)
+        .click(() => i <= hintsUsed && store.dispatch(setPage(i)));
+    }),
   );
 
 const $Hint = ({ hintContent, hintCost }, page, hintsUsed, coins) =>
