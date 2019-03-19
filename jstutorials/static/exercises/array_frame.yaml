@@ -27,7 +27,7 @@ hints:
       "l" + "ol".repeat(3);
       // returns "lololol"
       </pre>
-    hintCost: 99
+    hintCost: 1
   - hintContent: |
       <p>Add padding by using <code>padEnd</code></p>
 
