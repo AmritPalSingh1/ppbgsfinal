@@ -1,0 +1,88 @@
+---
+task: "Draw a circular pattern"
+details: |
+  <p><strong>Draw a path of triangles on a circular path</strong></p>
+hints: 
+  - hintContent: |
+      <p>To draw the red square</p>
+
+      <pre>
+      ctx.fillStyle = "red";
+      ctx.fillRect(100, 40, 100, 100);
+      </pre>
+    hintCost: 20
+html: |-
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+  <h4>Your canvas:</h4>
+  <canvas id="my-canvas"></canvas>
+  <h4>What your canvas should look like:</h4>
+  <canvas id="demo-canvas"></canvas>
+js: |
+  var canvas = document.getElementById("my-canvas");
+  var ctx = canvas.getContext("2d");
+
+  function drawTriangle(x, y) {
+    ctx.beginPath();
+    ctx.moveTo(x + 0, y + 10);
+    ctx.lineTo(x + 8, y - 10);
+    ctx.lineTo(x - 8, y - 10);
+    ctx.fill();
+  }
+htmlReadOnly: true
+jsReadOnly: false
+secret: |-
+  const canvas = document.getElementById("demo-canvas");
+  const ctx = canvas.getContext("2d");
+  ctx.translate(canvas.width / 2, canvas.height / 2);
+
+  const drawTriangle = (x, y) => {
+    ctx.beginPath();
+    ctx.moveTo(x + 0, y + 10);
+    ctx.lineTo(x + 8, y - 10);
+    ctx.lineTo(x - 8, y - 10);
+    ctx.fill();
+  };
+
+  const drawCircle = (count, radius) => {
+    const angle = Math.PI * 2 / count;
+
+    for (let i = 0; i < count; i++) {
+      ctx.rotate(angle);
+      drawTriangle(radius, 0);
+    }
+  };
+
+  drawCircle(7, 20);
+  drawCircle(18, 60);
+  drawCircle(27, 100);
+test:
+  setup: |
+    const userCanvas = document.querySelector('#my-canvas');
+    const demoCanvas = document.querySelector('#demo-canvas');
+
+    const userContext = userCanvas.getContext('2d');
+    const demoContext = demoCanvas.getContext('2d');
+  run: |
+    const userData = userContext.getImageData(0, 0, userCanvas.width, userCanvas.height).data;
+    const demoData = demoContext.getImageData(0, 0, demoCanvas.width, demoCanvas.height).data;
+
+    let squares = 0;
+
+    for (let i = 0; i < userData.length; i++) {
+      squares += (userData[i] - demoData[i]) ** 2;
+    }
+
+    const perc = (255 - Math.sqrt(squares / userData.length)) / 255;
+
+    if (perc < .9) {
+      fail('Your image and the image shown aren\'t similar enough');
+    }
+  cleanup: ''
+  has: []
+  hasNot: []
+  maxLines: 30
+  errorThreshold: 1
