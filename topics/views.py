@@ -50,7 +50,7 @@ def update_user_coins(request, coins):
     total_coins.coins = total_coins.coins + coins
     total_coins.save()
 
-def update_user_last_location(request, location, topic):       
+def update_user_last_location(request, location, topic):
     # update user's last visited location
     user_last_location = UserLastLocation.objects.get(user=request.user)
     user_last_location.topic = topic
@@ -285,7 +285,7 @@ def quiz(request):
 def questions(request):
 
     user_data = user_info(request)
-    
+
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -359,7 +359,7 @@ def challenges(request):
 
     if 'dp' in request.GET:
         challenge_id = request.GET['dp']
-        # challenge 
+        # challenge
         dp_challenge = Challenge.objects.get(id=challenge_id)
         # check if chip is already baught
         dp_already_baught = DoublePoint.objects.filter(challenge=dp_challenge, user=request.user)
@@ -372,7 +372,7 @@ def challenges(request):
 
     if 'fw' in request.GET:
         challenge_id = request.GET['fw']
-        # challenge 
+        # challenge
         fw_challenge = Challenge.objects.get(id=challenge_id)
         # check if chip is already baught
         fw_already_baught = FreeWin.objects.filter(challenge=fw_challenge, user=request.user)
@@ -386,14 +386,14 @@ def challenges(request):
     user_all_dp = DoublePoint.objects.filter(user=request.user)
 
     dp_challenge_list = []
-    
+
     for user_dp in user_all_dp:
         dp_challenge_list.append(user_dp.challenge)
 
     user_all_fw = FreeWin.objects.filter(user=request.user)
 
     fw_challenge_list = []
-    
+
     for user_fw in user_all_fw:
         fw_challenge_list.append(user_fw.challenge)
 
@@ -452,7 +452,7 @@ def hint(request):
             coins = coins * (-1)
     else:
         return JsonResponse({'error': 'no coins'})
-    
+
     challenge = Challenge.objects.get(id=challenge_id)
 
     # check if user has already used any hint for that question
@@ -475,7 +475,7 @@ def hint(request):
 
 @login_required
 def challenge(request):
-    
+
     # data related to user: coins, points, rank
     user_data = user_info(request)
 
@@ -496,17 +496,47 @@ def challenge(request):
     # Current challenge
     challenge = Challenge.objects.get(topic=topic, id=exercise)
 
-    # get hints bought for this challenge
-    hint = Hint.objects.get(challenge=challenge, user=request.user)
+    # check if any user hints exists
+    hint_exits = Hint.objects.filter(challenge=challenge, user=request.user)
+
+    if hint_exits:
+        # get hints bought for this challenge
+        hint = Hint.objects.get(challenge=challenge, user=request.user)
+    else:
+        # create new Hint for user
+        hint = Hint(challenge=challenge, user=request.user, hints_baught=0)
+        hint.save()
+        
+
+    hint_number = hint.hints_baught
+    
 
     context = {
         'challenge': challenge,
         'user_data': user_data,
-        'hint': hint,
+        'hint_number': hint_number,
         'topic': topic,
     }
 
     return render(request, 'pages/code_editor.html', context)
 
 def result(request):
+    
+    # get current topic name
+    if 'topic_name' in request.POST:
+        topic_name = request.POST['topic-name']
+
+    # Fetch current topic
+    topic = get_object_or_404(Topic, topicName=topic_name)
+
+    if 'challenge_id' in request.POST:
+        challenge_id = request.POST['challenge_id']
+
+    challenge = Challenge.objects.get(id=challenge_id)
+
+    context = {
+        'topic': topic,
+        'challenge': challenge
+    }
+
     return render(request, 'pages/result.html')

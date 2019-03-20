@@ -11,7 +11,19 @@ class FlowchartQuestion(models.Model):
     option4 = models.CharField(max_length=500)
     answer = models.IntegerField()
     solution = models.TextField()
-    difficulty = models.IntegerField()
+    EASY = 'easy'
+    MEDIUM = 'medium'
+    HARD = 'hard'
+    Difficulty_levels = (
+        (EASY, 'Easy'),
+        (MEDIUM, 'Medium'),
+        (HARD, 'Hard'),
+    )
+    difficulty = models.CharField(
+        max_length=6,
+        choices=Difficulty_levels,
+        default=MEDIUM,
+    )
 
     def __str__(self):
         return self.question

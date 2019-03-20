@@ -1,0 +1,271 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Home</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+      integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+      crossorigin="anonymous"
+    />
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+
+  {% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/all.css' %}" />
+  {% endblock %}
+  </head>
+  <body>
+    <!--Top bar-->
+    <section class="dark-background text-light d-none d-sm-block">
+        <div class="container py-1 alt-font">
+          <div class="d-flex">
+            <div>
+              <small>
+                <span class="pr-5">
+                  <i class="fas text-light fa-envelope-open"></i>
+                  support@gmail.com</span
+                >
+              </small>
+            </div>
+            <div class="ml-auto">
+              <a href="javascript:{document.getElementById('logout').submit()}">
+                <small><i class="fas fa-sign-out-alt"></i> Logout </small>
+              </a>
+              <form action="{% url 'logout' %}" method="POST" id="logout">
+                {% csrf_token %} <input type="hidden" />
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    <section class="bg-none">
+      <div class="container alt-font nav-text d-flex py-1">
+        <a class="navbar-brand text-dark" href="{% url 'index' %}"
+          ><img
+            src="{% static 'images/logo.png' %}"
+            alt=""
+            height="50"
+            width="50"
+          />
+          PPBGS
+        </a>
+        <div class="ml-auto d-flex align-items-center text-dark-gray">
+          <span class="mr-2">(John Doe)</span>
+          <span class="mr-3">Points: 2</span> Coins: 20
+        </div>
+      </div>
+    </section>
+    <!--Main Content-->
+
+    <!-- Modal -->
+
+    <div
+      class="modal fade"
+      id="welcome"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Welcome</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde aut
+            iure quidem aperiam, placeat atque nisi eaque earum molestiae
+            impedit eligendi quae voluptatum incidunt itaque dicta eos nihil
+            libero blanditiis.
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-dark-pink"
+              data-dismiss="modal"
+            >
+              Start Flowchart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section
+      class="flowchart-background"
+      style="background-image: url('https://images.pexels.com/photos/373076/pexels-photo-373076.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');"
+    >
+      <div class="flowchart-overlay">
+        <div class="container-fluid py-5">
+          <div class="row">
+            <div class="col-md-6 col-12 pl-md-5 px-3 d-flex align-items-center">
+              <div class="bg-none rounded py-5 px-4">
+                <img
+                  class="img-fluid"
+                  src="{% static 'images/flow1.jpg' %}"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div class="col-md-6 col-12 pr-md-5 px-3 mt-4 mt-md-0">
+              <div class="bg-none rounded py-4">
+                <div class="container py-3 px-4">
+                  <form action="" method="POST">
+                    <input type="hidden" name="user_id" value="" />
+                    <input type="hidden" name="question_number" value="" />
+
+                    <p class="text-small">
+                      Question 1 of 3
+                    </p>
+
+                    <h5>
+                      This is a question
+                    </h5>
+                    <form action="{% url 'start' %}" method="POST">
+                    <div class="py-4">
+                      <div
+                        class="alert d-flex quiz-option-outer border"
+                        id="radio1"
+                        onclick="quizItem('radio1')"
+                        tabindex="1"
+                      >
+                        <label for="radio1" class="option">
+                          Option 1
+                        </label>
+                        <div class="over-radio">
+                          <input
+                            class="quiz-option"
+                            name="radio"
+                            value="1"
+                            type="radio"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="alert border d-flex quiz-option-outer"
+                        id="radio2"
+                        onclick="quizItem('radio2')"
+                        tabindex="2"
+                      >
+                        <label for="radio2" class="option"> Option 2</label>
+                        <div class="over-radio">
+                          <input
+                            class="quiz-option"
+                            name="radio"
+                            value="2"
+                            type="radio"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="alert border d-flex quiz-option-outer"
+                        id="radio3"
+                        onclick="quizItem('radio3')"
+                        tabindex="3"
+                      >
+                        <label for="radio3" class="option">
+                          Option 3
+                        </label>
+                        <div class="over-radio">
+                          <input
+                            class="quiz-option"
+                            name="radio"
+                            value="3"
+                            type="radio"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="alert border d-flex quiz-option-outer"
+                        id="radio4"
+                        onclick="quizItem('radio4')"
+                        tabindex="4"
+                      >
+                        <label for="radio4" class="option">
+                          Option 4
+                        </label>
+                        <div class="over-radio">
+                          <input
+                            class="quiz-option"
+                            name="radio"
+                            value="4"
+                            type="radio"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex">
+                      <a class="no-underline" href="#">Study Flowchart</a>
+                      <input type="submit" class="btn btn-outline-dark ml-auto" value="Next Question">
+                      <input type="submit" class="btn btn-outline-dark ml-auto" value="See Result">
+                    </form>
+                     
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript">
+      $(window).on('load', function() {
+        $('#welcome').modal('show');
+      });
+    </script>
+
+    <script>
+      $('.quiz-option-outer').on('click', function(e) {
+        if ($(e.target).is('.quiz-option')) {
+          e.stopPropagation();
+        } else {
+          if ($('input:radio', this).prop('checked') === true) {
+            console.log('returning false');
+            return false;
+          }
+          $('input:radio', this).prop('checked', true);
+        }
+        console.log('Clicked : ' + $(this).attr('class'));
+      });
+
+      function quizItem(radio) {
+        console.log('radio' + 1);
+        console.log(radio);
+        for (let i = 1; i <= 4; i++) {
+          document.getElementById('radio' + i).style.backgroundColor =
+            '#f8f9fa';
+          document.getElementById('radio' + i).style.color = 'black';
+        }
+        document.getElementById(radio).style.backgroundColor = '#ff214f';
+        document.getElementById(radio).style.color = 'white';
+      }
+    </script>
+  </body>
+</html>
