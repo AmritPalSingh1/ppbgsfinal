@@ -1,0 +1,119 @@
+---
+task: Merge two arrays
+details: |
+  <p><strong>Given two arrays, insert the elements into a new array in alternating order</strong></p>
+  <p>
+  <p>Input:<p>
+
+  <pre>
+  alternate(["a", "b", "c"], [1, 2, 3, 4, 5])
+  </pre>
+
+  <p>Output:</p>
+
+  <pre>
+  ["a", 1, "b", 2, "c", 3, 4, 5]
+  <pre>
+hints:
+  - hintContent: |
+      <p>Since all of the elements will be visted in both arrays, get the combined length of the arrays and use that for your loop</p>
+
+      <pre>
+      var combinedLength = arr1.length + arr2.length;
+
+      for (var i = 0; i < combinedLength; i++) {
+
+      }
+      </pre>
+    hintCost: 12
+  - hintContent: |
+      <p>Use <code>shift</code> remove an item from the start of an array. It changes the length</p>
+      <p>returns <code>undefined</code> if the array is empty</p>
+
+      <pre>
+      var arr = [1, 2, 3];
+      var one = arr.shift();
+      console.log(one); // 1
+      console.log(arr); // [2, 3]
+
+      var arr2 = [];
+      arr2.shift(); // undefined
+      </pre>
+    hintCost: 14
+  - hintContent: |
+      <p>Solution</p>
+
+      <pre>
+      function alternate(arr1, arr2) {
+        var newArr = [];
+        var combinedLength = arr1.length + arr2.length;
+        for (var i = 0; i < combinedLength; i++) {
+          var item1 = arr1.shift();
+          var item2 = arr2.shift();
+          if (item1) {
+            newArr.push(item1);
+          }
+          if (item2) {
+            newArr.push(item2);
+          }
+        }
+        return newArr;
+      }
+      </pre>
+    hintCost: 30
+html: ''
+js: |
+  function alternate(arr1, arr2) {
+    // your code here
+  }
+
+  var a = ["a", "b", "c"];
+  var b = [1, 2, 3, 4, 5];
+  console.log(alternate(a, b));
+hintReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    alternate = undefined;
+
+    const ARRAY_EQUAL = (arr1, arr2) => {
+      if (arr1.length !== arr2.length) {
+        return false;
+      }
+
+      for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i]) {
+          return false;
+        }
+      }
+
+      return true;
+    };
+
+    const TEST_ASSERT = (arg1, arg2, expected, msg) => {
+      try {
+        if (!ARRAY_EQUAL(alternate(arg1, arg2), expected)) {
+          throw new Error();
+        }
+      } catch (e) {
+        console.error(e);
+        fail(msg || `Failed case: ${arg}`);
+      }
+    };
+  run: |
+    if (!alternate) {
+      fail('You must use the function "alternate"');
+    }
+
+    TEST_ASSERT([], [], [], 'Failed case: alternate([], [])');
+    TEST_ASSERT([], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5], 'Failed case: alternate([], [1, 2, 3, 4, 5])');
+    TEST_ASSERT(["a", "b", "c"], [1, 2, 3], ["a", 1, "b", 2, "c", 3], 'Failed case: alternate(["a", "b", "c"], [1, 2, 3])');
+    TEST_ASSERT(["a", "b", "c"], [1, 2, 3, 4, 5], ["a", 1, "b", 2, "c", 3, 4, 5], 'Failed case: alternate(["a", "b", "c"], [1, 2, 3, 4, 5])');
+    TEST_ASSERT(["a", "b", "c", "d", "e", "f", "g"], [], ["a", "b", "c", "d", "e", "f", "g"], 'Failed case: alternate(["a", "b", "c", "d", "e", "f", "g"], [])');
+    TEST_ASSERT(["a", "b", "c", "d", "e", "f", "g"], [1, 2, 3], ["a", 1, "b", 2, "c", 3, "d", "e", "f", "g"], 'Failed case: alternate(["a", "b", "c", "d", "e", "f", "g"], [1, 2, 3])');
+  cleanup: ''
+  has: []
+  hasNot: []
+  maxLines: 50
+  errorThreshold: 6

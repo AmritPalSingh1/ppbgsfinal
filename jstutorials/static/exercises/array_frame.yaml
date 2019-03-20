@@ -62,19 +62,12 @@ hints:
         return len;
       }
 
-      function pad(str, len) {
-        while (str.length < len) {
-          str += " ";
-        }
-        return str;
-      }
-
       function frame(arr) {
         var length = longest(arr);
         var verticalBorder = "+" + "-".repeat(length + 2) + "+\n";
         var framed = verticalBorder;
         for (var i = 0; i < arr.length; i++) {
-          framed += "| " + pad(arr[i], length) +  " |\n";
+          framed += "| " + arr[i].padEnd(length) +  " |\n";
         }
         framed += verticalBorder;
         return framed;
@@ -93,11 +86,8 @@ hintReadOnly: false
 jsReadOnly: false
 secret: ''
 test:
-  setup: frame = undefined;
-  run: |
-    if (!frame) {
-      fail('You must use the function "frame"');
-    }
+  setup: |
+    frame = undefined;
 
     const TEST_ASSERT = (arg, expected, msg) => {
       try {
@@ -108,6 +98,10 @@ test:
         fail(msg || `Failed case: ${arg}`);
       }
     };
+  run: |
+    if (!frame) {
+      fail('You must use the function "frame"');
+    }
 
     let expected = '+--+\n+--+';
     TEST_ASSERT([], expected, 'Failed case: [] (Empty list)');
