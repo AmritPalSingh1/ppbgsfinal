@@ -26,17 +26,9 @@ import { toFormData } from './utils.js';
 
 // -- Onload dispatch -----------------------------------------------
 
-// const ex = 'array_frame.yaml';
-const ex = 'basics_hello.yaml';
-// const ex = 'canvas_rect.yaml';
-// const ex = 'cond_even_num.yaml';
-// const ex = 'dom_counter.yaml';
-// const ex = 'func_greet.yaml';
-// const ex = 'loop_1to20.yaml';
-
 store.dispatch(setCoins($('#coins').html()));
 store.dispatch(setHintsUsed($('#hints-used').html()));
-store.dispatch(fetchExercise(`/static/exercises/${ex}`));
+store.dispatch(fetchExercise('/static/exercises/loop_primes.yaml'));
 
 // -- Handle code change --------------------------------------------
 

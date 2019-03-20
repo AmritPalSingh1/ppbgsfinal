@@ -38,7 +38,7 @@ hints:
 
       <p>That will print <code>"hi"</code> 20 times to the console</p>
       <p>Feel free to copy and paste the code</p>
-    hintCost: 1
+    hintCost: 8
   - hintContent: |
       <p>Here is the solution:</p>
 
@@ -47,7 +47,7 @@ hints:
         console.log(i);
       }
       </pre>
-    hintCost: 1
+    hintCost: 20
 html: ''
 js: ''
 hintReadOnly: false

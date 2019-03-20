@@ -1,0 +1,101 @@
+---
+task: Write Fizz-Buzz
+details: |
+  <p><strong>
+    Print the numbers from 1 to 30,
+    but for every multiple of 3, print <code>Fizz</code>,
+    for every multiple of 5, print <code>Buzz</code>,
+    for a multiple of both, print <code>FizzBuzz</code>.
+  </strong></p>
+  <p>Expected console output:</p>
+  <pre>
+    1
+    2
+    Fizz
+    4
+    Buzz
+    Fizz
+    7
+    8
+    Fizz
+    Buzz
+    11
+    Fizz
+    13
+    14
+    FizzBuzz
+    16
+    17
+    Fizz
+    19
+    Buzz
+    Fizz
+    22
+    23
+    Fizz
+    Buzz
+    26
+    Fizz
+    28
+    29
+    FizzBuzz
+  </pre>
+hints:
+  - hintContent: |
+      <p>Check if a number is a multiple of both 3 and 5 first. Then check if it is a multiple of 3 or a multiple of 5</p>
+
+      <pre>
+      if (/* number is a multiple of both */) {
+        // ...
+      }
+      // if the statement below is reached
+      // we know "FizzBuzz" was not printed
+      else if (/* ... */) {
+      }
+      </pre>
+    hintCost: 15
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      for (var i = 1; i <= 30; i++) {
+        if (i % 15 === 0) {
+          console.log("FizzBuzz");
+        }
+        else if (i % 3 === 0) {
+          console.log("Fizz");
+        }
+        else if (i % 5 === 0) {
+          console.log("Buzz");
+        }
+        else {
+          console.log(i);
+        }
+      }
+      </pre>
+    hintCost: 25
+html: ''
+js: ''
+hintReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+  run: |
+    consoleOutput = consoleOutput.trim();
+    if (consoleOutput !== '1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizzBuzz\n16\n17\nFizz\n19\nBuzz\nFizz\n22\n23\nFizz\nBuzz\n26\nFizz\n28\n29\nFizzBuzz') {
+      fail('The console doesn\'t print the 30 Fizz-Buzz numbers');
+    }
+  cleanup: console.log = oldLog;
+  has:
+    - regex: (for|while)
+      message: Your code is missing a loop (use "for", "while", or "do... while").
+  hasNot: []
+  maxLines: 25
+  errorThreshold: 2

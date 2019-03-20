@@ -28,7 +28,7 @@ hints:
         // a doesn't have a value!
       }
       </pre>
-    hintCost: 1
+    hintCost: 15
   - hintContent: |
       <p>Solution:</p>
 
@@ -40,7 +40,7 @@ hints:
         return greeting + ", " + name + "!";
       }
       </pre>
-    hintCost: 1
+    hintCost: 30
 html: ''
 js: |
   function greet(greeting, name) {

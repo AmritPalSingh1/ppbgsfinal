@@ -7,7 +7,7 @@ Exercises are stored as a YAML file. They contain the task, hints for the task, 
 ```YAML
 task: Task displayed at the top of the page (html string)
 details: exercise details (html string)
-hints: 0 or more hints for this task (array)
+hints: 0 or more hints for this task. The last hint is considered the solution for the exercise (array)
   - hintContent: The actual hint to display (html string)
     hintCost: the cost for this hint (number)
 html: starter html code (string)

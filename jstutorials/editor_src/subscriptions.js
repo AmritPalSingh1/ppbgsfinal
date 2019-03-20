@@ -9,11 +9,8 @@ import { runCode } from './codeRunner.js';
 // -- On exercise fetch setup ---------------------------------------
 
 const OnDataFetched = once((htmlCode, jsCode, htmlReadOnly, jsReadOnly) => {
-  // "race condition" here:
-  // have to get the values from localStore if they exist before setting editor values
-  // otherwise, the editors get their default value
-  // I don't know why. I don't think this code is asynchronous...
-  // just one of those things...
+  // if the current exercise is the same as the last one visited,
+  // get the html and js code saved in localstorage
   if ($('#task-id').html() === localStorage.getItem('for-task')) {
     htmlCode = localStorage.getItem('htmlCode') || htmlCode;
     jsCode = localStorage.getItem('jsCode') || jsCode;

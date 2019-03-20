@@ -13,7 +13,7 @@ hints:
       <pre>
       console.log("This gets displayed to the console");
       </pre>
-    hintCost: 1
+    hintCost: 2
   - hintContent: |
       <pre>
       var name = "Jason";
@@ -21,7 +21,7 @@ hints:
       </pre>
 
       <p>The variable <code>greeting</code> contains the value:<code> "Hey, Jason"</code></p>
-    hintCost: 1
+    hintCost: 10
   - hintContent: |
       <p>This is one solution:</p>
 
@@ -29,7 +29,7 @@ hints:
       var name = "Jason";
       console.log("Hello, " + name + "!");
       </pre>
-    hintCost: 1
+    hintCost: 20
 html: '<p>Write your code in the JS editor at the bottom left</p>'
 js: ''
 htmlReadOnly: false

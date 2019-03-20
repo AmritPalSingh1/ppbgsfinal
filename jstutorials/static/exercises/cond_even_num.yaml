@@ -13,7 +13,7 @@ hints:
       <pre>
       var two = 5 % 3;
       </pre>
-    hintCost: 1
+    hintCost: 8
   - hintContent: |
       <p>Here is how you can check if a number is even:<p>
 
@@ -22,7 +22,7 @@ hints:
         // n is even!
       }
       </pre>
-    hintCost: 1
+    hintCost: 18
   - hintContent: |
       <p>Solution:<p>
 
@@ -34,7 +34,7 @@ hints:
         console.log("odd");
       }
       </pre>
-    hintCost: 1
+    hintCost: 30
 html: ''
 js: |
   // just letting you know that n exists
