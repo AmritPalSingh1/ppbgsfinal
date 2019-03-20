@@ -521,4 +521,22 @@ def challenge(request):
     return render(request, 'pages/code_editor.html', context)
 
 def result(request):
+    
+    # get current topic name
+    if 'topic_name' in request.POST:
+        topic_name = request.POST['topic-name']
+
+    # Fetch current topic
+    topic = get_object_or_404(Topic, topicName=topic_name)
+
+    if 'challenge_id' in request.POST:
+        challenge_id = request.POST['challenge_id']
+
+    challenge = Challenge.objects.get(id=challenge_id)
+
+    context = {
+        'topic': topic,
+        'challenge': challenge
+    }
+
     return render(request, 'pages/result.html')
