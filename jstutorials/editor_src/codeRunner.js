@@ -14,7 +14,8 @@ import { tidyHtml, nl2br, escapeCode } from './utils.js';
 // -- Console area --------------------------------------------------
 
 const log = x => {
-  store.dispatch(logToConsole(`<samp>${x}</samp><br />`));
+  const toLog = typeof x === 'object' ? JSON.stringify(x) : x;
+  store.dispatch(logToConsole(`<samp>${toLog}</samp><br />`));
 };
 
 const fail = x => {
