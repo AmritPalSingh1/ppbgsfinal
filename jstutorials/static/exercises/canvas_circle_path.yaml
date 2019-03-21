@@ -7,21 +7,17 @@ details: |
   <p>The large circle has 27 triangles and has a radius of 100 pixels</p>
 hints: 
   - hintContent: |
-      <p>Consider creating a function to draw the circular path</p>
-      <p>For example: <code>drawCircle(triangleCount, radius)</code></p>
-    hintCost: 3
-  - hintContent: |
       <p>Think about a drawing/drafting compass and how it draws a circle on a piece of paper</p>
     hintCost: 6
+  - hintContent: |
+      <p>The angle to rotate to the next triangle is <strong>2π / number of triangles</strong></p>
+    hintCost: 12
   - hintContent: |
       <p>Translate the origin to the center of the canvas before drawing anything</p>
 
       <pre>
       ctx.translate(canvas.width / 2, canvas.height / 2);
       </pre>
-    hintCost: 12
-  - hintContent: |
-      <p>The angle to rotate to the next triangle is <strong>2π / number of triangles</strong></p>
     hintCost: 18
   - hintContent: |
       <p>Draw the triangles using a loop similar to this:</p>
@@ -125,6 +121,8 @@ test:
     }
   cleanup: ''
   has: []
-  hasNot: []
+  hasNot:
+    - regex: demo-canvas
+      message: You shouldn't access the demo canvas
   maxLines: 30
   errorThreshold: 1

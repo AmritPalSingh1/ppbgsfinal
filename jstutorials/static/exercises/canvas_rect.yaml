@@ -82,6 +82,8 @@ test:
       message: Your code should use "ctx.fillStyle" to change colors
     - regex: fillRect
       message: Your code should use "ctx.fillRect" to draw rectangles
-  hasNot: []
+  hasNot:
+    - regex: demo-canvas
+      message: You shouldn't access the demo canvas
   maxLines: 20
   errorThreshold: 3

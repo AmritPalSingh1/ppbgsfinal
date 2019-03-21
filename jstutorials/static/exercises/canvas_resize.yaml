@@ -1,0 +1,163 @@
+---
+task: Create a resizable rectangle
+details: |
+  <p><strong>Draw a rectangle that resizes on button clicks</strong></p>
+  <p>The rectangle should be centered on the canvas</p>
+  <p>The initial width and height of the rectangle should be half of the canvas width and height respectively</p>
+  <p>When the grow button is clicked, the rectangle width and height increases by 10&percnt;<p>
+  <p>When the shrink button is clicked, the rectangle width and height decreases by 10&percnt;<p>
+hints: 
+  - hintContent: |
+      <p>Use <code>canvas.width</code> and <code>canvas.height</code> to calculate the rectangle&apos;s size</p>
+    hintCost: 6
+  - hintContent: |
+      <p>Every time you update the canvas, clear it before drawing the rectangle</p>
+
+      <pre>
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // add code to draw the rectangle
+      </pre>
+    hintCost: 12
+  - hintContent: |
+      <p>It might be helpful to translate the origin to the center of the canvas</p>
+
+      <pre>
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      </pre>
+    hintCost: 16
+  - hintContent: |
+      <p>Solution</p>
+
+      <pre>
+      var canvas = document.getElementById("my-canvas");
+      var ctx = canvas.getContext("2d");
+
+      var size = 0.5;
+
+      function drawRectangle(percent) {
+        var width = percent * canvas.width;
+        var height = percent * canvas.height;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.fillRect(-width / 2, -height / 2, width, height);
+        ctx.restore();
+      }
+
+      function grow() {
+        size += 0.1;
+        drawRectangle(size);
+      }
+
+      function shrink() {
+        size -= 0.1;
+        drawRectangle(size);
+      }
+
+      drawRectangle(size);
+      </pre>
+    hintCost: 40
+html: |-
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+  <h4>Your canvas:</h4>
+  <canvas id="my-canvas"></canvas><br />
+  <button onclick="grow()">Grow</button>
+  <button onclick="shrink()">Shrink</button>
+  <h4>Expected result:</h4>
+  <canvas id="demo-canvas"></canvas><br />
+  <span>Try me! --&gt;</span>
+  <button>Grow</button>
+  <button>Shrink</button>
+js: |
+  var canvas = document.getElementById("my-canvas");
+  var ctx = canvas.getContext("2d");
+
+  function grow() {
+
+  }
+
+  function shrink() {
+
+  }
+htmlReadOnly: false
+jsReadOnly: false
+secret: |-
+  const canvas = document.getElementById("demo-canvas");
+  const ctx = canvas.getContext("2d");
+  const buttons = document.querySelectorAll('button');
+
+  let size = 0.5;
+
+  const drawRect = (perc) => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    const width = perc * canvas.width;
+    const height = perc * canvas.height;
+    ctx.fillRect(-width / 2, -height / 2, width, height);
+    ctx.restore();
+  };
+
+  // grow button
+  buttons[2].onclick = () => {
+    size += 0.1;
+    drawRect(size);
+  };
+
+  // shrink button
+  buttons[3].onclick = () => {
+    size -= 0.1;
+    drawRect(size);
+  };
+
+  drawRect(size);
+
+test:
+  setup: |
+    grow = undefined;
+    shrink = undefined;
+
+    const userCanvas = document.querySelector('#my-canvas');
+    const demoCanvas = document.querySelector('#demo-canvas');
+
+    const userContext = userCanvas.getContext('2d');
+    const demoContext = demoCanvas.getContext('2d');
+
+    const COMPARE_CANVAS = (passingPerc, failMsg) => {
+      const userData = userContext.getImageData(0, 0, userCanvas.width, userCanvas.height).data;
+      const demoData = demoContext.getImageData(0, 0, demoCanvas.width, demoCanvas.height).data;
+
+      let squares = 0;
+
+      for (let i = 0; i < userData.length; i++) {
+        squares += (userData[i] - demoData[i]) ** 2;
+      }
+
+      const perc = (255 - Math.sqrt(squares / userData.length)) / 255;
+
+      if (perc < passingPerc) {
+        fail(failMsg);
+      }
+    };
+  run: |
+    const buttons = document.querySelectorAll('button');
+    const [userGrow, userShrink, demoGrow, demoShrink] = buttons;
+
+    COMPARE_CANVAS(0.95, 'The initial rectangle size should be the same as the demo rectangle size');
+    userGrow.click();
+    demoGrow.click();
+    COMPARE_CANVAS(0.95, 'The rectangle does not grow by 10% when the grow button is clicked');
+    userShrink.click();
+    demoShrink.click();
+    COMPARE_CANVAS(0.95, 'The rectangle does not shrink by 10% when the shrink button is clicked');
+  cleanup: ''
+  has: []
+  hasNot:
+    - regex: demo-canvas
+      message: You shouldn't access the demo canvas
+  maxLines: 30
+  errorThreshold: 3

@@ -67,7 +67,10 @@ htmlReadOnly: true
 jsReadOnly: false
 secret: ''
 test:
-  setup: ''
+  setup: |
+    increment = undefined;
+    decrement = undefined;
+    reset = undefined;
   run: |
     const $ = x => document.querySelector(x);
 
