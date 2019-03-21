@@ -21,7 +21,7 @@ details: |
   <pre>
 hints:
   - hintContent: |
-      <p>Repeat a string by using <code>repeat</code> from a string</p>
+      <p>Repeat a string by using <code>String.prototype.repeat()</code></p>
 
       <pre>
       "l" + "ol".repeat(3);
@@ -29,7 +29,7 @@ hints:
       </pre>
     hintCost: 7
   - hintContent: |
-      <p>Add padding by using <code>padEnd</code></p>
+      <p>Add padding by using <code>String.prototype.padEnd()</code></p>
 
       <pre>
       "My love".padEnd(10, '.');

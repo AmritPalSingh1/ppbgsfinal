@@ -26,7 +26,7 @@ import { toFormData } from './utils.js';
 
 store.dispatch(setCoins($('#coins').html()));
 store.dispatch(setHintsUsed($('#hints-used').html()));
-store.dispatch(fetchExercise('/static/exercises/canvas_circle_path.yaml'));
+store.dispatch(fetchExercise('/static/exercises/array_flatten.yaml'));
 
 // -- Handle code change --------------------------------------------
 

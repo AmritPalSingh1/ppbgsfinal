@@ -27,7 +27,7 @@ hints:
       </pre>
     hintCost: 12
   - hintContent: |
-      <p>Use <code>shift</code> remove an item from the start of an array. It changes the length</p>
+      <p>Use <code>Array.prototype.shift()</code> to remove an item from the start of an array. It changes the length</p>
       <p>returns <code>undefined</code> if the array is empty</p>
 
       <pre>

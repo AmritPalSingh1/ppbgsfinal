@@ -11,6 +11,9 @@ hints:
       <p>For example: <code>drawCircle(triangleCount, radius)</code></p>
     hintCost: 3
   - hintContent: |
+      <p>Think about a drawing/drafting compass and how it draws a circle on a piece of paper</p>
+    hintCost: 6
+  - hintContent: |
       <p>Translate the origin to the center of the canvas before drawing anything</p>
 
       <pre>
@@ -19,9 +22,9 @@ hints:
     hintCost: 12
   - hintContent: |
       <p>The angle to rotate to the next triangle is <strong>2π / number of triangles</strong></p>
-    hintCost: 15
+    hintCost: 18
   - hintContent: |
-      <p>Draw the circles using a loop similar to this:</p>
+      <p>Draw the triangles using a loop similar to this:</p>
 
       <pre>
       for (var i = 0; i < numberOfTriangles; i++) {
@@ -29,7 +32,7 @@ hints:
         drawTriangle(radius, 0);
       }
       </pre>
-    hintCost: 15
+    hintCost: 24
   - hintContent: |
       <p>Solution:</p>
 
@@ -49,7 +52,7 @@ hints:
       drawCircle(18, 60);
       drawCircle(27, 100);
       </pre>
-    hintCost: 25
+    hintCost: 40
 html: |-
   <style>
     canvas {
@@ -117,7 +120,7 @@ test:
 
     const perc = (255 - Math.sqrt(squares / userData.length)) / 255;
 
-    if (perc < .9) {
+    if (perc < .95) {
       fail('Your image and the image shown aren\'t similar enough');
     }
   cleanup: ''
