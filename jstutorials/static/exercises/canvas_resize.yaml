@@ -83,7 +83,7 @@ js: |
   function shrink() {
 
   }
-htmlReadOnly: false
+htmlReadOnly: true
 jsReadOnly: false
 secret: |-
   const canvas = document.getElementById("demo-canvas");

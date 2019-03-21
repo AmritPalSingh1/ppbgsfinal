@@ -37,15 +37,14 @@ hints:
     hintCost: 30
 html: ''
 js: |
-  // just letting you know that n exists
+  // just letting you know that n magically exists
   // even though you can't see it in the editor
   console.log("n is a " + typeof n);
 htmlReadOnly: false
 jsReadOnly: false
-secret: ''
+secret: window.n = 2;
 test:
   setup: |
-    const n = 2;
     const oldLog = console.log;
     let consoleOutput = '';
     console.log = x => {
@@ -54,20 +53,26 @@ test:
     };
   run: |
     consoleOutput = consoleOutput.trim();
-    if (consoleOutput !== "even") {
-      fail('Expected console output to be "even"');
+
+    if (!/even/is.test(consoleOutput)) {
+      fail('Expected console output to contain "even"');
+    }
+
+    if (/odd/is.test(consoleOutput)) {
+      fail('Console output should not contain "odd"');
     }
   cleanup: console.log = oldLog;
   has:
-    - regex: 'if.*else'
+    - regex: if.*else
+      flags: s
       message: 'Your code is missing an if/else statement'
     - regex: '( *\% *2| *& *1)'
       message: 'Your code should have a condition to test if n is even or odd'
     - regex: 'console\.log'
       message: 'Your code is missing console.log'
     - regex: (['"].*even.*['"].*['"].*odd.*['"]|['"].*odd.*['"].*['"].*even.*['"])
-      flags: i
-      message: 'Your code should cover both even and odd cases'
+      flags: is
+      message: 'Your code should either print even or odd for any number'
   hasNot: []
   maxLines: 10
   errorThreshold: 5

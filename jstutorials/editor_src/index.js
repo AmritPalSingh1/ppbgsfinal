@@ -26,7 +26,7 @@ import { toFormData } from './utils.js';
 
 store.dispatch(setCoins($('#coins').html()));
 store.dispatch(setHintsUsed($('#hints-used').html()));
-store.dispatch(fetchExercise('/static/exercises/canvas_resize.yaml'));
+store.dispatch(fetchExercise('/static/exercises/cond_even_num.yaml'));
 
 // -- Handle code change --------------------------------------------
 
