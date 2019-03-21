@@ -15,11 +15,6 @@ details: |
   </pre>
 
   <p>Do not use <code>Array.prototype.flat()</code> or <code>Array.prototype.reduce()</code></p> 
-  <p>
-    Be aware of infinite recursion. You might end up with an unresponsive browser tab.
-    Usually though, you would get a <em>Maximum call stack size exceeded</em> error,
-    but it&apos;s better to play it safe and write your base case first instead of having your browser crash.
-  </p>
 hints:
   - hintContent: |
       <p><code>Array.prototype.concat()</code> adds to the end of an array. It can be used to merge two arrays</p>
