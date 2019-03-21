@@ -1,8 +1,6 @@
 /* global $ */
 
 import jsyaml from 'js-yaml';
-import store from './store.js';
-import { html, js } from '../codeEditor.js';
 import { toFormData } from '../utils.js';
 import {
   FETCH_SUCCESS,
@@ -44,16 +42,6 @@ export const buyHint = hintCost => dispatch =>
       hintsUsed: hint_number,
     }))
     .then(data => dispatch({ type: HINT_PURCHASE_SUCCESS, data }));
-
-export const resetHtml = () => {
-  html.setValue(store.getState().exercise.html);
-  return { type: NO_OP };
-};
-
-export const resetJs = () => {
-  js.setValue(store.getState().exercise.js);
-  return { type: NO_OP };
-};
 
 export const setHtmlCode = code => ({ type: SET_HTML, code });
 export const setJsCode = code => ({ type: SET_JS, code });

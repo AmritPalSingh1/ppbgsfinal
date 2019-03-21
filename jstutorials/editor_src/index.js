@@ -14,8 +14,6 @@ import {
   setHintsUsed,
   setHtmlCode,
   setJsCode,
-  resetHtml,
-  resetJs,
 } from './redux/actions.js';
 import './splitHandler.js';
 import './modals.js';
@@ -45,8 +43,8 @@ html.on('change', handleChange(setHtmlCode));
 
 // -- Settings ------------------------------------------------------
 
-$('#reset-html-button').click(() => store.dispatch(resetHtml()));
-$('#reset-js-button').click(() => store.dispatch(resetJs()));
+$('#reset-html-button').click(() => html.setValue(store.getState().exercise.html));
+$('#reset-js-button').click(() => js.setValue(store.getState().exercise.js));
 
 // -- Submit code ---------------------------------------------------
 

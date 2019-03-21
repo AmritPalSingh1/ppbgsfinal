@@ -4,8 +4,6 @@ import {
   HINT_PURCHASE_SUCCESS,
   SET_HTML,
   SET_JS,
-  RESET_HTML,
-  RESET_JS,
   LOG_TO_CONSOLE,
   CLEAR_CONSOLE,
   INC_ERROR,
@@ -28,10 +26,6 @@ const reducer = (state = initialState, action) => {
       return { ...state, userHtml: action.code };
     case SET_JS:
       return { ...state, userJs: action.code };
-    case RESET_HTML:
-      return { ...state, userHtml: state.exercise.html };
-    case RESET_JS:
-      return { ...state, userJs: state.exercise.js };
 
     case LOG_TO_CONSOLE:
       return { ...state, consoleOutput: state.consoleOutput + action.data };
