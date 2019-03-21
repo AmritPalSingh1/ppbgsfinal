@@ -26,7 +26,7 @@ import { toFormData } from './utils.js';
 
 store.dispatch(setCoins($('#coins').html()));
 store.dispatch(setHintsUsed($('#hints-used').html()));
-store.dispatch(fetchExercise('/static/exercises/func_factorial_recursive.yaml'));
+store.dispatch(fetchExercise('/static/exercises/array_flatten.yaml'));
 
 // -- Handle code change --------------------------------------------
 
