@@ -26,7 +26,7 @@ import { toFormData } from './utils.js';
 
 store.dispatch(setCoins($('#coins').html()));
 store.dispatch(setHintsUsed($('#hints-used').html()));
-store.dispatch(fetchExercise('/static/exercises/array_flatten.yaml'));
+store.dispatch(fetchExercise('/static/exercises/func_sum_digits.yaml'));
 
 // -- Handle code change --------------------------------------------
 

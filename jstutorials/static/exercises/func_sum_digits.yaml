@@ -1,0 +1,91 @@
+---
+task: Add the digits of a number
+details: |
+  <p><strong>Write a function that takes a positive number and returns the sum of its digits</strong></p>
+  <p>Sample:<p>
+  <pre>
+  console.log(addDigits(0));
+  console.log(addDigits(11111));
+  console.log(addDigits(12345));
+  </pre>
+
+  <p>Output:</p>
+  <pre>
+  0
+  5
+  15
+  <pre>
+hints:
+  - hintContent: |
+      <p>You can get the rightmost digit from a number by using <code>%</code></p>
+
+      <pre>
+      var zero = 100 % 10;
+      var two = 12 % 10;
+      var three = 33 % 10;
+      var seven = 27 % 10;
+      </pre>
+    hintCost: 10
+  - hintContent: |
+      <p>Remove the rightmost digit by dividing by ten and rounding down the quotient</p>
+
+      <pre>
+      var ten = Math.floor(100 / 10);
+      var two = Math.floor(21 / 10);
+      var fifty = Math.floor(509 / 10);
+      </pre>
+    hintCost: 21
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      function addDigits(n) {
+        var sum = 0;
+
+        while (n > 0) {
+          sum += n % 10;
+          n = Math.floor(n / 10);
+        }
+
+        return sum;
+      }
+      </pre>
+    hintCost: 30
+html: ''
+js: |
+  function addDigits(n) {
+    // your code here
+  }
+
+  console.log(addDigits(0));
+  console.log(addDigits(11111));
+  console.log(addDigits(12345));
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    addDigits = undefined;
+
+    const TEST_ASSERT = (arg, expected, msg) => {
+      try {
+        if (addDigits(arg) !== expected) {
+          throw new Error();
+        }
+      } catch (e) {
+        fail(msg || `Failed case: ${arg}`);
+      }
+    };
+  run: |
+    if (!addDigits) {
+      fail('You must use the function "addDigits"');
+    }
+
+    TEST_ASSERT(0, 0, 'Failed case: addDigits(0)');
+    TEST_ASSERT(11111, 5, 'Failed case: addDigits(11111)');
+    TEST_ASSERT(12345, 15, 'Failed case: addDigits(12345)');
+  cleanup: ''
+  has: []
+  hasNot: []
+  maxLines: 25
+  errorThreshold: 3
