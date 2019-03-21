@@ -76,7 +76,7 @@ hints:
     hintCost: 25
 html: ''
 js: ''
-hintReadOnly: false
+htmlReadOnly: false
 jsReadOnly: false
 secret: ''
 test:
@@ -87,9 +87,42 @@ test:
       consoleOutput += x + '\n';
       oldLog(x);
     };
+
+    const EXPECTED = `
+    1
+    2
+    Fizz
+    4
+    Buzz
+    Fizz
+    7
+    8
+    Fizz
+    Buzz
+    11
+    Fizz
+    13
+    14
+    FizzBuzz
+    16
+    17
+    Fizz
+    19
+    Buzz
+    Fizz
+    22
+    23
+    Fizz
+    Buzz
+    26
+    Fizz
+    28
+    29
+    FizzBuzz
+    `.trim();
   run: |
     consoleOutput = consoleOutput.trim();
-    if (consoleOutput !== '1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizzBuzz\n16\n17\nFizz\n19\nBuzz\nFizz\n22\n23\nFizz\nBuzz\n26\nFizz\n28\n29\nFizzBuzz') {
+    if (consoleOutput !== EXPECTED) {
       fail('The console doesn\'t print the 30 Fizz-Buzz numbers');
     }
   cleanup: console.log = oldLog;

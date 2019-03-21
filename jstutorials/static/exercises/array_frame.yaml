@@ -82,7 +82,7 @@ js: |
 
   var A = ["Hello", "I am", "in", "a", "frame"];
   console.log(frame(A));
-hintReadOnly: false
+htmlReadOnly: false
 jsReadOnly: false
 secret: ''
 test:

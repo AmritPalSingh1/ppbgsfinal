@@ -49,7 +49,7 @@ js: |
 
   console.log(greet("Hello", "Sarah"));
   console.log(greet("Hello"));
-hintReadOnly: false
+htmlReadOnly: false
 jsReadOnly: false
 secret: ''
 test:

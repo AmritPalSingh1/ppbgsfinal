@@ -67,7 +67,7 @@ js: |
 
   var A = [1, [2, 3], 4, [[5, 6], 7], 8];
   console.log(flatten(A));
-hintReadOnly: false
+htmlReadOnly: false
 jsReadOnly: false
 secret: ''
 test:

@@ -50,7 +50,7 @@ hints:
     hintCost: 20
 html: ''
 js: ''
-hintReadOnly: false
+htmlReadOnly: false
 jsReadOnly: false
 secret: ''
 test:

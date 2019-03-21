@@ -44,7 +44,7 @@ js: |
 
   var A = [1, 123, 68, -3, 10, 5, 689];
   console.log(minimum(A));
-hintReadOnly: false
+htmlReadOnly: false
 jsReadOnly: false
 secret: ''
 test:

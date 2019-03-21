@@ -1,0 +1,96 @@
+---
+task: Print the first 20 even fibonacci numbers
+details: |
+  <p>A term in the fibonacci sequence is the sum of the previous two terms, starting with two 1s.</p>
+  <p>1, 1, 2, 3, 5, 8, 13, 21, 34, ...</p>
+  <p><strong>Print the first 20 even fibonacci numbers</strong></p>
+  <p>Expected console output:</p>
+  <pre>
+    2
+    8
+    34
+    144
+    610
+    2584
+    10946
+    46368
+    196418
+    832040
+    3524578
+    14930352
+    63245986
+    267914296
+    1134903170
+    4807526976
+    20365011074
+    86267571272
+    365435296162
+    1548008755920
+  </pre>
+hints:
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      var count = 0;
+      var prev1 = 1;
+      var prev2 = 1;
+
+      while (count < 20) {
+        var sum = prev1 + prev2;
+        prev1 = prev2;
+        prev2 = sum;
+        
+        if (sum % 2 === 0) {
+          console.log(sum);
+          count++;
+        }
+      }
+      </pre>
+    hintCost: 30
+html: ''
+js: ''
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+
+    const EXPECTED = `
+    2
+    8
+    34
+    144
+    610
+    2584
+    10946
+    46368
+    196418
+    832040
+    3524578
+    14930352
+    63245986
+    267914296
+    1134903170
+    4807526976
+    20365011074
+    86267571272
+    365435296162
+    1548008755920
+    `.trim();
+  run: |
+    consoleOutput = consoleOutput.trim();
+    if (consoleOutput !== EXPECTED) {
+      fail('The console doesn\'t print the first 20 even fibonacci numbers');
+    }
+  cleanup: console.log = oldLog;
+  has: []
+  hasNot: []
+  maxLines: 30
+  errorThreshold: 1
