@@ -5,12 +5,14 @@ import store from './redux/store.js';
 import render from './view.js';
 import { html, js } from './codeEditor.js';
 import { runCode } from './codeRunner.js';
+import { DEFAULT_THEME, DEFAULT_INDENT, DEFAULT_KEYMAP } from './redux/constants.js';
 
 // -- On exercise fetch setup ---------------------------------------
 
 const OnDataFetched = once((htmlCode, jsCode, htmlReadOnly, jsReadOnly) => {
   // get options from localstore
   const indentUnit = localStorage.getItem('indentUnit');
+  const theme = localStorage.getItem('theme');
   let keymap = localStorage.getItem('keyMap');
 
   if (keymap) {
@@ -33,10 +35,12 @@ const OnDataFetched = once((htmlCode, jsCode, htmlReadOnly, jsReadOnly) => {
   // set editor options
   html.setOption('readOnly', htmlReadOnly);
   js.setOption('readOnly', jsReadOnly);
-  html.setOption('indentUnit', indentUnit || 2);
-  js.setOption('indentUnit', indentUnit || 2);
-  html.setOption('keyMap', keymap || 'default');
-  js.setOption('keyMap', keymap || 'default');
+  html.setOption('indentUnit', indentUnit || DEFAULT_INDENT);
+  js.setOption('indentUnit', indentUnit || DEFAULT_INDENT);
+  html.setOption('keyMap', keymap || DEFAULT_KEYMAP);
+  js.setOption('keyMap', keymap || DEFAULT_KEYMAP);
+  html.setOption('theme', theme || DEFAULT_THEME);
+  js.setOption('theme', theme || DEFAULT_THEME);
 
   // show task details
   $('#taskDetailsModal').modal('show');

@@ -1,3 +1,5 @@
+import { DEFAULT_INDENT, DEFAULT_KEYMAP, DEFAULT_THEME } from "./redux/constants";
+
 /* global $ */
 
 // do you feel sick?
@@ -87,9 +89,20 @@ createModal(
      <hr>
      <h6>Keymap</h6>
      <select id="keymap-select" class="form-control">
-       <option>Default</option>
-       <option disabled>Emacs</option>
-       <option>Vim</option>
+       <option>default</option>
+       <option disabled>emacs</option>
+       <option>vim</option>
+     </select>
+     <hr>
+     <h6>Theme</h6>
+     <select id="theme-select" class="form-control">
+       <option>base16-dark</option>
+       <option>base16-light</option>
+       <option>eclipse</option>
+       <option>idea</option>
+       <option>material</option>
+       <option>neo</option>
+       <option>oceanic-next</option>
      </select>
    </div>`,
   `<button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -97,7 +110,8 @@ createModal(
    </button>`,
 );
 
-$('#indent-select').val(localStorage.getItem('indentUnit') || 2);
-$('#keymap-select').val(localStorage.getItem('keyMap') || 'Default');
+$('#indent-select').val(localStorage.getItem('indentUnit') || DEFAULT_INDENT);
+$('#keymap-select').val(localStorage.getItem('keyMap') || DEFAULT_KEYMAP);
+$('#theme-select').val(localStorage.getItem('theme') || DEFAULT_THEME);
 
 // thanks I hate it

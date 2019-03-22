@@ -10,3 +10,8 @@ export const SET_HINTS_USED = 'set-hints-used';
 export const SET_HINT_PAGE = 'set-hint-page';
 export const SET_COIN_COUNT = 'set-coin-count';
 export const NO_OP = 'no-op';
+
+// not used by redux
+export const DEFAULT_INDENT = 2;
+export const DEFAULT_KEYMAP = 'default';
+export const DEFAULT_THEME = 'eclipse';

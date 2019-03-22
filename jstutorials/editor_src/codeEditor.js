@@ -52,7 +52,15 @@ $('#indent-select').on('change', () => {
 // change keymap
 $('#keymap-select').on('change', () => {
   const keymap = $('#keymap-select option:selected').text();
-  html.setOption('keyMap', keymap.toLowerCase());
-  js.setOption('keyMap', keymap.toLowerCase());
+  html.setOption('keyMap', keymap);
+  js.setOption('keyMap', keymap);
   localStorage.setItem('keyMap', keymap);
+});
+
+// change theme
+$('#theme-select').on('change', () => {
+  const theme = $('#theme-select option:selected').text();
+  html.setOption('theme', theme);
+  js.setOption('theme', theme);
+  localStorage.setItem('theme', theme);
 });
