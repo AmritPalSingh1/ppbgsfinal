@@ -76,7 +76,7 @@ createModal(
      <h6>Indent Size</h6>
      <select id="indent-select" class="form-control">
        <option>1</option>
-       <option selected="selected">2</option>
+       <option>2</option>
        <option>3</option>
        <option>4</option>
        <option>5</option>
@@ -97,7 +97,7 @@ createModal(
    </button>`,
 );
 
-$('#indent-select').val(localStorage.getItem('indentUnit'));
-$('#keymap-select').val(localStorage.getItem('keyMap'));
+$('#indent-select').val(localStorage.getItem('indentUnit') || 2);
+$('#keymap-select').val(localStorage.getItem('keyMap') || 'Default');
 
 // thanks I hate it
