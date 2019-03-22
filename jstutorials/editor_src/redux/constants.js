@@ -9,5 +9,4 @@ export const RESET_ERROR = 'reset-error';
 export const SET_HINTS_USED = 'set-hints-used';
 export const SET_HINT_PAGE = 'set-hint-page';
 export const SET_COIN_COUNT = 'set-coin-count';
-export const SET_CSRF_TOKEN = 'set-csrf-token';
 export const NO_OP = 'no-op';

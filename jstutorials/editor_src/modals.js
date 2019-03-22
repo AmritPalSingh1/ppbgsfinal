@@ -72,10 +72,32 @@ createModal(
      <h6>Reset Editors</h6>
      <button class="btn btn-outline-danger" id="reset-html-button">Reset HTML editor</button>
      <button class="btn btn-outline-danger" id="reset-js-button">Reset JS editor</button>
+     <hr>
+     <h6>Indent Size</h6>
+     <select id="indent-select" class="form-control">
+       <option>1</option>
+       <option selected="selected">2</option>
+       <option>3</option>
+       <option>4</option>
+       <option>5</option>
+       <option>6</option>
+       <option>7</option>
+       <option>8</option>
+     </select>
+     <hr>
+     <h6>Keymap</h6>
+     <select id="keymap-select" class="form-control">
+       <option>Default</option>
+       <option disabled>Emacs</option>
+       <option>Vim</option>
+     </select>
    </div>`,
   `<button type="button" class="btn btn-secondary" data-dismiss="modal">
      Close
    </button>`,
 );
+
+$('#indent-select').val(localStorage.getItem('indentUnit'));
+$('#keymap-select').val(localStorage.getItem('keyMap'));
 
 // thanks I hate it

@@ -41,11 +41,6 @@ const handleChange = curry((action, cm) => {
 js.on('change', handleChange(setJsCode));
 html.on('change', handleChange(setHtmlCode));
 
-// -- Settings ------------------------------------------------------
-
-$('#reset-html-button').click(() => html.setValue(store.getState().exercise.html));
-$('#reset-js-button').click(() => js.setValue(store.getState().exercise.js));
-
 // -- Submit code ---------------------------------------------------
 
 $('#submit-results-button').click(() => {

@@ -92,5 +92,5 @@ test:
   cleanup: console.log = oldLog;
   has: []
   hasNot: []
-  maxLines: 30
+  maxLines: 19
   errorThreshold: 1

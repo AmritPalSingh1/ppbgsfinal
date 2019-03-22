@@ -11,7 +11,6 @@ import {
   SET_HINTS_USED,
   SET_HINT_PAGE,
   SET_COIN_COUNT,
-  SET_CSRF_TOKEN,
   NO_OP,
 } from './constants.js';
 
@@ -43,8 +42,6 @@ const reducer = (state = initialState, action) => {
       return { ...state, hintsUsed: action.hintsUsed };
     case SET_HINT_PAGE:
       return { ...state, hintPage: action.page };
-    case SET_CSRF_TOKEN:
-      return { ...state, csrfToken: action.token };
 
     case NO_OP:
       return state;

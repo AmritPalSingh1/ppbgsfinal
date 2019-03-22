@@ -101,5 +101,5 @@ test:
     - regex: (for|while)
       message: Your code is missing a loop (use "for", "while", or "do... while").
   hasNot: []
-  maxLines: 30
+  maxLines: 19
   errorThreshold: 2

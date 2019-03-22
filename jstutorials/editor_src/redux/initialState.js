@@ -33,6 +33,10 @@ const exercise = {
 // -- Initial state -------------------------------------------------
 
 const initialState = {
+  // code indentation size
+  indentSize: 2,
+  // code editor keymap
+  keymap: 'default',
   // user html code
   userHtml: '',
   // user js code
@@ -51,8 +55,6 @@ const initialState = {
   errorCount: 0,
   // the contents of the console output
   consoleOutput: '',
-  // value of csrf token
-  csrfToken: '',
 };
 
 export default initialState;
