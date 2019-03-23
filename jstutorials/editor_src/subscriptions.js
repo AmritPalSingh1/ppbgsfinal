@@ -13,11 +13,7 @@ const OnDataFetched = once((htmlCode, jsCode, htmlReadOnly, jsReadOnly) => {
   // get options from localstore
   const indentUnit = localStorage.getItem('indentUnit');
   const theme = localStorage.getItem('theme');
-  let keymap = localStorage.getItem('keyMap');
-
-  if (keymap) {
-    keymap = keymap.toLowerCase();
-  }
+  const keymap = localStorage.getItem('keyMap');
 
   // if the current exercise is the same as the last one visited,
   // get the html and js code saved in localstorage

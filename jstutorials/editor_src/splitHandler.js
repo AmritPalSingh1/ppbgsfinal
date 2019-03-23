@@ -5,7 +5,7 @@
 const constants = {
   // the percentage view for the console to be considered closed
   consoleClosedThreshold: 97.5,
-  consoleDefaultSplitSize: [60, 40],
+  consoleDefaultSplitSize: [50, 50],
   gutterSize: 8,
 };
 

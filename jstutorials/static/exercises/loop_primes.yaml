@@ -1,7 +1,7 @@
 ---
-task: Print the first 20 prime numbers
+task: Print the first 30 prime numbers
 details: |
-  <p><strong>Print the first 20 prime numbers</strong></p>
+  <p><strong>Print the first 30 prime numbers</strong></p>
   <p>Expected console output:</p>
   <pre>
     2
@@ -24,6 +24,16 @@ details: |
     61
     67
     71
+    73
+    79
+    83
+    89
+    97
+    101
+    103
+    107
+    109
+    113
   </pre>
 hints:
   - hintContent: |
@@ -91,15 +101,48 @@ test:
       consoleOutput += x + '\n';
       oldLog(x);
     };
+
+    const EXPECTED = `
+    2
+    3
+    5
+    7
+    11
+    13
+    17
+    19
+    23
+    29
+    31
+    37
+    41
+    43
+    47
+    53
+    59
+    61
+    67
+    71
+    73
+    79
+    83
+    89
+    97
+    101
+    103
+    107
+    109
+    113
+    `.trim();
   run: |
     consoleOutput = consoleOutput.trim();
-    if (consoleOutput !== '2\n3\n5\n7\n11\n13\n17\n19\n23\n29\n31\n37\n41\n43\n47\n53\n59\n61\n67\n71') {
-      fail('The console doesn\'t print the first 20 prime numbers');
+    if (consoleOutput !== EXPECTED) {
+      fail('The console doesn\'t print the first 30 prime numbers');
     }
   cleanup: console.log = oldLog;
   has:
     - regex: (for|while)
       message: Your code is missing a loop (use "for", "while", or "do... while").
   hasNot: []
-  maxLines: 19
+  maxLines: 27
   errorThreshold: 2
