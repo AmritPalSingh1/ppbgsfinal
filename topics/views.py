@@ -4,6 +4,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from datetime import datetime, timedelta
+import math
 
 # Import required models
 from .models import Topic, Video, Question, Pdf, Query, Comment
@@ -12,6 +13,16 @@ from django.contrib.auth.models import User
 from challenges.models import Challenge, DoublePoint, FreeWin, Hint
 from userprogress.models import TotalPoints, TotalCoins
 
+def get_user_rank(user):
+    # list of all the users
+    allUsers = TotalPoints.objects.order_by('-points')
+
+    rank = 1
+    for singleUser in allUsers:
+        if singleUser.user == user:
+            break
+        rank += 1
+    return rank
 
 def user_info(request):
     # current user's total points
@@ -21,11 +32,8 @@ def user_info(request):
     allUsers = TotalPoints.objects.order_by('-points')
 
     # current user's rank
-    rank = 1
-    for singleUser in allUsers:
-        if singleUser.user == request.user:
-            break
-        rank += 1
+    rank = get_user_rank(request.user)
+    
 
     # current user's coins
     userCoins = TotalCoins.objects.get(user=request.user)
@@ -555,19 +563,49 @@ def result(request):
 
     # get current topic name
     if 'topic_name' in request.POST:
-        topic_name = request.POST['topic-name']
+        topic_name = request.POST['topic_name']
 
     # Fetch current topic
     #topic = get_object_or_404(Topic, topicName=topic_name)
+    topic = get_object_or_404(Topic, topicName="Intro to Html")
+
+    # get coins used
+    if 'coins_used' in request.POST:
+        coins_used = int(request.POST['coins_used'])
+    coins_used = 10
+
+    if 'grade' in request.POST:
+        grade = int(float(request.POST['grade']) * 100)
+
+    print(math.ceil(float("0.23") * 100))
 
     if 'challenge_id' in request.POST:
         challenge_id = request.POST['challenge_id']
 
-    #challenge = Challenge.objects.get(id=challenge_id)
+    challenge = Challenge.objects.get(id=1)
+
+    # user rank before this challenge
+    old_rank = get_user_rank(request.user)
+
+    # user points before
+    old_points = TotalPoints.objects.get(user=request.user).points
+
+    # user coins before adding final coins
+    after_hints_coins = TotalCoins.objects.get(user=request.user).coins
+
+    # user coins before buying hints
+    old_coins = after_hints_coins - coins_used
+
+    # total number of users who attempted this challenge
+    total_users = UserAttemptedChallenge.objects.filter(challenge=challenge).count()
+
 
     context = {
         'topic': topic,
-        'challenge': challenge
+        'challenge': challenge,
+        'old_rank': old_rank,
+        'old_points': old_points,
+        'old_coins': old_coins,
     }
 
-    return render(request, 'pages/result.html')
+    return render(request, 'pages/result.html', context)

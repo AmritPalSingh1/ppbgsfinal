@@ -6,6 +6,7 @@ from topics.models import Video, Question, Pdf, Topic
 from challenges.models import Challenge
 
 
+
 class UserWatchedVideo(models.Model):
     video = models.ForeignKey(Video, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -25,6 +26,8 @@ class UserAttemptedQuestion(models.Model):
 class TotalPoints(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     points = models.IntegerField(default=0)
+
+    
 
 
 class TotalCoins(models.Model):
