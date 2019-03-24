@@ -60,7 +60,7 @@ hints:
         return newArr;
       }
       </pre>
-    hintCost: 40
+    hintCost: 60
 html: ''
 js: |
   function flatten(arr) {

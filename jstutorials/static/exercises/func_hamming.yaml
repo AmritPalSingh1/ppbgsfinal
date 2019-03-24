@@ -5,12 +5,8 @@ details: |
 
   <p>Sample:<p>
   <pre>
-  hamming("CGGGAT", "CGGCCT")
-  </pre>
-
-  <p>Output:</p>
-  <pre>
-  2
+  hamming("CGGGAT", "CGGGAT") // 0
+  hamming("CGGGAT", "CGGCCT") // 2
   </pre>
 
   <p>You can assume that the two DNA strands are of equal length</p>

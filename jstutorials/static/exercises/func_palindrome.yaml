@@ -1,0 +1,86 @@
+---
+task: Check if a string is a palindrome
+details: |
+  <p><strong>Given a string, return true if it is a palindrome, false if not.</strong></p>
+
+  <p>A palindrome reads the same forward and backward. The function is case insensitive. Capitol letter "A" is the same as lower case "a".</p>
+
+  <p>Sample:<p>
+  <pre>
+  isPalindrome("Redivider") // true
+  isPalindrome("Radar") // true
+  isPalindrome("909") // true
+  isPalindrome("Haha") // false
+  </pre>
+hints:
+  - hintContent: |
+      <p>Given that <code>i</code> is a position in a string, you can get the "mirror" character using <code>str.length - i - 1</code>:</p>
+
+      <pre>
+      var str = "Dreaming"
+      var i = 1;
+      var j = str.length - i - 1;
+      console.log(str[i]);
+      console.log(str[j]);
+      </pre>
+
+      <p>Output:</p>
+      <pre>
+      "r"
+      "n"
+      </pre>
+    hintCost: 12
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      function isPalindrome(str) {
+        for (var i = 0; i < str.length / 2; i++) {
+          var j = str.length - i;
+          if (str[i].toLowerCase() !== str[j - 1].toLowerCase()) {
+            return false;
+          }
+        }
+        
+        return true;
+      }
+      </pre>
+    hintCost: 30
+html: ''
+js: |
+  function isPalindrome(str) {
+    // your code here
+  }
+
+  console.log(isPalindrome("Radar"));
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    isPalindrome = undefined;
+
+    const TEST_ASSERT = (arg, expected, msg) => {
+      try {
+        if (isPalindrome(arg) !== expected) {
+          throw new Error();
+        }
+      } catch (e) {
+        fail(msg || `Failed case: ${arg}`);
+      }
+    };
+  run: |
+    if (!isPalindrome) {
+      fail('You must use the function "isPalindrome"');
+    }
+
+    TEST_ASSERT("Redivider", true, 'Failed case: "Redivider"');
+    TEST_ASSERT("Radar", true, 'Failed case: "Radar"');
+    TEST_ASSERT("909", true, 'Failed case: "909"');
+    TEST_ASSERT("Haha", false, 'Failed case: "Haha"');
+    TEST_ASSERT("Alive", false, 'Failed case: "Alive"');
+  cleanup: ''
+  has: []
+  hasNot: []
+  maxLines: 25
+  errorThreshold: 6

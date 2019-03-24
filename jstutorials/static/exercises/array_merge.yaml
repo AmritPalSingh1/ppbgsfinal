@@ -60,7 +60,7 @@ hints:
         return newArr;
       }
       </pre>
-    hintCost: 30
+    hintCost: 35
 html: ''
 js: |
   function alternate(arr1, arr2) {

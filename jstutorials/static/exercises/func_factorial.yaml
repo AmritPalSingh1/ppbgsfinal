@@ -8,16 +8,9 @@ details: |
 
   <p>Sample:<p>
   <pre>
-  console.log(factorial(0));
-  console.log(factorial(4));
-  console.log(factorial(5));
-  </pre>
-
-  <p>Output:</p>
-  <pre>
-  1
-  24
-  120
+  factorial(0) // 1
+  factorial(4) // 24
+  factorial(5) // 120
   </pre>
 hints:
   - hintContent: |
