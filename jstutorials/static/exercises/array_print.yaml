@@ -1,0 +1,93 @@
+---
+task: Print the contents of an array
+details: |
+  <p><strong>Given an array, print each element</strong></p>
+  <p>Example:<p>
+
+  <pre>
+  print([1, "Banana", "Fish", undefined]);
+  </pre>
+
+  <p>Console output:</p>
+
+  <pre>
+  1
+  Banana
+  Fish
+  undefined
+  </pre>
+hints:
+  - hintContent: |
+      <p>To access array elements:</p>
+
+      <pre>
+      var fruits = ["Apple", "Orange", "Watermelon", "Strawberry"];
+      console.log(fruits[0]);
+      console.log(fruits[1]);
+      console.log(fruits[2]);
+      console.log(fruits[3]);
+      </pre>
+
+      <p>Output:</p>
+
+      <pre>
+      Apple
+      Orange
+      Watermelon
+      Strawberry
+      </pre>
+    hintCost: 8
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      function print(arr) {
+        for (var i = 0; i < arr.length; i++) {
+          console.log(arr[i]);
+        }
+      }
+      </pre>
+    hintCost: 25
+html: ''
+js: |
+  function print(arr) {
+    // your code here
+  }
+
+  var A = [1, "Banana", "Fish", undefined];
+  print(A);
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    print = undefined;
+
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+
+    const TEST_ASSERT = (arg, expected, msg) => {
+      consoleOutput = '';
+      print(arg);
+      consoleOutput = consoleOutput.trim();
+      if (consoleOutput !== expected) {
+        fail(msg);
+      }
+    };
+  run: |
+    if (!print) {
+      fail('You must use the function "print"');
+    }
+
+    TEST_ASSERT([], '', 'Failed case: [] (Empty list)');
+    TEST_ASSERT([1, 2, 3], '1\n2\n3', 'Failed case: [1, 2, 3]');
+    TEST_ASSERT([1, "Banana", "Fish", undefined], '1\nBanana\nFish\nundefined', 'Failed case: [1, "Banana", "Fish", undefined]');
+  cleanup: console.log = oldLog;
+  has: []
+  hasNot: []
+  maxLines: 20
+  errorThreshold: 3
