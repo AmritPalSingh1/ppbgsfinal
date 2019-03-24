@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 from userprogress.models import TotalCoins, TotalPoints, UserLastLocation
 from topics.models import Topic
+from flowchart.models import Progress
 
 
 def register(request):
@@ -46,6 +47,10 @@ def register(request):
 
                     user_last_location = UserLastLocation(user=user, topic=first_topic, location="videos")
                     user_last_location.save()
+
+                    # start flowchart
+                    flowchart_progress = Progress(user=user)
+                    flowchart_progress.save()
 
                     messages.success(
                         request, 'You are now registered and can log in')

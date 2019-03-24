@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from userprogress.models import TotalPoints, TotalCoins, UserLastLocation
@@ -6,6 +6,7 @@ from topics.models import Video, Topic, Question, Query
 from challenges.models import Challenge
 from userprogress.models import UserReadNotes, UserAttemptedQuestion, UserWatchedVideo
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from flowchart.models import Progress
 
 
 def get_all_topics():
@@ -99,6 +100,13 @@ def get_all_topics_progress(request):
 
 @login_required
 def index(request):
+
+    flowchart_progress = Progress.objects.get(user=request.user)
+    if flowchart_progress.correct != 3:
+        return redirect('start') 
+
+
+
     get_all_topics_progress(request)
 
     user_last_location = UserLastLocation.objects.get(user=request.user)
@@ -133,6 +141,10 @@ def index(request):
 @login_required
 def topics(request):
 
+    flowchart_progress = Progress.objects.get(user=request.user)
+    if flowchart_progress.correct != 3:
+        return redirect('start') 
+
     user_data = user_info(request)
 
     # current user's total points
@@ -162,6 +174,10 @@ def topics(request):
 
 @login_required
 def leaderboards(request):
+
+    flowchart_progress = Progress.objects.get(user=request.user)
+    if flowchart_progress.correct != 3:
+        return redirect('start') 
 
     # all users total points
     all_total_points = TotalPoints.objects.order_by('-points')

@@ -541,7 +541,7 @@
   border-bottom: 1px dotted white;
 }
 
-.overlay {
+.blue-overlay {
   background-color: rgba(16, 216, 243, 0.6);
   height: 100%;
   overflow: auto;
