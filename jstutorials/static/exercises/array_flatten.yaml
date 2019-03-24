@@ -1,0 +1,122 @@
+---
+task: Flatten a nested array
+details: |
+  <p><strong>Given a nested array, write a function that returns a flattened version</strong></p>
+  <p>Input:<p>
+
+  <pre>
+  [1, [2, 3], 4, [[5, 6], 7], 8]
+  </pre>
+
+  <p>Output:</p>
+
+  <pre>
+  [1, 2, 3, 4, 5, 6, 7, 8]
+  </pre>
+
+  <p>You probably should write the function recursively</p>
+
+  <p>Do not use <code>Array.prototype.flat()</code> or <code>Array.prototype.reduce()</code></p> 
+hints:
+  - hintContent: |
+      <p><code>Array.prototype.concat()</code> adds to the end of an array. It can be used to merge two arrays</p>
+      <p>It returns a new array and does not change the array on the left hand side</p>
+
+      <pre>
+      var A = [1, 2, 3];
+
+      A = A.concat([4,5]); // [1, 2, 3, 4, 5]
+      A.concat(4); // [1, 2, 3, 4]
+
+      console.log(A);
+      </pre>
+
+      <p>Console output</p>
+
+      <pre>
+      [1, 2, 3, 4, 5]
+      </pre>
+    hintCost: 3
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      function flatten(arr) {
+        if (arr.length === 0) {
+          return [];
+        }
+        
+        var newArr = [];
+        
+        for (var i = 0; i < arr.length; i++) {
+          if (Array.isArray(arr[i])) {
+            newArr = newArr.concat(flatten(arr[i]));
+          }
+          else {
+            newArr = newArr.concat(arr[i]);
+          }
+        }
+
+        return newArr;
+      }
+      </pre>
+    hintCost: 40
+html: ''
+js: |
+  function flatten(arr) {
+    // your code here
+  }
+
+  var A = [1, [2, 3], 4, [[5, 6], 7], 8];
+  console.log(flatten(A));
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    flatten = undefined;
+
+    const ARRAY_EQUAL = (arr1, arr2) => {
+      if (arr1.length !== arr2.length) {
+        return false;
+      }
+
+      for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i]) {
+          return false;
+        }
+      }
+
+      return true;
+    };
+
+    const TEST_ASSERT = (arg, expected, msg) => {
+      try {
+        if (!ARRAY_EQUAL(flatten(arg), expected)) {
+          throw new Error();
+        }
+      } catch (e) {
+        console.error(e);
+        fail(msg || `Failed case: ${arg}`);
+      }
+    };
+  run: |
+    if (!flatten) {
+      fail('You must use the function "flatten"');
+    }
+
+    TEST_ASSERT([], [], 'Failed case: [] (Empty list)');
+    TEST_ASSERT([1, 2, 3, 4, 5], [1, 2, 3, 4, 5], 'Failed case: [1, 2, 3, 4, 5]');
+    TEST_ASSERT([1, [2, 3], 4, [[5, 6], 7], 8], [1, 2, 3, 4, 5, 6, 7, 8], 'Failed case: [1, [2, 3], 4, [[5, 6], 7], 8]');
+    TEST_ASSERT([1, [[[[[2]]], 3], 4, 5]], [1, 2, 3, 4, 5], 'Failed case: [1, [[[[[2]]], 3], 4, 5]]');
+  cleanup: ''
+  has: []
+  hasNot:
+    - regex: \.\s*flat
+      flags: s
+      message: You cannot use Array.prototype.flat()
+    - regex: \.\s*reduce
+      flags: s
+      message: You cannot use Array.prototype.reduce()
+  maxLines: 50
+  errorThreshold: 4

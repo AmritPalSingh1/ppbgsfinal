@@ -1,0 +1,111 @@
+---
+task: Print the first 10 prime numbers
+details: |
+  <p><strong>Print the first 10 prime numbers</strong></p>
+  <p>Expected console output:</p>
+  <pre>
+    2
+    3
+    5
+    7
+    11
+    13
+    17
+    19
+    23
+    29
+  </pre>
+hints:
+  - hintContent: |
+      <p>You&apos;re gonna need a loop inside another loop</p>
+    hintCost: 5
+  - hintContent: |
+      <p>The outer loop counts the number of times a prime number was printed</p>
+
+      <pre>
+      var count = 0;
+
+      while (count < 10) {
+        // some other code...
+
+        if (isPrime) {
+          count++;
+        }
+      }
+      </pre>
+    hintCost: 18
+  - hintContent: |
+      <p>Check if a number is prime by checking if every number before it is divisible</p>
+      <p>Just a reminder that to check if a number is divisible by another, use <code>%</code></p>
+      <p>Say that you want to check if 7 is prime</p>
+      <p>Check if <code>7 % 6 === 0</code></p>
+      <p>Then <code>7 % 5 === 0</code></p>
+      <p>Then <code>7 % 4 === 0</code></p>
+      <p>Then <code>7 % 3 === 0</code></p>
+      <p>Then <code>7 % 2 === 0</code></p>
+      <p>All of those conditions are false, therefore 7 is a prime number</p>
+    hintCost: 25
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      var count = 0;
+      var num = 2;
+
+      while (count < 10) {
+        var isPrime = true;
+        for (var i = 2; i < num; i++) {
+          if(num % i === 0) {
+            isPrime = false;
+          }
+        }
+
+        if (isPrime) {
+          count++;
+          console.log(num);
+        }
+        num++;
+      }
+      </pre>
+    hintCost: 40
+html: ''
+js: ''
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+
+    const EXPECTED = `
+    2
+    3
+    5
+    7
+    11
+    13
+    17
+    19
+    23
+    29
+    `.trim();
+  run: |
+    consoleOutput = consoleOutput.trim();
+    if (consoleOutput !== EXPECTED) {
+      fail('The console doesn\'t print the first 10 prime numbers');
+    }
+  cleanup: console.log = oldLog;
+  has:
+    - regex: (for|while)
+      message: Your code is missing a loop (use "for", "while", or "do... while").
+  hasNot:
+    - regex: (console\.log.*){10}
+      flags: s
+      message: Your code has too many console.log statements
+  maxLines: 30
+  errorThreshold: 2

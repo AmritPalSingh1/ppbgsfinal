@@ -13,7 +13,7 @@ hints:
       <pre>
       var count = document.getElementById("count");
       </pre>
-    hintCost: 1
+    hintCost: 5
   - hintContent: |
       <p>Change the content for a HTML element</p>
 
@@ -21,7 +21,7 @@ hints:
       var count = document.getElementById("count");
       count.innerHTML = "Hey!";
       </pre>
-    hintCost: 1
+    hintCost: 12
   - hintContent: |
       <p>Solution:</p>
 
@@ -44,7 +44,7 @@ hints:
         count.innerHTML = state;
       }
       </pre>
-    hintCost: 1
+    hintCost: 35
 html: |
   <button id="inc-button" onclick="increment()">+</button>
   <div id="count">0</div>
@@ -67,7 +67,10 @@ htmlReadOnly: true
 jsReadOnly: false
 secret: ''
 test:
-  setup: ''
+  setup: |
+    increment = undefined;
+    decrement = undefined;
+    reset = undefined;
   run: |
     const $ = x => document.querySelector(x);
 

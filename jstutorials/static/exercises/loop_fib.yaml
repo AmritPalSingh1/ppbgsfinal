@@ -1,0 +1,82 @@
+---
+task: Print the first 10 even fibonacci numbers
+details: |
+  <p>A term in the fibonacci sequence is the sum of the previous two terms, starting with two 1s.</p>
+  <p>1, 1, 2, 3, 5, 8, 13, 21, 34, ...</p>
+  <p><strong>Print the first 10 even fibonacci numbers</strong></p>
+  <p>Expected console output:</p>
+  <pre>
+    2
+    8
+    34
+    144
+    610
+    2584
+    10946
+    46368
+    196418
+    832040
+  </pre>
+hints:
+  - hintContent: |
+      <p>If you are using a for loop, change it to a while loop</p>
+    hintCost: 3
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      var count = 0;
+      var prev1 = 1;
+      var prev2 = 1;
+
+      while (count < 10) {
+        var sum = prev1 + prev2;
+        prev1 = prev2;
+        prev2 = sum;
+        
+        if (sum % 2 === 0) {
+          console.log(sum);
+          count++;
+        }
+      }
+      </pre>
+    hintCost: 30
+html: ''
+js: ''
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+
+    const EXPECTED = `
+    2
+    8
+    34
+    144
+    610
+    2584
+    10946
+    46368
+    196418
+    832040
+    `.trim();
+  run: |
+    consoleOutput = consoleOutput.trim();
+    if (consoleOutput !== EXPECTED) {
+      fail('The console doesn\'t print the first 10 even fibonacci numbers');
+    }
+  cleanup: console.log = oldLog;
+  has: []
+  hasNot:
+    - regex: (console\.log.*){10}
+      flags: s
+      message: Your code has too many console.log statements
+  maxLines: 30
+  errorThreshold: 1

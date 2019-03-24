@@ -1,0 +1,100 @@
+---
+task: Write a recursive factorial function
+details: |
+  <p>The factorial of a number <em>n</em> is <em>n</em> times the product of every positive number before it</p>
+  <p>The factorial of 5 is <em>5 * 4 * 3 * 2 * 1 = 120</em></p>
+  <p>A recursive function is a function that calls itself</p>
+
+  <p><strong>Write a recursive function that calculates the factorial of any positive number</strong></p>
+
+  <p>Sample:<p>
+  <pre>
+  console.log(factorial(0));
+  console.log(factorial(4));
+  console.log(factorial(5));
+  </pre>
+
+  <p>Output:</p>
+  <pre>
+  1
+  24
+  120
+  </pre>
+
+  <p>You cannot use a loop</p>
+hints:
+  - hintContent: |
+      <p>A recursive function has a base case and a recursive call</p>
+      <p>Here is an example of a recursive function</p>
+
+      <pre>
+      function manyHellos(n) {
+        // base case
+        if (n === 0) {
+          return;
+        }
+
+        console.log("Hello");
+        // recursive call
+        manyHellos(n - 1);
+      }
+      </pre>
+    hintCost: 8
+  - hintContent: |
+      <p>You can define factorial in terms of itself</p>
+      <p>Factorial of 5 is <em>5 * factorial(4)</em></p>
+      <p>Factorial of 0 is <em>1</em></p>
+    hintCost: 18
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      function factorial(n) {
+        if (n === 0) {
+          return 1;
+        }
+        
+        return n * factorial(n - 1);
+      }
+      </pre>
+    hintCost: 30
+html: ''
+js: |
+  function factorial(n) {
+    // your code here
+  }
+
+  console.log(factorial(0));
+  console.log(factorial(4));
+  console.log(factorial(5));
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    factorial = undefined;
+
+    const TEST_ASSERT = (arg, expected, msg) => {
+      try {
+        if (factorial(arg) !== expected) {
+          throw new Error();
+        }
+      } catch (e) {
+        fail(msg || `Failed case: ${arg}`);
+      }
+    };
+  run: |
+    if (!factorial) {
+      fail('You must use the function "factorial"');
+    }
+
+    TEST_ASSERT(0, 1, 'Failed case: factorial(0)');
+    TEST_ASSERT(4, 24, 'Failed case: factorial(4)');
+    TEST_ASSERT(5, 120, 'Failed case: factorial(5)');
+  cleanup: ''
+  has: []
+  hasNot:
+    - regex: (for|while)
+      message: You cannot use a loop. The function must be recursive
+  maxLines: 20
+  errorThreshold: 3

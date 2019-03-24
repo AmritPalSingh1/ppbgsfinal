@@ -1,0 +1,80 @@
+---
+task: Write a factorial function
+details: |
+  <p>The factorial of a number <em>n</em> is <em>n</em> times the product of every positive number before it</p>
+  <p>The factorial of 5 is <em>5 * 4 * 3 * 2 * 1 = 120</em></p>
+
+  <p><strong>Write a function that calculates the factorial of any positive number</strong></p>
+
+  <p>Sample:<p>
+  <pre>
+  console.log(factorial(0));
+  console.log(factorial(4));
+  console.log(factorial(5));
+  </pre>
+
+  <p>Output:</p>
+  <pre>
+  1
+  24
+  120
+  </pre>
+hints:
+  - hintContent: |
+      <p>You probably have a variable with an initial value</p>
+      <p>If that value is 0, think about how it will change when you multiply with another number</p>
+      <p>Compare that with multiplying a number by 1</p>
+    hintCost: 10
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      function factorial(n) {
+        var product = 1;
+        
+        for (var i = 1; i <= n; i++) {
+          product *= i;
+        }
+        
+        return product;
+      }
+      </pre>
+    hintCost: 30
+html: ''
+js: |
+  function factorial(n) {
+    // your code here
+  }
+
+  console.log(factorial(0));
+  console.log(factorial(4));
+  console.log(factorial(5));
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    factorial = undefined;
+
+    const TEST_ASSERT = (arg, expected, msg) => {
+      try {
+        if (factorial(arg) !== expected) {
+          throw new Error();
+        }
+      } catch (e) {
+        fail(msg || `Failed case: ${arg}`);
+      }
+    };
+  run: |
+    if (!factorial) {
+      fail('You must use the function "factorial"');
+    }
+
+    TEST_ASSERT(0, 1, 'Failed case: factorial(0)');
+    TEST_ASSERT(4, 24, 'Failed case: factorial(4)');
+    TEST_ASSERT(5, 120, 'Failed case: factorial(5)');
+  cleanup: ''
+  has: []
+  hasNot: []
+  maxLines: 20
+  errorThreshold: 3

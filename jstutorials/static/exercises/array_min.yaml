@@ -1,0 +1,76 @@
+---
+task: Get the minimum value in an array
+details: |
+  <p><strong>Write a function gets the smallest element in an array</strong></p>
+  <p>If the array is empty, return <code>Infinity</code></p>
+  <p>Input:<p>
+
+  <pre>
+  [1, 123, 68, -3, 10, 5, 689]
+  </pre>
+
+  <p>Output:</p>
+
+  <pre>
+  -3
+  <pre>
+hints:
+  - hintContent: |
+      <p>Use a variable to store the result of finding the minimum:</p>
+      <p>Loop through the array, changing the minimum value if the current value in the array is less than the variable stored</p>
+    hintCost: 15
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      function minimum(arr) {
+        var min = Infinity;
+        
+        for (var i = 0; i < arr.length; i++) {
+          if (arr[i] < min) {
+            min = arr[i];
+          }
+        }
+        
+        return min;
+      }
+      </pre>
+    hintCost: 28
+html: ''
+js: |
+  function minimum(arr) {
+    // your code here
+  }
+
+  var A = [1, 123, 68, -3, 10, 5, 689];
+  console.log(minimum(A));
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    minimum = undefined;
+
+    const TEST_ASSERT = (arg, expected, msg) => {
+      try {
+        if (minimum(arg) !== expected) {
+          throw new Error();
+        }
+      } catch (e) {
+        fail(msg || `Failed case: ${arg}`);
+      }
+    };
+  run: |
+    if (!minimum) {
+      fail('You must use the function "minimum"');
+    }
+
+    TEST_ASSERT([], Infinity, 'Failed case: [] (Empty list)');
+    TEST_ASSERT([0, 1, 3, 5, 0, 0], 0, 'Failed case: [0, 1, 3, 5, 0, 0]');
+    TEST_ASSERT([1, 123, 68, -3, 10, 5, 689], -3, 'Failed case: [1, 123, 68, -3, 10, 5, 689]');
+    TEST_ASSERT([128903, 589, 849, 123, 566, 399], 123, 'Failed case: [128903, 589, 849, 123, 566, 399]');
+  cleanup: ''
+  has: []
+  hasNot: []
+  maxLines: 50
+  errorThreshold: 4

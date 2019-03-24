@@ -1,0 +1,128 @@
+---
+task: "Draw a circular pattern"
+details: |
+  <p><strong>Draw a path of triangles on a circular path</strong></p>
+  <p>The small circle has 7 triangles and has a radius of 20 pixels</p>
+  <p>The center circle has 18 triangles and has a radius of 60 pixels</p>
+  <p>The large circle has 27 triangles and has a radius of 100 pixels</p>
+hints: 
+  - hintContent: |
+      <p>Think about a drawing/drafting compass and how it draws a circle on a piece of paper</p>
+    hintCost: 6
+  - hintContent: |
+      <p>The angle to rotate to the next triangle is <strong>2π / number of triangles</strong></p>
+    hintCost: 12
+  - hintContent: |
+      <p>Translate the origin to the center of the canvas before drawing anything</p>
+
+      <pre>
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      </pre>
+    hintCost: 18
+  - hintContent: |
+      <p>Draw the triangles using a loop similar to this:</p>
+
+      <pre>
+      for (var i = 0; i < numberOfTriangles; i++) {
+        ctx.rotate(angle);
+        drawTriangle(radius, 0);
+      }
+      </pre>
+    hintCost: 24
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+
+      function drawCircle(count, radius) {
+        var angle = Math.PI * 2 / count;
+
+        for (var i = 0; i < count; i++) {
+          ctx.rotate(angle);
+          drawTriangle(radius, 0);
+        }
+      }
+
+      drawCircle(7, 20);
+      drawCircle(18, 60);
+      drawCircle(27, 100);
+      </pre>
+    hintCost: 40
+html: |-
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+  <h4>Your canvas:</h4>
+  <canvas id="my-canvas"></canvas>
+  <h4>What your canvas should look like:</h4>
+  <canvas id="demo-canvas"></canvas>
+js: |
+  var canvas = document.getElementById("my-canvas");
+  var ctx = canvas.getContext("2d");
+
+  function drawTriangle(x, y) {
+    ctx.beginPath();
+    ctx.moveTo(x + 0, y + 10);
+    ctx.lineTo(x + 8, y - 10);
+    ctx.lineTo(x - 8, y - 10);
+    ctx.fill();
+  }
+htmlReadOnly: true
+jsReadOnly: false
+secret: |-
+  const canvas = document.getElementById("demo-canvas");
+  const ctx = canvas.getContext("2d");
+  ctx.translate(canvas.width / 2, canvas.height / 2);
+
+  const drawTriangle = (x, y) => {
+    ctx.beginPath();
+    ctx.moveTo(x + 0, y + 10);
+    ctx.lineTo(x + 8, y - 10);
+    ctx.lineTo(x - 8, y - 10);
+    ctx.fill();
+  };
+
+  const drawCircle = (count, radius) => {
+    const angle = Math.PI * 2 / count;
+
+    for (let i = 0; i < count; i++) {
+      ctx.rotate(angle);
+      drawTriangle(radius, 0);
+    }
+  };
+
+  drawCircle(7, 20);
+  drawCircle(18, 60);
+  drawCircle(27, 100);
+test:
+  setup: |
+    const userCanvas = document.querySelector('#my-canvas');
+    const demoCanvas = document.querySelector('#demo-canvas');
+
+    const userContext = userCanvas.getContext('2d');
+    const demoContext = demoCanvas.getContext('2d');
+  run: |
+    const userData = userContext.getImageData(0, 0, userCanvas.width, userCanvas.height).data;
+    const demoData = demoContext.getImageData(0, 0, demoCanvas.width, demoCanvas.height).data;
+
+    let squares = 0;
+
+    for (let i = 0; i < userData.length; i++) {
+      squares += (userData[i] - demoData[i]) ** 2;
+    }
+
+    const perc = (255 - Math.sqrt(squares / userData.length)) / 255;
+
+    if (perc < .95) {
+      fail('Your image and the image shown aren\'t similar enough');
+    }
+  cleanup: ''
+  has: []
+  hasNot:
+    - regex: demo-canvas
+      message: You shouldn't access the demo canvas
+  maxLines: 30
+  errorThreshold: 1

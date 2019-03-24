@@ -5,28 +5,42 @@ import store from './redux/store.js';
 import render from './view.js';
 import { html, js } from './codeEditor.js';
 import { runCode } from './codeRunner.js';
+import { DEFAULT_THEME, DEFAULT_INDENT, DEFAULT_KEYMAP } from './redux/constants.js';
 
 // -- On exercise fetch setup ---------------------------------------
 
 const OnDataFetched = once((htmlCode, jsCode, htmlReadOnly, jsReadOnly) => {
-  // "race condition" here:
-  // have to get the values from localStore if they exist before setting editor values
-  // otherwise, the editors get their default value
-  // I don't know why. I don't think this code is asynchronous...
-  // just one of those things...
+  // get options from localstore
+  const indentUnit = localStorage.getItem('indentUnit');
+  const theme = localStorage.getItem('theme');
+  const keymap = localStorage.getItem('keyMap');
+
+  // if the current exercise is the same as the last one visited,
+  // get the html and js code saved in localstorage
   if ($('#task-id').html() === localStorage.getItem('for-task')) {
     htmlCode = localStorage.getItem('htmlCode') || htmlCode;
     jsCode = localStorage.getItem('jsCode') || jsCode;
   }
   // set the current task
   localStorage.setItem('for-task', $('#task-id').html());
-  // populate code editor on data fetch and set options
+
+  // populate code editor on data fetch
   html.setValue(htmlCode);
   js.setValue(jsCode);
+
+  // set editor options
   html.setOption('readOnly', htmlReadOnly);
   js.setOption('readOnly', jsReadOnly);
+  html.setOption('indentUnit', indentUnit || DEFAULT_INDENT);
+  js.setOption('indentUnit', indentUnit || DEFAULT_INDENT);
+  html.setOption('keyMap', keymap || DEFAULT_KEYMAP);
+  js.setOption('keyMap', keymap || DEFAULT_KEYMAP);
+  html.setOption('theme', theme || DEFAULT_THEME);
+  js.setOption('theme', theme || DEFAULT_THEME);
+
   // show task details
   $('#taskDetailsModal').modal('show');
+
   // run the exercise
   runCode();
 });

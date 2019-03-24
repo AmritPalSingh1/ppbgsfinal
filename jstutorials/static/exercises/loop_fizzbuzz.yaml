@@ -1,0 +1,107 @@
+---
+task: Write Fizz-Buzz
+details: |
+  <p><strong>
+    Print the numbers from 1 to 15,
+    but for every multiple of 3, print <code>Fizz</code>,
+    for every multiple of 5, print <code>Buzz</code>,
+    for a multiple of both, print <code>FizzBuzz</code>.
+  </strong></p>
+  <p>Expected console output:</p>
+  <pre>
+    1
+    2
+    Fizz
+    4
+    Buzz
+    Fizz
+    7
+    8
+    Fizz
+    Buzz
+    11
+    Fizz
+    13
+    14
+    FizzBuzz
+  </pre>
+hints:
+  - hintContent: |
+      <p>Check if a number is a multiple of both 3 and 5 first. Then check if it is a multiple of 3 or a multiple of 5</p>
+
+      <pre>
+      if (/* number is a multiple of both */) {
+        // ...
+      }
+      // if the statement below is reached
+      // we know "FizzBuzz" was not printed
+      else if (/* ... */) {
+      }
+      </pre>
+    hintCost: 15
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      for (var i = 1; i <= 15; i++) {
+        if (i % 15 === 0) {
+          console.log("FizzBuzz");
+        }
+        else if (i % 3 === 0) {
+          console.log("Fizz");
+        }
+        else if (i % 5 === 0) {
+          console.log("Buzz");
+        }
+        else {
+          console.log(i);
+        }
+      }
+      </pre>
+    hintCost: 30
+html: ''
+js: ''
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+
+    const EXPECTED = `
+    1
+    2
+    Fizz
+    4
+    Buzz
+    Fizz
+    7
+    8
+    Fizz
+    Buzz
+    11
+    Fizz
+    13
+    14
+    FizzBuzz
+    `.trim();
+  run: |
+    consoleOutput = consoleOutput.trim();
+    if (consoleOutput !== EXPECTED) {
+      fail('The console doesn\'t print the 15 Fizz-Buzz numbers');
+    }
+  cleanup: console.log = oldLog;
+  has:
+    - regex: (for|while)
+      message: Your code is missing a loop (use "for", "while", or "do... while").
+  hasNot:
+    - regex: (console\.log.*){15}
+      flags: s
+      message: Your code has too many console.log statements
+  maxLines: 30
+  errorThreshold: 2

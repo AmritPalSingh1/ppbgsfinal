@@ -1,0 +1,86 @@
+---
+task: Get the Hamming difference from 2 DNA strands
+details: |
+  <p><strong>Compare two DNA strings and count the differences between the two</strong></p>
+
+  <p>Sample:<p>
+  <pre>
+  hamming("CGGGAT", "CGGCCT")
+  </pre>
+
+  <p>Output:</p>
+  <pre>
+  2
+  </pre>
+
+  <p>You can assume that the two DNA strands are of equal length</p>
+
+  <p><strong>Source:</strong> <a href="http://rosalind.info/problems/hamm/">http://rosalind.info/problems/hamm/</a></p>
+hints:
+  - hintContent: |
+      <p>Get the character in a string by accessing it like an array</p>
+
+      <pre>
+      var cat = "Fluffy";
+      console.log(cat[0]); // returns "F"
+      console.log(cat[1]); // returns "l"
+      console.log(cat[2]); // returns "u"
+      console.log(cat[3]); // returns "f"
+      console.log(cat[4]); // returns "f"
+      console.log(cat[5]); // returns "y"
+      </pre>
+    hintCost: 14
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      function hamming(dna1, dna2) {
+        var diff = 0;
+        
+        for (var i = 0; i < dna1.length; i++) {
+          if (dna1[i] !== dna2[i]) {
+            diff++;
+          }
+        }
+        
+        return diff;
+      }
+      </pre>
+    hintCost: 30
+html: ''
+js: |
+  function hamming(dna1, dna2) {
+    // your code here
+  }
+
+  console.log(hamming("CGGGAT", "CGGCCT"));
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    hamming = undefined;
+
+    const TEST_ASSERT = (arg1, arg2, expected, msg) => {
+      try {
+        if (hamming(arg1, arg2) !== expected) {
+          throw new Error();
+        }
+      } catch (e) {
+        fail(msg || `Failed case: ${arg}`);
+      }
+    };
+  run: |
+    if (!hamming) {
+      fail('You must use the function "hamming"');
+    }
+
+    TEST_ASSERT("", "", 0, 'Failed case: hamming("", "")');
+    TEST_ASSERT("CGGGAT", "CGGGAT", 0, 'Failed case: hamming("CGGGAT", "CGGGAT")');
+    TEST_ASSERT("CGGGAT", "CGGCCT", 2, 'Failed case: hamming("CGGGAT", "CGGCCT")');
+    TEST_ASSERT("GAGCCTACTAACGGGAT", "CATCGTAATGACGGCCT", 7, 'Failed case: hamming("GAGCCTACTAACGGGAT", "CATCGTAATGACGGCCT")');
+  cleanup: ''
+  has: []
+  hasNot: []
+  maxLines: 25
+  errorThreshold: 4

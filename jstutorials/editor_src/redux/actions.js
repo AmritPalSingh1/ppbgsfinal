@@ -1,8 +1,6 @@
 /* global $ */
 
 import jsyaml from 'js-yaml';
-import store from './store.js';
-import { html, js } from '../codeEditor.js';
 import { toFormData } from '../utils.js';
 import {
   FETCH_SUCCESS,
@@ -16,7 +14,6 @@ import {
   SET_HINTS_USED,
   SET_HINT_PAGE,
   SET_COIN_COUNT,
-  SET_CSRF_TOKEN,
   NO_OP,
 } from './constants.js';
 
@@ -45,16 +42,6 @@ export const buyHint = hintCost => dispatch =>
     }))
     .then(data => dispatch({ type: HINT_PURCHASE_SUCCESS, data }));
 
-export const resetHtml = () => {
-  html.setValue(store.getState().exercise.html);
-  return { type: NO_OP };
-};
-
-export const resetJs = () => {
-  js.setValue(store.getState().exercise.js);
-  return { type: NO_OP };
-};
-
 export const setHtmlCode = code => ({ type: SET_HTML, code });
 export const setJsCode = code => ({ type: SET_JS, code });
 
@@ -67,6 +54,5 @@ export const resetError = () => ({ type: RESET_ERROR });
 export const setHintsUsed = hintsUsed => ({ type: SET_HINTS_USED, hintsUsed });
 export const setPage = page => ({ type: SET_HINT_PAGE, page });
 export const setCoins = coinCount => ({ type: SET_COIN_COUNT, coinCount });
-export const setCsrfToken = token => ({ type: SET_CSRF_TOKEN, token });
 
 export const noOp = () => ({ type: NO_OP });

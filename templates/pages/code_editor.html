@@ -8,7 +8,13 @@
 
   <!-- use codemirror css -->
   <link href="{% static 'codemirror/lib/codemirror.css' %}" rel="stylesheet" />
+  <link href="{% static 'codemirror/theme/base16-dark.css' %}" rel="stylesheet" />
+  <link href="{% static 'codemirror/theme/base16-light.css' %}" rel="stylesheet" />
+  <link href="{% static 'codemirror/theme/eclipse.css' %}" rel="stylesheet" />
+  <link href="{% static 'codemirror/theme/idea.css' %}" rel="stylesheet" />
+  <link href="{% static 'codemirror/theme/material.css' %}" rel="stylesheet" />
   <link href="{% static 'codemirror/theme/neo.css' %}" rel="stylesheet" />
+  <link href="{% static 'codemirror/theme/oceanic-next.css' %}" rel="stylesheet" />
   <link href="{% static 'codemirror/addon/lint/lint.css' %}" rel="stylesheet" />
   <link href="{% static 'codemirror/addon/scroll/simplescrollbars.css' %}" rel="stylesheet" />
 
@@ -53,6 +59,8 @@
   <script src="{% static 'codemirror/addon/scroll/scrollpastend.js' %}"></script>
   <script src="{% static 'codemirror/addon/edit/closetag.js' %}"></script>
   <script src="{% static 'codemirror/addon/edit/closebrackets.js' %}"></script>
+  <script src="{% static 'codemirror/keymap/emacs.js' %}"></script>
+  <script src="{% static 'codemirror/keymap/vim.js' %}"></script>
 
   <!-- transpile with loop protection -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"
@@ -173,7 +181,7 @@
 
   <div id="topic-name" hidden>{{ topic.topicName }}</div>
   <div id="coins" hidden>{{ user_data.userCoins.coins }}</div>
-  <div id="hints-used" hidden>{{ hint.hints_baught }}</div>
+  <div id="hints-used" hidden>{{ hint_number }}</div>
   <div id="task-data" hidden>{{ challenge.exercise.url }}</div>
   <div id="task-id" hidden>{{ challenge.id }}</div>
   {% csrf_token %}

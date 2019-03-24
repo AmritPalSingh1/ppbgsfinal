@@ -10,21 +10,23 @@ details: |
   </ul>
 hints: 
   - hintContent: |
-      To draw the red square
+      <p>To draw the red square</p>
 
-      <pre><code>
+      <pre>
       ctx.fillStyle = "red";
       ctx.fillRect(100, 40, 100, 100);
-      </code></pre>
-    hintCost: 2
+      </pre>
+    hintCost: 20
   - hintContent: |
-      To draw the blue square
+      <p>Solution:</p>
 
-      <pre><code>
+      <pre>
       ctx.fillStyle = "blue";
       ctx.fillRect(40, 10, 100, 100);
-      </code></pre>
-    hintCost: 3
+      ctx.fillStyle = "red";
+      ctx.fillRect(100, 40, 100, 100);
+      </pre>
+    hintCost: 30
 html: |-
   <style>
     canvas {
@@ -80,6 +82,8 @@ test:
       message: Your code should use "ctx.fillStyle" to change colors
     - regex: fillRect
       message: Your code should use "ctx.fillRect" to draw rectangles
-  hasNot: []
+  hasNot:
+    - regex: demo-canvas
+      message: You shouldn't access the demo canvas
   maxLines: 20
   errorThreshold: 3

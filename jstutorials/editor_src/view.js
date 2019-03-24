@@ -82,6 +82,8 @@ const render = () => {
     $('#hint-modal-body')
       .html($HintTabs(hints, hintPage, hintsUsed))
       .append($Hint(hints[hintPage], hintPage, hintsUsed, coins));
+  } else {
+    $('#hint-modal-body').html('No hints available for this exercise');
   }
 
   // warn user about errors in submit modal

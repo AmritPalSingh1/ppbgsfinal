@@ -21,21 +21,21 @@ details: |
   <pre>
 hints:
   - hintContent: |
-      <p>Repeat a string by using <code>repeat</code> from a string</p>
+      <p>Repeat a string by using <code>String.prototype.repeat()</code></p>
 
       <pre>
       "l" + "ol".repeat(3);
       // returns "lololol"
       </pre>
-    hintCost: 1
+    hintCost: 7
   - hintContent: |
-      <p>Add padding by using <code>padEnd</code></p>
+      <p>Add padding by using <code>String.prototype.padEnd()</code></p>
 
       <pre>
-      "My love".padEnd(10, '.');
+      "My love".padEnd(10, ".");
       // returns "My love..."
       </pre>
-    hintCost: 1
+    hintCost: 12
   - hintContent: |
       <p>Use <code>"\n"</code> to add a new line to a string</p>
 
@@ -49,7 +49,7 @@ hints:
       Multiple
       Lines!
       </pre>
-    hintCost: 1
+    hintCost: 16
   - hintContent: |
       <p>Here is one solution:</p>
 
@@ -62,25 +62,18 @@ hints:
         return len;
       }
 
-      function pad(str, len) {
-        while (str.length < len) {
-          str += " ";
-        }
-        return str;
-      }
-
       function frame(arr) {
         var length = longest(arr);
         var verticalBorder = "+" + "-".repeat(length + 2) + "+\n";
         var framed = verticalBorder;
         for (var i = 0; i < arr.length; i++) {
-          framed += "| " + pad(arr[i], length) +  " |\n";
+          framed += "| " + arr[i].padEnd(length) +  " |\n";
         }
         framed += verticalBorder;
         return framed;
       }
       </pre>
-    hintCost: 1
+    hintCost: 50
 html: ''
 js: |
   function frame(arr) {
@@ -89,42 +82,39 @@ js: |
 
   var A = ["Hello", "I am", "in", "a", "frame"];
   console.log(frame(A));
-hintReadOnly: false
+htmlReadOnly: false
 jsReadOnly: false
 secret: ''
 test:
-  setup: frame = undefined;
+  setup: |
+    frame = undefined;
+
+    const TEST_ASSERT = (arg, expected, msg) => {
+      try {
+        if (frame(arg).trim() !== expected) {
+          throw new Error();
+        }
+      } catch (e) {
+        fail(msg || `Failed case: ${arg}`);
+      }
+    };
   run: |
     if (!frame) {
       fail('You must use the function "frame"');
     }
 
     let expected = '+--+\n+--+';
-    try {
-      if (frame([]).trim() !== expected) {
-        throw new Error();
-      }
-    } catch (e) {
-      fail('Failed case: [] (Empty list)');
-    }
+    TEST_ASSERT([], expected, 'Failed case: [] (Empty list)');
 
     expected = '+-------+\n| Hello |\n| I am  |\n| in    |\n| a     |\n| frame |\n+-------+';
-    try {
-      if ((frame(["Hello", "I am", "in", "a", "frame"]) || '').trim() !== expected) {
-        throw new Error();
-      }
-    } catch (e) {
-      fail('Failed case: ["Hello", "I am", "in", "a", "frame"]');
-    }
+    TEST_ASSERT(["Hello", "I am", "in", "a", "frame"], expected, 'Failed case: ["Hello", "I am", "in", "a", "frame"]');
 
     expected = '+------------------------------------+\n| supercalifragilisticexpialidocious |\n| Even though the sound of it        |\n| Is something quite atrocious       |\n+------------------------------------+'
-    try {
-      if ((frame(["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]) || '').trim() !== expected) {
-        throw new Error();
-      }
-    } catch (e) {
-      fail('Failed case: ["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]');
-    }
+    TEST_ASSERT(
+      ["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"],
+      expected, 
+      'Failed case: ["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"]'
+    );
   cleanup: ''
   has: []
   hasNot: []
