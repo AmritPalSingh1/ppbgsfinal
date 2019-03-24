@@ -3,10 +3,11 @@ from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from datetime import datetime, timedelta
 
 # Import required models
 from .models import Topic, Video, Question, Pdf, Query, Comment
-from userprogress.models import UserAttemptedQuestion, UserWatchedVideo, UserReadNotes, TotalCoins, TotalPoints, UserLastLocation
+from userprogress.models import UserAttemptedQuestion, UserWatchedVideo, UserReadNotes, TotalCoins, TotalPoints, UserLastLocation, UserAttemptedChallenge
 from django.contrib.auth.models import User
 from challenges.models import Challenge, DoublePoint, FreeWin, Hint
 from userprogress.models import TotalPoints, TotalCoins
@@ -38,17 +39,20 @@ def user_info(request):
 
     return user_data
 
+
 def update_user_points(request, points):
     # update total points
     total_points = TotalPoints.objects.get(user=request.user)
     total_points.points = total_points.points + points
     total_points.save()
 
+
 def update_user_coins(request, coins):
     # update total coins
     total_coins = TotalCoins.objects.get(user=request.user)
     total_coins.coins = total_coins.coins + coins
     total_coins.save()
+
 
 def update_user_last_location(request, location, topic):
     # update user's last visited location
@@ -78,7 +82,6 @@ def topic(request, topic_name):
     return render(request, 'pages/topic.html', context)
 
 
-
 @login_required
 def videos(request):
 
@@ -100,14 +103,16 @@ def videos(request):
     # key of the current video to display
     key = request.GET['key']
 
-    #current video
+    # current video
     current_video = Video.objects.get(topic=topic, key=key)
 
-    already_watched_video = UserWatchedVideo.objects.filter(video=current_video, user=request.user)
+    already_watched_video = UserWatchedVideo.objects.filter(
+        video=current_video, user=request.user)
 
     if not already_watched_video:
         # add video to user watched history
-        watched_video = UserWatchedVideo(video=current_video, user=request.user)
+        watched_video = UserWatchedVideo(
+            video=current_video, user=request.user)
         watched_video.save()
 
         update_user_points(request, 2)
@@ -151,8 +156,8 @@ def notes(request):
     # Fetch current topic's pdf
     pdf = Pdf.objects.get(topic=topic)
 
-
-    already_read_notes = UserReadNotes.objects.filter(pdf=pdf, user=request.user)
+    already_read_notes = UserReadNotes.objects.filter(
+        pdf=pdf, user=request.user)
     if not already_read_notes:
         read_notes = UserReadNotes(pdf=pdf, user=request.user)
         read_notes.save()
@@ -350,8 +355,6 @@ def question(request):
     return render(request, 'pages/question.html', context)
 
 
-
-
 @login_required
 def challenges(request):
     # pop message
@@ -362,10 +365,12 @@ def challenges(request):
         # challenge
         dp_challenge = Challenge.objects.get(id=challenge_id)
         # check if chip is already baught
-        dp_already_baught = DoublePoint.objects.filter(challenge=dp_challenge, user=request.user)
+        dp_already_baught = DoublePoint.objects.filter(
+            challenge=dp_challenge, user=request.user)
 
         if not dp_already_baught:
-            double_point = DoublePoint(challenge=dp_challenge, user=request.user)
+            double_point = DoublePoint(
+                challenge=dp_challenge, user=request.user)
             double_point.save()
             update_user_coins(request, -32)
             message_title = "Chip Activated!"
@@ -375,7 +380,8 @@ def challenges(request):
         # challenge
         fw_challenge = Challenge.objects.get(id=challenge_id)
         # check if chip is already baught
-        fw_already_baught = FreeWin.objects.filter(challenge=fw_challenge, user=request.user)
+        fw_already_baught = FreeWin.objects.filter(
+            challenge=fw_challenge, user=request.user)
 
         if not fw_already_baught:
             free_win = FreeWin(challenge=fw_challenge, user=request.user)
@@ -397,7 +403,6 @@ def challenges(request):
     for user_fw in user_all_fw:
         fw_challenge_list.append(user_fw.challenge)
 
-
     user_data = user_info(request)
 
     # retreive topic name from GET request
@@ -411,7 +416,8 @@ def challenges(request):
     easy_challenges = Challenge.objects.filter(topic=topic, difficulty="easy")
 
     # Fetch medium challenges
-    medium_challenges = Challenge.objects.filter(topic=topic, difficulty="medium")
+    medium_challenges = Challenge.objects.filter(
+        topic=topic, difficulty="medium")
 
     # Fetch hard challenges
     hard_challenges = Challenge.objects.filter(topic=topic, difficulty="hard")
@@ -473,6 +479,7 @@ def hint(request):
 
     return JsonResponse({'total_coins': total_coins+coins, 'hint_number': hint_number})
 
+
 @login_required
 def challenge(request):
 
@@ -488,7 +495,6 @@ def challenge(request):
         exercise = request.GET['exercise']
     else:
         return redirect('topics')
-
 
     # Fetch current topic
     topic = get_object_or_404(Topic, topicName=topic_name)
@@ -506,10 +512,34 @@ def challenge(request):
         # create new Hint for user
         hint = Hint(challenge=challenge, user=request.user, hints_baught=0)
         hint.save()
-        
 
     hint_number = hint.hints_baught
-    
+
+    # check if user has attempted challenge earlier
+    attempted_challenge = UserAttemptedChallenge.objects.filter(challenge=challenge, user=request.user)
+
+    # I'm sorry you have to see this mess
+    # if attempted
+    if attempted_challenge:
+        # get already attempted challenge
+        old_attempted_challenge= UserAttemptedChallenge.objects.get(challenge=challenge, user=request.user)
+        # if user is returning to question without finishing first time
+        if old_attempted_challenge.start_datetime == old_attempted_challenge.end_datetime:
+            # time taken is never > 5 hours
+            if ((datetime.now() - old_attempted_challenge.start_datetime).seconds / 3600) > 5:
+                if (old_attempted_challenge.time_taken != 0):
+                    old_attempted_challenge.time_taken = timedelta(hours=5)
+        # if user is attempting challenge again
+        else:
+            old_attempted_challenge.start_datetime = datetime.now()
+            old_attempted_challenge.end_datetime = datetime.now()
+            print(old_attempted_challenge.start_datetime == old_attempted_challenge.end_datetime)
+        print(old_attempted_challenge.time_taken)
+        old_attempted_challenge.save()
+    # if not ever attempted before by user
+    else:
+        new_attempted_challenge = UserAttemptedChallenge(challenge=challenge, user=request.user)
+        new_attempted_challenge.save()
 
     context = {
         'challenge': challenge,
@@ -520,19 +550,20 @@ def challenge(request):
 
     return render(request, 'pages/code_editor.html', context)
 
+
 def result(request):
-    
+
     # get current topic name
     if 'topic_name' in request.POST:
         topic_name = request.POST['topic-name']
 
     # Fetch current topic
-    topic = get_object_or_404(Topic, topicName=topic_name)
+    #topic = get_object_or_404(Topic, topicName=topic_name)
 
     if 'challenge_id' in request.POST:
         challenge_id = request.POST['challenge_id']
 
-    challenge = Challenge.objects.get(id=challenge_id)
+    #challenge = Challenge.objects.get(id=challenge_id)
 
     context = {
         'topic': topic,
