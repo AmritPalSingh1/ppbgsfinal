@@ -14,7 +14,19 @@ import { tidyHtml, nl2br } from './utils.js';
 // -- Console area --------------------------------------------------
 
 const log = x => {
-  const toLog = typeof x === 'object' ? JSON.stringify(x) : x;
+  // format the data nicely before printing
+  const toLog = (() => {
+    if (Array.isArray(x)) {
+      return JSON.stringify(x);
+    }
+
+    if (typeof x === 'object') {
+      return JSON.stringify(x, null, 2);
+    }
+
+    return x;
+  })();
+
   store.dispatch(logToConsole(`<samp>${toLog}</samp><br />`));
 };
 
