@@ -4,16 +4,9 @@ details: |
   <p><strong>Write a function that takes a positive number and returns the sum of its digits</strong></p>
   <p>Sample:<p>
   <pre>
-  console.log(addDigits(0));
-  console.log(addDigits(11111));
-  console.log(addDigits(12345));
-  </pre>
-
-  <p>Output:</p>
-  <pre>
-  0
-  5
-  15
+  addDigits(0) // 0
+  addDigits(11111) // 5
+  addDigits(12345) // 15
   </pre>
 hints:
   - hintContent: |

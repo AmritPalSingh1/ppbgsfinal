@@ -18,7 +18,7 @@ hints:
   - hintContent: |
       <p>Use a variable to store the result of finding the minimum:</p>
       <p>Loop through the array, changing the minimum value if the current value in the array is less than the variable stored</p>
-    hintCost: 15
+    hintCost: 12
   - hintContent: |
       <p>Solution:</p>
 
@@ -35,7 +35,7 @@ hints:
         return min;
       }
       </pre>
-    hintCost: 28
+    hintCost: 25
 html: ''
 js: |
   function minimum(arr) {
