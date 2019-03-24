@@ -32,7 +32,7 @@ hints:
       <p>Add padding by using <code>String.prototype.padEnd()</code></p>
 
       <pre>
-      "My love".padEnd(10, '.');
+      "My love".padEnd(10, ".");
       // returns "My love..."
       </pre>
     hintCost: 12

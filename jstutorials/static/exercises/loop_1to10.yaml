@@ -1,7 +1,7 @@
 ---
-task: Print the numbers 1 to 20 using a loop
+task: Print the numbers 1 to 10 using a loop
 details: |
-  <p><strong>Using a <code>for</code> loop, <code>while</code> loop, or <code>do while</code> loop, print the number from 1 to 20</strong></p>
+  <p><strong>Using a <code>for</code> loop, <code>while</code> loop, or <code>do while</code> loop, print the number from 1 to 10</strong></p>
   <p>Sample console output:</p>
   <pre>
     1
@@ -14,36 +14,26 @@ details: |
     8
     9
     10
-    11
-    12
-    13
-    14
-    15
-    16
-    17
-    18
-    19
-    20
   </pre>
 hints:
   - hintContent: |
       <p>Using a for loop, you can repeat code between brackets.</p>
 
       <pre>
-      for (var i = 1; i <= 20; i++) {
+      for (var i = 1; i <= 10; i++) {
         // code repeated here
         console.log("hi");
       }
       </pre>
 
-      <p>That will print <code>"hi"</code> 20 times to the console</p>
+      <p>That will print <code>"hi"</code> 10 times to the console</p>
       <p>Feel free to copy and paste the code</p>
     hintCost: 8
   - hintContent: |
       <p>Here is the solution:</p>
 
       <pre>
-      for (var i = 1; i <= 20; i++) {
+      for (var i = 1; i <= 10; i++) {
         console.log(i);
       }
       </pre>
@@ -63,13 +53,16 @@ test:
     };
   run: |
     consoleOutput = consoleOutput.trim();
-    if (consoleOutput !== '1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20') {
-      fail('The console doesn\'t print the numbers from 1 to 20');
+    if (consoleOutput !== '1\n2\n3\n4\n5\n6\n7\n8\n9\n10') {
+      fail('The console doesn\'t print the numbers from 1 to 10');
     }
   cleanup: console.log = oldLog;
   has:
     - regex: (for|while)
       message: Your code is missing a loop (use "for", "while", or "do... while").
-  hasNot: []
+  hasNot:
+    - regex: (console\.log.*){10}
+      flags: s
+      message: Your code has too many console.log statements
   maxLines: 10
   errorThreshold: 2

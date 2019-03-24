@@ -9,7 +9,7 @@ import {
   incError,
   resetError,
 } from './redux/actions.js';
-import { tidyHtml, nl2br, escapeCode } from './utils.js';
+import { tidyHtml, nl2br } from './utils.js';
 
 // -- Console area --------------------------------------------------
 
@@ -102,7 +102,7 @@ export const runCode = () => {
   const jsCode = (() => {
     let code = '';
     try {
-      code = escapeCode(transform(js.getValue()));
+      code = transform(js.getValue());
     } catch (e) {
       fail(nl2br(e.message));
     }
@@ -115,7 +115,7 @@ export const runCode = () => {
       ${secret}
     }
     {
-      eval('${jsCode}');
+      ${jsCode}
     }`;
 
   // code ran in the hidden iframe
@@ -127,7 +127,7 @@ export const runCode = () => {
       ${test.setup}
       {
         try {
-          eval('${jsCode}');
+          ${jsCode}
         } catch (e) {
           fail(e);
         }

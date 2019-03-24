@@ -26,7 +26,7 @@ import { toFormData } from './utils.js';
 
 store.dispatch(setCoins($('#coins').html()));
 store.dispatch(setHintsUsed($('#hints-used').html()));
-store.dispatch(fetchExercise('/static/exercises/loop_primes.yaml'));
+store.dispatch(fetchExercise('/static/exercises/loop_mul_table.yaml'));
 
 // -- Handle code change --------------------------------------------
 

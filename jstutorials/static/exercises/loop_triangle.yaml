@@ -1,0 +1,77 @@
+---
+task: Print a right angle triangle
+details: |
+  <p><strong>Print a triangle that is 10 lines tall and 10 characters wide:</strong></p>
+  <p>Expected console output:</p>
+  <pre>
+  *
+  **
+  ***
+  ****
+  *****
+  ******
+  *******
+  ********
+  *********
+  **********
+  </pre>
+hints:
+  - hintContent: |
+      <p>You&apos;re gonna need a loop inside another loop</p>
+    hintCost: 5
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      var height = 10;
+
+      for (var i = 1; i <= height; i++) {
+        var str = '';
+        for (var j = 0; j < i; j++) {
+          str += '*';
+        }
+        console.log(str);
+      }
+      </pre>
+    hintCost: 40
+html: ''
+js: ''
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+
+    const EXPECTED = `
+    *
+    **
+    ***
+    ****
+    *****
+    ******
+    *******
+    ********
+    *********
+    **********
+    `.trim();
+  run: |
+    consoleOutput = consoleOutput.trim();
+    if (consoleOutput !== EXPECTED) {
+      fail('The console doesn\'t print the triangle correctly');
+    }
+  cleanup: console.log = oldLog;
+  has:
+    - regex: (for|while)
+      message: Your code is missing a loop (use "for", "while", or "do... while").
+  hasNot:
+    - regex: (console\.log.*){10}
+      flags: s
+      message: Your code has too many console.log statements
+  maxLines: 20
+  errorThreshold: 2

@@ -1,9 +1,9 @@
 ---
-task: Print the first 30 even fibonacci numbers
+task: Print the first 10 even fibonacci numbers
 details: |
   <p>A term in the fibonacci sequence is the sum of the previous two terms, starting with two 1s.</p>
   <p>1, 1, 2, 3, 5, 8, 13, 21, 34, ...</p>
-  <p><strong>Print the first 30 even fibonacci numbers</strong></p>
+  <p><strong>Print the first 10 even fibonacci numbers</strong></p>
   <p>Expected console output:</p>
   <pre>
     2
@@ -16,28 +16,11 @@ details: |
     46368
     196418
     832040
-    3524578
-    14930352
-    63245986
-    267914296
-    1134903170
-    4807526976
-    20365011074
-    86267571272
-    365435296162
-    1548008755920
-    6557470319842
-    27777890035288
-    117669030460994
-    498454011879264
-    2111485077978050
-    8944394323791464
-    14472334024676220
-    23416728348467684
-    37889062373143900
-    61305790721611580
   </pre>
 hints:
+  - hintContent: |
+      <p>If you are using a for loop, change it to a while loop</p>
+    hintCost: 3
   - hintContent: |
       <p>Solution:</p>
 
@@ -46,7 +29,7 @@ hints:
       var prev1 = 1;
       var prev2 = 1;
 
-      while (count < 30) {
+      while (count < 10) {
         var sum = prev1 + prev2;
         prev1 = prev2;
         prev2 = sum;
@@ -83,34 +66,17 @@ test:
     46368
     196418
     832040
-    3524578
-    14930352
-    63245986
-    267914296
-    1134903170
-    4807526976
-    20365011074
-    86267571272
-    365435296162
-    1548008755920
-    6557470319842
-    27777890035288
-    117669030460994
-    498454011879264
-    2111485077978050
-    8944394323791464
-    14472334024676220
-    23416728348467684
-    37889062373143900
-    61305790721611580
     `.trim();
   run: |
     consoleOutput = consoleOutput.trim();
     if (consoleOutput !== EXPECTED) {
-      fail('The console doesn\'t print the first 30 even fibonacci numbers');
+      fail('The console doesn\'t print the first 10 even fibonacci numbers');
     }
   cleanup: console.log = oldLog;
   has: []
-  hasNot: []
-  maxLines: 25
+  hasNot:
+    - regex: (console\.log.*){10}
+      flags: s
+      message: Your code has too many console.log statements
+  maxLines: 30
   errorThreshold: 1

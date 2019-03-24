@@ -1,7 +1,7 @@
 ---
-task: Print the first 30 prime numbers
+task: Print the first 10 prime numbers
 details: |
-  <p><strong>Print the first 30 prime numbers</strong></p>
+  <p><strong>Print the first 10 prime numbers</strong></p>
   <p>Expected console output:</p>
   <pre>
     2
@@ -14,26 +14,6 @@ details: |
     19
     23
     29
-    31
-    37
-    41
-    43
-    47
-    53
-    59
-    61
-    67
-    71
-    73
-    79
-    83
-    89
-    97
-    101
-    103
-    107
-    109
-    113
   </pre>
 hints:
   - hintContent: |
@@ -45,7 +25,7 @@ hints:
       <pre>
       var count = 0;
 
-      while (count < 20) {
+      while (count < 10) {
         // some other code...
 
         if (isPrime) {
@@ -72,7 +52,7 @@ hints:
       var count = 0;
       var num = 2;
 
-      while (count < 20) {
+      while (count < 10) {
         var isPrime = true;
         for (var i = 2; i < num; i++) {
           if(num % i === 0) {
@@ -113,36 +93,19 @@ test:
     19
     23
     29
-    31
-    37
-    41
-    43
-    47
-    53
-    59
-    61
-    67
-    71
-    73
-    79
-    83
-    89
-    97
-    101
-    103
-    107
-    109
-    113
     `.trim();
   run: |
     consoleOutput = consoleOutput.trim();
     if (consoleOutput !== EXPECTED) {
-      fail('The console doesn\'t print the first 30 prime numbers');
+      fail('The console doesn\'t print the first 10 prime numbers');
     }
   cleanup: console.log = oldLog;
   has:
     - regex: (for|while)
       message: Your code is missing a loop (use "for", "while", or "do... while").
-  hasNot: []
-  maxLines: 27
+  hasNot:
+    - regex: (console\.log.*){10}
+      flags: s
+      message: Your code has too many console.log statements
+  maxLines: 30
   errorThreshold: 2
