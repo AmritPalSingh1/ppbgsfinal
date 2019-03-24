@@ -1,4 +1,8 @@
-import { DEFAULT_INDENT, DEFAULT_KEYMAP, DEFAULT_THEME } from "./redux/constants";
+import {
+  DEFAULT_INDENT,
+  DEFAULT_KEYMAP,
+  DEFAULT_THEME,
+} from './redux/constants';
 
 /* global $ */
 
