@@ -2,10 +2,10 @@
 task: Print an array of strings in a frame
 details: |
   <p><strong>Write a function that returns the contents of an array in a frame</strong></p>
-  <p>Input:<p>
+  <p>Example:<p>
 
   <pre>
-  ["Hello", "I am", "in", "a", "frame"]
+  console.log(frame(["Hello", "I am", "in", "a", "frame"]))
   </pre>
 
   <p>Output:</p>
@@ -73,7 +73,7 @@ hints:
         return framed;
       }
       </pre>
-    hintCost: 50
+    hintCost: 45
 html: ''
 js: |
   function frame(arr) {
@@ -106,10 +106,35 @@ test:
     let expected = '+--+\n+--+';
     TEST_ASSERT([], expected, 'Failed case: [] (Empty list)');
 
-    expected = '+-------+\n| Hello |\n| I am  |\n| in    |\n| a     |\n| frame |\n+-------+';
+    expected = `
+    +-------+
+    | Hello |
+    | I am  |
+    | in    |
+    | a     |
+    | frame |
+    +-------+
+    `.trim();
     TEST_ASSERT(["Hello", "I am", "in", "a", "frame"], expected, 'Failed case: ["Hello", "I am", "in", "a", "frame"]');
 
-    expected = '+------------------------------------+\n| supercalifragilisticexpialidocious |\n| Even though the sound of it        |\n| Is something quite atrocious       |\n+------------------------------------+'
+    expected = `
+    +---------+
+    | The     |
+    | last    |
+    | line    |
+    | is the  |
+    | longest |
+    +---------+
+    `.trim();
+    TEST_ASSERT(["The", "last", "line", "is the", "longest"], expected, 'Failed case: ["The", "last", "line", "is the", "longest"]');
+
+    expected = `
+    +------------------------------------+
+    | supercalifragilisticexpialidocious |
+    | Even though the sound of it        |
+    | Is something quite atrocious       |
+    +------------------------------------+
+    `.trim();
     TEST_ASSERT(
       ["supercalifragilisticexpialidocious", "Even though the sound of it", "Is something quite atrocious"],
       expected, 

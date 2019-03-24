@@ -1,0 +1,127 @@
+---
+task: Rotate the elements in an array
+details: |
+  <p><strong>Rotate elements in an array</strong></p>
+
+  <p>Example:<p>
+
+  <pre>
+  console.log(rotate([1, 2, 3, 4, 5], 2));
+  console.log(rotate([1, 2, 3], 5));
+  console.log(rotate([1, 2, 3], 0));
+  </pre>
+
+  <p>Output:</p>
+
+  <pre>
+  [3, 4, 5, 1, 2]
+  [3, 1, 2]
+  [1, 2, 3]
+  </pre>
+
+  <p>The function should be non-destructive. That means the array passed in does not change. You return a new array.</p>
+hints:
+  - hintContent: |
+      <p>Let&apos;s use <code>rotate([1, 2, 3, 4, 5], 2)</code> as an example:</p>
+
+      <p>The array returned should be <code>[3, 4, 5, 1, 2]</code>. Think of the original array being split in two halves. The left half containing [1, 2] and the right half containing [3, 4, 5].</p>
+
+      <p>Start with an empty array and using a loop, insert the right half [3, 4, 5]. After that create another loop to insert 1 and 2</p>
+    hintCost: 8
+  - hintContent: |
+      <p>If you&apos;re having trouble with <code>rotate([3, 1, 2], 5)</code>, use <code>%</code> to change the number of rotations</p>
+
+      <p>Rotating by 5 is the same as rotating by 2 in this case. The length of the array is 3.</p>
+    hintCost: 15
+  - hintContent: |
+      <p>If the number of rotations is larger than the length of the array, change the number of rotations like so:</p>
+
+      <pre>
+      var realTimes = times % arr.length;
+      </pre>
+    hintCost: 15
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      function rotate(arr, times) {
+        times = times % arr.length;
+        var rotated = [];
+        var i;
+        
+        for (i = times; i < arr.length; i++) {
+          rotated.push(arr[i]);
+        }
+        
+        for (i = 0; i < times; i++) {
+          rotated.push(arr[i]);
+        }
+        
+        return rotated;
+      }
+      </pre>
+    hintCost: 45
+html: ''
+js: |
+  function rotate(arr, times) {
+    // your code here
+  }
+
+  var A = [1, 2, 3, 4, 5];
+  console.log(rotate(A, 2));
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    rotate = undefined;
+
+    const ARRAY_EQUAL = (arr1, arr2) => {
+      if (arr1.length !== arr2.length) {
+        return false;
+      }
+
+      for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i]) {
+          return false;
+        }
+      }
+
+      return true;
+    };
+
+    const TEST_ASSERT = (arg1, arg2, expected, msg) => {
+      try {
+        if (!ARRAY_EQUAL(rotate(arg1, arg2), expected)) {
+          throw new Error();
+        }
+      } catch (e) {
+        console.error(e);
+        fail(msg || `Failed case: ${arg}`);
+      }
+    };
+  run: |
+    if (!rotate) {
+      fail('You must use the function "rotate"');
+    }
+
+    TEST_ASSERT([1, 2, 3], 0, [1, 2, 3], 'Failed case: rotate([1, 2, 3], 0)');
+    TEST_ASSERT([1, 2, 3], 5, [3, 1, 2], 'Failed case: rotate([3, 1, 2], 5)');
+    TEST_ASSERT([1, 2, 3, 4, 5], 2, [3, 4, 5, 1, 2], 'Failed case: rotate([1, 2, 3, 4, 5], 2)');
+    TEST_ASSERT([1, 2, 3, 4, 5], 5, [1, 2, 3, 4, 5], 'Failed case: rotate([1, 2, 3, 4, 5], 5)');
+
+    try {
+      var arr = [1, 2, 3];
+      rotate(arr, 2);
+      if (!ARRAY_EQUAL(arr, [1, 2, 3])) {
+        throw new Error();
+      }
+    } catch (e) {
+      console.error(e);
+      fail("You cannot change the array passed in. You should create a new array");
+    }
+  cleanup: ''
+  has: []
+  hasNot: []
+  maxLines: 30
+  errorThreshold: 4

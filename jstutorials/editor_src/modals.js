@@ -1,13 +1,13 @@
+/* global $ */
+
+// do you feel sick?
+// because I definitely feel sick
+
 import {
   DEFAULT_INDENT,
   DEFAULT_KEYMAP,
   DEFAULT_THEME,
 } from './redux/constants';
-
-/* global $ */
-
-// do you feel sick?
-// because I definitely feel sick
 
 const createModal = (id, title, body, footer) => {
   $('#modal-container').append(
