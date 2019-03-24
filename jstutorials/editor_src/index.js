@@ -1,11 +1,5 @@
 /* global $ */
 
-// I am so sorry that you're reading my code
-
-// if you're looking for bad code
-// please look at modals.js
-// bring a 20 meter stick with you
-
 import { curry } from 'ramda';
 import store from './redux/store.js';
 import {
@@ -26,7 +20,7 @@ import { toFormData } from './utils.js';
 
 store.dispatch(setCoins($('#coins').html()));
 store.dispatch(setHintsUsed($('#hints-used').html()));
-store.dispatch(fetchExercise('/static/exercises/func_palindrome.yaml'));
+store.dispatch(fetchExercise('/static/exercises/array_rotate.yaml'));
 
 // -- Handle code change --------------------------------------------
 

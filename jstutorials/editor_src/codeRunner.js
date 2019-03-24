@@ -148,23 +148,29 @@ export const runCode = () => {
       ${test.cleanup}
     }`;
 
-  writeToFrame('#visible-iframe', `
+  writeToFrame(
+    '#visible-iframe',
+    `
     ${htmlCode}
     <script>
       {
         console.log = window.parent.log;
         ${visibleScriptToRun}
       }
-    </script>`);
+    </script>`,
+  );
 
-  writeToFrame('#hidden-iframe', `
+  writeToFrame(
+    '#hidden-iframe',
+    `
     ${htmlCode}
     <script>
       {
         const fail = window.parent.fail;
         ${hiddenScriptToRun}
       }
-    </script>`);
+    </script>`,
+  );
 
   testCode(js.getValue());
 };

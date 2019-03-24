@@ -5,7 +5,11 @@ import store from './redux/store.js';
 import render from './view.js';
 import { html, js } from './codeEditor.js';
 import { runCode } from './codeRunner.js';
-import { DEFAULT_THEME, DEFAULT_INDENT, DEFAULT_KEYMAP } from './redux/constants.js';
+import {
+  DEFAULT_THEME,
+  DEFAULT_INDENT,
+  DEFAULT_KEYMAP,
+} from './redux/constants.js';
 
 // -- On exercise fetch setup ---------------------------------------
 
