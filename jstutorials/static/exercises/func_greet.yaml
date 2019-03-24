@@ -16,7 +16,7 @@ details: |
   Yo, Jeremy!
   Hello!
   Good morning!
-  <pre>
+  </pre>
 hints:
   - hintContent: |
       <p>To check if a variable is undefined:</p>

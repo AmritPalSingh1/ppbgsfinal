@@ -14,7 +14,7 @@ details: |
   0
   5
   15
-  <pre>
+  </pre>
 hints:
   - hintContent: |
       <p>You can get the rightmost digit from a number by using <code>%</code></p>
