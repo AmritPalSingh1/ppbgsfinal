@@ -597,6 +597,7 @@ def result_update(request):
         request.session['challenge_id'] = challenge_id
 
     # challenge = Challenge.objects.get(id=4)
+    challenge = Challenge.objects.get(id=challenge_id)
 
     # get coins used
     # if 'coins_used' in request.POST:
