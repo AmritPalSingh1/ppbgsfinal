@@ -1,0 +1,72 @@
+---
+task: Write a list application
+details: |
+  <p>Write a web application where a user can insert items to a list</p>
+
+  <p>Use the following HTML elements:</p>
+  <ul>
+    <li><code>&lt;input type="text"&gt;</code></li>
+    <li><code>&lt;button&gt;</code></li>
+    <li><code>&lt;ul&gt;</code></li>
+  </ul>
+
+  <p>There should only be one input text field, one button, and one unordered list element</p>
+
+  <p>Example HTML page</p>
+  <iframe src="/static/html/list.html" class="w-100"></iframe>
+hints:
+  - hintContent: |
+      <p>Solution:</p>
+
+      <p>HTML</p>
+
+      <pre>
+      <input type="text" id="text-input">
+      <button onclick="add()">Add</button>
+      <ul id="list-display"></ul>
+      </pre>
+
+      <p>JS</p>
+
+      <pre>
+      var input = document.getElementById('text-input');
+      var list = document.getElementById('list-display');
+
+      function add() {
+        var item = input.value;
+        list.innerHTML += '<li>' + item + '</li>';
+      }
+      </pre>
+    hintCost: 30
+html: |
+js: |
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: ''
+  run: |
+    const $ = x => document.querySelector(x);
+
+    $('input').value = 'A';
+    $('button').click();
+
+    if ($('ul').innerHTML === '') {
+      fail('An item should be added to a list when a button is clicked')
+    }
+
+    if (!/A/s.test($('ul').innerHTML)) {
+      fail('The value in the text field should show up in the list after button click')
+    }
+
+    $('input').value = 'B';
+    $('button').click();
+
+    if (!/A.*B/s.test($('ul').innerHTML)) {
+      fail('Adding another value should add to the list. Not overwritten');
+    }
+  cleanup: ''
+  has: []
+  hasNot: []
+  maxLines: 30
+  errorThreshold: 4

@@ -1,0 +1,18 @@
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Germania+One" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Germania One', cursive;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>My very cool To-do list</h2>
+  <input type="text" id="text-input">
+  <button onclick="add()">Add</button>
+  <ul id="list-display"></ul>
+  <script>
+    var i=document.getElementById("text-input");var a=document.getElementById("list-display");function add(){var t=i.value;a.innerHTML+="<li>"+t+"</li>"}
+  </script>
+</body>

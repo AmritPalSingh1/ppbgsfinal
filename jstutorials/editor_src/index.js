@@ -20,7 +20,7 @@ import { toFormData } from './utils.js';
 
 store.dispatch(setCoins($('#coins').html()));
 store.dispatch(setHintsUsed($('#hints-used').html()));
-store.dispatch(fetchExercise('/static/exercises/event_greet.yaml'));
+store.dispatch(fetchExercise('/static/exercises/event_list.yaml'));
 
 // -- Handle code change --------------------------------------------
 

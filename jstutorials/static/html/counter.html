@@ -1,0 +1,8 @@
+<button id="inc-button" onclick="increment()">+</button>
+<div id="count">0</div>
+<button id="dec-button" onclick="decrement()">-</button>
+<br /><br />
+<button id="reset-button" onclick="reset()">reset</button>
+<script>
+var n=document.getElementById("count");var e=0;function increment(){e++;n.innerHTML=e}function decrement(){e--;n.innerHTML=e}function reset(){e=0;n.innerHTML=e}
+</script>
