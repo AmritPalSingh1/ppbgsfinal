@@ -535,7 +535,7 @@ def challenge(request):
         if old_attempted_challenge.start_datetime == old_attempted_challenge.end_datetime:
             # time taken is never > 5 hours
             if ((datetime.now() - old_attempted_challenge.start_datetime).seconds / 3600) > 5:
-                if (old_attempted_challenge.time_taken != 0):
+                if (old_attempted_challenge.time_taken == 0):
                     old_attempted_challenge.time_taken = timedelta(hours=5)
         # if user is attempting challenge again
         else:
@@ -558,16 +558,19 @@ def challenge(request):
 
     return render(request, 'pages/code_editor.html', context)
 
-
-def result(request):
-
+def result_update(request):
+    coins_earned = 0
+    points_earned = 0
     # get current topic name
     if 'topic_name' in request.POST:
-        topic_name = request.POST['topic_name']
+        request.session['topic_name'] = request.POST['topic_name']
 
-    # Fetch current topic
-    #topic = get_object_or_404(Topic, topicName=topic_name)
-    topic = get_object_or_404(Topic, topicName="Intro to Html")
+    # get current challenge
+    if 'challenge_id' in request.POST:
+        challenge_id = request.POST['challenge_id']
+        request.session['challenge_id'] = challenge_id
+
+    challenge = Challenge.objects.get(id=1)
 
     # get coins used
     if 'coins_used' in request.POST:
@@ -575,14 +578,9 @@ def result(request):
     coins_used = 10
 
     if 'grade' in request.POST:
-        grade = int(float(request.POST['grade']) * 100)
+        grade = math.ceil(float(request.POST['grade']) * 100)
 
-    print(math.ceil(float("0.23") * 100))
-
-    if 'challenge_id' in request.POST:
-        challenge_id = request.POST['challenge_id']
-
-    challenge = Challenge.objects.get(id=1)
+    grade = math.ceil(float(0.2) * 100)
 
     # user rank before this challenge
     old_rank = get_user_rank(request.user)
@@ -596,9 +594,76 @@ def result(request):
     # user coins before buying hints
     old_coins = after_hints_coins - coins_used
 
-    # total number of users who attempted this challenge
-    total_users = UserAttemptedChallenge.objects.filter(challenge=challenge).count()
+    # Update user stats for this challenge
+    attempted_challenge = UserAttemptedChallenge.objects.get(user=request.user, challenge=challenge)
+    
+    # yeah.. I don't remember why I did this
+    if (attempted_challenge.start_datetime == attempted_challenge.end_datetime):
+        attempted_challenge.end_datetime = datetime.now()
+        attempted_challenge.save()
+        # maybe this means if user has completed this question for first time
+        if attempted_challenge.time_taken == timedelta(seconds=0):
+            if ((attempted_challenge.end_datetime - attempted_challenge.start_datetime).seconds / 3600) > 5:
+                attempted_challenge.time_taken = timedelta(hours=5)
+            else:
+                attempted_challenge.time_taken = (attempted_challenge.end_datetime - attempted_challenge.start_datetime)
+            if challenge.difficulty == "easy":
+                points_earned = math.ceil(5 * (grade / 100))
+            elif challenge.difficulty == "medium":
+                points_earned = math.ceil(7 * (grade / 100))
+            else:
+                points_earned = math.ceil(10 * (grade / 100))
+            
+            coins_earned = points_earned * 2
+            update_user_points(request, points_earned)
+            update_user_coins(request, coins_earned)
+            attempted_challenge.grade = grade
+    else:
+        return redirect('index')
 
+    print((attempted_challenge.end_datetime - attempted_challenge.start_datetime))
+
+    if attempted_challenge.grade == 0:
+        attempted_challenge.grade = grade
+    
+    attempted_challenge.save()
+
+    print(points_earned)
+    print(coins_earned)
+
+    time_taken = attempted_challenge.time_taken
+   
+    request.session['hours'] = str(time_taken.seconds // 3600)
+    request.session['minutes'] = str(time_taken.seconds % 3600 // 60)
+    request.session['seconds'] = str(time_taken.seconds % 60)
+    request.session['old_rank'] = old_rank
+    request.session['old_points'] = old_points
+    request.session['old_coins'] = old_coins
+    request.session['points_earned'] = points_earned
+    request.session['coins_earned'] = coins_earned
+    request.session['grade'] = grade
+
+    return redirect('result')
+
+def result(request):
+
+    old_rank = request.session.get('old_rank')
+    old_points = request.session.get('old_points')
+    old_coins = request.session.get('old_coins')
+    topic_name = request.session.get('topic_name')
+    challenge_id = request.session.get('challenge_id')
+    hours = request.session.get('hours')
+    minutes = request.session.get('miuntes')
+    seconds = request.session.get('seconds')
+
+    # Fetch current topic
+    #topic = get_object_or_404(Topic, topicName=topic_name)
+    topic = get_object_or_404(Topic, topicName="Intro to Html")
+    
+    challenge = Challenge.objects.get(id=1)
+
+     # total number of users who attempted this challenge
+    total_users = UserAttemptedChallenge.objects.filter(challenge=challenge).count()
 
     context = {
         'topic': topic,
@@ -606,6 +671,7 @@ def result(request):
         'old_rank': old_rank,
         'old_points': old_points,
         'old_coins': old_coins,
+        'total_user': total_users,
     }
 
     return render(request, 'pages/result.html', context)

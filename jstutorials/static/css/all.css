@@ -565,3 +565,24 @@
 .welcome {
   min-height: 530px;
 }
+
+.btn-green {
+  color: #fff;
+  background-color: #1cf2b4;
+  border-color: #1cf2b4;
+}
+
+.btn-green:hover {
+  color: #fff;
+  background-color: #1cf2b4;
+}
+
+.btn-pink{
+  color: #fff;
+  background-color: #ff214f;
+  border-color: #ff214f;
+}
+
+.btn-pink:hover{
+  color: #fff;
+}

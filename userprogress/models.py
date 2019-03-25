@@ -60,5 +60,5 @@ class UserAttemptedChallenge(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     start_datetime = models.DateTimeField(default=datetime.now, blank=True)
     end_datetime = models.DateTimeField(default=datetime.now, blank=True)
-    time_taken = models.DurationField(blank=True, default=timedelta(minutes=0))
-    points = models.IntegerField(default=0)
+    time_taken = models.DurationField(blank=True, default=timedelta(seconds=0))
+    grade = models.IntegerField(default=0)
