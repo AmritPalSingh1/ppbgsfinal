@@ -16,14 +16,21 @@ details: |
   <iframe src="/static/html/list.html" class="w-100"></iframe>
 hints:
   - hintContent: |
+      <p>You can create html list elements like so:</p>
+
+      <pre>
+      myList.innerHTML += '&lt;li&gt;' + item + '&lt;/li&gt;';
+      </pre>
+    hintCost: 10
+  - hintContent: |
       <p>Solution:</p>
 
       <p>HTML</p>
 
       <pre>
-      <input type="text" id="text-input">
-      <button onclick="add()">Add</button>
-      <ul id="list-display"></ul>
+      &lt;input type="text" id="text-input"&gt;
+      &lt;button onclick="add()"&gt;Add&lt;/button&gt;
+      &lt;ul id="list-display"&gt;&lt;/ul&gt;
       </pre>
 
       <p>JS</p>
@@ -34,7 +41,7 @@ hints:
 
       function add() {
         var item = input.value;
-        list.innerHTML += '<li>' + item + '</li>';
+        list.innerHTML += '&lt;li&gt;' + item + '&lt;/li&gt;';
       }
       </pre>
     hintCost: 30
