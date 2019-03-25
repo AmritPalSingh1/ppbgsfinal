@@ -16,7 +16,7 @@ details: |
 
   <p>You should probably write the function recursively</p>
 
-  <p>Do not use <code>Array.prototype.flat()</code> or <code>Array.prototype.reduce()</code></p> 
+  <p>Do not use <code>Array.prototype.flat()</code> or <code>Array.prototype.reduce()</code></p>
 hints:
   - hintContent: |
       <p>Check if something is an array with <code>Array.isArray</code></p>

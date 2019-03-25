@@ -6,7 +6,7 @@ details: |
   <p>The <code>+</code> button should increase the number displayed by 1</p>
   <p>The <code>-</code> button should decrease the number displayed by 1</p>
   <p>The <code>reset</code> button should set the number displayed to 0</p>
-hints: 
+hints:
   - hintContent: |
       <p>To get a HTML element:</p>
 

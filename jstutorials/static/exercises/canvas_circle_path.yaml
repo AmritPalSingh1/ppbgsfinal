@@ -1,11 +1,11 @@
 ---
-task: "Draw a circular pattern"
+task: 'Draw a circular pattern'
 details: |
   <p><strong>Draw a path of triangles on a circular path</strong></p>
   <p>The small circle has 7 triangles and has a radius of 20 pixels</p>
   <p>The center circle has 18 triangles and has a radius of 60 pixels</p>
   <p>The large circle has 27 triangles and has a radius of 100 pixels</p>
-hints: 
+hints:
   - hintContent: |
       <p>Think about a drawing/drafting compass and how it draws a circle on a piece of paper</p>
     hintCost: 6

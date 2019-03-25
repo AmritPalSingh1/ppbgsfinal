@@ -1,15 +1,15 @@
 ---
-task: "Say Hello!"
+task: 'Say Hello!'
 details: |
   <p><strong>Print hello with your name to the console</strong></p>
   <p>The console should read:</p>
   <pre><code>Hello, &lt;Your name&gt;!</code></pre>
   <p>For example: <code>Hello, Jason!</code></p>
   <p>Use a variable to store your name</p>
-hints: 
+hints:
   - hintContent: |
       <p>To print something to the console, type:</p>
-      
+
       <pre>
       console.log("This gets displayed to the console");
       </pre>

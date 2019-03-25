@@ -2,7 +2,7 @@
 task: Write Fizz-Buzz
 details: |
   <p><strong>
-    Print the numbers from 1 to 15,
+    Print the numbers from 1 to 15
     but for every multiple of 3, print <code>Fizz</code>,
     for every multiple of 5, print <code>Buzz</code>,
     for a multiple of both, print <code>FizzBuzz</code>.
