@@ -14,7 +14,6 @@ import './modals.js';
 import './subscriptions.js';
 import { html, js } from './codeEditor.js';
 import { runCode } from './codeRunner.js';
-import { toFormData } from './utils.js';
 
 // -- Onload dispatch -----------------------------------------------
 
@@ -41,16 +40,8 @@ $('#submit-results-button').click(() => {
   const { errorCount, exercise } = store.getState();
   const threshold = exercise.test.errorThreshold;
 
-  fetch('/topics/topic/result_update', {
-    method: 'POST',
-    redirect: 'follow',
-    headers: {
-      'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val(),
-    },
-    body: toFormData({
-      topic_name: $('#topic-name').html(),
-      challenge_id: $('#task-id').html(),
-      grade: Math.max(threshold - errorCount, 0) / threshold,
-    }),
-  });
+  $('#form_topic_name').val($('#topic-name').html());
+  $('#form_challenge').val($('#task-id').html());
+  $('#form_grade').val(Math.max(threshold - errorCount, 0) / threshold);
+  $('#submit-code-form').submit();
 });

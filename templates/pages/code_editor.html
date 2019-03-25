@@ -184,5 +184,11 @@
   <div id="hints-used" hidden>{{ hint_number }}</div>
   <div id="task-data" hidden>{{ challenge.exercise.url }}</div>
   <div id="task-id" hidden>{{ challenge.id }}</div>
-  {% csrf_token %}
+
+  <form id="submit-code-form" action="{% url 'result_update' %}" method="POST">
+    {% csrf_token %}
+    <input name="topic_name" type="hidden" id="form_topic_name">
+    <input name="challenge_id" type="hidden" id="form_challenge">
+    <input name="grade" type="hidden" id="form_grade">
+  </form>
 {% endblock %}
