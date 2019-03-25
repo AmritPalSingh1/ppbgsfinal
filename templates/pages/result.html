@@ -129,11 +129,11 @@
       </div>
       <div class="col-lg-2 col-md-4 col-sm-6 col-12 mb-2 px-1">
           {% if minutes_compare > 0 %}
-            <div class="card border-green px-3 py-2 shadow">
+            <div class="card border-danger px-3 py-2 shadow">
           {% elif minutes_compare == 0 %}
             <div class="card border-blue px-3 py-2 shadow">
           {% else %}
-            <div class="card border-danger px-3 py-2 shadow">
+            <div class="card border-green px-3 py-2 shadow">
           {% endif %}
           <span class="text-small alt-font"
             ><i class="fas fa-clock"></i> Average Time Taken</span
@@ -143,17 +143,17 @@
           </div>
           <div class="alt-font subheader subheader-small font-weight-light">
             {% if minutes_compare > 0 %}
-              <span class="text-green"
+              <span class="text-danger"
                 ><i class="fas fa-caret-up"></i> {{ minutes_compare }}%</span
-              >  Above Average
+              >  More time taken
             {% elif minutes_compare == 0 %}
               <span class="text-blue"
                 ><i class="fas fa-grip-lines"></i></span
               > Exact Average
             {% else %}
-              <span class="text-danger"
-                ><i class="fas fa-caret-up"></i> {{ minutes_compare }}%</span
-              >  Below Average
+              <span class="text-green"
+                ><i class="fas fa-caret-up"></i> {{ abs_minutes_compare }}%</span
+              >  Less time taken
             {% endif %}
             
            
@@ -173,7 +173,7 @@
                 <div class="text-center subheader font-weight-light">
                   {{ request.user }}
                   <div class=" py-2 text-capitalize text-small">
-                    <div class="text-dark"><i class="fas fa-percent"></i> <span class="text-lowercase"> a</span>ge: <span class="text-green">{{ grade}}</span> </div>
+                    <div class="text-dark">grade: <span class="text-green">{{ grade}}</span> </div>
                     <div class="text-dark">Time taken: <span class="text-danger"> 
                         {% if hours > 0 %} {{ hours }} hrs {% endif %}
                         {% if minutes %} {{ minutes }} min {% endif %}
@@ -192,7 +192,7 @@
                 <div class="text-center subheader font-weight-light">
                   John Doe
                   <div class=" py-2 text-capitalize text-small">
-                    <div class="text-dark"><i class="fas fa-percent"></i> <span class="text-lowercase"> a</span>ge: <span class="text-danger">40</span> </div>
+                    <div class="text-dark">grade: <span class="text-danger">40</span> </div>
                     <div class="text-dark">Time taken: <span class="text-green"> 90 sec</span></div>
                   </div>
                 </div>
@@ -208,14 +208,15 @@
             Challenge Rewards
           </div>
           <div class="px-3 py-2 alt-font d-flex justify-content-between text-extra-dark-gray">
-            <div>Pts Earned: 7</div>
-            <div><i class="fas fa-coins text-coin"></i> +14</div>
+            <div>Pts Earned: {{ points_change }}</div>
+            <div><i class="fas fa-coins text-coin"></i> +{{ coins_earned}}</div>
           </div>
           <div class="bg-dark text-light px-3 py-1 alt-font d-flex">
             <div class="mr-auto">Level 4</div>
             <div class="">Challenges Remaining: 3/5</div>
           </div>
-          <div class="px-2 py-3">
+          <div class="px-2 pb-3">
+            <div class="text-center py-2 alt-text">+3 Progress</div>
             <div class="progress bg-dark subheader" style="height: 5rem;">
               <div
                 class="progress-bar bg-deep-pink content-relative"

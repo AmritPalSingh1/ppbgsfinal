@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 
-from userprogress.models import TotalCoins, TotalPoints, UserLastLocation
+from userprogress.models import TotalCoins, TotalPoints, UserLastLocation, Level
 from topics.models import Topic
 from flowchart.models import Progress
 
@@ -51,6 +51,10 @@ def register(request):
                     # start flowchart
                     flowchart_progress = Progress(user=user)
                     flowchart_progress.save()
+
+                    # set user level
+                    user_level = Level(user=user)
+                    user_level.save()
 
                     messages.success(
                         request, 'You are now registered and can log in')

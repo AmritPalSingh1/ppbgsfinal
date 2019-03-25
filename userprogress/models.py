@@ -78,3 +78,10 @@ class UserAttemptedChallenge(models.Model):
                 break
             rank += 1
         return rank
+
+
+class Level(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    level = models.IntegerField(default=1)
+    tries = models.IntegerField(default=0)
+

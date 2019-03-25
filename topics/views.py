@@ -9,7 +9,7 @@ from django.db.models import Avg
 
 # Import required models
 from .models import Topic, Video, Question, Pdf, Query, Comment
-from userprogress.models import UserAttemptedQuestion, UserWatchedVideo, UserReadNotes, TotalCoins, TotalPoints, UserLastLocation, UserAttemptedChallenge
+from userprogress.models import UserAttemptedQuestion, UserWatchedVideo, UserReadNotes, TotalCoins, TotalPoints, UserLastLocation, UserAttemptedChallenge, Level
 from django.contrib.auth.models import User
 from challenges.models import Challenge, DoublePoint, FreeWin, Hint
 from userprogress.models import TotalPoints, TotalCoins
@@ -652,7 +652,7 @@ def result(request):
     hours = request.session.get('hours')
     minutes = request.session.get('minutes')
     seconds = request.session.get('seconds')
-    grade = request.session.get('grade')
+    grade = int(request.session.get('grade'))
 
     # Fetch current topic
     #topic = get_object_or_404(Topic, topicName=topic_name)
@@ -697,6 +697,10 @@ def result(request):
 
     # user's minutes compared to average
     minutes_compare = int(((user_minutes_taken - average_minutes_taken) / average_minutes_taken) * 100)
+
+    if minutes_compare < 0:
+        print("here")
+        abs_minutes_compare = minutes_compare  * -1
     
     context = {
         'topic': topic,
@@ -712,6 +716,7 @@ def result(request):
         'rank_change': new_rank - old_rank,
         'new_points': new_points,
         'points_change': new_points - old_points,
+        'coins_earned': (new_points - old_points)*2,
         'new_coins': new_coins,
         'coins_change': new_coins - old_coins,
         'rank': rank,
@@ -719,6 +724,7 @@ def result(request):
         'average_minutes_taken': average_minutes_taken,
         'grade_compare': grade_compare,
         'minutes_compare': minutes_compare,
+        'abs_minutes_compare': abs_minutes_compare,
         'all_users': all_users,
         'grade': grade,
     }
