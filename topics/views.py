@@ -593,7 +593,7 @@ def result_update(request):
 
     # get current challenge
     if 'challenge_id' in request.POST:
-        challenge_id = request.POST['challenge_id']
+        challenge_id =int(request.POST['challenge_id'])
         request.session['challenge_id'] = challenge_id
 
     # challenge = Challenge.objects.get(id=4)
