@@ -18,8 +18,6 @@ def start(request):
 
     all_questions = FlowchartQuestion.objects.filter(difficulty=user_progress.user_difficulty)
 
-    print(all_questions[0])
-
     if user_progress.current_question > 3:
         return redirect('final')
     elif user_progress.current_question == 1:

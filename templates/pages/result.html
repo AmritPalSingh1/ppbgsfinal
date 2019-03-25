@@ -3,46 +3,76 @@
 <div class="container mt-4">
     <div class="row">
       <div class="col-lg-2 col-md-4 col-sm-6 col-12 mb-2 px-1">
-        <div class="card border-green px-3 py-2 shadow">
+        {% if rank_change > 0 %}
+          <div class="card border-green px-3 py-2 shadow">
+        {% else %}
+          <div class="card border-blue px-3 py-2 shadow">
+        {% endif %}
           <span class="text-small alt-font"
             ><i class="fas fa-trophy"></i> Overall Rank</span
           >
           <div class="alt-font text-center text-dark-gray h2">
-            <span class="countup">23</span>
+            <span class="countup">{{ new_rank }}</span>
           </div>
           <div class="alt-font subheader subheader-small font-weight-light">
-            <span class="text-green"><i class="fas fa-caret-up"></i> 3</span>
-            (Old rank: 26)
+            {% if rank_change > 0 %}
+              <span class="text-green"><i class="fas fa-caret-up"></i> {{ rank_change}}</span>
+            {% else %}
+              <span class="text-blue"><i class="fas fa-grip-lines"></i> </span>
+            {% endif %}
+            (Old rank: {{ old_rank }})
           </div>
         </div>
       </div>
       <div class="col-lg-2 col-md-4 col-sm-6 col-12 mb-2 px-1">
-        <div class="card border-green px-3 py-2 shadow">
+          {% if points_change > 0 %}
+            <div class="card border-green px-3 py-2 shadow">
+          {% else %}
+            <div class="card border-blue px-3 py-2 shadow">
+          {% endif %}
           <span class="text-small alt-font"
             ><i class="fas fa-star"></i> Total Points</span
           >
           <div class="alt-font text-center text-dark-gray h2">
-            <span class="countup">54</span>
+            <span class="countup">{{ new_points }}</span>
           </div>
           <div class="alt-font subheader subheader-small font-weight-light">
-            <span class="text-green"><i class="fas fa-caret-up"></i> 7</span>
-            (Previously 47)
+            {% if points_change > 0 %}
+            <span class="text-green"><i class="fas fa-caret-up"></i> {{ points_change }}</span>
+            {% else %}
+              <span class="text-blue"><i class="fas fa-grip-lines"></i> </span>
+            {% endif %}
+            
+            (Previously {{ old_points }})
           </div>
         </div>
       </div>
       <div class="col-lg-2 col-md-4 col-sm-6 col-12 mb-2 px-1">
-        <div class="card border-danger px-3 py-2 shadow">
+        {% if coins_change > 0 %}
+          <div class="card border-green px-3 py-2 shadow">
+        {% elif coins_change == 0 %}
+          <div class="card border-blue px-3 py-2 shadow">
+        {% else %}
+          <div class="card border-danger px-3 py-2 shadow">
+        {% endif %}
+        
           <span class="text-small alt-font"
             ><i class="fas fa-coins"></i> Coins Remaining</span
           >
           <div class="alt-font text-center text-dark-gray h2">
-            <span class="countup">30</span>
+            <span class="countup">{{ new_coins }}</span>
           </div>
           <div class="alt-font subheader subheader-small font-weight-light">
-            <span class="text-danger"
-              ><i class="fas fa-caret-down"></i> 25</span
-            >
-            (Previously 55)
+              {% if coins_change > 0 %}
+                <span class="text-green"><i class="fas fa-caret-up"></i> {{ coins_change }}</span>
+              {% elif coins_change == 0 %}
+                <span class="text-blue"><i class="fas fa-grip-lines"></i> </span>
+              {% else %}
+                <span class="text-danger"
+                  ><i class="fas fa-caret-down"></i> {{ coins_change }}</span
+                >
+              {% endif %}
+            (Previously {{ old_coins }})
           </div>
         </div>
       </div>
@@ -52,42 +82,77 @@
             ><i class="fas fa-user"></i> Total Users</span
           >
           <div class="alt-font text-center text-dark-gray h2">
-            <span class="countup">26</span>
+            <span class="countup">{{ total_users }}</span>
           </div>
           <div class="alt-font subheader subheader-small font-weight-light">
-            Your Rank: 10
+            Your Rank: {{ rank }}
           </div>
         </div>
       </div>
       <div class="col-lg-2 col-md-4 col-sm-6 col-12 mb-2 px-1">
-        <div class="card border-danger px-3 py-2 shadow">
+        {% if grade_compare > 0 %}
+          <div class="card border-green px-3 py-2 shadow">
+        {% elif grade_compare == 0 %}
+          <div class="card border-blue px-3 py-2 shadow">
+        {% else %}
+          <div class="card border-danger px-3 py-2 shadow">
+        {% endif %}
+        
           <span class="text-small alt-font"
-            ><i class="fas fa-star"></i> Average Points</span
+            ><i class="fas fa-star"></i> Average Grade</span
           >
           <div class="alt-font text-center text-dark-gray h2">
-            <span class="countup">8</span>
+            <span class="countup">{{ average_points }}</span>
           </div>
           <div class="alt-font subheader subheader-small font-weight-light">
-            <span class="text-danger"
-              ><i class="fas fa-caret-down"></i> 7%</span
-            >
-            Below Average
+            {% if grade_compare > 0 %}
+              <span class="text-green"
+                ><i class="fas fa-caret-down"></i> {{ grade_compare }}%</span
+              >  Above Average
+            {% elif grade_compare == 0 %}
+              <span class="text-blue"
+                ><i class="fas fa-grip-lines"></i></span
+              > Average grade
+            {% else %}
+              <span class="text-danger"
+                ><i class="fas fa-caret-down"></i> {{ grade_compare }}%</span
+              >  Below Average
+            {% endif %}
+            
+           
           </div>
         </div>
       </div>
       <div class="col-lg-2 col-md-4 col-sm-6 col-12 mb-2 px-1">
-        <div class="card border-green px-3 py-2 shadow">
+          {% if minutes_compare > 0 %}
+            <div class="card border-green px-3 py-2 shadow">
+          {% elif minutes_compare == 0 %}
+            <div class="card border-blue px-3 py-2 shadow">
+          {% else %}
+            <div class="card border-danger px-3 py-2 shadow">
+          {% endif %}
           <span class="text-small alt-font"
             ><i class="fas fa-clock"></i> Average Time Taken</span
           >
           <div class="alt-font text-center text-dark-gray h2">
-            <span class="countup">2</span> min
+            <span class="">{{ average_minutes_taken }}</span> min
           </div>
           <div class="alt-font subheader subheader-small font-weight-light">
-            <span class="text-green"
-              ><i class="fas fa-caret-up"></i> 17%</span
-            >
-            Above Average
+            {% if minutes_compare > 0 %}
+              <span class="text-green"
+                ><i class="fas fa-caret-up"></i> {{ minutes_compare }}%</span
+              >  Above Average
+            {% elif minutes_compare == 0 %}
+              <span class="text-blue"
+                ><i class="fas fa-grip-lines"></i></span
+              > Exact Average
+            {% else %}
+              <span class="text-danger"
+                ><i class="fas fa-caret-up"></i> {{ minutes_compare }}%</span
+              >  Below Average
+            {% endif %}
+            
+           
           </div>
         </div>
       </div>

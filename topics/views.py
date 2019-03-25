@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from datetime import datetime, timedelta
 import math
+from django.db.models import Avg
 
 # Import required models
 from .models import Topic, Video, Question, Pdf, Query, Comment
@@ -621,15 +622,11 @@ def result_update(request):
     else:
         return redirect('index')
 
-    print((attempted_challenge.end_datetime - attempted_challenge.start_datetime))
-
     if attempted_challenge.grade == 0:
         attempted_challenge.grade = grade
     
     attempted_challenge.save()
 
-    print(points_earned)
-    print(coins_earned)
 
     time_taken = attempted_challenge.time_taken
    
@@ -655,6 +652,7 @@ def result(request):
     hours = request.session.get('hours')
     minutes = request.session.get('miuntes')
     seconds = request.session.get('seconds')
+    grade = request.session.get('grade')
 
     # Fetch current topic
     #topic = get_object_or_404(Topic, topicName=topic_name)
@@ -665,13 +663,62 @@ def result(request):
      # total number of users who attempted this challenge
     total_users = UserAttemptedChallenge.objects.filter(challenge=challenge).count()
 
+    # get new rank
+    new_rank = get_user_rank(request.user)
+
+    # get new user points
+    new_points = TotalPoints.objects.get(user=request.user).points
+
+    # get new user points
+    new_coins = TotalCoins.objects.get(user=request.user).coins
+
+    # all users who attempted current challenge
+    all_users = UserAttemptedChallenge.objects.filter(challenge=challenge).order_by('-grade', 'time_taken')
+
+    rank = 1
+    for user in all_users:
+        if user.user == request.user:
+            break
+        rank += 1
+
+    # average points
+    average_points_aggregate = UserAttemptedChallenge.objects.filter(challenge=challenge).aggregate(Avg('grade'))
+    average_points = int(average_points_aggregate['grade__avg'])
+
+    # user's grade compare to average
+    grade_compare = grade - average_points
+
+    # average time taken
+    average_time_taken = UserAttemptedChallenge.objects.filter(challenge=challenge).aggregate(Avg('time_taken'))
+    average_minutes_taken = round(average_time_taken['time_taken__avg'].seconds / 60, 1)
+
+    # get user's minutes taken
+    user_minutes_taken = round(UserAttemptedChallenge.objects.get(challenge=challenge, user=request.user).time_taken.seconds / 60 ,1)
+
+    # user's minutes compared to average
+    minutes_compare = int(((user_minutes_taken - average_minutes_taken) / average_minutes_taken) * 100)
+    
     context = {
         'topic': topic,
         'challenge': challenge,
         'old_rank': old_rank,
         'old_points': old_points,
         'old_coins': old_coins,
-        'total_user': total_users,
+        'total_users': total_users,
+        'hours': hours,
+        'minutes': minutes,
+        'seconds': seconds,
+        'new_rank': new_rank,
+        'rank_change': new_rank - old_rank,
+        'new_points': new_points,
+        'points_change': new_points - old_points,
+        'new_coins': new_coins,
+        'coins_change': new_coins - old_coins,
+        'rank': rank,
+        'average_points': average_points,
+        'average_minutes_taken': average_minutes_taken,
+        'grade_compare': grade_compare,
+        'minutes_compare': minutes_compare,
     }
 
     return render(request, 'pages/result.html', context)
