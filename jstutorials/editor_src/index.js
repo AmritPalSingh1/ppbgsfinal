@@ -43,6 +43,7 @@ $('#submit-results-button').click(() => {
 
   fetch('/topics/topic/result_update', {
     method: 'post',
+    redirect: 'follow',
     headers: {
       'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val(),
     },
