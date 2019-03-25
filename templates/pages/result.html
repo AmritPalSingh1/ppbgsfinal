@@ -111,7 +111,7 @@
           <div class="alt-font subheader subheader-small font-weight-light">
             {% if grade_compare > 0 %}
               <span class="text-green"
-                ><i class="fas fa-caret-down"></i> {{ grade_compare }}%</span
+                ><i class="fas fa-caret-up"></i> {{ grade_compare }}%</span
               >  Above Average
             {% elif grade_compare == 0 %}
               <span class="text-blue"
@@ -144,7 +144,7 @@
           <div class="alt-font subheader subheader-small font-weight-light">
             {% if minutes_compare > 0 %}
               <span class="text-danger"
-                ><i class="fas fa-caret-up"></i> {{ minutes_compare }}%</span
+                ><i class="fas fa-caret-down"></i> {{ minutes_compare }}%</span
               >  More time taken
             {% elif minutes_compare == 0 %}
               <span class="text-blue"
