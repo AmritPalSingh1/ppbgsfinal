@@ -672,7 +672,7 @@ def result(request):
     # get new user points
     new_coins = TotalCoins.objects.get(user=request.user).coins
 
-    # all users who attempted current challenge
+    # all users who attempted current challenge sorted
     all_users = UserAttemptedChallenge.objects.filter(challenge=challenge).order_by('-grade', 'time_taken')
 
     rank = 1
@@ -719,6 +719,7 @@ def result(request):
         'average_minutes_taken': average_minutes_taken,
         'grade_compare': grade_compare,
         'minutes_compare': minutes_compare,
+        'all_users': all_users,
     }
 
     return render(request, 'pages/result.html', context)

@@ -1,4 +1,8 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} 
+{% load static %} 
+{% load humanize %}
+{% load get_user_rank %}
+{% block content %}
 
 <div class="container mt-4">
     <div class="row">
@@ -252,76 +256,86 @@
         <table
           class="table table-striped-lightblue table-borderless subheader subheader-small text-dark-gray mt-3"
         >
+          {% if all_users.0 %}
           <tr>
             <td class="px-3">
-              <a href="" class="text-dark">John Doe</a>
+              <a href="" class="text-dark">{{ all_users.0.user }}</a>
               <span class="mx-2 font-weight-light"
                 >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
-                3)</span
+                {{ all_users.0 | get_user_rank:all_users.0.user }})</span
               >
               <div class="font-weight-light pt-1">
-                <span class="mx-2">Score: 7</span>
-                <span class="mx-2">Time taken: 2min</span>
+                <span class="mx-2">Grade: {{ all_users.0.grade }}</span>
+                <span class="mx-2">Time taken: {{ all_users.0.minutes_taken }} min</span>
                 <span class="mx-2">Level: 5</span>
               </div>
             </td>
           </tr>
+          {% endif %}
+          {% if all_users.1 %}
           <tr>
             <td class="px-3">
-              <a href="" class="text-dark">John Doe</a>
+              <a href="" class="text-dark">{{ all_users.1.user }}</a>
               <span class="mx-2 font-weight-light"
                 >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
-                3)</span
+                {{ all_users.1 | get_user_rank:all_users.1.user }})</span
               >
               <div class="font-weight-light pt-1">
-                <span class="mx-2">Score: 7</span>
-                <span class="mx-2">Time taken: 2min</span>
+                <span class="mx-2">Grade: {{ all_users.1.grade }}</span>
+                <span class="mx-2">Time taken: {{ all_users.1.minutes_taken }} min</span>
                 <span class="mx-2">Level: 5</span>
               </div>
             </td>
           </tr>
+          {% endif %}
+          {% if all_users.2 %}
           <tr>
             <td class="px-3">
-              <a href="" class="text-dark">John Doe</a>
+              <a href="" class="text-dark">{{ all_users.2.user }}</a>
               <span class="mx-2 font-weight-light"
                 >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
-                3)</span
+                {{ all_users.2 | get_user_rank:all_users.2.user }})</span
               >
               <div class="font-weight-light pt-1">
-                <span class="mx-2">Score: 7</span>
-                <span class="mx-2">Time taken: 2min</span>
+                <span class="mx-2">Grade: {{ all_users.2.grade }}</span>
+                <span class="mx-2">Time taken: {{ all_users.2.minutes_taken }} min</span>
                 <span class="mx-2">Level: 5</span>
               </div>
             </td>
           </tr>
+          {% endif %}
+          {% if all_users.3 %}
           <tr>
             <td class="px-3">
-              <a href="" class="text-dark">John Doe</a>
+              <a href="" class="text-dark">{{ all_users.3.user }}</a>
               <span class="mx-2 font-weight-light"
                 >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
-                3)</span
+                {{ all_users.3 | get_user_rank:all_users.3.user }})</span
               >
               <div class="font-weight-light pt-1">
-                <span class="mx-2">Score: 7</span>
-                <span class="mx-2">Time taken: 2min</span>
+                <span class="mx-2">Grade: {{ all_users.3.grade }}</span>
+                <span class="mx-2">Time taken: {{ all_users.3.minutes_taken }} min</span>
                 <span class="mx-2">Level: 5</span>
               </div>
             </td>
           </tr>
+          {% endif %}
+          {% if all_users.4 %}
           <tr>
             <td class="px-3">
-              <a href="" class="text-dark">John Doe</a>
+              <a href="" class="text-dark">{{ all_users.4.user }}</a>
               <span class="mx-2 font-weight-light"
                 >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
-                3)</span
+                {{ all_users.4 | get_user_rank:all_users.4.user }})</span
               >
               <div class="font-weight-light pt-1">
-                <span class="mx-2">Score: 7</span>
-                <span class="mx-2">Time taken: 2min</span>
+                <span class="mx-2">Grade: {{ all_users.4.grade }}</span>
+                <span class="mx-2">Time taken: {{ all_users.4.minutes_taken }} min</span>
                 <span class="mx-2">Level: 5</span>
               </div>
             </td>
           </tr>
+          {% endif %}
         </table>
       </div>
     </div>

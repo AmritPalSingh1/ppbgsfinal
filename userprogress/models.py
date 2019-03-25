@@ -5,6 +5,8 @@ from datetime import datetime, timedelta
 from topics.models import Video, Question, Pdf, Topic
 from challenges.models import Challenge
 
+import math
+
 
 
 class UserWatchedVideo(models.Model):
@@ -62,3 +64,17 @@ class UserAttemptedChallenge(models.Model):
     end_datetime = models.DateTimeField(default=datetime.now, blank=True)
     time_taken = models.DurationField(blank=True, default=timedelta(seconds=0))
     grade = models.IntegerField(default=0)
+
+    def minutes_taken(self):
+        return round(self.time_taken.seconds / 60, 1)
+
+    def get_user_rank(self, user):
+        # list of all the users
+        allUsers = TotalPoints.objects.order_by('-points')
+
+        rank = 1
+        for singleUser in allUsers:
+            if singleUser.user == user:
+                break
+            rank += 1
+        return rank
