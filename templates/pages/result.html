@@ -171,16 +171,20 @@
             <div class="row">
               <div class="col-xl-4 col-lg-12 col-md-4">
                 <div class="text-center subheader font-weight-light">
-                  Kathy Smith
+                  {{ request.user }}
                   <div class=" py-2 text-capitalize text-small">
-                    <div class="text-dark"><i class="fas fa-percent"></i> <span class="text-lowercase"> a</span>ge: <span class="text-green">70</span> </div>
-                    <div class="text-dark">Time taken: <span class="text-danger"> 102 sec</span></div>
+                    <div class="text-dark"><i class="fas fa-percent"></i> <span class="text-lowercase"> a</span>ge: <span class="text-green">{{ grade}}</span> </div>
+                    <div class="text-dark">Time taken: <span class="text-danger"> 
+                        {% if hours > 0 %} {{ hours }} hrs {% endif %}
+                        {% if minutes %} {{ minutes }} min {% endif %}
+                        {% if seconds > 0 %} {{ seconds }} sec {% endif %}
+                    </span></div>
                   </div>
                 </div>
               </div>
               <div class="col-xl-4 col-lg-12 col-md-4">
                 <div class="display-4 text-center">
-                  <span class="text-green"> 70 </span>:
+                  <span class="text-green"> {{ grade }} </span>:
                   <span class="text-danger"> 40</span>
                 </div>
               </div>

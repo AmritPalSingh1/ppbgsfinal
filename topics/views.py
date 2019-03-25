@@ -650,7 +650,7 @@ def result(request):
     topic_name = request.session.get('topic_name')
     challenge_id = request.session.get('challenge_id')
     hours = request.session.get('hours')
-    minutes = request.session.get('miuntes')
+    minutes = request.session.get('minutes')
     seconds = request.session.get('seconds')
     grade = request.session.get('grade')
 
@@ -705,9 +705,9 @@ def result(request):
         'old_points': old_points,
         'old_coins': old_coins,
         'total_users': total_users,
-        'hours': hours,
-        'minutes': minutes,
-        'seconds': seconds,
+        'hours': int(hours),
+        'minutes': int(minutes),
+        'seconds': int(seconds),
         'new_rank': new_rank,
         'rank_change': new_rank - old_rank,
         'new_points': new_points,
@@ -720,6 +720,7 @@ def result(request):
         'grade_compare': grade_compare,
         'minutes_compare': minutes_compare,
         'all_users': all_users,
+        'grade': grade,
     }
 
     return render(request, 'pages/result.html', context)
