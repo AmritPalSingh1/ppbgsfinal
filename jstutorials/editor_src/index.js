@@ -20,7 +20,7 @@ import { toFormData } from './utils.js';
 
 store.dispatch(setCoins($('#coins').html()));
 store.dispatch(setHintsUsed($('#hints-used').html()));
-store.dispatch(fetchExercise('/static/exercises/event_list.yaml'));
+store.dispatch(fetchExercise($('#task-data').html()));
 
 // -- Handle code change --------------------------------------------
 
@@ -41,7 +41,7 @@ $('#submit-results-button').click(() => {
   const { errorCount, exercise } = store.getState();
   const threshold = exercise.test.errorThreshold;
 
-  fetch('/topics/topic/result', {
+  fetch('/topics/topic/result_update', {
     method: 'post',
     headers: {
       'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val(),
@@ -50,7 +50,6 @@ $('#submit-results-button').click(() => {
       topic_name: $('#topic-name').html(),
       challenge_id: $('#task-id').html(),
       grade: Math.max(threshold - errorCount, 0) / threshold,
-      errors: errorCount,
     }),
   });
 });
