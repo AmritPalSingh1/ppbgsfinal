@@ -78,7 +78,7 @@ const render = () => {
   $('#error-count-container').html(Errors(errorCount));
   $('#task-detail-modal-body').html(details);
 
-  if (hints.length > 0) {
+  if (hints && hints.length > 0) {
     $('#hint-modal-body')
       .html($HintTabs(hints, hintPage, hintsUsed))
       .append($Hint(hints[hintPage], hintPage, hintsUsed, coins));
