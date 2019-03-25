@@ -1,15 +1,15 @@
 ---
-task: "Check if a number is even or odd"
+task: 'Check if a number is even or odd'
 details: |
   <p><strong>Check if a number is even or odd</strong></p>
   <p>There is already a secret variable <code>n</code></p>
   <p>Your code should test if n is even or odd</p>
   <p>Print <code>"even"</code> if n is even</p>
   <p>Print <code>"odd"</code> if n is odd</p>
-hints: 
+hints:
   - hintContent: |
       <p>The modulus operator <code>%</code> gets the remainder of dividing the left side by the right side<p>
-      
+
       <pre>
       var two = 5 % 3;
       </pre>

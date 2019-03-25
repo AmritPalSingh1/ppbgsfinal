@@ -1,0 +1,75 @@
+---
+task: Display a greeting on a HTML page
+details: |
+  <p><strong>Display a greeting on a HTML page</strong></p>
+  <p>There is a input field, a button and a div on the page</p>
+  <p>When the button is clicked, the div will change it&apos;s contents to be <pre>Hello, <code>name</code>!</pre> where <code>name</code> is the value in the input field</p>
+
+  <p>Example HTML page</p>
+
+  <iframe src="/static/html/greet.html" class="w-100"></iframe>
+hints:
+  - hintContent: |
+      <p>Get the value of a text input element with <code>HTMLInputElement.value</code></p>
+
+      <pre>
+      var myTextInput = document.getElementById('some-text-input');
+      console.log(myTextInput.value);
+      </pre>
+    hintCost: 5
+  - hintContent: |
+      <p>Change a html elements contents with <code>Element.innerHTML</code></p>
+
+      <pre>
+      var myDiv = document.getElementById('some-div');
+      myDiv.innerHTML = "Hey!";
+      </pre>
+    hintCost: 5
+  - hintContent: |
+      <p>Solution:</p>
+
+      <pre>
+      var input = document.getElementById('name-input');
+      var output = document.getElementById('output');
+
+      function greet() {
+        var name = input.value;
+        output.innerHTML = "Hello, " + name + "!";
+      }
+      </pre>
+    hintCost: 30
+html: |
+  <input type="text" id="name-input" placeholder="name">
+  <button onclick="greet()">Submit</button>
+  <div id="output"></div>
+js: |
+htmlReadOnly: true
+jsReadOnly: false
+secret: ''
+test:
+  setup: greet = undefined;
+  run: |
+    const $ = x => document.querySelector(x);
+
+    if ($('#output').innerText !== '') {
+      fail('The output div should be empty initially');
+    }
+
+    $('#name-input').value = 'Jason';
+    $('button').click();
+
+    if ($('#output').innerText !== 'Hello, Jason!') {
+      fail('The output div should display hello to the user. Example, "Hello, Jason!"');
+    }
+
+    $('#name-input').value = 'Kim';
+    $('button').click();
+
+    if ($('#output').innerText !== 'Hello, Kim!') {
+      fail('The output div should be replaced with a new greeting when a different name is entered');
+    }
+  cleanup: ''
+  has: []
+  hasNot: []
+  maxLines: 20
+  errorThreshold: 2

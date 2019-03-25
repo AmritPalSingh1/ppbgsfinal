@@ -6,7 +6,7 @@ details: |
   <p>The initial width and height of the rectangle should be half of the canvas width and height respectively</p>
   <p>When the grow button is clicked, the rectangle width and height increases by 10&percnt;<p>
   <p>When the shrink button is clicked, the rectangle width and height decreases by 10&percnt;<p>
-hints: 
+hints:
   - hintContent: |
       <p>Use <code>canvas.width</code> and <code>canvas.height</code> to calculate the rectangle&apos;s size</p>
     hintCost: 6
