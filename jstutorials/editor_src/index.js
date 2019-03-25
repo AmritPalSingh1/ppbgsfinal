@@ -42,7 +42,7 @@ $('#submit-results-button').click(() => {
   const threshold = exercise.test.errorThreshold;
 
   fetch('/topics/topic/result_update', {
-    method: 'post',
+    method: 'POST',
     redirect: 'follow',
     headers: {
       'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val(),
