@@ -43,5 +43,5 @@ $('#submit-results-button').click(() => {
   $('#form_topic_name').val($('#topic-name').html());
   $('#form_challenge').val($('#task-id').html());
   $('#form_grade').val(Math.max(threshold - errorCount, 0) / threshold);
-  $('#submit-code-form').submit();
+  $('#form_submit').click();
 });
