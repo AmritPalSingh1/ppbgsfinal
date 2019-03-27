@@ -210,7 +210,7 @@
               </div>
             </div>
             {% if winner == 'user' %}
-              <div class="text-center text-green subheader">You won!</div>
+              <div class="text-center text-green subheader">You won! {% if play_fw == True %} <span class="text-dark-gray no-uppercase">(Free Win)</span>{% endif %} </div>
             {% elif winner == 'opponent' %}
               <div class="text-center text-danger subheader">You lost</div>
             {% elif winner == 'draw' %}
@@ -227,7 +227,7 @@
             Challenge Rewards
           </div>
           <div class="px-3 py-2 alt-font d-flex justify-content-between text-extra-dark-gray">
-            <div>Pts Earned: {{ points_change }}</div>
+            <div>Pts Earned: {{ points_change }}{% if play_dp == True %} <span class="text-green">(Double Points)</span>{% endif %} </div>
             <div><i class="fas fa-coins text-coin"></i> +{{ coins_earned}}</div>
           </div>
           <div class="bg-dark text-light px-3 py-1 alt-font d-flex">

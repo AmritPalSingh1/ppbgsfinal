@@ -591,6 +591,8 @@ def result_update(request):
     opponent_seconds = 0
     status = "Keep Codding"
     opponent_name = "None"
+    play_dp = False
+    play_fw = False
 
     level_before = Level.objects.get(user=request.user)
 
@@ -635,6 +637,7 @@ def result_update(request):
         attempted_challenge.save()
         # maybe this means if user has completed this question for first time
         if attempted_challenge.time_taken == timedelta(seconds=0):
+            play_dp = True
             if ((attempted_challenge.end_datetime - attempted_challenge.start_datetime).seconds / 3600) > 5:
                 attempted_challenge.time_taken = timedelta(hours=5)
             else:
@@ -671,18 +674,24 @@ def result_update(request):
             else:
                 time_winner = "opponent"
 
+            # check if free hit is active
+            free_win = FreeWin.objects.filter(challenge=challenge, user=request.user)
 
-            if (grade > opponent.grade):
+            if free_win:
+                play_fw = True
                 winner = "user"
-            elif (grade == opponent.grade):
-                if opponent.time_taken > attempted_challenge.time_taken:
+            else:
+                if (grade > opponent.grade):
                     winner = "user"
-                elif opponent.time_taken == attempted_challenge.time_taken:
-                    winner = "draw"
+                elif (grade == opponent.grade):
+                    if opponent.time_taken > attempted_challenge.time_taken:
+                        winner = "user"
+                    elif opponent.time_taken == attempted_challenge.time_taken:
+                        winner = "draw"
+                    else:
+                        winner = "opponent"
                 else:
                     winner = "opponent"
-            else:
-                winner = "opponent"
 
             # manage user's level
 
@@ -722,6 +731,12 @@ def result_update(request):
 
     level = Level.objects.get(user=request.user)
 
+    # if double points chip is active
+    double_point = DoublePoint.objects.filter(challenge=challenge, user=request.user)
+    if double_point:
+        if play_dp == True:
+            points_earned = points_earned*2
+
     request.session['tries'] = level.tries
     request.session['level'] = level.level
     request.session['old_level'] = old_level
@@ -744,6 +759,8 @@ def result_update(request):
     request.session['status'] = status
     request.session['challenge_id'] = challenge_id
     request.session['progress'] = progress
+    request.session['play_dp'] = play_dp
+    request.session['play_fw'] = play_fw
 
     return redirect('result')
 
@@ -772,6 +789,9 @@ def result(request):
     level = int(request.session.get('level'))
     old_level = int(request.session.get('old_level'))
     progress = int(request.session.get('progress'))
+    play_dp = request.session.get('play_dp')
+    play_fw = request.session.get('play_fw')
+
 
     # managing user progress this way because I'm not cool enough
     rel_progress = 0
@@ -916,5 +936,7 @@ def result(request):
         'rel_progress': rel_progress,
         'stay_progress': stay_progress,
         'pro_progress': pro_progress,
+        'play_dp': play_dp,
+        'play_fw': play_fw,
     }
     return render(request, 'pages/result.html', context)
