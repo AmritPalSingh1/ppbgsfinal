@@ -39,11 +39,15 @@ def user_info(request):
     # current user's coins
     userCoins = TotalCoins.objects.get(user=request.user)
 
+    # current user's level
+    userLevel = Level.objects.get(user=request.user)
+
     user_data = {
         'userPoints': userPoints,
         'rank': rank,
         'allUsers': allUsers,
-        'userCoins': userCoins
+        'userCoins': userCoins,
+        'userLevel': userLevel,
     }
 
     return user_data

@@ -1,4 +1,8 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} 
+{% load static %}
+{% load get_user_rank %}
+{% load get_user_level %}
+{% block content %}
 
 <div class="leaderboard-text">
     <div class="container py-4">
@@ -46,10 +50,10 @@
               {% if all_total_points %}
                 {% for total_points in all_total_points %}
                   <tr>
-                    <td scope="row">1</td>
+                    <td scope="row">{{ total_points | get_user_rank:total_points.user }}</td>
                     <td>{{ total_points.user.username }}</td>
                     <td>{{ total_points.points }}</td>
-                    <td>2</td>
+                    <td>{{ total_points | get_user_level:total_points.user }}</td>
                     <td>{{ total_points.user.date_joined | date:"d M Y" }}</td>
                   </tr>
                 {% endfor %}

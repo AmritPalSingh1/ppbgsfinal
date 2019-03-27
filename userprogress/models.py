@@ -29,6 +29,19 @@ class TotalPoints(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     points = models.IntegerField(default=0)
 
+    def get_user_rank(self, user):
+        # list of all the users
+        allUsers = TotalPoints.objects.order_by('-points')
+
+        rank = 1
+        for singleUser in allUsers:
+            if singleUser.user == user:
+                break
+            rank += 1
+        return rank
+
+    def get_user_level(self, user):
+        return Level.objects.get(user=user).level
     
 
 

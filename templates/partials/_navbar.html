@@ -39,24 +39,28 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'index' %}">Home</a>
+            <a class="nav-link 
+            {% if '/' == request.path %}
+              active
+            {% endif %}" href="{% url 'index' %}">Home</a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item 
+            {% if 'topic' in request.path  %}
+              active
+            {% endif %}">
             <a class="nav-link" href="{% url 'topics' %}">Topics</a>
           </li>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
-              >Rankings</a
-            >
-            <div class="dropdown-menu">
-              <a href="{% url 'leaderboards' %}" class="dropdown-item"
-                >Leaderboards</a
-              >
-              <a href="#" class="dropdown-item">Table</a>
-            </div>
+          <li class="nav-item 
+            {% if 'leaderboards' in request.path  %}
+              active
+            {% endif %}">
+              <a class="nav-link" href="{% url 'leaderboards' %}">Rankings</a>
           </li>
 
-          <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+          <li class="nav-item
+            {% if 'profile' in request.path  %}
+              active
+            {% endif %}"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
           <li class="nav-item">
             <a
               class="nav-link d-block d-sm-none"

@@ -224,7 +224,7 @@
         <h5
         class="text-uppercase alt-font text-extra-dark-gray mb-3 font-weight-700"
       >
-        Daily Tasks
+        Weekly Tasks
       </h5>
       <span
         class="separator-line-horrizontal-medium-light2 bg-deep-pink display-table width-100px"
@@ -328,37 +328,37 @@
               </div>
               <div class="row dark-background">
                 <div class="col-md-4 col-6 border border-light">
-                  <p class="text-green text-center pt-2 mb-0">
+                  <p class="text-blue text-center pt-2 mb-0">
                     Your rank
                   </p>
                   <p class="text-light text-center">2</p>
                 </div>
                 <div class="col-md-4 col-6 border border-light">
-                  <p class="text-green text-center pt-2 mb-0">
+                  <p class="text-blue text-center pt-2 mb-0">
                     Your Points
                   </p>
                   <p class="text-light text-center">{{ user_data.userPoints.points }}</p>
                 </div>
                 <div class="col-md-4 col-6 border border-light">
-                  <p class="text-green text-center pt-2 mb-0">
+                  <p class="text-blue text-center pt-2 mb-0">
                     Your Coins
                   </p>
                   <p class="text-light text-center">{{ user_data.userCoins.coins }}</p>
                 </div>
                 <div class="col-md-4 col-6 border border-light">
-                  <p class="text-green text-center pt-2 mb-0">
+                  <p class="text-blue text-center pt-2 mb-0">
                     Current Level
                   </p>
-                  <p class="text-light text-center">4</p>
+                  <p class="text-light text-center">{{ user_data.userLevel.level }}</p>
                 </div>
                 <div class="col-md-4 col-6 border border-light">
-                  <p class="text-green text-center pt-2 mb-0">
+                  <p class="text-blue text-center pt-2 mb-0">
                     Your Coins
                   </p>
                   <p class="text-light text-center">144</p>
                 </div>
                 <div class="col-md-4 col-6 border border-light">
-                  <p class="text-green text-center pt-2 mb-0">
+                  <p class="text-blue text-center pt-2 mb-0">
                     Date Joined
                   </p>
                   <p class="text-light text-center">{{ request.user.date_joined | date:"d M Y" }}</p>
@@ -404,8 +404,8 @@
                     <td class="text-light">
                       <span class="dotted2">Your name </span>
                     </td>
-                    <td class="text-green">3</td>
-                    <td class="text-green">10</td>
+                    <td class="text-blue">3</td>
+                    <td class="text-blue">10</td>
                   </tr>
                 </tbody>
               </table>

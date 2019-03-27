@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from userprogress.models import TotalPoints, TotalCoins, UserLastLocation
 from topics.models import Video, Topic, Question, Query
 from challenges.models import Challenge
-from userprogress.models import UserReadNotes, UserAttemptedQuestion, UserWatchedVideo
+from userprogress.models import UserReadNotes, UserAttemptedQuestion, UserWatchedVideo, Level
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from flowchart.models import Progress
 
@@ -43,11 +43,15 @@ def user_info(request):
     # current user's coins
     userCoins = TotalCoins.objects.get(user=request.user)
 
+    # current user's level
+    userLevel = Level.objects.get(user=request.user)
+
     user_data = {
         'userPoints': userPoints,
         'rank': rank,
         'allUsers': allUsers,
-        'userCoins': userCoins
+        'userCoins': userCoins,
+        'userLevel': userLevel,
     }
 
     return user_data
@@ -126,7 +130,6 @@ def index(request):
     # Latest Questions asked
     latest_questions = Query.objects.all().order_by('-id')[:5]
 
-
     context = {
         'user_last_location': user_last_location,
         'video': videos[0].key,
@@ -199,3 +202,8 @@ def leaderboards(request):
     }
 
     return render(request, 'pages/leaderboards.html', context)
+
+
+@login_required
+def profile(request):
+    return render(request, 'pages/profile.html')
