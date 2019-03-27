@@ -79,6 +79,10 @@ class UserAttemptedChallenge(models.Model):
             rank += 1
         return rank
 
+    def get_user_level(self, user):
+        return Level.objects.get(user=user).level
+       
+
 
 class Level(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

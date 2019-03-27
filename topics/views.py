@@ -527,7 +527,6 @@ def challenge(request):
     # check if user has attempted challenge earlier
     attempted_challenge = UserAttemptedChallenge.objects.filter(challenge=challenge, user=request.user)
 
-    # I'm sorry you have to see this mess
     # if attempted
     if attempted_challenge:
         # get already attempted challenge
@@ -540,8 +539,9 @@ def challenge(request):
                     old_attempted_challenge.time_taken = timedelta(hours=5)
         # if user is attempting challenge again
         else:
-            old_attempted_challenge.start_datetime = datetime.now()
-            old_attempted_challenge.end_datetime = datetime.now()
+            update_time = datetime.now()
+            old_attempted_challenge.start_datetime = update_time
+            old_attempted_challenge.end_datetime = update_time
             print(old_attempted_challenge.start_datetime == old_attempted_challenge.end_datetime)
         print(old_attempted_challenge.time_taken)
         old_attempted_challenge.save()
@@ -564,6 +564,10 @@ def challenge(request):
 def get_opponent(request, challenge):
     no_of_possible_opponents = UserAttemptedChallenge.objects.filter(challenge=challenge).count()
 
+    # if no one has ever attempted this question
+    if no_of_possible_opponents == 1:
+        return UserAttemptedChallenge(challenge=challenge, user=request.user, time_taken=timedelta(seconds=18000), grade=0)
+
     random_opponent_index = random.randint(1, no_of_possible_opponents)
 
     random_opponent = UserAttemptedChallenge.objects.filter(challenge=challenge)[random_opponent_index-1]
@@ -574,178 +578,174 @@ def get_opponent(request, challenge):
         return random_opponent
 
 
+
+
 def result_update(request):
-    if 'topic_name' in request.POST and 'challenge_id' in request.POST and 'grade' in request.POST:
-        topic_name = request.POST['topic_name']
-        challenge_id = int(request.POST['challenge_id'])
+    coins_earned = 0
+    points_earned = 0
+    winner = "none"
+    time_winner = "none"
+    opponent_grade = 0
+    opponent_hours = 0
+    opponent_minutes = 0
+    opponent_seconds = 0
+    status = "Keep Codding"
+    opponent_name = "None"
+
+    level_before = Level.objects.get(user=request.user)
+
+    old_level = level_before.level
+
+    progress = level_before.progress
+
+    # get current topic name
+    if 'topic_name' in request.POST:
+        request.session['topic_name'] = request.POST['topic_name']
+
+    # get current challenge
+    if 'challenge_id' in request.POST:
+        challenge_id = request.POST['challenge_id']
+
+    challenge = Challenge.objects.get(id=challenge_id)
+
+
+    if 'grade' in request.POST:
         grade = math.ceil(float(request.POST['grade']) * 100)
-        print(challenge_id)
-        print(topic_name)
-        print(grade)
 
-    else:
-        return HttpResponse('<h1>Something was missing :(</h1>')
-    return HttpResponse('<h1>Thanks Jason Very Cool</h1>')
+    # grade = math.ceil(float(0.2) * 100)
 
+    # user rank before this challenge
+    old_rank = get_user_rank(request.user)
 
+    # user points before
+    old_points = TotalPoints.objects.get(user=request.user).points
 
+    # user coins before adding final coins
+    after_hints_coins = TotalCoins.objects.get(user=request.user).coins
 
-# def result_update2(request):
-#     coins_earned = 0
-#     points_earned = 0
-#     winner = "none"
-#     time_winner = "none"
-#     opponent_grade = 0
-#     opponent_hours = ""
-#     opponent_minutes = ""
-#     opponent_seconds = ""
-#     status = "Keep Going"
-#     # get current topic name
-#     if 'topic_name' in request.POST:
-#         request.session['topic_name'] = request.POST['topic_name']
+    # user coins before buying hints
+    old_coins = after_hints_coins
 
-#     # get current challenge
-#     if 'challenge_id' in request.POST:
-#         challenge_id = int(request.POST['challenge_id'])
-#         request.session['challenge_id'] = challenge_id
-#         print("here")
-#         print(challenge_id)
-
-#     challenge_id = 1
-#     challenge = Challenge.objects.get(id=challenge_id)
-#     print (challenge)
-
-#     # get coins used
-#     # if 'coins_used' in request.POST:
-#     #     coins_used = int(request.POST['coins_used'])
-#     coins_used = 10
-
-#     if 'grade' in request.POST:
-#         grade = math.ceil(float(request.POST['grade']) * 100)
-
-#     # grade = math.ceil(float(0.2) * 100)
-
-#     # user rank before this challenge
-#     old_rank = get_user_rank(request.user)
-
-#     # user points before
-#     old_points = TotalPoints.objects.get(user=request.user).points
-
-#     # user coins before adding final coins
-#     after_hints_coins = TotalCoins.objects.get(user=request.user).coins
-
-#     # user coins before buying hints
-#     old_coins = after_hints_coins - coins_used
-
-#     # Update user stats for this challenge
-#     attempted_challenge = UserAttemptedChallenge.objects.get(user=request.user, challenge=challenge)
+    # Update user stats for this challenge
+    attempted_challenge = UserAttemptedChallenge.objects.get(user=request.user, challenge=challenge)
     
-#     # yeah.. I don't remember why I did this
-#     if (attempted_challenge.start_datetime == attempted_challenge.end_datetime):
-#         print("here2")
-#         attempted_challenge.end_datetime = datetime.now()
-#         attempted_challenge.save()
-#         # maybe this means if user has completed this question for first time
-#         if attempted_challenge.time_taken == timedelta(seconds=0):
-#             if ((attempted_challenge.end_datetime - attempted_challenge.start_datetime).seconds / 3600) > 5:
-#                 attempted_challenge.time_taken = timedelta(hours=5)
-#             else:
-#                 attempted_challenge.time_taken = (attempted_challenge.end_datetime - attempted_challenge.start_datetime)
-#             if challenge.difficulty == "easy":
-#                 points_earned = math.ceil(5 * (grade / 100))
-#             elif challenge.difficulty == "medium":
-#                 points_earned = math.ceil(7 * (grade / 100))
-#             else:
-#                 points_earned = math.ceil(10 * (grade / 100))
+    # yeah.. I don't remember why I did this
+    if (attempted_challenge.start_datetime == attempted_challenge.end_datetime):
+        attempted_challenge.end_datetime = datetime.now()
+        attempted_challenge.save()
+        # maybe this means if user has completed this question for first time
+        if attempted_challenge.time_taken == timedelta(seconds=0):
+            if ((attempted_challenge.end_datetime - attempted_challenge.start_datetime).seconds / 3600) > 5:
+                attempted_challenge.time_taken = timedelta(hours=5)
+            else:
+                attempted_challenge.time_taken = (attempted_challenge.end_datetime - attempted_challenge.start_datetime)
+            if challenge.difficulty == "easy":
+                points_earned = math.ceil(5 * (grade / 100))
+            elif challenge.difficulty == "medium":
+                points_earned = math.ceil(7 * (grade / 100))
+            else:
+                points_earned = math.ceil(10 * (grade / 100))
             
-#             attempted_challenge.save()
-#             coins_earned = points_earned * 2
-#             update_user_points(request, points_earned)
-#             update_user_coins(request, coins_earned)
-#             attempted_challenge.grade = grade
+            attempted_challenge.save()
+            coins_earned = points_earned * 2
+            update_user_points(request, points_earned)
+            update_user_coins(request, coins_earned)
+            attempted_challenge.grade = grade
 
-#             # get opponent
-#             opponent = get_opponent(request, challenge)
+            # get opponent
+            opponent = get_opponent(request, challenge)
 
-#             opponent_grade = opponent.grade
-#             opponent_hours = str(opponent.time_taken.seconds // 3600)
-#             opponent_minutes = str(opponent.time_taken.seconds % 3600 // 60)
-#             opponent_seconds = str(opponent.time_taken.seconds % 60)
+            if opponent.user != request.user:
+                winner = "user"
+                opponent_name = opponent.user.username
 
-#             if opponent.time_taken > attempted_challenge.time_taken:
-#                 time_winner = "user"
-#             elif opponent.time_taken == attempted_challenge.time_taken:
-#                 time_winner = "draw"
-#             else:
-#                 time_winner = "opponent"
+            opponent_grade = opponent.grade
+            opponent_hours = str(opponent.time_taken.seconds // 3600)
+            opponent_minutes = str(opponent.time_taken.seconds % 3600 // 60)
+            opponent_seconds = str(opponent.time_taken.seconds % 60)
 
-
-#             if (grade > opponent.grade):
-#                 winner = "user"
-#             elif (grade == opponent.grade):
-#                 if opponent.time_taken > attempted_challenge.time_taken:
-#                     winner = "user"
-#                 elif opponent.time_taken == attempted_challenge.time_taken:
-#                     winner = "draw"
-#                 else:
-#                     winner = "opponent"
-#             else:
-#                 winner = "opponent"
-
-#             # manage user's level
-
-#             level = Level.objects.get(user=request.user)
-#             level.tries = level.tries + 1
-
-#             if winner == "user":
-#                 level.progress = level.progress + 3
-#             elif winner == "draw":
-#                 level.progress = level.progress + 1
-#             level.save()
-
-#             if level.progress >= 9:
-#                 level.level = level.level + 1
-#                 status = "Promoted"
-
-#             if (level.progress < 4 and level.tries == 5) or (level.progress == 0 and level.tries == 4) :
-#                 if level.level != 1:
-#                     level.level = level.level - 1
-#                     status = "Relegated"
+            if opponent.time_taken > attempted_challenge.time_taken:
+                time_winner = "user"
+            elif opponent.time_taken == attempted_challenge.time_taken:
+                time_winner = "draw"
+            else:
+                time_winner = "opponent"
 
 
-#     else:
-#         print("here3")
-#         return redirect('index')
+            if (grade > opponent.grade):
+                winner = "user"
+            elif (grade == opponent.grade):
+                if opponent.time_taken > attempted_challenge.time_taken:
+                    winner = "user"
+                elif opponent.time_taken == attempted_challenge.time_taken:
+                    winner = "draw"
+                else:
+                    winner = "opponent"
+            else:
+                winner = "opponent"
 
-#     if attempted_challenge.grade == 0:
-#         attempted_challenge.grade = grade
+            # manage user's level
+
+            level = Level.objects.get(user=request.user)
+            level.tries = level.tries + 1
+
+            if winner == "user":
+                level.progress = level.progress + 3
+            elif winner == "draw":
+                level.progress = level.progress + 1
+            level.save()
+
+            progress = level.progress
+
+            if level.progress >= 9:
+                level.level = level.level + 1
+                status = "Promoted"
+                level.points = 0
+                level.tries = 0
+
+            if (level.progress < 4 and level.tries == 5) or (level.progress == 0 and level.tries == 4) :
+                if level.level != 1:
+                    level.level = level.level - 1
+                    status = "Relegated"
+                    level.points = 0
+                    level.tries = 0
+            level.save()
+    else:
+        return redirect('index')
+
+    if attempted_challenge.grade == 0:
+        attempted_challenge.grade = grade
     
-#     attempted_challenge.save()
+    attempted_challenge.save()
 
-#     print("here4")
+    time_taken = attempted_challenge.time_taken
 
-#     time_taken = attempted_challenge.time_taken
-   
-#     request.session['hours'] = str(time_taken.seconds // 3600)
-#     request.session['minutes'] = str(time_taken.seconds % 3600 // 60)
-#     request.session['seconds'] = str(time_taken.seconds % 60)
-#     request.session['old_rank'] = old_rank
-#     request.session['old_points'] = old_points
-#     request.session['old_coins'] = old_coins
-#     request.session['points_earned'] = points_earned
-#     request.session['coins_earned'] = coins_earned
-#     request.session['grade'] = grade
-#     request.session['winner'] = winner
-#     request.session['time_winner'] = time_winner
-#     request.session['opponent_grade'] = opponent_grade
-#     request.session['opponent_hours'] = opponent_hours
-#     request.session['opponent_minutes'] = opponent_minutes
-#     request.session['opponent_seconds'] = opponent_seconds
-#     request.session['status'] = status
+    level = Level.objects.get(user=request.user)
 
-#     print("here5")
+    request.session['tries'] = level.tries
+    request.session['level'] = level.level
+    request.session['old_level'] = old_level
+    request.session['hours'] = str(time_taken.seconds // 3600)
+    request.session['minutes'] = str(time_taken.seconds % 3600 // 60)
+    request.session['seconds'] = str(time_taken.seconds % 60)
+    request.session['old_rank'] = old_rank
+    request.session['old_points'] = old_points
+    request.session['old_coins'] = old_coins
+    request.session['points_earned'] = points_earned
+    request.session['coins_earned'] = coins_earned
+    request.session['grade'] = grade
+    request.session['winner'] = winner
+    request.session['time_winner'] = time_winner
+    request.session['opponent_grade'] = opponent_grade
+    request.session['opponent_hours'] = opponent_hours
+    request.session['opponent_minutes'] = opponent_minutes
+    request.session['opponent_seconds'] = opponent_seconds
+    request.session['opponent_name'] = opponent_name
+    request.session['status'] = status
+    request.session['challenge_id'] = challenge_id
+    request.session['progress'] = progress
 
-#     return redirect('result')
+    return redirect('result')
 
 def result(request):
 
@@ -766,12 +766,69 @@ def result(request):
     opponent_hours = request.session.get('opponent_hours')
     opponent_minutes = request.session.get('opponent_minutes')
     opponent_seconds = request.session.get('opponent_seconds')
+    opponent_name = request.session.get('opponent_name')
     status = request.session.get('status')
+    tries = int(request.session.get('tries'))
+    level = int(request.session.get('level'))
+    old_level = int(request.session.get('old_level'))
+    progress = int(request.session.get('progress'))
+
+    # managing user progress this way because I'm not cool enough
+    rel_progress = 0
+    stay_progress = 0
+    pro_progress = 0
+    if progress == 1:
+        rel_progress = 25
+    elif progress == 2:
+        rel_progress = 50
+    elif progress == 3:
+        rel_progress = 75
+    elif progress == 4:
+        rel_progress = 100
+    elif progress == 5:
+        rel_progress = 100
+        stay_progress = 20
+    elif progress == 6:
+        rel_progress = 100
+        stay_progress = 40
+    elif progress == 7:
+        rel_progress = 100
+        stay_progress = 60
+    elif progress == 8:
+        rel_progress = 100
+        stay_progress = 80
+    elif progress == 9:
+        rel_progress = 100
+        stay_progress = 100
+    elif progress == 10:
+        rel_progress = 100
+        stay_progress = 100
+        pro_progress = 16.5
+    elif progress == 11:
+        rel_progress = 100
+        stay_progress = 100
+        pro_progress = 33.3
+    elif progress == 12:
+        rel_progress = 100
+        stay_progress = 100
+        pro_progress = 50
+    elif progress == 13:
+        rel_progress = 100
+        stay_progress = 100
+        pro_progress = 66.6
+    elif progress == 14:
+        rel_progress = 100
+        stay_progress = 100
+        pro_progress = 83.3
+    elif progress == 15:
+        rel_progress = 100
+        stay_progress = 100
+        pro_progress = 100
+    
 
 
     # Fetch current topic
-    #topic = get_object_or_404(Topic, topicName=topic_name)
-    topic = get_object_or_404(Topic, topicName="Intro to Html")
+    topic = get_object_or_404(Topic, topicName=topic_name)
     
     challenge = Challenge.objects.get(id=challenge_id)
 
@@ -816,7 +873,6 @@ def result(request):
     abs_minutes_compare = 0
 
     if minutes_compare < 0:
-        print("here")
         abs_minutes_compare = minutes_compare  * -1
     
     context = {
@@ -845,8 +901,20 @@ def result(request):
         'all_users': all_users,
         'grade': grade,
         'opponent_grade': opponent_grade,
+        'opponent_name': opponent_name,
+        'opponent_hours': int(opponent_hours),
+        'opponent_seconds': int(opponent_seconds),
+        'opponent_minutes': int(opponent_minutes),
         'status': status,
         'winner': winner,
+        'time_winner': time_winner,
+        'tries': 5 - tries,
+        'level': level,
+        'old_level': old_level,
+        'level_before': old_level - 1,
+        'level_after': old_level + 1,
+        'rel_progress': rel_progress,
+        'stay_progress': stay_progress,
+        'pro_progress': pro_progress,
     }
-
     return render(request, 'pages/result.html', context)

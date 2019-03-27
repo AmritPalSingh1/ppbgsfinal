@@ -586,3 +586,7 @@
 .btn-pink:hover{
   color: #fff;
 }
+
+.no-uppercase{
+  text-transform: none!important;
+}

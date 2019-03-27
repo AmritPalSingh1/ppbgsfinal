@@ -2,6 +2,7 @@
 {% load static %} 
 {% load humanize %}
 {% load get_user_rank %}
+{% load get_user_level %}
 {% block content %}
 
 <div class="container mt-4">
@@ -165,18 +166,24 @@
     <div class="row py-4">
       <div class="col-lg-8 mb-3">
         <div
-          class="bg-lightblue rounded text-dark-gray px-2 py-4 alt-font text-uppercase "
-        >
+          class="bg-lightblue border text-dark-gray px-2 py-4 alt-font text-uppercase "
+        > 
           <div class="container-fluid">
+            {% if time_winner == 'none' %}
+              <div class="text-center no-uppercase">Since you are attempting this challenge again, your stats will not be updated</div>
+              <div class="text-center no-uppercase pt-3">Your Grade: <span class="text-dark">{{ grade }}</span> <span class="ml-3"> Time Taken: <span class="text-dark"> {% if hours > 0 %} {{ hours }} hrs {% endif %}
+                  {% if minutes > 0 %} {{ minutes }} min {% endif %}
+                  {% if seconds > 0 %} {{ seconds }} sec {% endif %}</span> </span></div>
+            {% else %}
             <div class="row">
               <div class="col-xl-4 col-lg-12 col-md-4">
                 <div class="text-center subheader font-weight-light">
                   {{ request.user }}
                   <div class=" py-2 text-capitalize text-small">
-                    <div class="text-dark">grade: <span class="text-green">{{ grade}}</span> </div>
-                    <div class="text-dark">Time taken: <span class="text-danger"> 
+                    <div class="text-dark">grade: <span class="{% if grade > opponent_grade %}  text-green {% elif grade == opponent_grade %} text-blue {% else %} text-danger {% endif %}">{{ grade}}</span> </div>
+                    <div class="text-dark">Time taken: <span class="{% if time_winner == 'user' %} text-green {% elif time_winner == 'opponent' %} text-danger {% else %} text-blue {% endif %}"> 
                         {% if hours > 0 %} {{ hours }} hrs {% endif %}
-                        {% if minutes %} {{ minutes }} min {% endif %}
+                        {% if minutes > 0 %} {{ minutes }} min {% endif %}
                         {% if seconds > 0 %} {{ seconds }} sec {% endif %}
                     </span></div>
                   </div>
@@ -184,20 +191,32 @@
               </div>
               <div class="col-xl-4 col-lg-12 col-md-4">
                 <div class="display-4 text-center">
-                  <span class="text-green"> {{ grade }} </span>:
-                  <span class="text-danger"> 40</span>
+                  <span class="{% if grade > opponent_grade %}  text-green {% elif grade == opponent_grade %} text-blue {% else %} text-danger {% endif %}"> {{ grade }} </span>:
+                  <span class="{% if grade > opponent_grade %}  text-danger {% elif grade == opponent_grade %} text-blue {% else %} text-green {% endif %}"> {{ opponent_grade }}</span>
                 </div>
               </div>
               <div class="col-xl-4 col-lg-12 col-md-4">
                 <div class="text-center subheader font-weight-light">
-                  John Doe
+                  {{ opponent_name }}
                   <div class=" py-2 text-capitalize text-small">
-                    <div class="text-dark">grade: <span class="text-danger">40</span> </div>
-                    <div class="text-dark">Time taken: <span class="text-green"> 90 sec</span></div>
+                    <div class="text-dark">grade: <span class="{% if grade > opponent_grade %}  text-danger {% elif grade == opponent_grade %} text-blue {% else %} text-green {% endif %}">{{ opponent_grade }}</span> </div>
+                    <div class="text-dark">Time taken: <span class="{% if time_winner == 'user' %} text-danger {% elif time_winner == 'opponent' %} text-green {% else %} text-blue {% endif %}"> 
+                      {% if opponent_hours > 0 %} {{ opponent_hours }} hrs {% endif %}
+                      {% if opponent_minutes > 0 %} {{ opponent_minutes }} min {% endif %}
+                      {% if opponent_seconds > 0 %} {{ opponent_seconds }} sec {% elif opponent_name == 'None' %} {{ opponent_hours }} hrs {% endif %} 
+                  </span></div>
                   </div>
                 </div>
               </div>
             </div>
+            {% if winner == 'user' %}
+              <div class="text-center text-green subheader">You won!</div>
+            {% elif winner == 'opponent' %}
+              <div class="text-center text-danger subheader">You lost</div>
+            {% elif winner == 'draw' %}
+              <div class="text-center text-blue subheader">Draw!</div>
+            {% endif %}
+            {% endif %}
           </div>
           
           
@@ -212,43 +231,65 @@
             <div><i class="fas fa-coins text-coin"></i> +{{ coins_earned}}</div>
           </div>
           <div class="bg-dark text-light px-3 py-1 alt-font d-flex">
-            <div class="mr-auto">Level 4</div>
-            <div class="">Challenges Remaining: 3/5</div>
+            <div class="mr-auto">Level {{ level }}</div>
+            <div class="">Challenges Remaining: {{ tries }}/5</div>
           </div>
           <div class="px-2 pb-3">
-            <div class="text-center py-2 alt-text">+3 Progress</div>
+            {% if winner == 'user' %}
+              <div class="text-center py-2 alt-text font-weight-bold">+3 Progress</div>
+            {% elif winner == 'opponent' %}
+              <div class="text-center py-2 alt-text font-weight-bold">+0 Progress</div>
+            {% elif winner == 'draw' %}
+              <div class="text-center py-2 alt-text font-weight-bold">+1 Progress</div>
+            {% else %}
+              <div class="text-center py-2 alt-text font-weight-bold">No Progress</div>
+            {% endif %}
             <div class="progress bg-dark subheader" style="height: 5rem;">
+              {% if level_before > 0 %}
               <div
                 class="progress-bar bg-deep-pink content-relative"
                 style="width: 26.66%;"
               >
-                Level 3
-                <div class="background" style="width: 100%;"></div>
+                Level {{ level_before }}
+                <div class="background" style="width: {{ rel_progress }}%;"></div>
               </div>
+              {% else %}
+              <div
+                class="progress-bar bg-blue content-relative"
+                style="width: 26.66%;"
+              >
+                <div class="background" style="width: {{ rel_progress }}%;"></div>
+              </div>
+              {% endif %}
               <div
                 class="progress-bar bg-blue content-relative"
                 style="width: 33.33%"
               >
-                Level 4
-                <div class="background" style="width: 40%;"></div>
+                Level {{ old_level }}
+                <div class="background" style="width: {{ stay_progress }}%;"></div>
               </div>
               <div class="progress-bar bg-green" style="width: 40%">
-                Level 5
+                Level {{ level_after }}
+                <div class="background" style="width: {{ pro_progress }}%;"></div>
               </div>
             </div>
             <div class="container-fluid">
               <div class="row">
                 <div class="col-3"></div>
-                <div class="col-4 px-0">4 pts</div>
-                <div class="col px-0">9 pts</div>
+                <div class="col-4 px-2">4</div>
+                <div class="col px-2">9</div>
               </div>
             </div>
+            <div class="text-center mt-2 font-weight-bold text-info">
+                {{ status }}
+            </div>
           </div>
+          
         </div>
 
         <div class="d-flex my-3">
-          <a href="" class="btn btn-outline-dark px-4 py-2"><i class="fas fa-angle-double-left"></i> Home</a>
-          <a href="" class="btn btn-outline-dark px-4 py-2 ml-auto">Continue <i class="fas fa-angle-double-right"></i></a>
+          <a href="{% url 'index' %}" class="btn btn-outline-dark px-4 py-2"><i class="fas fa-angle-double-left"></i> Home</a>
+          <a href="{% url 'challenges' %}?topic_name={{ topic.topicName }}" class="btn btn-outline-dark px-4 py-2 ml-auto">Continue <i class="fas fa-angle-double-right"></i></a>
         </div>
       </div>
       <div class="col-lg-4 border px-0">
@@ -272,7 +313,7 @@
               <div class="font-weight-light pt-1">
                 <span class="mx-2">Grade: {{ all_users.0.grade }}</span>
                 <span class="mx-2">Time taken: {{ all_users.0.minutes_taken }} min</span>
-                <span class="mx-2">Level: 5</span>
+                <span class="mx-2">Level: {{ all_users.0 | get_user_level:all_users.0.user }}</span>
               </div>
             </td>
           </tr>
@@ -288,7 +329,7 @@
               <div class="font-weight-light pt-1">
                 <span class="mx-2">Grade: {{ all_users.1.grade }}</span>
                 <span class="mx-2">Time taken: {{ all_users.1.minutes_taken }} min</span>
-                <span class="mx-2">Level: 5</span>
+                <span class="mx-2">Level: {{ all_users.1 | get_user_level:all_users.1.user }}</span>
               </div>
             </td>
           </tr>
@@ -304,7 +345,7 @@
               <div class="font-weight-light pt-1">
                 <span class="mx-2">Grade: {{ all_users.2.grade }}</span>
                 <span class="mx-2">Time taken: {{ all_users.2.minutes_taken }} min</span>
-                <span class="mx-2">Level: 5</span>
+                <span class="mx-2">Level: {{ all_users.2 | get_user_level:all_users.2.user }}</span>
               </div>
             </td>
           </tr>
@@ -320,7 +361,7 @@
               <div class="font-weight-light pt-1">
                 <span class="mx-2">Grade: {{ all_users.3.grade }}</span>
                 <span class="mx-2">Time taken: {{ all_users.3.minutes_taken }} min</span>
-                <span class="mx-2">Level: 5</span>
+                <span class="mx-2">Level: {{ all_users.3 | get_user_level:all_users.3.user }}</span>
               </div>
             </td>
           </tr>
@@ -336,7 +377,7 @@
               <div class="font-weight-light pt-1">
                 <span class="mx-2">Grade: {{ all_users.4.grade }}</span>
                 <span class="mx-2">Time taken: {{ all_users.4.minutes_taken }} min</span>
-                <span class="mx-2">Level: 5</span>
+                <span class="mx-2">Level: {{ all_users.4 | get_user_level:all_users.4.user }}</span>
               </div>
             </td>
           </tr>
