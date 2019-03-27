@@ -1,12 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from userprogress.models import TotalPoints, TotalCoins, UserLastLocation
 from topics.models import Video, Topic, Question, Query
 from challenges.models import Challenge
-from userprogress.models import UserReadNotes, UserAttemptedQuestion, UserWatchedVideo, Level
+from userprogress.models import UserReadNotes, UserAttemptedQuestion, UserWatchedVideo, Level, TotalCoins, TotalPoints, UserAttemptedChallenge
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from flowchart.models import Progress
+from django.contrib.auth.models import User
+from django.db.models import Avg
+from datetime import datetime, timedelta
 
 
 def get_all_topics():
@@ -56,7 +59,7 @@ def user_info(request):
 
     return user_data
 
-def get_all_topics_progress(request):
+def get_all_topics_progress(user):
 
     all_topics = get_all_topics()
 
@@ -85,14 +88,14 @@ def get_all_topics_progress(request):
 
         topic_progress = 0
         # check if user has viewed the pdf file
-        topic_progress = topic_progress + UserReadNotes.objects.filter(user=request.user, pdf__topic=topic).count()
+        topic_progress = topic_progress + UserReadNotes.objects.filter(user=user, pdf__topic=topic).count()
 
         # add watched videos
-        topic_progress = topic_progress + UserWatchedVideo.objects.filter(user=request.user, video__topic=topic).count()
+        topic_progress = topic_progress + UserWatchedVideo.objects.filter(user=user, video__topic=topic).count()
 
         # add attempted practice questions
         topic_progress = topic_progress + UserAttemptedQuestion.objects.filter(
-        user=request.user, question__topic=topic).count()
+        user=user, question__topic=topic).count()
 
         progress = (topic_progress / topic_total_progress) * 100
 
@@ -110,9 +113,6 @@ def index(request):
         return redirect('start') 
 
 
-
-    get_all_topics_progress(request)
-
     user_last_location = UserLastLocation.objects.get(user=request.user)
 
     # current user's info
@@ -125,7 +125,7 @@ def index(request):
     all_topics = get_all_topics()
 
     # topics progress
-    all_topics_progress = get_all_topics_progress(request)
+    all_topics_progress = get_all_topics_progress(request.user)
 
     # Latest Questions asked
     latest_questions = Query.objects.all().order_by('-id')[:5]
@@ -205,5 +205,131 @@ def leaderboards(request):
 
 
 @login_required
-def profile(request):
-    return render(request, 'pages/profile.html')
+def profile(request, profile_id):
+
+    user = get_object_or_404(User, id=profile_id)
+
+    # get user rank
+
+    # list of all the users
+    allUsers = TotalPoints.objects.order_by('-points')
+    rank = 1
+    for singleUser in allUsers:
+        if singleUser.user == user:
+            break
+        rank += 1
+
+    # get user points
+    user_points = TotalPoints.objects.get(user=user).points
+
+    # get user Level
+    user_level = Level.objects.get(user=user)
+
+    # get user coins
+    user_coins = TotalCoins.objects.get(user=user).coins
+
+    # topics progress
+    all_topics_progress = get_all_topics_progress(user)
+
+    # average grade calculations
+    average_grade_aggregate = UserAttemptedChallenge.objects.filter(user=user, time_taken__gt=timedelta(seconds=0)).aggregate(Avg('grade'))
+
+    if average_grade_aggregate['grade__avg']:
+        average_grade = int(average_grade_aggregate['grade__avg'])
+    else:
+        average_grade = 0
+    # average time taken to solve challenges calculation
+    average_time_taken = UserAttemptedChallenge.objects.filter(user=user, time_taken__gt=timedelta(seconds=0)).aggregate(Avg('time_taken'))
+    average_time = str(average_time_taken['time_taken__avg']).split('.')[0]
+    # total challenges attempted by user
+    user_attempted_challenges = UserAttemptedChallenge.objects.filter(user=user).count()
+
+    # total questions attempted by user
+    user_attempted_questions = UserAttemptedQuestion.objects.filter(user=user).count()
+
+    # total videos watched by user
+    user_watched_videos = UserWatchedVideo.objects.filter(user=user).count()
+
+    # total notes read by user
+    user_read_notes = UserReadNotes.objects.filter(user=user).count()
+
+    pre_level = user_level.level - 1
+    next_level = user_level.level + 1
+    progress = user_level.progress
+    tries_left = 5 - user_level.tries
+
+    # managing user progress this way because I'm not cool enough
+    rel_progress = 0
+    stay_progress = 0
+    pro_progress = 0
+    if progress == 1:
+        rel_progress = 25
+    elif progress == 2:
+        rel_progress = 50
+    elif progress == 3:
+        rel_progress = 75
+    elif progress == 4:
+        rel_progress = 100
+    elif progress == 5:
+        rel_progress = 100
+        stay_progress = 20
+    elif progress == 6:
+        rel_progress = 100
+        stay_progress = 40
+    elif progress == 7:
+        rel_progress = 100
+        stay_progress = 60
+    elif progress == 8:
+        rel_progress = 100
+        stay_progress = 80
+    elif progress == 9:
+        rel_progress = 100
+        stay_progress = 100
+    elif progress == 10:
+        rel_progress = 100
+        stay_progress = 100
+        pro_progress = 16.5
+    elif progress == 11:
+        rel_progress = 100
+        stay_progress = 100
+        pro_progress = 33.3
+    elif progress == 12:
+        rel_progress = 100
+        stay_progress = 100
+        pro_progress = 50
+    elif progress == 13:
+        rel_progress = 100
+        stay_progress = 100
+        pro_progress = 66.6
+    elif progress == 14:
+        rel_progress = 100
+        stay_progress = 100
+        pro_progress = 83.3
+    elif progress == 15:
+        rel_progress = 100
+        stay_progress = 100
+        pro_progress = 100
+    
+
+    context = {
+        'user': user,
+        'rank': rank,
+        'user_points': user_points,
+        'user_level': user_level,
+        'user_coins': user_coins,
+        'all_topics_progress': all_topics_progress,
+        'average_grade': average_grade,
+        'user_attempted_challenges': user_attempted_challenges,
+        'user_attempted_questions': user_attempted_questions,
+        'user_watched_videos': user_watched_videos,
+        'user_read_notes': user_read_notes,
+        'pre_level': pre_level,
+        'next_level': next_level,
+        'tries_left': tries_left,
+        'rel_progress': rel_progress,
+        'stay_progress': stay_progress,
+        'pro_progress': pro_progress,
+        'average_time': average_time,
+    }
+
+    return render(request, 'pages/profile.html', context)

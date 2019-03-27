@@ -1,5 +1,6 @@
 {% extends 'base.html' %} 
 {% load static %}
+{% load get_user_level %}
 {% load humanize %}
 {% block content %}
 <!--Main Content-->
@@ -321,9 +322,7 @@
                   <h1 class="h2">
                     {{ request.user.username }}
                   </h1>
-                  <button class="btn btn-blue px-5">
-                    View Profile
-                  </button>
+                  <a href="{% url 'profile' request.user.id %}" class="btn btn-blue px-5">View Profile</a>
                 </div>
               </div>
               <div class="row dark-background">
@@ -385,27 +384,31 @@
                 <tbody class="text-dark-gray">
                   <tr>
                     <td scope="row">
-                      <a href="" class="text-dark">User 1</a>
+                      <a href="{% url 'profile' user_data.allUsers.0.user.id %}" class="text-dark">{{ user_data.allUsers.0.user }}</a>
                     </td>
-                    <td class="text-success2">12</td>
-                    <td class="text-success2">10</td>
+                    <td class="text-success2">{{ user_data.allUsers.0.points }}</td>
+                    <td class="text-success2">{{ user_data.allUsers.0 | get_user_level:user_data.allUsers.0.user}}</td>
                   </tr>
                   <tr class="bg-lightblue">
-                    <td><a href="" class="text-dark">User 2</a></td>
-                    <td class="text-success2">20</td>
-                    <td class="text-success2">10</td>
+                      <td scope="row">
+                          <a href="{% url 'profile' user_data.allUsers.1.user.id %}" class="text-dark">{{ user_data.allUsers.1.user }}</a>
+                        </td>
+                        <td class="text-success2">{{ user_data.allUsers.1.points }}</td>
+                        <td class="text-success2">{{ user_data.allUsers.1 | get_user_level:user_data.allUsers.1.user}}</td>
                   </tr>
                   <tr>
-                    <td><a href="" class="text-dark">User 3</a></td>
-                    <td class="text-success2">10</td>
-                    <td class="text-success2">10</td>
+                      <td scope="row">
+                          <a href="{% url 'profile' user_data.allUsers.2.user.id %}" class="text-dark">{{ user_data.allUsers.2.user }}</a>
+                        </td>
+                        <td class="text-success2">{{ user_data.allUsers.2.points }}</td>
+                        <td class="text-success2">{{ user_data.allUsers.2 | get_user_level:user_data.allUsers.2.user}}</td>
                   </tr>
                   <tr class="dark-background">
                     <td class="text-light">
-                      <span class="dotted2">Your name </span>
+                      <span class="dotted2">{{ request.user }} </span>
                     </td>
-                    <td class="text-blue">3</td>
-                    <td class="text-blue">10</td>
+                    <td class="text-blue">{{ user_data.userPoints.points }}</td>
+                    <td class="text-blue">{{ user_data.userLevel.level }}</td>
                   </tr>
                 </tbody>
               </table>

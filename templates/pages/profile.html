@@ -10,7 +10,7 @@
                 <i class="fas fa-trophy text-pink fa-3x"></i>
               </div>
               <div class="pl-4">
-                <div class="profile-info"><span class="countup">50</span></div>
+                <div class="profile-info"><span class="countup">{{ rank }}</span></div>
                 <div class="profile-small-text alt-font text-dark-gray">
                   Rank
                 </div>
@@ -27,7 +27,7 @@
                 <i class="fas fa-star fa-3x text-green"></i>
               </div>
               <div class="pl-4">
-                <div class="profile-info"><span class="countup">130</span></div>
+                <div class="profile-info"><span class="countup">{{ user_points }}</span></div>
                 <div class="profile-small-text alt-font text-dark-gray">
                   Points
                 </div>
@@ -44,7 +44,7 @@
                 <i class="fas fa-medal fa-3x text-dark"></i>
               </div>
               <div class="pl-4">
-                <div class="profile-info"><span class="countup">3</span></div>
+                <div class="profile-info"><span class="countup">{{ user_level.level }}</span></div>
                 <div class="profile-small-text alt-font text-dark-gray">
                   Level
                 </div>
@@ -61,7 +61,7 @@
                 <i class="fas fa-coins fa-3x text-coin"></i>
               </div>
               <div class="pl-4">
-                <div class="profile-info"><span class="countup">208</span></div>
+                <div class="profile-info"><span class="countup">{{ user_coins }}</span></div>
                 <div class="profile-small-text alt-font text-dark-gray">
                   Coins
                 </div>
@@ -77,7 +77,7 @@
           <h5
             class="text-uppercase alt-font text-extra-dark-gray mb-2 font-weight-700"
           >
-            John Doe
+            {{ user.username }}
           </h5>
           <div class="container-fluid">
             <div class="row">
@@ -86,8 +86,8 @@
                   <div class="text-dark-gray alt-font font-weight-bold">
                     Average Grade:
                   </div>
-                  <div class="progress-circle over50 p66">
-                    <span class="text-secondary">66%</span>
+                  <div class="progress-circle {% if average_grade >= 50  %}over50{% endif %} p{{ average_grade }}">
+                    <span class="text-secondary">{{ average_grade }}%</span>
                     <div class="left-half-clipper">
                       <div class="first50-bar"></div>
                       <div class="value-bar"></div>
@@ -104,7 +104,7 @@
                       </div>
                     </div>
                     <div class="col-5">
-                      <div class="profile-info text-dark">00:12:00</div>
+                      <div class="profile-info text-dark">{{ average_time }}</div>
                     </div>
                   </div>
                 </div>
@@ -115,47 +115,62 @@
             <tbody>
               <tr class="border-bottom">
                 <td>Challenges Attempted</td>
-                <th class="text-right">23</th>
+                <th class="text-right">{{ user_attempted_challenges }}</th>
               </tr>
               <tr class="border-bottom">
                 <td>Self Assesment Questions Done</td>
-                <th class="text-right">40</th>
+                <th class="text-right">{{ user_attempted_questions }}</th>
               </tr>
               <tr class="border-bottom">
                 <td>Videos Watched</td>
-                <th class="text-right">12</th>
+                <th class="text-right">{{ user_watched_videos }}</th>
               </tr>
               <tr>
                 <td>Lecture Notes Read</td>
-                <th class="text-right">6</th>
+                <th class="text-right">{{ user_read_notes }}</th>
               </tr>
             </tbody>
           </table>
 
-          <div class="p-3 alt-font">Level Progress: 0</div>
-          <div class="progress bg-dark subheader" style="height: 5rem;">
-            <div
-              class="progress-bar bg-deep-pink content-relative"
-              style="width: 26.66%;"
-            >
-              Level 2
-              <div class="background" style="width: 0%;"></div>
-            </div>
-            <div
-              class="progress-bar bg-blue content-relative"
-              style="width: 33.33%;"
-            >
-              Level 3
-              <div class="background" style="width: 0%;"></div>
-            </div>
-            <div
-              class="progress-bar bg-green content-relative"
-              style="width: 40%;"
-            >
-              Level 4
-              <div class="background" style="width: 0%;"></div>
+          <div class="p-3 alt-font">
+            <div class="d-flex">
+              <div>
+                Level Progress: {{ user_level.progress }} / 15
+              </div>
+              <div class="ml-auto">
+                Challenges Remaining: {{ tries_left }} / 5
+              </div>
             </div>
           </div>
+          <div class="progress bg-dark subheader" style="height: 5rem;">
+                {% if pre_level > 0 %}
+                <div
+                  class="progress-bar bg-deep-pink content-relative"
+                  style="width: 26.66%;"
+                >
+                  Level {{ pre_level }}
+                  <div class="background" style="width: {{ rel_progress }}%;"></div>
+                </div>
+                {% else %}
+                <div
+                  class="progress-bar bg-blue content-relative"
+                  style="width: 26.66%;"
+                >
+                  <div class="background" style="width: {{ rel_progress }}%;"></div>
+                </div>
+                {% endif %}
+                <div
+                  class="progress-bar bg-blue content-relative"
+                  style="width: 33.33%"
+                >
+                  Level {{ user_level.level }}
+                  <div class="background" style="width: {{ stay_progress }}%;"></div>
+                </div>
+                <div class="progress-bar bg-green" style="width: 40%">
+                  Level {{ next_level }}
+                  <div class="background" style="width: {{ pro_progress }}%;"></div>
+                </div>
+              </div>
           <div class="container-fluid">
             <div class="row">
               <div class="col-3"></div>
@@ -175,110 +190,110 @@
               Intro to Html
             </div>
             <div class="ml-auto">
-              50%
+                    {{ all_topics_progress.topic1 | floatformat:"0" }}%
             </div>
           </div>
           <div class="progress mt-2 mb-3" style="height: 4px;">
-            <div class="progress-bar bg-green" style="width: 50%;"></div>
+            <div class="progress-bar bg-green" style="width: {{ all_topics_progress.topic1 }}%;"></div>
           </div>
           <div class="d-flex align-items-center">
             <div class="profile-small-text">
               JavaScript Expressions
             </div>
             <div class="ml-auto">
-              50%
+                    {{ all_topics_progress.topic2 | floatformat:"0" }}%
             </div>
           </div>
           <div class="progress mt-2 mb-3" style="height: 4px;">
-            <div class="progress-bar bg-green" style="width: 50%;"></div>
+            <div class="progress-bar bg-green" style="width: {{ all_topics_progress.topic2 }}%;"></div>
           </div>
           <div class="d-flex align-items-center">
             <div class="profile-small-text">
               DOM Manipulation
             </div>
             <div class="ml-auto">
-              50%
+                    {{ all_topics_progress.topic3 | floatformat:"0" }}%
             </div>
           </div>
           <div class="progress mt-2 mb-3" style="height: 4px;">
-            <div class="progress-bar bg-green" style="width: 50%;"></div>
+            <div class="progress-bar bg-green" style="width: {{ all_topics_progress.topic3 }}%;"></div>
           </div>
           <div class="d-flex align-items-center">
             <div class="profile-small-text">
               JavaScript Conditionals
             </div>
             <div class="ml-auto">
-              50%
+                    {{ all_topics_progress.topic4 | floatformat:"0" }}%
             </div>
           </div>
           <div class="progress mt-2 mb-3" style="height: 4px;">
-            <div class="progress-bar bg-green" style="width: 50%;"></div>
+            <div class="progress-bar bg-green" style="width: {{ all_topics_progress.topic4 }}%;"></div>
           </div>
           <div class="d-flex align-items-center">
             <div class="profile-small-text">
               Loops
             </div>
             <div class="ml-auto">
-              50%
+                    {{ all_topics_progress.topic5 | floatformat:"0" }}%
             </div>
           </div>
           <div class="progress mt-2 mb-3" style="height: 4px;">
-            <div class="progress-bar bg-green" style="width: 50%;"></div>
+            <div class="progress-bar bg-green" style="width: {{ all_topics_progress.topic5 }}%;"></div>
           </div>
           <div class="d-flex align-items-center">
             <div class="profile-small-text">
               Drawing with Canvas
             </div>
             <div class="ml-auto">
-              50%
+                    {{ all_topics_progress.topic6 | floatformat:"0" }}%
             </div>
           </div>
           <div class="progress mt-2 mb-3" style="height: 4px;">
-            <div class="progress-bar bg-green" style="width: 50%;"></div>
+            <div class="progress-bar bg-green" style="width: {{ all_topics_progress.topic6 }}%;"></div>
           </div>
           <div class="d-flex align-items-center">
             <div class="profile-small-text">
               Functions
             </div>
             <div class="ml-auto">
-              50%
+                    {{ all_topics_progress.topic7 | floatformat:"0" }}%
             </div>
           </div>
           <div class="progress mt-2 mb-3" style="height: 4px;">
-            <div class="progress-bar bg-green" style="width: 50%;"></div>
+            <div class="progress-bar bg-green" style="width: {{ all_topics_progress.topic7 }}%;"></div>
           </div>
           <div class="d-flex align-items-center">
             <div class="profile-small-text">
               Functions and Events
             </div>
             <div class="ml-auto">
-              50%
+                    {{ all_topics_progress.topic8 | floatformat:"0" }}%
             </div>
           </div>
           <div class="progress mt-2 mb-3" style="height: 4px;">
-            <div class="progress-bar bg-green" style="width: 50%;"></div>
+            <div class="progress-bar bg-green" style="width: {{ all_topics_progress.topic8 }}%;"></div>
           </div>
           <div class="d-flex align-items-center">
             <div class="profile-small-text">
               Arrays
             </div>
             <div class="ml-auto">
-              50%
+                    {{ all_topics_progress.topic9 | floatformat:"0" }}%
             </div>
           </div>
           <div class="progress mt-2 mb-3" style="height: 4px;">
-            <div class="progress-bar bg-green" style="width: 50%;"></div>
+            <div class="progress-bar bg-green" style="width: {{ all_topics_progress.topic9 }}%;"></div>
           </div>
           <div class="d-flex align-items-center">
             <div class="profile-small-text">
               Objects
             </div>
             <div class="ml-auto">
-              50%
+                    {{ all_topics_progress.topic10 | floatformat:"0" }}%
             </div>
           </div>
           <div class="progress mt-2 mb-3" style="height: 4px;">
-            <div class="progress-bar bg-green" style="width: 50%;"></div>
+            <div class="progress-bar bg-green" style="width: {{ all_topics_progress.topic10 }}%;"></div>
           </div>
         </div>
       </div>

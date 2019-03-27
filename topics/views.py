@@ -797,7 +797,7 @@ def result(request):
     play_fw = request.session.get('play_fw')
 
 
-    # managing user progress this way because I'm not cool enough
+    # managing user progress
     rel_progress = 0
     stay_progress = 0
     pro_progress = 0
