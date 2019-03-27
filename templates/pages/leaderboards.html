@@ -51,7 +51,7 @@
                 {% for total_points in all_total_points %}
                   <tr>
                     <td scope="row">{{ total_points | get_user_rank:total_points.user }}</td>
-                    <td>{{ total_points.user.username }}</td>
+                    <td><a href="{% url 'profile' total_points.user.id %}" class="text-dark text-muted font-weight-bold"> {{ total_points.user.username }}</a></td>
                     <td>{{ total_points.points }}</td>
                     <td>{{ total_points | get_user_level:total_points.user }}</td>
                     <td>{{ total_points.user.date_joined | date:"d M Y" }}</td>

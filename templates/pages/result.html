@@ -203,7 +203,7 @@
                     <div class="text-dark">Time taken: <span class="{% if time_winner == 'user' %} text-danger {% elif time_winner == 'opponent' %} text-green {% else %} text-blue {% endif %}"> 
                       {% if opponent_hours > 0 %} {{ opponent_hours }} hrs {% endif %}
                       {% if opponent_minutes > 0 %} {{ opponent_minutes }} min {% endif %}
-                      {% if opponent_seconds > 0 %} {{ opponent_seconds }} sec {% elif opponent_name == 'None' %} {{ opponent_hours }} hrs {% endif %} 
+                      {% if opponent_seconds > 0 %} {{ opponent_seconds }} sec {% endif %} 
                   </span></div>
                   </div>
                 </div>
@@ -305,7 +305,7 @@
           {% if all_users.0 %}
           <tr>
             <td class="px-3">
-              <a href="" class="text-dark">{{ all_users.0.user }}</a>
+              <a href="{% url 'profile' all_users.0.user.id %}" class="text-dark">{{ all_users.0.user }}</a>
               <span class="mx-2 font-weight-light"
                 >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
                 {{ all_users.0 | get_user_rank:all_users.0.user }})</span
@@ -321,7 +321,7 @@
           {% if all_users.1 %}
           <tr>
             <td class="px-3">
-              <a href="" class="text-dark">{{ all_users.1.user }}</a>
+              <a href="{% url 'profile' all_users.1.user.id %}" class="text-dark">{{ all_users.1.user }}</a>
               <span class="mx-2 font-weight-light"
                 >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
                 {{ all_users.1 | get_user_rank:all_users.1.user }})</span
@@ -337,7 +337,7 @@
           {% if all_users.2 %}
           <tr>
             <td class="px-3">
-              <a href="" class="text-dark">{{ all_users.2.user }}</a>
+              <a href="{% url 'profile' all_users.2.user.id %}" class="text-dark">{{ all_users.2.user }}</a>
               <span class="mx-2 font-weight-light"
                 >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
                 {{ all_users.2 | get_user_rank:all_users.2.user }})</span
@@ -353,7 +353,7 @@
           {% if all_users.3 %}
           <tr>
             <td class="px-3">
-              <a href="" class="text-dark">{{ all_users.3.user }}</a>
+              <a href="{% url 'profile' all_users.3.user.id %}" class="text-dark">{{ all_users.3.user }}</a>
               <span class="mx-2 font-weight-light"
                 >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
                 {{ all_users.3 | get_user_rank:all_users.3.user }})</span
@@ -369,7 +369,7 @@
           {% if all_users.4 %}
           <tr>
             <td class="px-3">
-              <a href="" class="text-dark">{{ all_users.4.user }}</a>
+              <a href="{% url 'profile' all_users.4.user.id %}" class="text-dark">{{ all_users.4.user }}</a>
               <span class="mx-2 font-weight-light"
                 >( <i class="fas fa-trophy text-blue"></i> Overall Rank:
                 {{ all_users.4 | get_user_rank:all_users.4.user }})</span

@@ -39,35 +39,35 @@
     <tr class="border-bottom">
       <td width="15%" class="py-1 text-center">1</td>
       <td width="60%" class="py-1">
-        <a href="" class="text-dark">{{ user_data.allUsers.0.user.username }}</a>
+        <a href="{% url 'profile' user_data.allUsers.0.user.id %}" class="text-dark">{{ user_data.allUsers.0.user.username }}</a>
       </td>
       <td width="25%" class="py-1 text-center">{{ user_data.allUsers.0.points }}</td>
     </tr>
     <tr class="border-bottom">
       <td width="15%" class="py-1 text-center">2</td>
       <td width="60%" class="py-1">
-        <a href="" class="text-dark">{{ user_data.allUsers.1.user.username }}</a>
+        <a href="{% url 'profile' user_data.allUsers.1.user.id %}" class="text-dark">{{ user_data.allUsers.1.user.username }}</a>
       </td>
       <td width="25%" class="py-1 text-center">{{ user_data.allUsers.1.points }}</td>
     </tr>
     <tr class="border-bottom">
       <td width="15%" class="py-1 text-center">3</td>
       <td width="60%" class="py-1">
-        <a href="" class="text-dark">{{ user_data.allUsers.2.user.username }}</a>
+        <a href="{% url 'profile' user_data.allUsers.2.user.id %}" class="text-dark">{{ user_data.allUsers.2.user.username }}</a>
       </td>
       <td width="25%" class="py-1 text-center">{{ user_data.allUsers.2.points }}</td>
     </tr>
     <tr class="border-bottom">
       <td width="15%" class="py-1 text-center">4</td>
       <td width="60%" class="py-1">
-        <a href="" class="text-dark">{{ user_data.allUsers.3.user.username }}</a>
+        <a href="{% url 'profile' user_data.allUsers.3.user.id %}" class="text-dark">{{ user_data.allUsers.3.user.username }}</a>
       </td>
       <td width="25%" class="py-1 text-center">{{ user_data.allUsers.3.points }}</td>
     </tr>
     <tr class="border-bottom">
       <td width="15%" class="py-1 text-center">5</td>
       <td width="60%" class="py-1">
-        <a href="" class="text-dark">{{ user_data.allUsers.4.user.username }}</a>
+        <a href="{% url 'profile' user_data.allUsers.4.user.id %}" class="text-dark">{{ user_data.allUsers.4.user.username }}</a>
       </td>
       <td width="25%" class="py-1 text-center">{{ user_data.allUsers.4.points }}</td>
     </tr>

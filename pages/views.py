@@ -65,6 +65,7 @@ def get_all_topics_progress(user):
 
     all_topics_progress = {}
     
+    print(all_topics)
 
     for topic_number in all_topics:
         #
@@ -190,6 +191,19 @@ def leaderboards(request):
     if 'entries' in request.GET:
         entries = request.GET['entries']
         username = request.GET['username']
+        all_valid_users = User.objects.filter(username__icontains=username)
+
+        print(all_valid_users)
+
+        all_users = all_total_points
+
+        all_total_points = TotalPoints.objects.none()
+
+        for user in all_users:
+            if user.user in all_valid_users:
+                instance = TotalPoints.objects.get(user=user.user)
+                all_total_points |= TotalPoints.objects.filter(pk=instance.pk)
+
         #all_total_points = all_total_points.filter(user__icontains=username)
 
     # allow only one question to display on each page
