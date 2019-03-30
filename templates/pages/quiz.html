@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 
-<div class="bg-image-quiz">
+<div class="bg-image-quiz" id="fixed-image">
   <div class="dark-overlay">
     <div class="container-fluid">
       <div class="row">
@@ -23,7 +23,7 @@
             <div class="bg-light m-auto">
               <div class="container py-3 px-4">
                 {% if questions %} {% for question in questions %}
-                <form action="{% url 'quiz' %}?topic_name={{ topic.topicName }}&page={{ questions.number }}" method="POST">
+                <form action="{% url 'check_answer' %}?topic_name={{ topic.topicName }}&page={{ questions.number }}" method="POST">
                     {% csrf_token %}
                     <input
                       type="hidden"

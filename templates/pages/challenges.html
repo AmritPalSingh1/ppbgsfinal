@@ -1,4 +1,8 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} 
+{% load static %}
+{% load is_attempted %} 
+{% load is_only_started %} 
+{% block content %}
 
 <div class="container-fluid">
         <div class="row">
@@ -54,7 +58,7 @@
                             <button type="submit" class="btn btn-link w-100 text-xs no-underline font-weight-bold text-green text-uppercase mb-3 px-3 d-flex">
                                 <span>Problem {{ forloop.counter }} </span>
                                 <span class="ml-auto"
-                                  ><i class="fas fa-angle-double-right"></i
+                                  >{% if easy_challenge|is_only_started:request.user %} (Continue) {% elif easy_challenge|is_attempted:request.user %}(Attempt again){% endif %}  <i class="fas fa-angle-double-right"></i
                                 ></span>
                             </button>
                           </form>
@@ -77,7 +81,7 @@
                                     <span> Chip Active!</span>
                                   </button>
                                   {% else %}
-                                    {% if user_data.userCoins.coins >= 32 %}
+                                    {% if user_data.userCoins.coins >= 32 and easy_challenge|is_only_started:request.user == False %}
                                     <button type="submit"
                                       class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
                                     >
@@ -111,7 +115,7 @@
                                     <span> Chip Active!</span>
                                   </button>
                                   {% else %}
-                                    {% if user_data.userCoins.coins >= 24 %}
+                                    {% if user_data.userCoins.coins >= 24 and easy_challenge|is_only_started:request.user == False %}
                                     <button type="submit"
                                       class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
                                     >
@@ -157,7 +161,7 @@
                                 <button type="submit" class="btn btn-link w-100 text-xs no-underline font-weight-bold text-secondary text-uppercase mb-3 px-3 d-flex">
                                     <span>Problem {{ forloop.counter }} </span>
                                     <span class="ml-auto"
-                                      ><i class="fas fa-angle-double-right"></i
+                                      >{% if medium_challenge|is_only_started:request.user %} (Continue) {% elif medium_challenge|is_attempted:request.user %}(Attempt again) {% endif %}<i class="fas fa-angle-double-right"></i
                                     ></span>
                                 </button>
                             </form>
@@ -180,7 +184,7 @@
                                     <span> Chip Active!</span>
                                   </button>
                                   {% else %}
-                                    {% if user_data.userCoins.coins >= 32 %}
+                                    {% if user_data.userCoins.coins >= 32 and medium_challenge|is_only_started:request.user == False %}
                                     <button type="submit"
                                       class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
                                     >
@@ -214,7 +218,7 @@
                                     <span> Chip Active!</span>
                                   </button>
                                   {% else %}
-                                    {% if user_data.userCoins.coins >= 24 %}
+                                    {% if user_data.userCoins.coins >= 24 and medium_challenge|is_only_started:request.user == False %}
                                     <button type="submit"
                                       class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
                                     >
@@ -261,7 +265,7 @@
                                 <button type="submit" class="btn btn-link w-100 text-xs no-underline font-weight-bold text-pink text-uppercase mb-3 px-3 d-flex">
                                     <span>Problem {{ forloop.counter }} </span>
                                     <span class="ml-auto"
-                                      ><i class="fas fa-angle-double-right"></i
+                                      >{% if hard_challenge|is_only_started:request.user %} (Continue) {% elif hard_challenge|is_attempted:request.user %}(Attempt again) {% endif %}<i class="fas fa-angle-double-right"></i
                                     ></span>
                                 </button>
                             </form>
@@ -284,7 +288,7 @@
                                     <span> Chip Active!</span>
                                   </button>
                                   {% else %}
-                                    {% if user_data.userCoins.coins >= 32 %}
+                                    {% if user_data.userCoins.coins >= 32 and hard_challenge|is_only_started:request.user == False %}
                                     <button type="submit"
                                       class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
                                     >
@@ -318,7 +322,7 @@
                                     <span> Chip Active!</span>
                                   </button>
                                   {% else %}
-                                    {% if user_data.userCoins.coins >= 24 %}
+                                    {% if user_data.userCoins.coins >= 24 and hard_challenge|is_only_started:request.user == False %}
                                     <button type="submit"
                                       class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
                                     >

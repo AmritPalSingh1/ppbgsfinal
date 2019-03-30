@@ -200,9 +200,8 @@ def notes(request):
     }
     return render(request, 'pages/notes.html', context)
 
-
 @login_required
-def quiz(request):
+def check_answer(request):
     # Initializing points update message
     message_title = None
     points_up = None
@@ -213,9 +212,8 @@ def quiz(request):
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
 
-    # default values of context variables
-    submitted_question = None
-    user_answer = None
+    if 'page' in request.GET:
+        page = request.GET['page']
 
     # if user submits a answer
     if request.method == 'POST':
@@ -264,6 +262,51 @@ def quiz(request):
                     question=submitted_question, user=request.user, isCorrect=False)
                 attemptedQuestion.save()
                 danger_message = "Incorrect answer!"
+
+    request.session['question_number'] = question_number
+    request.session['user_answer'] = user_answer
+    request.session['message_title'] = message_title
+    request.session['danger_message'] = danger_message
+    request.session['points_up'] = points_up
+    request.session['coins_up'] = coins_up
+
+
+    return redirect('/topics/topic/quiz?topic_name=' + topic_name + '&page=' + page)
+
+@login_required
+def quiz(request):
+    # Initializing points update message
+    message_title = None
+    points_up = None
+    coins_up = None
+    danger_message = None
+
+    # default values of context variables
+    submitted_question = None
+    user_answer = None
+
+    if 'question_number' in request.session:
+        question_number = request.session['question_number']
+        user_answer = request.session['user_answer']
+        submitted_question = Question.objects.get(id=question_number)
+
+        message_title = request.session['message_title']
+        points_up = request.session['points_up']
+        coins_up = request.session['coins_up']
+        danger_message = request.session['danger_message']
+
+        del request.session['question_number']
+        del request.session['user_answer']
+        del request.session['message_title']
+        del request.session['danger_message']
+        del request.session['points_up']
+        del request.session['coins_up']
+
+    # retreive topic name from GET request
+    if 'topic_name' in request.GET:
+        topic_name = request.GET['topic_name']
+
+    
 
     # Fetch current topic
     topic = get_object_or_404(Topic, topicName=topic_name)
@@ -565,7 +608,7 @@ def challenge(request):
         if old_attempted_challenge.start_datetime == old_attempted_challenge.end_datetime:
             # time taken is never > 5 hours
             if ((datetime.now() - old_attempted_challenge.start_datetime).seconds / 3600) > 5:
-                if (old_attempted_challenge.time_taken == 0):
+                if (old_attempted_challenge.time_taken == timedelta(seconds=0)):
                     old_attempted_challenge.time_taken = timedelta(hours=5)
         # if user is attempting challenge again
         else:
