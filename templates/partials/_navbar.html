@@ -1,6 +1,5 @@
 {% load static %}
 
-<div id="navbar-component">
   <section class="dark-background text-light d-none d-sm-block">
     <div class="container py-1 alt-font">
       <div class="d-flex">
@@ -23,7 +22,7 @@
       </div>
     </div>
   </section>
-  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light-nav">
     <div class="container alt-font nav-text">
       <a class="navbar-brand " href="{% url 'index' %}"
         ><img src="{% static 'images/logo.png' %}" alt="" height="50" width="50" />
@@ -72,4 +71,3 @@
       </div>
     </div>
   </nav>
-</div>

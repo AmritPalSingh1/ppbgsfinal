@@ -298,6 +298,24 @@ def quiz(request):
 
     return render(request, 'pages/quiz.html', context)
 
+# if user posts a question
+@login_required
+def add_question(request):
+    # retreive topic name from GET request
+    if 'topic_name' in request.GET:
+        topic_name = request.GET['topic_name']
+
+    # Fetch current topic
+    topic = get_object_or_404(Topic, topicName=topic_name)
+    
+    # if user posts a question
+    if 'question' in request.POST:
+        question = request.POST['question']
+        details = request.POST['details']
+        query = Query(topic=topic, user=request.user,
+                      question=question, details=details)
+        query.save()
+    return redirect('/topics/topic/questions?topic_name=' + topic_name)
 
 @login_required
 def questions(request):
@@ -311,16 +329,8 @@ def questions(request):
     # Fetch current topic
     topic = get_object_or_404(Topic, topicName=topic_name)
 
-    # if user posts a question
-    if 'question' in request.POST:
-        question = request.POST['question']
-        details = request.POST['details']
-        query = Query(topic=topic, user=request.user,
-                      question=question, details=details)
-        query.save()
-
     # list of all the questions of current topic
-    questions = Query.objects.filter(topic=topic)
+    questions = Query.objects.filter(topic=topic).order_by('-date')
 
     context = {
         'topic': topic,
@@ -330,12 +340,8 @@ def questions(request):
 
     return render(request, 'pages/questions.html', context)
 
-
 @login_required
-def question(request):
-
-    user_data = user_info(request)
-
+def add_comment(request):
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
@@ -355,8 +361,28 @@ def question(request):
         new_comment = Comment(user=request.user, query=query, comment=comment)
         new_comment.save()
 
+    return redirect('/topics/topic/question?topic_name=' + topic_name + '&questionID=' + questionID)
+
+@login_required
+def question(request):
+
+    user_data = user_info(request)
+
+    # retreive topic name from GET request
+    if 'topic_name' in request.GET:
+        topic_name = request.GET['topic_name']
+
+    # Fetch current topic
+    topic = get_object_or_404(Topic, topicName=topic_name)
+
+    # current question/query
+    if 'questionID' in request.GET:
+        questionID = request.GET['questionID']
+
+    query = Query.objects.get(id=questionID)
+
     # list of all the comments of current topic
-    comments = Comment.objects.filter(query=query)
+    comments = Comment.objects.filter(query=query).order_by('-date')
 
     context = {
         'topic': topic,

@@ -443,13 +443,12 @@
   font-size: 1.1rem;
 }
 
-#home-heading {
+#fixed-image {
   position: relative;
   min-height: 200px;
-  background: url('https://colorlib.com/preview/theme/unicat/images/home_slider_1.jpg');
-  /*background: url('https://colorlib.com/preview/theme/educrown/assest/img/slider/slide-1.jpg');*/
   background-attachment: fixed;
-  background-size: auto 100%;
+  background-position: center;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: 0 0px;
 }
@@ -983,4 +982,9 @@
 }
 .progress-circle.p100 .value-bar {
   transform: rotate(360deg);
+}
+
+
+.bg-light-nav{
+  background-color: rgba(248, 249, 250, 0.8);
 }

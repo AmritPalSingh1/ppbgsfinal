@@ -5,13 +5,13 @@
 {% block content %}
 
     <!--Topic name section-->
-
-    <div class="dark-background py-5">
+<div id="fixed-image" style="background-image: url('https://images.pexels.com/photos/990818/pexels-photo-990818.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')">
+    <div class="blue-overlay py-5">
             <div class="container">
               <div class="row">
                 <div class="col-lg-5 text-light">
                   <h2>{{ topic.topicName }}</h2>
-                  <ol class="breadcrumb px-0 dark-background">
+                  <ol class="breadcrumb bg-none">
                     <li class="breadcrumb-item">
                       <a class="" href="{% url 'index' %}">Home</a>
                     </li>
@@ -25,14 +25,14 @@
                   </ol>
                 </div>
                 <div class="col-lg-7">
-                  <form action="{% url 'questions' %}?topic_name={{ topic.topicName }}" method="POST">
+                  <form action="{% url 'add_question' %}?topic_name={{ topic.topicName }}" method="POST">
                     {% csrf_token %}
                     <div class="input-group mb-2">
                       <input
                         type="text"
                         placeholder="Question Title"
                         name="question"
-                        class="form-control"
+                        class="form-control" required
                       />
                     </div>
                     <div class="form-group mb-0">
@@ -40,7 +40,7 @@
                         name="details"
                         rows="3"
                         class="form-control"
-                        placeholder="Describe your question here"
+                        placeholder="Describe your question here" required
                       ></textarea>
                     </div>
                       <div class="pt-2">
@@ -56,7 +56,7 @@
               </div>
             </div>
           </div>
-      
+        </div>
           <div class="bg-qa">
             <div class="container-fluid">
               <div class="row">
