@@ -28,13 +28,19 @@ class FlowchartQuestion(models.Model):
     EASY = 'easy'
     MEDIUM = 'medium'
     HARD = 'hard'
+    EASY2 = 'easy2'
+    MEDIUM2 = 'medium2'
+    HARD2 = 'hard2'
     Difficulty_levels = (
         (EASY, 'Easy'),
         (MEDIUM, 'Medium'),
         (HARD, 'Hard'),
+        (EASY2, 'Easy2'),
+        (MEDIUM2, 'Medium2'),
+        (HARD2, 'Hard2'),
     )
     difficulty = models.CharField(
-        max_length=6,
+        max_length=7,
         choices=Difficulty_levels,
         default=MEDIUM,
     )
@@ -52,13 +58,20 @@ class Progress(models.Model):
     EASY = 'easy'
     MEDIUM = 'medium'
     HARD = 'hard'
+    EASY2 = 'easy2'
+    MEDIUM2 = 'medium2'
+    HARD2 = 'hard2'
+    
     Difficulty_levels = (
         (EASY, 'Easy'),
         (MEDIUM, 'Medium'),
         (HARD, 'Hard'),
+        (EASY2, 'Easy2'),
+        (MEDIUM2, 'Medium2'),
+        (HARD2, 'Hard2'),
     )
     user_difficulty = models.CharField(
-        max_length=6,
+        max_length=7,
         choices=Difficulty_levels,
         default=MEDIUM,
     )

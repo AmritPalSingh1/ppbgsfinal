@@ -134,6 +134,17 @@ def undo(request):
     user_progress.correct = 0
     user_progress.current_question = 1
 
+    if (user_progress.user_difficulty == 'hard'):
+        user_progress.user_difficulty = 'hard2'
+    elif (user_progress.user_difficulty == 'hard2'):
+        user_progress.user_difficulty = 'medium'
+    elif (user_progress.user_difficulty == 'medium'):
+        user_progress.user_difficulty = 'medium2'
+    elif (user_progress.user_difficulty == 'medium2'):
+        user_progress.user_difficulty = 'easy'
+    elif (user_progress.user_difficulty == 'easy'):
+        user_progress.user_difficulty = 'easy2'
+
     user_progress.save()
 
     return redirect('start')

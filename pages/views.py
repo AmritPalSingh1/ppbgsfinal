@@ -126,7 +126,7 @@ def index(request):
     all_topics = get_all_topics()
 
     # topics progress
-    #all_topics_progress = get_all_topics_progress(request.user)
+    all_topics_progress = get_all_topics_progress(request.user)
 
     # Latest Questions asked
     latest_questions = Query.objects.all().order_by('-id')[:5]
@@ -135,7 +135,7 @@ def index(request):
         'user_last_location': user_last_location,
         'video': videos[0].key,
         'all_topics': all_topics,
-        #'all_topics_progress': all_topics_progress,
+        'all_topics_progress': all_topics_progress,
         'latest_questions': latest_questions,
         'user_data': user_data
     }
@@ -204,7 +204,6 @@ def leaderboards(request):
                 instance = TotalPoints.objects.get(user=user.user)
                 all_total_points |= TotalPoints.objects.filter(pk=instance.pk)
 
-        #all_total_points = all_total_points.filter(user__icontains=username)
 
     # allow only one question to display on each page
     paginator = Paginator(all_total_points, entries)
@@ -243,7 +242,7 @@ def profile(request, profile_id):
     user_coins = TotalCoins.objects.get(user=user).coins
 
     # topics progress
-    #all_topics_progress = get_all_topics_progress(user)
+    all_topics_progress = get_all_topics_progress(user)
 
     # average grade calculations
     average_grade_aggregate = UserAttemptedChallenge.objects.filter(user=user, time_taken__gt=timedelta(seconds=0)).aggregate(Avg('grade'))
@@ -331,7 +330,7 @@ def profile(request, profile_id):
         'user_points': user_points,
         'user_level': user_level,
         'user_coins': user_coins,
-        #'all_topics_progress': all_topics_progress,
+        'all_topics_progress': all_topics_progress,
         'average_grade': average_grade,
         'user_attempted_challenges': user_attempted_challenges,
         'user_attempted_questions': user_attempted_questions,

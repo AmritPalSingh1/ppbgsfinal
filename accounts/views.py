@@ -16,6 +16,7 @@ def register(request):
         email = request.POST['email']
         password = request.POST['password']
         password2 = request.POST['password2']
+        difficulty = request.POST['difficulty']
 
         # Check if passwords match
         if password == password2:
@@ -49,7 +50,7 @@ def register(request):
                     user_last_location.save()
 
                     # start flowchart
-                    flowchart_progress = Progress(user=user)
+                    flowchart_progress = Progress(user=user, user_difficulty=difficulty)
                     flowchart_progress.save()
 
                     # set user level

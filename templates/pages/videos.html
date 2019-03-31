@@ -76,67 +76,21 @@
             <div class="container-fluid py-4">
               <div class="row">
                 <div class="col text-center">
-                  <!-- Button trigger modal -->
-                  <button
-                    type="button"
-                    class="btn btn-outline-dark mr-sm-4 mr-0"
-                    data-toggle="modal"
-                    data-target="#learningModalCenter"
-                  >
-                    Want to learn more?
-                  </button>
+                  <form action="{% url 'notes' %}">
+                      <input
+                        type="hidden"
+                        name="topic_name"
+                        value="{{ topic.topicName }}"
+                      />
+                      <button
+                        type="submit"
+                        class="btn btn-outline-dark mr-sm-4 mr-0"
+                      >
+                        Lecture Notes
+                      </button>
+                    </form>
 
-                  <!-- Modal -->
-                  <div
-                    class="modal fade"
-                    id="learningModalCenter"
-                    tabindex="-1"
-                    role="dialog"
-                    aria-labelledby="exampleModalCenterTitle"
-                    aria-hidden="true"
-                  >
-                    <div
-                      class="modal-dialog modal-dialog-centered"
-                      role="document"
-                    >
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">
-                            Learning Methods
-                          </h5>
-                          <button
-                            type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          Choose the method of learning
-                          <hr />
-                          <div class="py-1">
-                              <form action="{% url 'notes' %}">
-                                <input
-                                  type="hidden"
-                                  name="topic_name"
-                                  value="{{ topic.topicName }}"
-                                />
-                                <button
-                                  type="submit"
-                                  class="btn btn-outline-dark-pink btn-block text-outline-pink"
-                                >
-                                  Lecture Notes
-                                </button>
-                              </form>
-                            </div>
-                            
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  
                 </div>
                 <div class="col text-center">
                         <form action="{% url 'quiz' %}">

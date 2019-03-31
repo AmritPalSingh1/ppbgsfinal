@@ -320,12 +320,6 @@
                               name="topic_name"
                               value="{{ topic.topicName }}"
                             />
-                            <button
-                              type="submit"
-                              class="btn btn-outline-dark-pink btn-block text-outline-pink"
-                            >
-                              Other Sources
-                            </button>
                           </form>
                         </div>
                       </div>
@@ -334,7 +328,7 @@
                 </div>
               </div>
               <div class="col d-flex justify-content-around">
-                <a href="" class="btn btn-outline-light ml-auto">Challenges</a>
+                <a href="{% url 'challenges' %}?topic_name={{ topic.topicName }}" class="btn btn-outline-light ml-auto">Challenges</a>
               </div>
             </div>
             </div>

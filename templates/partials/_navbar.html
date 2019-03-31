@@ -1,20 +1,20 @@
 {% load static %}
 
-  <section class="bg-dark text-light d-none d-sm-block">
+  <section class="dark-background text-light d-none d-sm-block">
     <div class="container py-1 alt-font">
       <div class="d-flex">
         <div>
           <small>
             <span class="pr-5">
               <a href="" class="no-underline">
-              <i class="fas text-light fa-envelope"></i>
+              <i class="fas text-light fa-envelope mr-1"></i>
               <span class=""> support@gmail.com</span> </span
             ></a>
           </small>
         </div>
         <div class="ml-auto">
           <a href="javascript:{document.getElementById('logout').submit()}" class="no-underline">
-            <small><i class="fas text-light fa-sign-out-alt"></i> <span class=""> Logout</span> </small>
+            <small><i class="fas text-light fa-sign-out-alt mr-1"></i> <span class=""> Logout</span> </small>
           </a>
           <form action="{% url 'logout' %}" method="POST" id="logout">
             {% csrf_token %} <input type="hidden" />
