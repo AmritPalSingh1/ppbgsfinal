@@ -13,6 +13,7 @@ from userprogress.models import UserAttemptedQuestion, UserWatchedVideo, UserRea
 from django.contrib.auth.models import User
 from challenges.models import Challenge, DoublePoint, FreeWin, Hint
 from userprogress.models import TotalPoints, TotalCoins
+from tasks.models import WeeklyTask
 
 def get_user_rank(user):
     # list of all the users
@@ -131,9 +132,22 @@ def videos(request):
         update_user_points(request, 2)
         update_user_coins(request, 4)
 
-        message_title = "Explored new Video!"
+        message_title = "New Video Watched!"
         points_up = 2
         coins_up = 4
+
+        # if user has 'watch at least 2 new videos' task then update data
+        current_tasks = WeeklyTask.objects.filter(user=request.user, task="Watch at least 2 new videos")
+        if current_tasks:
+            task = WeeklyTask.objects.get(user=request.user, task="Watch at least 2 new videos")
+            if task.user_progress <= 1:
+                task.user_progress = task.user_progress + 1
+                task.save()
+            if task.user_progress >= 2:
+                task.is_finished = True
+                task.save()
+                update_user_points(request, task.points)
+            
 
     user_data = user_info(request)
 
@@ -782,6 +796,7 @@ def result_update(request):
             if level.progress >= 9:
                 level.level = level.level + 1
                 status = "Promoted"
+                level.progress = 0
                 level.points = 0
                 level.tries = 0
 
@@ -789,6 +804,7 @@ def result_update(request):
                 if level.level != 1:
                     level.level = level.level - 1
                     status = "Relegated"
+                    level.progress = 0
                     level.points = 0
                     level.tries = 0
             level.save()
@@ -839,7 +855,7 @@ def result_update(request):
 
 def result(request):
 
-    # yeah I'm an idiot
+    # yeah I'm an idiot, but should I delete these sessions?
 
     old_rank = request.session.get('old_rank')
     old_points = request.session.get('old_points')
@@ -959,6 +975,9 @@ def result(request):
 
     # get user's minutes taken
     user_minutes_taken = round(UserAttemptedChallenge.objects.get(challenge=challenge, user=request.user).time_taken.seconds / 60 ,1)
+
+    if average_minutes_taken < 0.001:
+        average_minutes_taken = 0.1
 
     # user's minutes compared to average
     minutes_compare = int(((user_minutes_taken - average_minutes_taken) / average_minutes_taken) * 100)

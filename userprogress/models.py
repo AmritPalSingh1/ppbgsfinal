@@ -102,3 +102,5 @@ class Level(models.Model):
     level = models.IntegerField(default=1)
     tries = models.IntegerField(default=0)
     progress = models.IntegerField(default=0)
+
+

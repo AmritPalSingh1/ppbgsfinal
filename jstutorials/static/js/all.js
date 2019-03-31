@@ -56,6 +56,11 @@ setTimeout(function() {
   $("#pop-message").fadeOut("slow");
 }, 5000);
 
+$(window).on('load',function(){
+  $('#messages').modal('show');
+});
+
+// Count up animation
 $('.countup').each(function () {
   $(this).prop('Counter',0).animate({
       Counter: $(this).text()

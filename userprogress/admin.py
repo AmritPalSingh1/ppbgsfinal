@@ -1,7 +1,6 @@
 from django.contrib import admin
 
 from .models import UserWatchedVideo, UserAttemptedQuestion, TotalPoints, TotalCoins, UserReadNotes, UserLastLocation, UserAttemptedChallenge, Level
-
 class ChallengeProgressAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'challenge')
     list_display_links = ('id',)

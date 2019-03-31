@@ -1,0 +1,19 @@
+<!--Points Messages-->
+    <div class="pop-message w-100 text-center" id="pop-message">
+        {% if message_title %}
+            <div>
+            <span class="px-3 py-2 bg-message h4 rounded alt-font text-uppercase font-weight-700 font-italic text-green">{{ message_title }}</span>
+            </div>
+        {% endif %}
+        {% if coins_up and points_up %}
+            <div class="mt-3">
+            <span class="px-3 py-2 bg-message text-green font-weight-700 alt-font text-uppercase font-italic mr-2"><i class="fas fa-coins"></i>  <span class="mr-3">+<span class="countup">{{ coins_up }}</span> </span> Points +<span class="countup">{{ points_up }}</span></span>
+            </div>
+        {% endif %}
+        {% if danger_message %}
+          <div>
+            <span class="text-pink bg-message px-3 py-2 font-weight-700 alt-font text-uppercase h4 font-italic">{{ danger_message }}</span>
+          </div>
+        {% endif %}
+        
+    </div>

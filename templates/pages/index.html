@@ -240,21 +240,23 @@
               Task 1
             </div>
             <div class="card-body">
-              <h5 class="card-title">0/2</h5>
+              <h5 class="card-title">{{ task1.user_progress }}/{{ task1.total_progress }}</h5>
               <p class="card-text text-dark-gray">
-                Solve 2 challenges today
+                {{ task1 }}
               </p>
               <p class="card-text">
-                <span class="p-2 dark-background text-light rounded"
-                  >5 <i class="fas fa-coins"></i
-                ></span>
+                Reward: <span class="p-2 dark-background text-light rounded"
+                  >{{ task1.points }} </i
+                > Points</span>
               </p>
-
-              <a href="#" class="btn bg-deep-pink text-light">Challenges </a>
-              <a href="#" class="btn btn-blue">Claim Reward </a>
+              {% if task1.is_finished == True %}
+                <p class="mb-0 pt-2"> <span class="bg-green text-light px-3 py-2 rounded">Task Complete!</span> </p>
+              {% else %}
+                <p class="mb-0 pt-2"> <span class="bg-deep-pink text-light px-3 py-2 rounded">Task Incomplete</span> </p>
+              {% endif %}
             </div>
             <div class="card-footer text-muted bg-lightblue">
-              10 hours remaining
+              {{ task1.end_datetime | timeuntil }} remaining
             </div>
           </div>
         </div>
@@ -264,22 +266,24 @@
               Task 2
             </div>
             <div class="card-body">
-              <h5 class="card-title">0/2</h5>
-              <p class="card-text text-dark-gray">
-                Solve 2 challenges today
-              </p>
-              <p class="card-text">
-                <span class="p-2 dark-background text-light rounded"
-                  >5 <i class="fas fa-coins"></i
-                ></span>
-              </p>
-
-              <a href="#" class="btn bg-deep-pink text-light">Challenges </a>
-              <a href="#" class="btn btn-blue">Claim Reward </a>
-            </div>
-            <div class="card-footer text-muted bg-lightblue">
-              10 hours remaining
-            </div>
+                <h5 class="card-title">{{ task2.user_progress }}/{{ task2.total_progress }}</h5>
+                <p class="card-text text-dark-gray">
+                  {{ task2 }}
+                </p>
+                <p class="card-text">
+                  Reward: <span class="p-2 dark-background text-light rounded"
+                    >{{ task2.points }} </i
+                  > Points</span>
+                </p>
+                {% if task2.is_finished == True %}
+                  <p class="mb-0 pt-2"> <span class="bg-green text-light px-3 py-2 rounded">Task Complete!</span> </p>
+                {% else %}
+                  <p class="mb-0 pt-2"> <span class="bg-deep-pink text-light px-3 py-2 rounded">Task Incomplete</span> </p>
+                {% endif %}
+              </div>
+              <div class="card-footer text-muted bg-lightblue">
+                {{ task2.end_datetime | timeuntil }} remaining
+              </div>
           </div>
         </div>
         <div class="col-lg-4 py-3">
@@ -288,22 +292,24 @@
               Task 3
             </div>
             <div class="card-body">
-              <h5 class="card-title">0/2</h5>
-              <p class="card-text text-dark-gray">
-                Solve 2 challenges today
-              </p>
-              <p class="card-text">
-                <span class="p-2 dark-background text-light rounded"
-                  >5 <i class="fas fa-coins"></i
-                ></span>
-              </p>
-
-              <a href="#" class="btn bg-deep-pink text-light">Challenges </a>
-              <a href="#" class="btn btn-blue">Claim Reward </a>
-            </div>
-            <div class="card-footer text-muted bg-lightblue">
-              10 hours remaining
-            </div>
+                <h5 class="card-title">{{ task3.user_progress }}/{{ task3.total_progress }}</h5>
+                <p class="card-text text-dark-gray">
+                  {{ task3 }}
+                </p>
+                <p class="card-text">
+                  Reward: <span class="p-2 dark-background text-light rounded"
+                    >{{ task3.points }} </i
+                  > Points</span>
+                </p>
+                {% if task3.is_finished == True %}
+                  <p class="mb-0 pt-2"> <span class="bg-green text-light px-3 py-2 rounded">Task Complete!</span> </p>
+                {% else %}
+                  <p class="mb-0 pt-2"> <span class="bg-deep-pink text-light px-3 py-2 rounded">Task Incomplete</span> </p>
+                {% endif %}
+              </div>
+              <div class="card-footer text-muted bg-lightblue">
+                {{ task3.end_datetime | timeuntil }} remaining
+              </div>
           </div>
         </div>
       </div>

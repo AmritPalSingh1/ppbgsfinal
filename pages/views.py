@@ -10,7 +10,33 @@ from flowchart.models import Progress
 from django.contrib.auth.models import User
 from django.db.models import Avg
 from datetime import datetime, timedelta
+from tasks.models import WeeklyTask
 
+
+# no more than 3 tasks at same time are allowed
+def update_weekly_tasks(request):
+    current_tasks = WeeklyTask.objects.filter(user=request.user)
+    # if 'task1' in request.session:
+    #     del request.session['task1']
+    # if 'task2' in request.session:
+    #     del request.session['task2']
+    # if 'task3' in request.session:
+    #     del request.session['task3']
+    # if no current tasks are active
+    if not current_tasks:
+        # create 3 tasks
+        task1 = WeeklyTask(user=request.user, task="Watch at least 2 new videos", points=5, total_progress=2)
+        task1.save()
+        task2 = WeeklyTask(user=request.user, task="Attempt 10 self assesment problems", points=7, total_progress=10)
+        task2.save()
+        task3 = WeeklyTask(user=request.user, task="Win a challenge", points=10, total_progress=1)
+        task3.save()
+    else:
+        # check the number of tasks
+        if current_tasks.count() != 3:
+            # delete current users all tasks and recall this function
+            print(current_tasks.count())
+        
 
 def get_all_topics():
     all_topics = {
@@ -65,8 +91,6 @@ def get_all_topics_progress(user):
 
     all_topics_progress = {}
     
-    print(all_topics)
-
     for topic_number in all_topics:
         #
         # Total progress possible per topic
@@ -108,6 +132,14 @@ def get_all_topics_progress(user):
 
 @login_required
 def index(request):
+    update_weekly_tasks(request)
+
+    # get current tasks
+    current_task = WeeklyTask.objects.filter(user=request.user)
+
+    task1 = current_task[2]
+    task2 = current_task[1]
+    task3 = current_task[0]
 
     flowchart_progress = Progress.objects.get(user=request.user)
     if flowchart_progress.correct != 3:
@@ -137,7 +169,10 @@ def index(request):
         'all_topics': all_topics,
         'all_topics_progress': all_topics_progress,
         'latest_questions': latest_questions,
-        'user_data': user_data
+        'user_data': user_data,
+        'task1': task1,
+        'task2': task2,
+        'task3': task3,
     }
     return render(request, 'pages/index.html', context)
 
