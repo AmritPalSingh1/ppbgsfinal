@@ -24,13 +24,9 @@
                   <div class=""><i class="fas fa-coins text-coin"></i> +{{ coins_up }} Coins </div>
               </div>
               {% else %}
-              <div class="mt-3 d-flex justify-content-center">
-                    <div class="mr-5"><i class="fas fa-star text-green"></i> +0 Points</div>
-                    <div class=""><i class="fas fa-coins text-coin"></i> +0 Coins </div>
-                </div>
               {% endif %}
               {% if task_name %}
-              <div class="mt-4 pt-2 "> <span class="text-uppercase subheader subheader-medium"> Task {{ task_number }} Done: </span>{{ task_name }}</div>
+              <div class="mt-4 pt-2 "> <span class="text-uppercase subheader subheader-medium"> Task Done: </span>{{ task_name }}</div>
               <div class="my-3 d-flex justify-content-center">
                   <div class=""><i class="fas fa-star text-green"></i> +{{ task_points }} Points</div>
               </div>

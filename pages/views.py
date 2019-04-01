@@ -19,20 +19,20 @@ def update_weekly_tasks(request):
     current_tasks = WeeklyTask.objects.filter(user=request.user)
 
     # List of all task 1
-    possible_task1 = ['Watch at least 2 new videos2', 'Study lecture notes1']
+    possible_task1 = ['Watch at least 2 new videos2', 'Study new lecture notes1']
     random_task1 = random.choice(possible_task1)
     task1_name = random_task1[0:len(random_task1)-1]
     task1_progress = int(random_task1[-1])
 
 
     # List of all task 2
-    possible_task2 = ['Attempt 8 practice questions8', 'Correctly solve 7 practice questions7']
+    possible_task2 = ['Attempt 8 practice questions8', 'Correctly solve 6 practice questions6']
     random_task2 = random.choice(possible_task2)
     task2_name = random_task2[0:len(random_task2)-1]
     task2_progress = int(random_task2[-1])
 
     # List of all task 3
-    possible_task3 = ['Win a challenge1', 'Attempt 2 challenges2', 'Solve 2 challenges with 80+ grade2']
+    possible_task3 = ['Win a challenge1', 'Attempt 2 new challenges2', 'Solve 2 challenges with 80+ grade2']
     random_task3 = random.choice(possible_task3)
     task3_name = random_task3[0:len(random_task3)-1]
     task3_progress = int(random_task3[-1])
@@ -45,10 +45,15 @@ def update_weekly_tasks(request):
         task3 = WeeklyTask(user=request.user, task=task3_name, points=10, total_progress=task3_progress)
         task3.save()
     else:
-        # check the number of tasks
-        if current_tasks.count() != 3:
-            # delete current users all tasks and recall this function
-            print(current_tasks.count())
+        old_task1 = current_tasks[0]
+        old_task2 = current_tasks[1]
+        old_task3 = current_tasks[2]
+        if old_task1.end_datetime < datetime.now():
+            old_task1.delete()
+            old_task2.delete()
+            old_task3.delete()
+            update_weekly_tasks(request)
+
         
 
 def get_all_topics():
