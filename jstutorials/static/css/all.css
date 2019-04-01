@@ -255,6 +255,10 @@
   font-size: 14px;
 }
 
+.subheader-medium {
+  font-size: 16px;
+}
+
 .border-top-pink {
   border-top: 4px solid #ff214f;
 }

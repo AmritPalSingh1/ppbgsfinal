@@ -11,25 +11,38 @@ from django.contrib.auth.models import User
 from django.db.models import Avg
 from datetime import datetime, timedelta
 from tasks.models import WeeklyTask
+import random
 
 
 # no more than 3 tasks at same time are allowed
 def update_weekly_tasks(request):
     current_tasks = WeeklyTask.objects.filter(user=request.user)
-    # if 'task1' in request.session:
-    #     del request.session['task1']
-    # if 'task2' in request.session:
-    #     del request.session['task2']
-    # if 'task3' in request.session:
-    #     del request.session['task3']
-    # if no current tasks are active
+
+    # List of all task 1
+    possible_task1 = ['Watch at least 2 new videos2', 'Study lecture notes1']
+    random_task1 = random.choice(possible_task1)
+    task1_name = random_task1[0:len(random_task1)-1]
+    task1_progress = int(random_task1[-1])
+
+
+    # List of all task 2
+    possible_task2 = ['Attempt 8 practice questions8', 'Correctly solve 7 practice questions7']
+    random_task2 = random.choice(possible_task2)
+    task2_name = random_task2[0:len(random_task2)-1]
+    task2_progress = int(random_task2[-1])
+
+    # List of all task 3
+    possible_task3 = ['Win a challenge1', 'Attempt 2 challenges2', 'Solve 2 challenges with 80+ grade2']
+    random_task3 = random.choice(possible_task3)
+    task3_name = random_task3[0:len(random_task3)-1]
+    task3_progress = int(random_task3[-1])
     if not current_tasks:
         # create 3 tasks
-        task1 = WeeklyTask(user=request.user, task="Watch at least 2 new videos", points=5, total_progress=2)
+        task1 = WeeklyTask(user=request.user, task=task1_name, points=5, total_progress=task1_progress)
         task1.save()
-        task2 = WeeklyTask(user=request.user, task="Attempt 10 self assesment problems", points=7, total_progress=10)
+        task2 = WeeklyTask(user=request.user, task=task2_name, points=7, total_progress=task2_progress)
         task2.save()
-        task3 = WeeklyTask(user=request.user, task="Win a challenge", points=10, total_progress=1)
+        task3 = WeeklyTask(user=request.user, task=task3_name, points=10, total_progress=task3_progress)
         task3.save()
     else:
         # check the number of tasks
@@ -226,19 +239,8 @@ def leaderboards(request):
     if 'entries' in request.GET:
         entries = request.GET['entries']
         username = request.GET['username']
-        all_valid_users = User.objects.filter(username__icontains=username)
-
-        print(all_valid_users)
-
-        all_users = all_total_points
-
-        all_total_points = TotalPoints.objects.none()
-
-        for user in all_users:
-            if user.user in all_valid_users:
-                instance = TotalPoints.objects.get(user=user.user)
-                all_total_points |= TotalPoints.objects.filter(pk=instance.pk)
-
+        all_total_points = all_total_points.filter(user__username__icontains=username).order_by('-points')
+        
 
     # allow only one question to display on each page
     paginator = Paginator(all_total_points, entries)

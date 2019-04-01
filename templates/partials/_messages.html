@@ -1,16 +1,40 @@
 
 <!-- Modal -->
+
+{% if message_title or points_up or coins_up or danger_message or task_name %}
 <div class="modal fade" id="messages" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content alt-font">
             <div class="modal-header">
-              <h5 class="modal-title subheader text-uppercase" id="exampleModalLabel">Your Reward</h5>
+              <h5 class="modal-title subheader text-uppercase" id="exampleModalLabel">Your Rewards</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body text-center">
-              New video watched
+              {% if message_title %}
+                <div class="text-uppercase subheader subheader-medium"> {{ message_title }}</div>
+              {% endif %}
+              {% if danger_message %}
+                <div class="text-uppercase subheader subheader-medium"> {{ danger_message }}</div>
+              {% endif %}
+              {% if points_up or coins_up %}
+              <div class="mt-3 d-flex justify-content-center">
+                  <div class="mr-5"><i class="fas fa-star text-green"></i> +{{ points_up }} Points</div>
+                  <div class=""><i class="fas fa-coins text-coin"></i> +{{ coins_up }} Coins </div>
+              </div>
+              {% else %}
+              <div class="mt-3 d-flex justify-content-center">
+                    <div class="mr-5"><i class="fas fa-star text-green"></i> +0 Points</div>
+                    <div class=""><i class="fas fa-coins text-coin"></i> +0 Coins </div>
+                </div>
+              {% endif %}
+              {% if task_name %}
+              <div class="mt-4 pt-2 "> <span class="text-uppercase subheader subheader-medium"> Task {{ task_number }} Done: </span>{{ task_name }}</div>
+              <div class="my-3 d-flex justify-content-center">
+                  <div class=""><i class="fas fa-star text-green"></i> +{{ task_points }} Points</div>
+              </div>
+              {% endif %}
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-green" data-dismiss="modal">Ok</button>
@@ -18,3 +42,5 @@
           </div>
         </div>
       </div>
+
+{% endif %}

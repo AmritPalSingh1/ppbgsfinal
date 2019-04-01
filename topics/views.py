@@ -103,6 +103,9 @@ def videos(request):
     message_title = None
     points_up = None
     coins_up = None
+    task_number = None
+    task_name = None
+    task_points = None
 
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
@@ -140,13 +143,17 @@ def videos(request):
         current_tasks = WeeklyTask.objects.filter(user=request.user, task="Watch at least 2 new videos")
         if current_tasks:
             task = WeeklyTask.objects.get(user=request.user, task="Watch at least 2 new videos")
-            if task.user_progress <= 1:
-                task.user_progress = task.user_progress + 1
-                task.save()
-            if task.user_progress >= 2:
-                task.is_finished = True
-                task.save()
-                update_user_points(request, task.points)
+            if task.is_finished == False:
+                if task.user_progress <= 1:
+                    task.user_progress = task.user_progress + 1
+                    task.save()
+                if task.user_progress >= 2:
+                    task.is_finished = True
+                    task.save()
+                    update_user_points(request, task.points)
+                    task_points = task.points
+                    task_number = 1
+                    task_name = task.task
             
 
     user_data = user_info(request)
@@ -160,7 +167,10 @@ def videos(request):
         'user_data': user_data,
         'message_title': message_title,
         'points_up': points_up,
-        'coins_up': coins_up
+        'coins_up': coins_up,
+        'task_points': task_points,
+        'task_number': task_number,
+        'task_name': task_name,
     }
 
     return render(request, 'pages/videos.html', context)
