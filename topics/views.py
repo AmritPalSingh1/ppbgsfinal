@@ -545,16 +545,30 @@ def question(request):
     return render(request, 'pages/question.html', context)
 
 
-@login_required
-def challenges(request):
-    update_weekly_tasks(request)
-    # pop message
+def double_points(request):
     message_title = None
+    # retreive topic name from GET request
+    if 'topic_name' in request.POST:
+        topic_name = request.POST['topic_name']
 
-    if 'dp' in request.GET:
-        challenge_id = request.GET['dp']
+    if 'dp' in request.POST:
+        challenge_id = request.POST['dp']
         # challenge
         dp_challenge = Challenge.objects.get(id=challenge_id)
+
+        # check if user has already started this challenge
+        attempted_challenges = UserAttemptedChallenge.objects.filter(challenge=dp_challenge, user=request.user)
+        if attempted_challenges:
+            challenge = UserAttemptedChallenge.objects.get(challenge=dp_challenge, user=request.user)
+            if challenge.time_taken == timedelta(seconds=0):
+                return redirect('/topics/topic/challenges?topic_name=' + topic_name)
+
+        # check if user has enough coins
+        user_coins = TotalCoins.objects.get(user=request.user)
+        if (user_coins.coins < 32):
+            return redirect('/topics/topic/challenges?topic_name=' + topic_name)
+
+        
         # check if chip is already baught
         dp_already_baught = DoublePoint.objects.filter(
             challenge=dp_challenge, user=request.user)
@@ -566,10 +580,34 @@ def challenges(request):
             update_user_coins(request, -32)
             message_title = "Chip Activated!"
 
-    if 'fw' in request.GET:
-        challenge_id = request.GET['fw']
+    request.session['message_title'] = message_title
+    request.session['topic_name'] = topic_name
+    return redirect('/topics/topic/challenges?topic_name=' + topic_name)
+
+def free_win(request):
+    message_title = None
+    # retreive topic name from GET request
+    if 'topic_name' in request.POST:
+        topic_name = request.POST['topic_name']
+
+    if 'fw' in request.POST:
+        challenge_id = request.POST['fw']
         # challenge
         fw_challenge = Challenge.objects.get(id=challenge_id)
+
+        # check if user has already started this challenge
+        attempted_challenges = UserAttemptedChallenge.objects.filter(challenge=fw_challenge, user=request.user)
+        if attempted_challenges:
+            challenge = UserAttemptedChallenge.objects.get(challenge=fw_challenge, user=request.user)
+            if challenge.time_taken == timedelta(seconds=0):
+                return redirect('/topics/topic/challenges?topic_name=' + topic_name)
+
+        # check if user has enough coins
+        user_coins = TotalCoins.objects.get(user=request.user)
+        if (user_coins.coins < 24):
+            return redirect('/topics/topic/challenges?topic_name=' + topic_name)
+
+        
         # check if chip is already baught
         fw_already_baught = FreeWin.objects.filter(
             challenge=fw_challenge, user=request.user)
@@ -580,6 +618,23 @@ def challenges(request):
             update_user_coins(request, -24)
             message_title = "Chip Activated!"
 
+    request.session['message_title'] = message_title
+    request.session['topic_name'] = topic_name
+    return redirect('/topics/topic/challenges?topic_name=' + topic_name)
+
+@login_required
+def challenges(request):
+    update_weekly_tasks(request)
+    # pop message
+    message_title = None
+
+    if 'message_title' in request.session:
+        message_title = request.session.get('message_title')
+        del request.session['message_title']
+
+    if 'topic_name' in request.session:
+        topic_name = request.session.get('topic_name')
+    
     user_all_dp = DoublePoint.objects.filter(user=request.user)
 
     dp_challenge_list = []
@@ -669,6 +724,7 @@ def hint(request):
         hint_number = 1
 
     return JsonResponse({'total_coins': total_coins+coins, 'hint_number': hint_number})
+
 
 
 @login_required
@@ -815,6 +871,10 @@ def result_update(request):
 
     # Update user stats for this challenge
     attempted_challenge = UserAttemptedChallenge.objects.get(user=request.user, challenge=challenge)
+
+    if attempted_challenge.start_datetime != attempted_challenge.end_datetime:
+        attempted_challenge.start_datetime = attempted_challenge.end_datetime
+        attempted_challenge.save()
     
     # yeah.. I don't remember why I did this
     if (attempted_challenge.start_datetime == attempted_challenge.end_datetime):

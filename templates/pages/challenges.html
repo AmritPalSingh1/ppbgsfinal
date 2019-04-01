@@ -70,7 +70,8 @@
                                     >Double Points</span
                                   >
                                 </div>
-                                <form action="{% url 'challenges' %}">
+                                <form action="{% url 'double_points' %}" method="POST">
+                                  {% csrf_token %}
                                   <input type="hidden" name="dp" value="{{ easy_challenge.id }}">
                                   <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
                                   {% if easy_challenge in dp_challenge_list %}
@@ -81,7 +82,7 @@
                                     <span> Chip Active!</span>
                                   </button>
                                   {% else %}
-                                    {% if user_data.userCoins.coins >= 32 and easy_challenge|is_only_started:request.user == False %}
+                                    {% if user_data.userCoins.coins >= 32 and easy_challenge|is_only_started:request.user == False and easy_challenge|is_attempted:request.user == False %}
                                     <button type="submit"
                                       class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
                                     >
@@ -104,7 +105,8 @@
                                 <div class="ch-info mb-1">
                                   <span class="border-bottom-dotted">Free Win</span>
                                 </div>
-                                <form action="{% url 'challenges' %}">
+                                <form action="{% url 'free_win' %}" method="POST">
+                                  {% csrf_token %}
                                   <input type="hidden" name="fw" value="{{ easy_challenge.id }}">
                                   <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
                                   {% if easy_challenge in fw_challenge_list %}
@@ -115,7 +117,7 @@
                                     <span> Chip Active!</span>
                                   </button>
                                   {% else %}
-                                    {% if user_data.userCoins.coins >= 24 and easy_challenge|is_only_started:request.user == False %}
+                                    {% if user_data.userCoins.coins >= 24 and easy_challenge|is_only_started:request.user == False and easy_challenge|is_attempted:request.user == False %}
                                     <button type="submit"
                                       class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
                                     >
@@ -173,7 +175,8 @@
                                     >Double Points</span
                                   >
                                 </div>
-                                <form action="{% url 'challenges' %}">
+                                <form action="{% url 'double_points' %}" method="POST">
+                                    {% csrf_token %}
                                   <input type="hidden" name="dp" value="{{ medium_challenge.id }}">
                                   <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
                                   {% if medium_challenge in dp_challenge_list %}
@@ -184,7 +187,7 @@
                                     <span> Chip Active!</span>
                                   </button>
                                   {% else %}
-                                    {% if user_data.userCoins.coins >= 32 and medium_challenge|is_only_started:request.user == False %}
+                                    {% if user_data.userCoins.coins >= 32 and medium_challenge|is_only_started:request.user == False and medium_challenge|is_attempted:request.user == False %}
                                     <button type="submit"
                                       class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
                                     >
@@ -207,7 +210,8 @@
                                 <div class="ch-info mb-1">
                                   <span class="border-bottom-dotted">Free Win</span>
                                 </div>
-                                <form action="{% url 'challenges' %}">
+                                <form action="{% url 'free_win' %}" method="POST">
+                                    {% csrf_token %}
                                   <input type="hidden" name="fw" value="{{ medium_challenge.id }}">
                                   <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
                                   {% if medium_challenge in fw_challenge_list %}
@@ -218,7 +222,7 @@
                                     <span> Chip Active!</span>
                                   </button>
                                   {% else %}
-                                    {% if user_data.userCoins.coins >= 24 and medium_challenge|is_only_started:request.user == False %}
+                                    {% if user_data.userCoins.coins >= 24 and medium_challenge|is_only_started:request.user == False and medium_challenge|is_attempted:request.user == False %}
                                     <button type="submit"
                                       class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
                                     >
@@ -277,7 +281,8 @@
                                     >Double Points</span
                                   >
                                 </div>
-                                <form action="{% url 'challenges' %}">
+                                <form action="{% url 'double_points' %}" method="POST">
+                                    {% csrf_token %}
                                   <input type="hidden" name="dp" value="{{ hard_challenge.id }}">
                                   <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
                                   {% if hard_challenge in dp_challenge_list %}
@@ -288,7 +293,7 @@
                                     <span> Chip Active!</span>
                                   </button>
                                   {% else %}
-                                    {% if user_data.userCoins.coins >= 32 and hard_challenge|is_only_started:request.user == False %}
+                                    {% if user_data.userCoins.coins >= 32 and hard_challenge|is_only_started:request.user == False and hard_challenge|is_attempted:request.user == False %}
                                     <button type="submit"
                                       class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
                                     >
@@ -311,7 +316,8 @@
                                 <div class="ch-info mb-1">
                                   <span class="border-bottom-dotted">Free Win</span>
                                 </div>
-                                <form action="{% url 'challenges' %}">
+                                <form action="{% url 'free_win' %}" method="POST">
+                                    {% csrf_token %}
                                   <input type="hidden" name="fw" value="{{ hard_challenge.id }}">
                                   <input type="hidden" name="topic_name" value="{{ topic.topicName }}">
                                   {% if hard_challenge in fw_challenge_list %}
@@ -322,7 +328,7 @@
                                     <span> Chip Active!</span>
                                   </button>
                                   {% else %}
-                                    {% if user_data.userCoins.coins >= 24 and hard_challenge|is_only_started:request.user == False %}
+                                    {% if user_data.userCoins.coins >= 24 and hard_challenge|is_only_started:request.user == False and hard_challenge|is_attempted:request.user == False %}
                                     <button type="submit"
                                       class="btn btn-blue btn-block ch-info text-uppercase d-flex justify-content-around"
                                     >
