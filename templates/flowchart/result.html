@@ -23,36 +23,32 @@
     <!--Top bar-->
     <section class="dark-background text-light d-none d-sm-block">
         <div class="container py-1 alt-font">
-          <div class="d-flex">
-            <div>
-              <small>
-                <span class="pr-5">
-                  <i class="fas text-light fa-envelope-open"></i>
-                  support@gmail.com</span
-                >
-              </small>
-            </div>
-            <div class="ml-auto">
-              <a href="javascript:{document.getElementById('logout').submit()}">
-                <small><i class="fas fa-sign-out-alt"></i> Logout </small>
-              </a>
-              <form action="{% url 'logout' %}" method="POST" id="logout">
-                {% csrf_token %} <input type="hidden" />
-              </form>
+            <div class="d-flex">
+              <div>
+                <small>
+                  <span class="pr-5">
+                    <a href="" class="no-underline">
+                    <i class="fas text-light fa-envelope mr-1"></i>
+                    <span class=" text-blue"> support@gmail.com</span> </span
+                  ></a>
+                </small>
+              </div>
+              <div class="ml-auto">
+                <a href="javascript:{document.getElementById('logout').submit()}" class="no-underline">
+                  <small><i class="fas text-light fa-sign-out-alt mr-1"></i> <span class="text-blue"> Logout</span> </small>
+                </a>
+                <form action="{% url 'logout' %}" method="POST" id="logout">
+                  {% csrf_token %} <input type="hidden" />
+                </form>
+              </div>
             </div>
           </div>
-        </div>
       </section>
     <section class="bg-none">
       <div class="container alt-font nav-text d-flex py-1">
-        <a class="navbar-brand text-dark" href="{% url 'index' %}"
-          ><img
-            src="{% static 'images/logo.png' %}"
-            alt=""
-            height="50"
-            width="50"
-          />
-          PPBGS
+          <a class="navbar-brand text-muted" href="{% url 'index' %}"
+          ><img src="{% static 'images//logo/logo5.png' %}" alt="" height="50" width="50" />
+          <span class="text-pink">Ppbg</span>System
         </a>
         <div class="ml-auto d-flex align-items-center text-dark-gray">
                 <span class="mr-2">({{ request.user }})</span>

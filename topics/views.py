@@ -57,17 +57,123 @@ def user_info(request):
 
 
 def update_user_points(request, points):
+    task_points = None
+    task_name = None
     # update total points
     total_points = TotalPoints.objects.get(user=request.user)
     total_points.points = total_points.points + points
     total_points.save()
 
+    # if user has 'Earn 35 points' task then update data
+    current_tasks = WeeklyTask.objects.filter(user=request.user, task="Earn 35 points")
+    if current_tasks:
+        task = WeeklyTask.objects.get(user=request.user, task="Earn 35 points")
+        if task.is_finished == False:
+            if task.user_progress <= task.total_progress-1:
+                task.user_progress = task.user_progress + points
+                task.save()
+            if task.user_progress >= task.total_progress:
+                task.user_progress = task.total_progress
+                task.is_finished = True
+                task.save()
+                update_user_points(request, task.points)
+                task_points = task.points
+                task_name = task.task
+
+    # if user has 'Earn 40 points' task then update data
+    current_tasks = WeeklyTask.objects.filter(user=request.user, task="Earn 40 points")
+    if current_tasks:
+        task = WeeklyTask.objects.get(user=request.user, task="Earn 40 points")
+        if task.is_finished == False:
+            if task.user_progress <= task.total_progress-1:
+                task.user_progress = task.user_progress + points
+                task.save()
+            if task.user_progress >= task.total_progress:
+                task.user_progress = task.total_progress
+                task.is_finished = True
+                task.save()
+                update_user_points(request, task.points)
+                task_points = task.points
+                task_name = task.task
+
+    # if user has 'Earn 50 points' task then update data
+    current_tasks = WeeklyTask.objects.filter(user=request.user, task="Earn 50 points")
+    if current_tasks:
+        task = WeeklyTask.objects.get(user=request.user, task="Earn 50 points")
+        if task.is_finished == False:
+            if task.user_progress <= task.total_progress-1:
+                task.user_progress = task.user_progress + points
+                task.save()
+            if task.user_progress >= task.total_progress:
+                task.user_progress = task.total_progress
+                task.is_finished = True
+                task.save()
+                update_user_points(request, task.points)
+                task_points = task.points
+                task_name = task.task
+    if task_points != None:
+        request.session['task_points'] = task_points
+        request.session['task_name'] = task_name
 
 def update_user_coins(request, coins):
+    task_points = None
+    task_name = None
     # update total coins
     total_coins = TotalCoins.objects.get(user=request.user)
     total_coins.coins = total_coins.coins + coins
     total_coins.save()
+
+    # if user has 'Earn 70 coins' task then update data
+    current_tasks = WeeklyTask.objects.filter(user=request.user, task="Earn 70 coins")
+    if current_tasks:
+        task = WeeklyTask.objects.get(user=request.user, task="Earn 70 coins")
+        if task.is_finished == False:
+            if task.user_progress <= task.total_progress-1:
+                task.user_progress = task.user_progress + points
+                task.save()
+            if task.user_progress >= task.total_progress:
+                task.user_progress = task.total_progress
+                task.is_finished = True
+                task.save()
+                update_user_points(request, task.points)
+                task_points = task.points
+                task_name = task.task
+    
+    # if user has 'Earn 80 coins' task then update data
+    current_tasks = WeeklyTask.objects.filter(user=request.user, task="Earn 80 coins")
+    if current_tasks:
+        task = WeeklyTask.objects.get(user=request.user, task="Earn 80 coins")
+        if task.is_finished == False:
+            if task.user_progress <= task.total_progress-1:
+                task.user_progress = task.user_progress + points
+                task.save()
+            if task.user_progress >= task.total_progress:
+                task.user_progress = task.total_progress
+                task.is_finished = True
+                task.save()
+                update_user_points(request, task.points)
+                task_points = task.points
+                task_name = task.task
+    
+    # if user has 'Earn 100 coins' task then update data
+    current_tasks = WeeklyTask.objects.filter(user=request.user, task="Earn 100 coins")
+    if current_tasks:
+        task = WeeklyTask.objects.get(user=request.user, task="Earn 100 coins")
+        if task.is_finished == False:
+            if task.user_progress <= task.total_progress-1:
+                task.user_progress = task.user_progress + points
+                task.save()
+            if task.user_progress >= task.total_progress:
+                task.user_progress = task.total_progress
+                task.is_finished = True
+                task.save()
+                update_user_points(request, task.points)
+                task_points = task.points
+                task_name = task.task
+
+    if task_points != None:
+        request.session['task_points'] = task_points
+        request.session['task_name'] = task_name
 
 
 def update_user_last_location(request, location, topic):
@@ -109,6 +215,12 @@ def videos(request):
     coins_up = None
     task_name = None
     task_points = None
+
+    if 'task_name' in request.session:
+        task_name = request.session.get('task_name')
+        task_points = request.session.get('task_points')
+        del request.session['task_name']
+        del request.session['task_points']
 
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
@@ -186,6 +298,13 @@ def notes(request):
     coins_up = None
     task_name = None
     task_points = None
+
+    if 'task_name' in request.session:
+        task_name = request.session.get('task_name')
+        task_points = request.session.get('task_points')
+        del request.session['task_name']
+        del request.session['task_points']
+
 
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
@@ -547,6 +666,8 @@ def question(request):
 
 def double_points(request):
     message_title = None
+    task_name = None
+    task_points = None
     # retreive topic name from GET request
     if 'topic_name' in request.POST:
         topic_name = request.POST['topic_name']
@@ -579,13 +700,31 @@ def double_points(request):
             double_point.save()
             update_user_coins(request, -32)
             message_title = "Chip Activated!"
+            # if user has 'Buy Double Points chip' task then update data
+            current_tasks = WeeklyTask.objects.filter(user=request.user, task="Buy Double Points chip")
+            if current_tasks:
+                task = WeeklyTask.objects.get(user=request.user, task="Buy Double Points chip")
+                if task.is_finished == False:
+                    if task.user_progress <= 0:
+                        task.user_progress = task.user_progress + 1
+                        task.save()
+                    if task.user_progress >= 1:
+                        task.is_finished = True
+                        task.save()
+                        update_user_points(request, task.points)
+                        task_points = task.points
+                        task_name = task.task
 
     request.session['message_title'] = message_title
     request.session['topic_name'] = topic_name
+    request.session['task_points'] = task_points
+    request.session['task_name'] = task_name
     return redirect('/topics/topic/challenges?topic_name=' + topic_name)
 
 def free_win(request):
     message_title = None
+    task_name = None
+    task_points = None
     # retreive topic name from GET request
     if 'topic_name' in request.POST:
         topic_name = request.POST['topic_name']
@@ -617,9 +756,26 @@ def free_win(request):
             free_win.save()
             update_user_coins(request, -24)
             message_title = "Chip Activated!"
+            # if user has 'Buy a Free Win' task then update data
+            current_tasks = WeeklyTask.objects.filter(user=request.user, task="Buy a Free Win")
+            if current_tasks:
+                task = WeeklyTask.objects.get(user=request.user, task="Buy a Free Win")
+                if task.is_finished == False:
+                    if task.user_progress <= 0:
+                        task.user_progress = task.user_progress + 1
+                        task.save()
+                    if task.user_progress >= 1:
+                        task.is_finished = True
+                        task.save()
+                        update_user_points(request, task.points)
+                        task_points = task.points
+                        task_name = task.task
+
 
     request.session['message_title'] = message_title
     request.session['topic_name'] = topic_name
+    request.session['task_points'] = task_points
+    request.session['task_name'] = task_name
     return redirect('/topics/topic/challenges?topic_name=' + topic_name)
 
 @login_required
@@ -627,10 +783,18 @@ def challenges(request):
     update_weekly_tasks(request)
     # pop message
     message_title = None
+    task_name = None
+    task_points = None
 
     if 'message_title' in request.session:
         message_title = request.session.get('message_title')
         del request.session['message_title']
+
+    if 'task_name' in request.session:
+        task_name = request.session.get('task_name')
+        task_points = request.session.get('task_points')
+        del request.session['task_name']
+        del request.session['task_points']
 
     if 'topic_name' in request.session:
         topic_name = request.session.get('topic_name')
@@ -678,7 +842,9 @@ def challenges(request):
         'user_data': user_data,
         'message_title': message_title,
         'dp_challenge_list': dp_challenge_list,
-        'fw_challenge_list': fw_challenge_list
+        'fw_challenge_list': fw_challenge_list,
+        'task_name': task_name,
+        'task_points': task_points,
     }
 
     return render(request, 'pages/challenges.html', context)
@@ -957,6 +1123,21 @@ def result_update(request):
                 level.progress = 0
                 level.points = 0
                 level.tries = 0
+
+                # if user has 'Get promoted to next level' task then update data
+                current_tasks = WeeklyTask.objects.filter(user=request.user, task="Get promoted to next level")
+                if current_tasks:
+                    task = WeeklyTask.objects.get(user=request.user, task="Get promoted to next level")
+                    if task.is_finished == False:
+                        if task.user_progress <= 0:
+                            task.user_progress = task.user_progress + 1
+                            task.save()
+                        if task.user_progress >= 1:
+                            task.is_finished = True
+                            task.save()
+                            update_user_points(request, task.points)
+                            task_points = task.points
+                            task_name = task.task
 
             if (level.progress < 4 and level.tries == 5) or (level.progress == 0 and level.tries == 4) :
                 if level.level != 1:

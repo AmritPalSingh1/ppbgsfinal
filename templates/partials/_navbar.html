@@ -8,13 +8,13 @@
             <span class="pr-5">
               <a href="" class="no-underline">
               <i class="fas text-light fa-envelope mr-1"></i>
-              <span class=""> support@gmail.com</span> </span
+              <span class=" text-blue"> support@gmail.com</span> </span
             ></a>
           </small>
         </div>
         <div class="ml-auto">
           <a href="javascript:{document.getElementById('logout').submit()}" class="no-underline">
-            <small><i class="fas text-light fa-sign-out-alt mr-1"></i> <span class=""> Logout</span> </small>
+            <small><i class="fas text-light fa-sign-out-alt mr-1"></i> <span class="text-blue"> Logout</span> </small>
           </a>
           <form action="{% url 'logout' %}" method="POST" id="logout">
             {% csrf_token %} <input type="hidden" />
@@ -25,9 +25,9 @@
   </section>
   <nav class="navbar sticky-top navbar-expand-sm navbar-light bg-nav">
     <div class="container alt-font nav-text">
-      <a class="navbar-brand " href="{% url 'index' %}"
-        ><img src="{% static 'images/logo.png' %}" alt="" height="50" width="50" />
-        PPBGS
+      <a class="navbar-brand text-muted" href="{% url 'index' %}"
+        ><img src="{% static 'images//logo/logo5.png' %}" alt="" height="50" width="50" />
+        <span class="text-pink">Ppbg</span>System
       </a>
       <button
         class="navbar-toggler"

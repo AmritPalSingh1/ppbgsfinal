@@ -19,23 +19,44 @@ def update_weekly_tasks(request):
     current_tasks = WeeklyTask.objects.filter(user=request.user)
 
     # List of all task 1
-    possible_task1 = ['Watch at least 2 new videos2', 'Study new lecture notes1']
+    possible_task1 = ['Watch at least 2 new videos2', 'Study new lecture notes1', 'Buy a Free Win1', 'Earn 35 points35', 'Earn 70 coins70']
     random_task1 = random.choice(possible_task1)
-    task1_name = random_task1[0:len(random_task1)-1]
-    task1_progress = int(random_task1[-1])
+    if random_task1 == 'Earn 35 points35':
+        task1_name = 'Earn 35 points'
+        task1_progress = 35
+    elif random_task1 == 'Earn 70 coins70':
+        task1_name = 'Earn 70 coins'
+        task1_progress = 70
+    else:
+        task1_name = random_task1[0:len(random_task1)-1]
+        task1_progress = int(random_task1[-1])
 
 
     # List of all task 2
-    possible_task2 = ['Attempt 8 practice questions8', 'Correctly solve 6 practice questions6']
+    possible_task2 = ['Attempt 8 practice questions8', 'Correctly solve 6 practice questions6', 'Buy Double Points chip1', 'Earn 40 points40', 'Earn 80 coins80']
     random_task2 = random.choice(possible_task2)
-    task2_name = random_task2[0:len(random_task2)-1]
-    task2_progress = int(random_task2[-1])
+    if random_task2 == 'Earn 40 points40':
+        task2_name = 'Earn 40 points'
+        task2_progress = 40
+    elif random_task2 == 'Earn 80 coins80':
+        task2_name = 'Earn 80 coins'
+        task2_progress = 80
+    else:
+        task2_name = random_task2[0:len(random_task2)-1]
+        task2_progress = int(random_task2[-1])
 
     # List of all task 3
-    possible_task3 = ['Win a challenge1', 'Attempt 2 new challenges2', 'Solve 2 challenges with 80+ grade2']
+    possible_task3 = ['Win a challenge1', 'Attempt 2 new challenges2', 'Solve 2 challenges with 80+ grade2', 'Get promoted to next level1', 'Earn 50 points50', 'Earn 100 coins100']
     random_task3 = random.choice(possible_task3)
-    task3_name = random_task3[0:len(random_task3)-1]
-    task3_progress = int(random_task3[-1])
+    if random_task3 == 'Earn 50 points50':
+        task3_name = 'Earn 50 points'
+        task3_progress = 50
+    elif random_task3 == 'Earn 100 coins100':
+        task3_name = 'Earn 100 coins'
+        task3_progress = 100
+    else:
+        task3_name = random_task3[0:len(random_task3)-1]
+        task3_progress = int(random_task3[-1])
     if not current_tasks:
         # create 3 tasks
         task1 = WeeklyTask(user=request.user, task=task1_name, points=5, total_progress=task1_progress)
