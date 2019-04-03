@@ -71,58 +71,42 @@
       </td>
       <td width="25%" class="py-1 text-center">{{ user_data.allUsers.4.points }}</td>
     </tr>
-  </table>
-  <h3 class="subheader subheader-small mt-3 py-2 px-2">Rank Per Topic</h3>
-  <table width="100%" class="subheader subheader-small font-weight-light">
-    <tr class="border-bottom border-top">
-      <td width="15%" class="py-1 text-center">5</td>
-      <td width="5%" class="py-1"></td>
-      <td width="80%" class="py-1">Intro to HTML</td>
+    <tr class="border-bottom">
+      <td width="15%" class="py-1 text-center">6</td>
+      <td width="60%" class="py-1">
+        <a href="{% url 'profile' user_data.allUsers.5.user.id %}" class="text-dark">{{ user_data.allUsers.5.user.username }}</a>
+      </td>
+      <td width="25%" class="py-1 text-center">{{ user_data.allUsers.5.points }}</td>
     </tr>
     <tr class="border-bottom">
-      <td width="15%" class="py-1 text-center">5</td>
-      <td width="5%" class="py-1"></td>
-      <td width="80%" class="py-1">JavaScript Expressions</td>
+      <td width="15%" class="py-1 text-center">7</td>
+      <td width="60%" class="py-1">
+        <a href="{% url 'profile' user_data.allUsers.6.user.id %}" class="text-dark">{{ user_data.allUsers.6.user.username }}</a>
+      </td>
+      <td width="25%" class="py-1 text-center">{{ user_data.allUsers.6.points }}</td>
     </tr>
     <tr class="border-bottom">
-      <td width="15%" class="py-1 text-center">5</td>
-      <td width="5%" class="py-1"></td>
-      <td width="80%" class="py-1">DOM Manipulation</td>
+      <td width="15%" class="py-1 text-center">8</td>
+      <td width="60%" class="py-1">
+        <a href="{% url 'profile' user_data.allUsers.7.user.id %}" class="text-dark">{{ user_data.allUsers.7.user.username }}</a>
+      </td>
+      <td width="25%" class="py-1 text-center">{{ user_data.allUsers.7.points }}</td>
     </tr>
     <tr class="border-bottom">
-      <td width="15%" class="py-1 text-center">5</td>
-      <td width="5%" class="py-1"></td>
-      <td width="80%" class="py-1">JavaScript Conditionals</td>
+      <td width="15%" class="py-1 text-center">9</td>
+      <td width="60%" class="py-1">
+        <a href="{% url 'profile' user_data.allUsers.8.user.id %}" class="text-dark">{{ user_data.allUsers.8.user.username }}</a>
+      </td>
+      <td width="25%" class="py-1 text-center">{{ user_data.allUsers.8.points }}</td>
     </tr>
     <tr class="border-bottom">
-      <td width="15%" class="py-1 text-center">5</td>
-      <td width="5%" class="py-1"></td>
-      <td width="80%" class="py-1">Loops</td>
-    </tr>
-    <tr class="border-bottom">
-      <td width="15%" class="py-1 text-center">5</td>
-      <td width="5%" class="py-1"></td>
-      <td width="80%" class="py-1">Drawing with Canvas</td>
-    </tr>
-    <tr class="border-bottom">
-      <td width="15%" class="py-1 text-center">5</td>
-      <td width="5%" class="py-1"></td>
-      <td width="80%" class="py-1">Functions</td>
-    </tr>
-    <tr class="border-bottom">
-      <td width="15%" class="py-1 text-center">5</td>
-      <td width="5%" class="py-1"></td>
-      <td width="80%" class="py-1">Functions and Events</td>
-    </tr>
-    <tr class="border-bottom">
-      <td width="15%" class="py-1 text-center">5</td>
-      <td width="5%" class="py-1"></td>
-      <td width="80%" class="py-1">Arrays</td>
-    </tr>
-    <tr class="border-bottom">
-      <td width="15%" class="py-1 text-center">5</td>
-      <td width="5%" class="py-1"></td>
-      <td width="80%" class="py-1">Objects</td>
+      <td width="15%" class="py-1 text-center">10</td>
+      <td width="60%" class="py-1">
+        <a href="{% url 'profile' user_data.allUsers.9.user.id %}" class="text-dark">{{ user_data.allUsers.9.user.username }}</a>
+      </td>
+      <td width="25%" class="py-1 text-center">{{ user_data.allUsers.9.points }}</td>
     </tr>
   </table>
+
+  
 </div>
