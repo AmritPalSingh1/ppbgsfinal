@@ -71,7 +71,7 @@
             </thead>
           </table>
           <div class="d-flex mb-2">
-            <p class="text-small mr-auto">Showing 1 to 10 of 36 items</p>
+            <p class="text-small mr-auto">Showing {{ start }} to {{ end }} of {{ total }} items</p>
             <nav>
                 {% if all_total_points.has_other_pages %}
                 <ul class="pagination pagination-sm justify-content-center flex-wrap">

@@ -33,9 +33,11 @@ class TotalPoints(models.Model):
         # list of all the users
         allUsers = TotalPoints.objects.order_by('-points')
 
+        user_points = TotalPoints.objects.get(user=user).points
+
         rank = 1
         for singleUser in allUsers:
-            if singleUser.user == user:
+            if singleUser.points == user_points:
                 break
             rank += 1
         return rank

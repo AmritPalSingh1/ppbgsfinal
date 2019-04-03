@@ -202,6 +202,9 @@ def index(request):
     # Latest Questions asked
     latest_questions = Query.objects.all().order_by('-id')[:5]
 
+    # total number of questions posted by user
+    questions_posted = Query.objects.filter(user=request.user).count()
+
     context = {
         'user_last_location': user_last_location,
         'video': videos[0].key,
@@ -212,6 +215,7 @@ def index(request):
         'task1': task1,
         'task2': task2,
         'task3': task3,
+        'questions_posted': questions_posted
     }
     return render(request, 'pages/index.html', context)
 
@@ -267,14 +271,28 @@ def leaderboards(request):
         username = request.GET['username']
         all_total_points = all_total_points.filter(user__username__icontains=username).order_by('-points')
         
+    total = all_total_points.count()    
 
     # allow only one question to display on each page
     paginator = Paginator(all_total_points, entries)
     page = request.GET.get('page')
     paged_all_total_points = paginator.get_page(page)
 
+    start = 1
+
+    if 'page' in request.GET:
+        start = int(page) * int(entries)
+
+    end = start + int(entries) - 1
+
+    if end > total:
+        end = total
+
     context = {
         'all_total_points': paged_all_total_points,
+        'start': start,
+        'end': end,
+        'total': total,
     }
 
     return render(request, 'pages/leaderboards.html', context)
