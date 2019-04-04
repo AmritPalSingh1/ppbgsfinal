@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseNotFound
 from datetime import datetime, timedelta
 import math, random
 from django.db.models import Avg
@@ -225,6 +225,8 @@ def videos(request):
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
 
     # Fetch current topic
     topic = get_object_or_404(Topic, topicName=topic_name)
@@ -233,7 +235,10 @@ def videos(request):
     videos = Video.objects.filter(topic=topic)
 
     # key of the current video to display
-    key = request.GET['key']
+    if 'key' in request.GET:
+        key = request.GET['key']
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
 
     # current video
     current_video = Video.objects.get(topic=topic, key=key)
@@ -309,6 +314,8 @@ def notes(request):
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
 
     # Fetch current topic
     topic = get_object_or_404(Topic, topicName=topic_name)
@@ -528,6 +535,8 @@ def quiz(request):
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
 
     
 
@@ -594,6 +603,9 @@ def questions(request):
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+
 
     # Fetch current topic
     topic = get_object_or_404(Topic, topicName=topic_name)
@@ -614,6 +626,9 @@ def add_comment(request):
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+
 
     # Fetch current topic
     topic = get_object_or_404(Topic, topicName=topic_name)
@@ -621,6 +636,9 @@ def add_comment(request):
     # current question/query
     if 'questionID' in request.GET:
         questionID = request.GET['questionID']
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+
 
     query = Query.objects.get(id=questionID)
 
@@ -641,6 +659,9 @@ def question(request):
     # retreive topic name from GET request
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+
 
     # Fetch current topic
     topic = get_object_or_404(Topic, topicName=topic_name)
@@ -648,6 +669,9 @@ def question(request):
     # current question/query
     if 'questionID' in request.GET:
         questionID = request.GET['questionID']
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+
 
     query = Query.objects.get(id=questionID)
 
@@ -903,12 +927,16 @@ def challenge(request):
     # get current topic name
     if 'topic_name' in request.GET:
         topic_name = request.GET['topic_name']
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+
 
     # get current challenge id
     if 'exercise' in request.GET:
         exercise = request.GET['exercise']
     else:
-        return redirect('topics')
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+
 
     # Fetch current topic
     topic = get_object_or_404(Topic, topicName=topic_name)
