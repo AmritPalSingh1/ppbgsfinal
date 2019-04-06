@@ -241,7 +241,7 @@ def videos(request):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
     # current video
-    current_video = Video.objects.get(topic=topic, key=key)
+    current_video = get_object_or_404(Video, topic=topic, key=key)
 
     already_watched_video = UserWatchedVideo.objects.filter(
         video=current_video, user=request.user)
@@ -673,7 +673,7 @@ def question(request):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-    query = Query.objects.get(id=questionID)
+    query = get_object_or_404(Query, id=questionID)
 
     # list of all the comments of current topic
     comments = Comment.objects.filter(query=query).order_by('-date')
@@ -964,19 +964,11 @@ def challenge(request):
     if attempted_challenge:
         # get already attempted challenge
         old_attempted_challenge= UserAttemptedChallenge.objects.get(challenge=challenge, user=request.user)
-        # if user is returning to question without finishing first time
-        if old_attempted_challenge.start_datetime == old_attempted_challenge.end_datetime:
-            # time taken is never > 5 hours
-            if ((datetime.now() - old_attempted_challenge.start_datetime).seconds / 3600) > 5:
-                if (old_attempted_challenge.time_taken == timedelta(seconds=0)):
-                    old_attempted_challenge.time_taken = timedelta(hours=5)
         # if user is attempting challenge again
-        else:
+        if old_attempted_challenge.start_datetime != old_attempted_challenge.end_datetime:
             update_time = datetime.now()
             old_attempted_challenge.start_datetime = update_time
             old_attempted_challenge.end_datetime = update_time
-            print(old_attempted_challenge.start_datetime == old_attempted_challenge.end_datetime)
-        print(old_attempted_challenge.time_taken)
         old_attempted_challenge.save()
     # if not ever attempted before by user
     else:
