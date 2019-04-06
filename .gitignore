@@ -9,4 +9,4 @@ venv
 /static
 .vscode
 node_modules
-jstutorials/settings.py
+jstutorials/local_settings.py
