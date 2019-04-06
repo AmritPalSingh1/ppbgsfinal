@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'jstutorials.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'database_name',
-        'USER': 'username',
-        'PASSWORD': 'password',
+        'NAME': 'js',
+        'USER': 'postgres',
+        'PASSWORD': 'Hazard10',
         'HOST': 'localhost',
-        'PORT': '5432'
+        'PORT': '5433'
     }
 }
 
