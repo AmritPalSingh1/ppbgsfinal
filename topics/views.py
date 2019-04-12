@@ -145,7 +145,7 @@ def update_user_coins(request, coins):
         task = WeeklyTask.objects.get(user=request.user, task="Earn 80 coins")
         if task.is_finished == False:
             if task.user_progress <= task.total_progress-1:
-                task.user_progress = task.user_progress + points
+                task.user_progress = task.user_progress + coins
                 task.save()
             if task.user_progress >= task.total_progress:
                 task.user_progress = task.total_progress
@@ -161,7 +161,7 @@ def update_user_coins(request, coins):
         task = WeeklyTask.objects.get(user=request.user, task="Earn 100 coins")
         if task.is_finished == False:
             if task.user_progress <= task.total_progress-1:
-                task.user_progress = task.user_progress + points
+                task.user_progress = task.user_progress + coins
                 task.save()
             if task.user_progress >= task.total_progress:
                 task.user_progress = task.total_progress
