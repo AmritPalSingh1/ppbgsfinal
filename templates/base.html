@@ -7,7 +7,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Home</title>
+  <title>
+    {% if '/' == request.path %}
+      PPBGS - Home
+      {% elif 'Intro to Html' in request.path  %}
+        Intro to Html
+      {% elif '/topics' == request.path  %}
+        Topics
+      {% elif 'leaderboards' in request.path  %}
+        Rankings
+      {% elif 'profile' in request.path  %}
+        Profile
+      {% elif 'JavaScript Expressions' in request.path  %}
+        JavaScript Expressions
+      {% elif 'DOM Manipulation' in request.path  %}
+        DOM Manipulation
+      {% elif 'JavaScript Conditionals' in request.path  %}
+        JavaScript Conditionals
+      {% elif 'Loops' in request.path  %}
+        Loops
+      {% elif 'Drawing with Canvas' in request.path  %}
+        Drawing with Canvas
+      {% elif 'Functions' in request.path  %}
+        Functions
+      {% elif 'Functions and Events' in request.path  %}
+        Functions and Events
+      {% elif 'Arrays' in request.path  %}
+        Arrays
+      {% elif 'Objects' in request.path  %}
+        Objects
+    {% endif %}
+    </title>
 
   <!-- icons required for navbar, so it isn't placed in a template block -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
