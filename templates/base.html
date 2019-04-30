@@ -7,9 +7,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>
+  <title> PPBGS - 
     {% if '/' == request.path %}
-      PPBGS - Home
+      Home
       {% elif 'Intro to Html' in request.path  %}
         Intro to Html
       {% elif '/topics' == request.path  %}
@@ -36,6 +36,13 @@
         Arrays
       {% elif 'Objects' in request.path  %}
         Objects
+      {% elif 'challenge' in request.path  %}
+        Challenge
+      {% elif 'quiz' in request.path  %}
+        Quiz
+      {% elif 'question' in request.path  %}
+        Question
+      
     {% endif %}
     </title>
 
@@ -63,6 +70,11 @@
 
   <!--Main content-->
   {% block content %}
+  {% endblock %}
+
+  <!-- Footer -->
+  {% block footer %}
+    {% include 'partials/_footer.html' %}
   {% endblock %}
 
   {% block javascript %}

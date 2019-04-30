@@ -1,0 +1,62 @@
+---
+task: 'Add two variables'
+details: |
+  <p><strong>Declare and add two variables</strong></p>
+  <p>Create two variables whose sum is 25 (e.g. 10 and 15)</p>
+  <p>Print their sum to the console</p>
+hints:
+  - hintContent: |
+      <p>To print something to the console, type:</p>
+
+      <pre>
+      console.log("This gets displayed to the console");
+      </pre>
+    hintCost: 2
+  - hintContent: |
+      <pre> var value = 10</pre>
+      
+      <p> The variable <code>value</code> stores the number <code>10</code>
+      <pre>
+    hintCost: 8
+  - hintContent: |
+      <p>This is one solution:</p>
+
+      <pre>
+      var value1 = 10;
+      var value2 = 15;
+      console.log(value1 + value2);
+      </pre>
+    hintCost: 20
+html: '<p>Write your code in the JS editor at the bottom left</p>'
+js: ''
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+  run: |
+    consoleOutput = consoleOutput.trim();
+    const re = /^25$/;
+    if (!re.test(consoleOutput)) {
+      consoleOutput = consoleOutput.replace(/\n/g, '<br />');
+      fail('Your result is incorrect! Example output: "25"');
+    }
+  cleanup: 'console.log = oldLog;'
+  has:
+    - regex: 'console\.log'
+      message: 'Your code is missing console.log'
+    - regex: '(var|let|const)'
+      message: 'Your code should declare a variable for first value'
+    - regex: '(var|let|const)(.|\n)*(var|let|const)'
+      message: 'Your code should declare a variable for second value'
+    - regex: '\+'
+      message: 'Your code should combine numbers with the "+" sign'
+  hasNot: []
+  maxLines: 10
+  errorThreshold: 5

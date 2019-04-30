@@ -22,18 +22,28 @@
             <span class="text-light text-uppercase"> Leaderboards</span>
           </h5>
             <form action="{% url 'leaderboards' %}">
-                <div class="d-flex mb-2">
-                <label class="mr-auto">
-                    Show
-                    <select name="entries" id="number">
-                      <option value="10">10</option>
-                      <option value="25">25</option>
-                      <option value="50">50</option>
-                    </select>
-                    entries
-                  </label>
-                  <label for="" class="mt-1">Search: <input type="text" name="username" /></label>
-                  <input type="submit" class="btn btn-dark ml-3 font-weight-bold text-small text-light alt-font" value="Apply">
+                <div class="mb-2">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-xl-8 col-lg-7 col-md-6 col-sm-4">
+                        <label class="mr-auto">
+                          Show
+                          <select name="entries" id="number">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                          </select>
+                          entries
+                        </label>
+                      </div>
+                      <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
+                        <label for="" class="mt-1 d-inline">Search: <input type="text" name="username" /></label>
+                        <input type="submit" class="btn btn-dark ml-3 font-weight-bold text-small text-light alt-font" value="Apply">
+                      </div>
+                    </div>
+                  </div>
+                
+                  
           </div>
         </form>       
         <table class="table table-striped table-bordered bg-light">
