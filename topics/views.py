@@ -1299,6 +1299,9 @@ def result(request):
         del request.session['ch_task_name']
         del request.session['ch_task_points']
 
+    # Also change play_dp to false for future attempts
+    request.session['play_dp'] = False
+
 
 
     # managing user progress

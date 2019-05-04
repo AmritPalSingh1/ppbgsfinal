@@ -1,0 +1,54 @@
+---
+task: 'Bool Alert!'
+details: |
+  <p><strong>Declare and alert a boolean</strong></p>
+  <p>The message should read:<pre>&lt;true&gt; or &lt;false&gt;</pre></p>
+hints:
+  - hintContent: |
+      <p>To alert a message, use:</p>
+
+      <pre>
+        alert()
+      </pre>
+    hintCost: 4
+  - hintContent: |
+      <p>To Declare a boolean:</p>
+
+      <pre>
+      var myBoolean = true;
+      </pre>
+    hintCost: 10
+  - hintContent: |
+      <p>This is one solution:</p>
+
+      <pre>
+      var myBoolean = true
+      alert(myBoolean);
+      </pre>
+    hintCost: 25
+html: '<p>Write your code in the JS editor at the bottom left</p>'
+js: ''
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+  run: |
+    consoleOutput = consoleOutput.trim();
+  cleanup: 'console.log = oldLog;'
+  has:
+    - regex: (var|let|const)
+      message: 'Your code should declare a variable for your boolean'
+    - regex: (true|false)
+      message: 'Value of your variable should be either true or false'
+    - regex: '(var|let|const) +(\b.+\b)(.|\n)*alert(.|\n)*\2'
+      message: 'Your code should alert the declared boolean'
+  hasNot: []
+  maxLines: 10
+  errorThreshold: 3

@@ -156,6 +156,9 @@ def get_all_topics_progress(user):
 
         # add watched videos
         topic_progress = topic_progress + UserWatchedVideo.objects.filter(user=user, video__topic=topic).count()
+        
+        # add attempted challenges
+        topic_progress = topic_progress + UserAttemptedChallenge.objects.filter(user=user, challenge__topic=topic).count()
 
         # add attempted practice questions
         topic_progress = topic_progress + UserAttemptedQuestion.objects.filter(
