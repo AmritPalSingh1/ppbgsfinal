@@ -1068,7 +1068,6 @@ def result_update(request):
         attempted_challenge.save()
         # maybe this means if user has completed this question for first time
         if attempted_challenge.time_taken == timedelta(seconds=0):
-            play_dp = True
             if ((attempted_challenge.end_datetime - attempted_challenge.start_datetime).seconds / 3600) > 5:
                 attempted_challenge.time_taken = timedelta(hours=5)
             else:
@@ -1104,6 +1103,12 @@ def result_update(request):
                 time_winner = "draw"
             else:
                 time_winner = "opponent"
+
+            # if double points chip is active
+            double_point = DoublePoint.objects.filter(challenge=challenge, user=request.user)
+            if double_point:
+                points_earned = points_earned*2
+                play_dp = True
 
             # check if free hit is active
             free_win = FreeWin.objects.filter(challenge=challenge, user=request.user)
@@ -1178,12 +1183,6 @@ def result_update(request):
     time_taken = attempted_challenge.time_taken
 
     level = Level.objects.get(user=request.user)
-
-    # if double points chip is active
-    double_point = DoublePoint.objects.filter(challenge=challenge, user=request.user)
-    if double_point:
-        if play_dp == True:
-            points_earned = points_earned*2
 
     if winner == 'user':
         # if user has 'Win a challenge' task then update data
@@ -1298,11 +1297,6 @@ def result(request):
         task_name = request.session.get('ch_task_name')
         del request.session['ch_task_name']
         del request.session['ch_task_points']
-
-    # Also change play_dp to false for future attempts
-    request.session['play_dp'] = False
-
-
 
     # managing user progress
     rel_progress = 0

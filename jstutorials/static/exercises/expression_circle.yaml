@@ -1,0 +1,52 @@
+---
+task: 'Circle Area'
+details: |
+  <p><strong>Calculate the area of circle of given radius</strong></p>
+  <p>Area of circle can be calculated using &Pi;r^2, where r is the radius of the circle</p>
+  <p>Print your result to the console</p>
+hints:
+  - hintContent: |
+      <pre>
+      Math.PI; // returns 3.141592653589793
+      </pre>
+
+      <pre>
+      Math.pow(5, 2); // returns 25
+      </pre>
+    hintCost: 7
+  - hintContent: |
+      <p>This is one solution:</p>
+
+      <pre>
+      console.log(Math.PI * Math.pow(r, 2));
+      </pre>
+    hintCost: 25
+html: '<p>Write your code in the JS editor at the bottom left</p>'
+js: 'const r = 15;'
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+  run: |
+    consoleOutput = consoleOutput.trim();
+    const re = /^706.85[0-9]*$/;
+    if (!re.test(consoleOutput)) {
+      consoleOutput = consoleOutput.replace(/\n/g, '<br />');
+      fail('Your result is incorrect');
+    }
+  cleanup: 'console.log = oldLog;'
+  has:
+    - regex: 'Math.PI'
+      message: 'Use Math object'
+    - regex: 'console\.log'
+      message: 'Your code is missing console.log'
+  hasNot: []
+  maxLines: 10
+  errorThreshold: 3
