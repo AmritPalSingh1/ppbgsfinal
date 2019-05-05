@@ -1,5 +1,5 @@
 ---
-task: 'Circle Area'
+task: 'Calculate Circle Area'
 details: |
   <p><strong>Calculate the area of circle of given radius</strong></p>
   <p>Area of circle can be calculated using &Pi;r^2, where r is the radius of the circle</p>

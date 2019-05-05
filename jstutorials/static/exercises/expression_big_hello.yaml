@@ -1,0 +1,68 @@
+---
+task: 'Print big HELLO'
+details: |
+  <p><strong>Print the following to the console</strong></p>
+  <pre>
+      H       H  E E E E  L        L        O O O O
+      H       H  E        L        L       O       O
+      H H H H H  E E E E  L        L       O       O
+      H       H  E        L        L       O       O
+      H       H  E E E E  L L L L  L L L L  O O O O
+  </pre>
+hints:
+  - hintContent: |
+      <p>To print something to the console, type:</p>
+
+      <pre>
+      console.log("This gets displayed to the console");
+      </pre>
+    hintCost: 2
+  - hintContent: |
+      <p>Following code prints big H:</p>
+
+      <pre>
+      console.log("H       H");
+      console.log("H       H");
+      console.log("H H H H H");
+      console.log("H       H");
+      console.log("H       H");
+      </pre>
+    hintCost: 12
+  - hintContent: |
+      <p>This is one solution:</p>
+
+      <pre>
+      console.log("H       H  E E E E  L        L        O O O O");
+      console.log("H       H  E        L        L       O       O");
+      console.log("H H H H H  E E E E  L        L       O       O");
+      console.log("H       H  E        L        L       O       O");
+      console.log("H       H  E E E E  L L L L  L L L L  O O O O");
+      </pre>
+    hintCost: 25
+html: '<p>Write your code in the JS editor at the bottom left</p>'
+js: ''
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+  run: |
+    consoleOutput = consoleOutput.trim();
+    const re = /.*H *H *E *E *E *E *L *L *O *O *O *O.*\n.*H *H *E *L *L *O *O.*\n.*H *H *H *H *H *E *E *E *E *L *L *O *O.*\n.*H *H *E *L *L *O *O.*\n.*H *H *E *E *E *E *L *L *L *L *L *L *L *L *O *O *O *O/;
+    if (!re.test(consoleOutput)) {
+      consoleOutput = consoleOutput.replace(/\n/g, '<br />');
+      fail('Your result is incorrect');
+    }
+  cleanup: 'console.log = oldLog;'
+  has:
+    - regex: 'console\.log'
+      message: 'Your code is missing console.log'
+  hasNot: []
+  maxLines: 10
+  errorThreshold: 2

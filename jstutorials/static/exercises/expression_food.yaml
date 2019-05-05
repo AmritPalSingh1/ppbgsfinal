@@ -1,5 +1,5 @@
 ---
-task: 'Favourite fool'
+task: 'Print your Favourite foods'
 details: |
   <p><strong>Print list of three favourite food to the console</strong></p>
   <p>Each food item should on new line</p>

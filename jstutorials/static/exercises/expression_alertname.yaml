@@ -1,5 +1,5 @@
 ---
-task: 'Bool Alert!'
+task: 'Alert a boolean!'
 details: |
   <p><strong>Declare and alert a boolean</strong></p>
   <p>The message should read:<pre>&lt;true&gt; or &lt;false&gt;</pre></p>
