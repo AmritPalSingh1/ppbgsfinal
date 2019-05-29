@@ -1,0 +1,49 @@
+---
+task: 'Declaring different variable'
+details: |
+  <p><strong>Declare variables of atleast 3 different data types</strong></p>
+
+hints:
+  - hintContent: |
+      <p>Some of the common data types in JavaScript are:</p>
+
+      <pre>
+      bool
+      number
+      string
+      null
+      undefined
+      objects
+      </pre>
+    hintCost: 10
+  - hintContent: |
+      <p>This is one solution:</p>
+
+      <pre>
+      var myString = "John";
+      var myBool = true;
+      var myNumber = 3;
+      </pre>
+    hintCost: 20
+html: '<p>Write your code in the JS editor at the bottom left</p>'
+js: ''
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+  run: |
+    consoleOutput = consoleOutput.trim();
+  cleanup: 'console.log = oldLog;'
+  has:
+    - regex: (var|let|const)
+      message: 'Your code should declare variables'
+  hasNot: []
+  maxLines: 10
+  errorThreshold: 4
