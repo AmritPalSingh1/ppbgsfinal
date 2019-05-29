@@ -1,0 +1,59 @@
+---
+task: 'Type Conversion'
+details: |
+  <p><strong>Convert the given string into an integer</strong></p>
+  <p><pre>var myString = "10";</pre></p>
+  <p>Output your result to the console</p>
+hints:
+  - hintContent: |
+      <p>To print something to the console, type:</p>
+
+      <pre>
+      console.log("This gets displayed to the console");
+      </pre>
+    hintCost: 2
+  - hintContent: |
+      <p>A simple way to convert a string to a number:</p>
+      <pre>
+      var myInteger = (Number)("2");
+      </pre>
+    hintCost: 10
+  - hintContent: |
+      <p>This is one solution:</p>
+
+      <pre>
+      console.log(parseInt(myString));
+      </pre>
+    hintCost: 20
+html: '<p>Write your code in the JS editor at the bottom left</p>'
+js: 'var myString = "10";'
+htmlReadOnly: false
+jsReadOnly: false
+secret: ''
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+  run: |
+    consoleOutput = consoleOutput.trim();
+    const re = /^10$/;
+    if (!re.test(consoleOutput)) {
+      consoleOutput = consoleOutput.replace(/\n/g, '<br />');
+      fail('Your result is incorrect!');
+    }
+  cleanup: 'console.log = oldLog;'
+  has:
+    - regex: 'console\.log'
+      message: 'Your code is missing console.log'
+    - regex: '(\bNumber\b|\bparseInt\b)'
+      message: 'Your code is not converting the given string'
+    - regex: 'myString(.|\n)*myString'
+      message: ''
+
+  hasNot: []
+  maxLines: 10
+  errorThreshold: 4
