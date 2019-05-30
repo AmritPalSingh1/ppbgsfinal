@@ -71,7 +71,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Welcome</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Welcome {{ request.user }}</h5>
             <button
               type="button"
               class="close"
@@ -82,10 +82,7 @@
             </button>
           </div>
           <div class="modal-body">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde aut
-            iure quidem aperiam, placeat atque nisi eaque earum molestiae
-            impedit eligendi quae voluptatum incidunt itaque dicta eos nihil
-            libero blanditiis.
+            Great to see you here. Let's start by solving these flowchart questions. Each question is related to the image on the left. To fully understand each question, go through <a href="" class="no-underline">this pdf</a>. Remember you will not be able to access the complete site until you solve all the three problems correctly.
           </div>
           <div class="modal-footer">
             <button
