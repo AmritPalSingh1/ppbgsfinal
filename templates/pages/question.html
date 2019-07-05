@@ -43,7 +43,7 @@
                         <i class="fas fa-user ml-3"></i> {{ query.user.username }}
                       </div>
                       <div class="border p-3 mt-2 bg-qa">
-                        {{ query.details }}
+                        {{ query.details | linebreaks }}
                       </div>
                       <div class="text-small mt-2">
                         {{ query.noOfComments }} comments
@@ -84,7 +84,7 @@
                             <p
                               class="subheader subheader-small font-weight-light pt-3 px-2"
                             >
-                              {{ comment.comment }}
+                              {{ comment.comment | linebreaks }}
                             </p>
                           </div>
                         {% endfor %}
