@@ -1,0 +1,33 @@
+---
+task: 'Print your name!'
+details: |
+  <p><strong>Print your name in the document body using javascript</strong></p>
+  <p>Page should read:'Your name'</p>
+  <p>You must use document.write</p>
+hints:
+  - hintContent: |
+      <p>To print something to the document, type:</p>
+
+      <pre>
+      document.write("This gets displayed in the document body");
+      </pre>
+    hintCost: 15 
+html: ''
+js: ''
+htmlReadOnly: true
+jsReadOnly: false
+secret: ''
+test:
+  setup: ''
+  run: |
+    body = document.querySelector('body');
+    if (body == null){
+      fail('Your code should print something to the document');
+    }
+  cleanup: ''
+  has:
+    - regex: 'document\.write'
+      message: 'Your code is missing document.write'
+  hasNot: []
+  maxLines: 10
+  errorThreshold: 2
