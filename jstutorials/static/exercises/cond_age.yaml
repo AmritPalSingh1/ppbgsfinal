@@ -1,0 +1,79 @@
+---
+task: 'Validate age'
+details: |
+  <p><strong>Check if age is greater than 13 and less than 18</strong></p>
+  <p>There is already a variable <code>age</code></p>
+  <p>Your code should test if age is greater than 13 and less than 18</p>
+  <p>Print <code>"true"</code> or <code>"false"</code> based on result</p>
+hints:
+  - hintContent: |
+      <p>Here is how you can check if a number is greater than 13:<p>
+
+      <pre>
+      if (age >= 13) {
+        // age is greater than 13!
+      }
+      </pre>
+    hintCost: 10
+  - hintContent: |
+      <p>Here is how you can check if a number is less than 18:<p>
+
+      <pre>
+      if (age <= 18) {
+        // age is less than 18!
+      }
+      </pre>
+    hintCost: 10
+  - hintContent: |
+      <p>Solution:<p>
+
+      <pre>
+      if (age >= 13 && age <= 18) {
+        console.log("true");
+      }
+      else {
+        console.log("false");
+      }
+      </pre>
+    hintCost: 30
+html: ''
+js: |
+  var age = 15;
+htmlReadOnly: false
+jsReadOnly: false
+secret: window.n = 2;
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+  run: |
+    consoleOutput = consoleOutput.trim();
+
+    if (!/true/is.test(consoleOutput)) {
+      fail('Expected console output to contain "true"');
+    }
+
+    if (/false/is.test(consoleOutput)) {
+      fail('Console output should not contain "false"');
+    }
+  cleanup: console.log = oldLog;
+  has:
+    - regex: if.*else
+      flags: s
+      message: 'Your code is missing an if/else statement'
+    - regex: 'age.*>=.*13'
+      message: 'Your code should test if age is greather than 13'
+    - regex: 'age.*<=.*18'
+      message: 'Your code should test if age is less than 18'
+    - regex: 'console\.log'
+      message: 'Your code is missing console.log'
+    - regex: (['"].*true.*['"].*['"].*false.*['"]|['"].*false.*['"].*['"].*true.*['"])
+      flags: is
+      message: 'Your code should either print even or odd for any number'
+  hasNot: []
+  maxLines: 10
+  errorThreshold: 6
