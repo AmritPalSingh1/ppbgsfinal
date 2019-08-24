@@ -1,0 +1,71 @@
+---
+task: 'Validate random number'
+details: |
+  <p><strong>Check if a number is less than 5 or not</strong></p>
+  <p>There is already a secret variable <code>n</code></p>
+  <p>Your code should test if n is less than 5 or not</p>
+  <p>Print <code>"greater"</code> if n more than 5</p>
+  <p>Print <code>"smaller"</code> if n is less than or equal to 5</p>
+hints:
+  - hintContent: |
+      <p>Here is how you can check if a number is greater than 5:<p>
+
+      <pre>
+      if (n  > 5) {
+        // n is greater than 5!
+      }
+      </pre>
+    hintCost: 18
+  - hintContent: |
+      <p>Solution:<p>
+
+      <pre>
+      if (n > 5) {
+        console.log("greater");
+      }
+      else {
+        console.log("smaller");
+      }
+      </pre>
+    hintCost: 30
+html: ''
+js: |
+  // just letting you know that n magically exists
+  // even though you can't see it in the editor
+  console.log("n is a " + typeof n);
+htmlReadOnly: false
+jsReadOnly: false
+secret: window.n = Math.floor(Math.random() * 11);
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+  run: |
+    consoleOutput = consoleOutput.trim();
+
+    if (!/greater/is.test(consoleOutput) && n > 5) {
+      fail('Expected console output to contain "greater"');
+    }
+
+    if (!/smaller/is.test(consoleOutput) && n <= 5) {
+      fail('Expected console output to contain "smaller"');
+    }
+  cleanup: console.log = oldLog;
+  has:
+    - regex: if.*else
+      flags: s
+      message: 'Your code is missing an if/else statement'
+    - regex: '(<.*5|>.*5)'
+      message: 'Your code should have a condition to test if n is greater than 5 or not'
+    - regex: 'console\.log'
+      message: 'Your code is missing console.log'
+    - regex: (['"].*greater.*['"].*['"].*smaller.*['"]|['"].*smaller.*['"].*['"].*greater.*['"])
+      flags: is
+      message: 'Your code should either print even or odd for any number'
+  hasNot: []
+  maxLines: 10
+  errorThreshold: 5
