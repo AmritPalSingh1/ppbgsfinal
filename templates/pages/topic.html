@@ -183,7 +183,7 @@
         </div>
         <div class="row mx-0">
           <div
-            class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-12 py-5 px-md-0 px-sm-4"
+            class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-12 py-5 px-md-0 px-sm-4 border-dark-pink"
           >
             <div class="container">
               <div class="row mx-0 align-items-center">
@@ -211,6 +211,49 @@
             </div>
           </div>
         </div>
+        <div class="row mx-0">
+          <div
+            class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-12 py-5 px-md-0 px-sm-4"
+          >
+            <div class="container">
+              <div class="row mx-0 align-items-center ">
+                <div class="col-md-4 order-md-2">
+                  <div class="image-border">
+                    <img
+                      class="topic-images"
+                      src="{% static 'images/question.jpg'%}"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div class="col-md-8 pt-md-0 order-md-1 pt-5">
+                  <div class="pl-sm-4">
+                    <h5 class="mb-3 alt-font font-weight-700 ">
+                      Discuss
+                    </h5>
+                    <p class="alt-font">
+                      Having trouble understanding something? Stuck on a problem or Just want to help others? Ask your questions here.
+                    </p>
+                    <form action="{% url 'questions' %}">
+                        <input
+                          type="hidden"
+                          name="topic_name"
+                          value="{{ topic.topicName }}"
+                        />
+                        <button
+                          type="submit"
+                          class="btn btn-outline-dark-pink text-outline-pink"
+                        >
+                          Discussion Page
+                        </button>
+                      </form>
+                      
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -221,25 +264,5 @@
   </div>
 </div>
 
-<section class="bg-blue py-5 text-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-9">
-          <h2 class="alt-font">Discuss</h2>
-          <p class="mb-0 alt-font">
-            Having trouble understanding something? Stuck on a problem or Just want to help others? Ask your questions here
-          </p>
-          <p></p>
-        </div>
-        <div class="col-md-3 d-flex align-items-center">
-          <p class="mb-0">
-            <a href="{% url 'questions' %}?topic_name={{ topic.topicName }}" class="btn btn-light px-4 py-3"
-              >Discussion Page</a
-            >
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
 
 {% endblock %}

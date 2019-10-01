@@ -1,0 +1,78 @@
+---
+task: 'Compare two variables'
+details: |
+  <p><strong>Check if variable a is greater than b</strong></p>
+  <p>There is already a secret variable <code>n</code></p>
+  <p>Your code should test if n is even or odd</p>
+  <p>Print <code>"even"</code> if n is even</p>
+  <p>Print <code>"odd"</code> if n is odd</p>
+hints:
+  - hintContent: |
+      <p>The modulus operator <code>%</code> gets the remainder of dividing the left side by the right side<p>
+
+      <pre>
+      var two = 5 % 3;
+      </pre>
+    hintCost: 8
+  - hintContent: |
+      <p>Here is how you can check if a number is even:<p>
+
+      <pre>
+      if (n % 2 === 0) {
+        // n is even!
+      }
+      </pre>
+    hintCost: 18
+  - hintContent: |
+      <p>Solution:<p>
+
+      <pre>
+      if (n % 2 === 0) {
+        console.log("even");
+      }
+      else {
+        console.log("odd");
+      }
+      </pre>
+    hintCost: 30
+html: ''
+js: |
+  // just letting you know that n magically exists
+  // even though you can't see it in the editor
+  console.log("n is a " + typeof n);
+htmlReadOnly: false
+jsReadOnly: false
+secret: window.n = 2;
+test:
+  setup: |
+    const oldLog = console.log;
+    let consoleOutput = '';
+    console.log = x => {
+      consoleOutput += x + '\n';
+      oldLog(x);
+    };
+  run: |
+    consoleOutput = consoleOutput.trim();
+
+    if (!/even/is.test(consoleOutput)) {
+      fail('Expected console output to contain "even"');
+    }
+
+    if (/odd/is.test(consoleOutput)) {
+      fail('Console output should not contain "odd"');
+    }
+  cleanup: console.log = oldLog;
+  has:
+    - regex: if.*else
+      flags: s
+      message: 'Your code is missing an if/else statement'
+    - regex: '( *\% *2| *& *1)'
+      message: 'Your code should have a condition to test if n is even or odd'
+    - regex: 'console\.log'
+      message: 'Your code is missing console.log'
+    - regex: (['"].*even.*['"].*['"].*odd.*['"]|['"].*odd.*['"].*['"].*even.*['"])
+      flags: is
+      message: 'Your code should either print even or odd for any number'
+  hasNot: []
+  maxLines: 10
+  errorThreshold: 5
