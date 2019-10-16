@@ -43,7 +43,7 @@
   height: 1px;
 }
 .bg-deep-pink {
-  background-color: #ff214f;
+  background-color: #ff214f !important;
 }
 .margin-auto {
   margin: 0 auto !important;
@@ -996,4 +996,26 @@
 
 .bg-nav{
   background-color: rgba(248, 249, 250, 0.8);
+}
+
+/* Leaderboards card */
+.ranking-card a{
+  color: #fff;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid black;
+  font-size: 0.8rem;
+}
+
+.ranking-card a:hover{
+  text-decoration: none;
+  color: #fff;
+}
+.ranking-card .level, .ranking-card .points{
+  color: white;
+  padding: 0.2rem 1rem;
+  background-color: rgba(0,0,0,0.3);
+  border-radius: 15px;
 }
