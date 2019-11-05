@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 from topics.models import Video, Question, Pdf, Topic
 from challenges.models import Challenge
+from django.db.models import Avg
+# from pages.views import get_all_topics_progress
 
 import math
 
@@ -45,6 +47,21 @@ class TotalPoints(models.Model):
     def get_user_level(self, user):
         return Level.objects.get(user=user).level
     
+    def get_user_challenges(self, user):
+        return UserAttemptedChallenge.objects.filter(user=user).count()
+
+    def get_user_grade(self, user):
+        average_grade_aggregate = UserAttemptedChallenge.objects.filter(user=user, time_taken__gt=timedelta(seconds=0)).aggregate(Avg('grade'))
+        if average_grade_aggregate['grade__avg']:
+            average_grade = int(average_grade_aggregate['grade__avg'])
+        else:
+            average_grade = 0
+        return average_grade
+
+    # def get_user_progress(self, user):
+    #     progress = get_all_topics_progress(user)
+    #     return progress
+
 
 
 class TotalCoins(models.Model):

@@ -2,6 +2,8 @@
 {% load static %}
 {% load get_user_rank %}
 {% load get_user_level %}
+{% load get_user_challenges %}
+{% load get_user_grade %}
 {% block content %}
 
 <div class="leaderboard-text bg-blue" style="min-height: 95vh;">
@@ -46,52 +48,66 @@
 
 
     <div class="row text-dark">
-      <div class="col-md-6 ranking-card p-2">
-        <div class="container-fluid">
-          <div class="row shadow rounded">
-            <div class="col-4 bg-green rounded-left d-flex text-center flex-column justify-content-between">
-              <div class="pt-4"><span class="level">Level 12</span></div>
-              <div class="m-auto my-2"><a href="" class="btn d-flex justify-content-center align-items-center">View Profile <i class="fas fa-chevron-right"></i> </a> </div>
-              <div class="pb-4"><span class="points">23 Points</span></div>
-            </div>
-            <div class="col-8 bg-light rounded-right">
-              <div class="name pt-4 pb-2 mb-0 h3 text-center">John Doe</div>
-              <div class="text-right mb-5">Joined January 2019</div>
-              <div class="row pb-3">
-                <div class="col d-flex flex-column text-center">
-                  <div>
-                    RANK
+      {% if all_total_points %}
+        {% for total_points in all_total_points %}
+          <!-- <tr>
+            <td scope="row">{{ total_points | get_user_rank:total_points.user }}</td>
+            <td><a href="{% url 'profile' total_points.user.id %}" class="text-dark font-weight-bold"> {{ total_points.user.username }}</a></td>
+            <td>{{ total_points.points }}</td>
+            <td>{{ total_points | get_user_level:total_points.user }}</td>
+            <td>{{ total_points.user.date_joined | date:"d M Y" }}</td>
+          </tr> -->
+          <div class="col-md-6 ranking-card p-2">
+              <div class="container-fluid">
+                <div class="row shadow rounded">
+                  <div class="col-4 bg-green rounded-left d-flex text-center flex-column justify-content-between">
+                    <div class="pt-4"><span class="level">Level {{ total_points | get_user_level:total_points.user }}</span></div>
+                    <div class="m-auto my-2"><a href="{% url 'profile' total_points.user.id %}" class="btn d-flex justify-content-center align-items-center">View Profile <i class="fas fa-chevron-right"></i> </a> </div>
+                    <div class="pb-4"><span class="points">{{ total_points.points }} Points</span></div>
                   </div>
-                  <div> <i class="fas fa-trophy fa-2x"></i> </div>
-                  <div class="h4">2</div>
-                </div>
-                <div class="col d-flex flex-column text-center">
-                  <div>
-                    CHALLENGES
+                  <div class="col-8 bg-light rounded-right">
+                    <div class="name pt-4 pb-2 mb-0 h3 text-center">{{ total_points.user.username }}</div>
+                    <div class="text-right mb-5">Joined {{ total_points.user.date_joined | date:"M Y" }}</div>
+                    <div class="row pb-3">
+                      <div class="col d-flex flex-column text-center">
+                        <div>
+                          RANK
+                        </div>
+                        <div> <i class="fas fa-trophy fa-2x"></i> </div>
+                        <div class="h4">{{ total_points | get_user_rank:total_points.user }}</div>
+                      </div>
+                      <div class="col d-flex flex-column text-center">
+                        <div>
+                          CHALLENGES
+                        </div>
+                        <div> <i class="fas fa-gamepad fa-2x"></i> </div>
+                        <div class="h4">{{ total_points | get_user_challenges:total_points.user }}</div>
+                      </div>
+                      <div class="col d-flex flex-column text-center">
+                        <div>
+                          GRADE
+                        </div>
+                        <div> <i class="fas fa-graduation-cap fa-2x"></i> </div>
+                        <div class="h4">{{ total_points | get_user_grade:total_points.user }}%</div>
+                      </div>
+                      <div class="col d-flex flex-column text-center">
+                        <div>
+                          PROGRESS
+                        </div>
+                        <div> <i class="fas fa-spinner fa-2x"></i> </div>
+                        <div class="h4">30%</div>
+                      </div>
+                    </div>
+                    
                   </div>
-                  <div> <i class="fas fa-gamepad fa-2x"></i> </div>
-                  <div class="h4">2</div>
-                </div>
-                <div class="col d-flex flex-column text-center">
-                  <div>
-                    GRADE
-                  </div>
-                  <div> <i class="fas fa-graduation-cap fa-2x"></i> </div>
-                  <div class="h4">80%</div>
-                </div>
-                <div class="col d-flex flex-column text-center">
-                  <div>
-                    PROGRESS
-                  </div>
-                  <div> <i class="fas fa-spinner fa-2x"></i> </div>
-                  <div class="h4">30%</div>
                 </div>
               </div>
-              
             </div>
-          </div>
-        </div>
-      </div>
+
+
+        {% endfor %}
+      {% endif %}
+      
       <div class="col-md-6 ranking-card p-2">
         <div class="container-fluid">
           <div class="row shadow rounded">
