@@ -1,5 +1,24 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 
+<style>
+      @media (min-width: 500px) {
+        .card-columns {
+          column-count: 1;
+        }
+      }   
+      @media (min-width: 600px) {
+        .card-columns {
+          column-count: 2;
+        }
+      }     
+      @media (min-width: 1100px) {
+        .card-columns {
+          column-count: 3;
+        }
+      }      
+</style>
+
+
 <!--Topic name section-->
 <section id="fixed-image" style="background-image:url({% static 'images/topic_bg.jpeg' %})">
   <div
@@ -35,8 +54,63 @@
             </ol>
           </div>
         </div>
-      <div class="container">
-        
+      <div class="container py-3">
+          <div class="card-columns">
+              <div class="card border-success mb-3">
+                  <div class="card-header">Website name</div>
+                  <div class="card-body">
+                    <h5 class="card-title"><a href="" class="text-dark">Heading</a></h5>
+                    <p class="card-text font-weight-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel, unde.</p>
+                    <div>Is this helpful? <i class="far fa-thumbs-up mx-1 option"></i> <i class="far fa-thumbs-down option"></i></div>
+                    <p class="card-text"><small class="text-muted">10 students found this helpful</small></p>
+                </div>
+              </div>
+              <div class="card border-success mb-3">
+                  <div class="card-header">Website name</div>
+                  <div class="card-body">
+                    <h5 class="card-title"><a href="" class="text-dark">Heading</a></h5>
+                    <p class="card-text font-weight-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel, unde.</p>
+                    <div>Is this helpful? <i class="far fa-thumbs-up mx-1 option"></i> <i class="far fa-thumbs-down option"></i></div>
+                    <p class="card-text"><small class="text-muted">10 students found this helpful</small></p>
+                </div>
+              </div>
+              <div class="card border-success mb-3">
+                  <div class="card-header">Website name</div>
+                  <div class="card-body">
+                    <h5 class="card-title"><a href="" class="text-dark">Heading</a></h5>
+                    <p class="card-text font-weight-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel, unde.</p>
+                    <div>Is this helpful? <i class="far fa-thumbs-up mx-1 option"></i> <i class="far fa-thumbs-down option"></i></div>
+                    <p class="card-text"><small class="text-muted">10 students found this helpful</small></p>
+                </div>
+              </div>
+              <div class="card border-success mb-3">
+                  <div class="card-header">Website name</div>
+                  <div class="card-body">
+                    <h5 class="card-title"><a href="" class="text-dark">Heading</a></h5>
+                    <p class="card-text font-weight-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel, unde.</p>
+                    <div>Is this helpful? <i class="far fa-thumbs-up mx-1 option"></i> <i class="far fa-thumbs-down option"></i></div>
+                    <p class="card-text"><small class="text-muted">10 students found this helpful</small></p>
+                </div>
+              </div>
+              <div class="card border-danger mb-3">
+                  <div class="card-header">Website name</div>
+                  <div class="card-body">
+                    <h5 class="card-title"><a href="" class="text-dark">Heading</a></h5>
+                    <p class="card-text font-weight-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel, unde.</p>
+                    <div>Is this helpful? <i class="far fa-thumbs-up mx-1 option"></i> <i class="far fa-thumbs-down option"></i></div>
+                    <p class="card-text"><small class="text-muted">-2 students found this helpful</small></p>
+                </div>
+              </div>
+              <div class="card border-danger mb-3">
+                  <div class="card-header">Website name</div>
+                  <div class="card-body">
+                    <h5 class="card-title"><a href="" class="text-dark">Heading</a></h5>
+                    <p class="card-text font-weight-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel, unde.</p>
+                    <div>Is this helpful? <i class="far fa-thumbs-up mx-1 option"></i> <i class="far fa-thumbs-down option"></i></div>
+                    <p class="card-text"><small class="text-muted">-10 students found this helpful</small></p>
+                </div>
+              </div>
+            </div>
       </div>
     </div>
     <div class="col-md-3 col-lg-2 mt-md-0 mt-4 pl-md-0 pr-md-1 px-2">
