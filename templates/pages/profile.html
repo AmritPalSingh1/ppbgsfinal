@@ -1,4 +1,8 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
+
+<link rel="stylesheet" href="{% static 'css/social_links.css' %}">
+
+
 <div class="bg-blue">
   <div class="container py-5">
     <div class="row">
@@ -74,11 +78,18 @@
     <div class="row mt-4">
       <div class="col-lg-8 px-2 py-2">
         <div class="bg-none rounded shadow p-3">
-          <h5
-            class="text-uppercase alt-font text-extra-dark-gray mb-2 font-weight-700"
-          >
-            {{ user.username }}
-          </h5>
+          <div class="d-flex">
+            <h5
+              class="text-uppercase alt-font text-extra-dark-gray mb-2 font-weight-700"
+            >
+              {{ user.username }}
+            </h5>
+            <ul class="share-buttons ml-auto">
+                <li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F35.182.83.226%2Fprofile%2F{{user.id}}&quote=Check%20out%20my%20JavaScript%20progress." title="Share on Facebook" target="_blank"><img alt="Share on Facebook" src="{% static 'images/social_images/Facebook.svg' %}" /></a></li>
+                <li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2F35.182.83.226%2Fprofile%2F{{user.id}}&text=Check%20out%20my%20JavaScript%20progress.:%20http%3A%2F%2F35.182.83.226%2Fprofile%2F14" target="_blank" title="Tweet"><img alt="Tweet" src="{% static 'images/social_images/Twitter.svg' %}" /></a></li>
+                <li><a href="mailto:?subject=Check%20out%20my%20JavaScript%20progress.&body=I'm%20learning%20JavaScript%20atm.%20Please%20have%20a%20look%20at%20my%20profile.:%20http%3A%2F%2F35.182.83.226%2Fprofile%2F{{user.id}}" target="_blank" title="Send email"><img alt="Send email" src="{% static 'images/social_images/Email.svg' %}" /></a></li>
+            </ul>
+          </div>
           <div class="container-fluid">
             <div class="row">
               <div class="col-sm-6">
