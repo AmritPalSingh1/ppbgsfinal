@@ -62,6 +62,12 @@
 
 <body>
   
+  {% block preloader %}
+  <div class="loader">
+      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  </div>
+  {% endblock %}
+
   <!--Pop messages-->
   {% include 'partials/_messages.html' %}
 

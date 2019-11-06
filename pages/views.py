@@ -1,10 +1,9 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from userprogress.models import TotalPoints, TotalCoins, UserLastLocation
 from topics.models import Video, Topic, Question, Query
 from challenges.models import Challenge
-from userprogress.models import UserReadNotes, UserAttemptedQuestion, UserWatchedVideo, Level, TotalCoins, TotalPoints, UserAttemptedChallenge
+from userprogress.models import UserReadNotes, UserAttemptedQuestion, UserWatchedVideo, Level, TotalCoins, TotalPoints, UserAttemptedChallenge, UserLastLocation
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from flowchart.models import Progress
 from django.contrib.auth.models import User

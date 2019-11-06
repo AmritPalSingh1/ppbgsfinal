@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from topics.models import Video, Question, Pdf, Topic
 from challenges.models import Challenge
 from django.db.models import Avg
-# from pages.views import get_all_topics_progress
+# from .views import get_topics_progress
 
 import math
 

@@ -1,3 +1,12 @@
+// Pre loader
+window.addEventListener("load", function(){
+  setTimeout(function(){
+    const loader = document.querySelector(".loader");
+    loader.classList.add("hidden");
+  }, 500);
+});
+
+
 // Formatting topics page images
 var $grid = $(".gallery-wrapper").masonry({
   itemSelector: ".grid-item",
