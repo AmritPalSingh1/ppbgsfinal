@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!--Topic name section-->
+<section id="fixed-image" style="background-image:url({% static 'images/topic_bg.jpeg' %})">
+  <div
+    class="dark-overlay-top"
+    
+  >
+    <div class="py-5">
+      <div class="container text-center">
+        <h1 class="display-5 text-light my-5 d-inline">
+          {{ topic.topicName }}
+        </h1>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Main Content-->
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col-md-9 col-lg-10">
+      <div class="container-fluid">
+        <div class="pb-2">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a class="text-dark" href="{% url 'index' %}">Home</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a class="text-dark" href="{% url 'topics' %}">Topics</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="{% url 'topic' topic.topicName %}" class="text-dark">{{ topic.topicName }}</a>
+              </li>
+              <li class="breadcrumb-item active">Extra Resources</li>
+            </ol>
+          </div>
+        </div>
+      <div class="container">
+        
+      </div>
+    </div>
+    <div class="col-md-3 col-lg-2 mt-md-0 mt-4 pl-md-0 pr-md-1 px-2">
+      {% include 'partials/_sidebar.html' %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

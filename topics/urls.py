@@ -6,6 +6,7 @@ urlpatterns = [
     path('<str:topic_name>', views.topic, name='topic'),
     path('topic/videos', views.videos, name='videos'),
     path('topic/notes', views.notes, name='notes'),
+    path('topic/extra', views.extra, name='extra'),
     path('topic/quiz', views.quiz, name='quiz'),
     path('topic/check_answer', views.check_answer, name='check_answer'),
     path('topic/questions', views.questions, name='questions'),

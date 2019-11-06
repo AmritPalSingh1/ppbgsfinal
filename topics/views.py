@@ -1450,3 +1450,24 @@ def result(request):
         'task_name': task_name,
     }
     return render(request, 'pages/result.html', context)
+
+
+@login_required
+def extra(request):
+
+    # retreive topic name from GET request
+    if 'topic_name' in request.GET:
+        topic_name = request.GET['topic_name']
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+
+    # Fetch current topic
+    topic = get_object_or_404(Topic, topicName=topic_name)
+
+    user_data = user_info(request)
+
+    context = {
+        'topic': topic,
+        'user_data': user_data,
+    }
+    return render(request, 'pages/extras.html', context)
