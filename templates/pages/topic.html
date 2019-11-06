@@ -129,6 +129,21 @@
                                 </button>
                               </form>
                             </div>
+                            <div class="py-1">
+                                <form action="{% url 'extra' %}">
+                                  <input
+                                    type="hidden"
+                                    name="topic_name"
+                                    value="{{ topic.topicName }}"
+                                  />
+                                  <button
+                                    type="submit"
+                                    class="btn btn-outline-dark-pink btn-block text-outline-pink"
+                                  >
+                                    Extra Resources
+                                  </button>
+                                </form>
+                              </div>
                           </div>
                         </div>
                       </div>
