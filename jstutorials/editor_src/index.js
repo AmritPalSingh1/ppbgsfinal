@@ -1,5 +1,4 @@
 /* global $ */
-import { youtube } from './youtube.js';
 
 import { curry } from 'ramda';
 import store from './redux/store.js';
