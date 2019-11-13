@@ -1,4 +1,8 @@
 // Pre loader
+setTimeout(function(){
+  const loader = document.querySelector(".loader");
+  loader.classList.add("hidden");
+}, 5000);
 window.addEventListener("load", function(){
   setTimeout(function(){
     const loader = document.querySelector(".loader");

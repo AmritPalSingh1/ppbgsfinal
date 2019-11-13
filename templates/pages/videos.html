@@ -122,4 +122,62 @@
   </div>
 </div>
 
+{% block javascript %}
+  <!-- use bootstrap js -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+    crossorigin="anonymous"></script>
+
+  <!-- use split.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.5.10/split.min.js"
+    integrity="sha256-voAP1SafVzHBtUVXxB6ZuQB5mIZu6h0veHhhzwXcthQ=" crossorigin="anonymous"></script>
+
+  <!-- use jshint -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jshint/2.10.1/jshint.min.js"
+    integrity="sha256-AnRo6ofeMX/ySgINPlWrw/wgAp8WtuOLhJk7rpvr7dM=" crossorigin="anonymous"></script>
+
+  <!-- use htmlhint -->
+  <script src="{% static 'js/htmlhint.js' %}"></script>
+
+  <!-- use codemirror js -->
+  <script src="{% static 'codemirror/lib/codemirror.js' %}"></script>
+  <script src="{% static 'codemirror/mode/css/css.js' %}"></script>
+  <script src="{% static 'codemirror/mode/javascript/javascript.js' %}"></script>
+  <script src="{% static 'codemirror/mode/xml/xml.js' %}"></script>
+  <script src="{% static 'codemirror/mode/htmlmixed/htmlmixed.js' %}"></script>
+  <script src="{% static 'codemirror/addon/lint/lint.js' %}"></script>
+  <script src="{% static 'codemirror/addon/lint/html-lint.js' %}"></script>
+  <script src="{% static 'codemirror/addon/lint/javascript-lint.js' %}"></script>
+  <script src="{% static 'codemirror/addon/scroll/simplescrollbars.js' %}"></script>
+  <script src="{% static 'codemirror/addon/scroll/scrollpastend.js' %}"></script>
+  <script src="{% static 'codemirror/addon/edit/closetag.js' %}"></script>
+  <script src="{% static 'codemirror/addon/edit/closebrackets.js' %}"></script>
+  <script src="{% static 'codemirror/keymap/emacs.js' %}"></script>
+  <script src="{% static 'codemirror/keymap/vim.js' %}"></script>
+
+  <!-- transpile with loop protection -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"
+    integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
+
+  <!-- javascript entry point -->
+  <script src="{% static 'js/code_editor.js' %}" defer></script>
+
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+  <script src="{% static 'js/all.js' %}" defer></script>
+{% endblock %}
+
+
 {% endblock %}

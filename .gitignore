@@ -10,3 +10,4 @@ venv
 .vscode
 node_modules
 jstutorials/local_settings.py
+.env
