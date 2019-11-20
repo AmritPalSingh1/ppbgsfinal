@@ -6,6 +6,10 @@ from django.http import JsonResponse, HttpResponse, HttpResponseNotFound
 from datetime import datetime, timedelta
 import math, random
 from django.db.models import Avg
+import requests
+from django.conf import settings
+from isodate import parse_duration
+
 
 # Import required models
 from .models import Topic, Video, Question, Pdf, Query, Comment
@@ -205,9 +209,70 @@ def topic(request, topic_name):
     return render(request, 'pages/topic.html', context)
 
 
+"""
+Returns videos related to search query using youtube api
+"""
+def get_youtube_videos(query):
+    search_url = 'https://www.googleapis.com/youtube/v3/search'
+    video_url = 'https://www.googleapis.com/youtube/v3/videos'
+
+    videos = []
+
+
+    # if request.method == 'POST':
+    search_params = {
+        'key' : settings.YOUTUBE_KEY,
+        'q' : query,
+        'part' : 'snippet',
+        'maxResults' : 9,
+        'type' : 'video'
+    }
+
+    r = requests.get(search_url, params=search_params)
+
+    results = r.json()['items']
+
+    video_ids = []
+    for result in results:
+        video_ids.append(result['id']['videoId'])
+
+
+    # if request.form.get('submit') == 'lucky':
+    #     return redirect(f'https://www.youtube.com/watch?v={ video_ids[0] }')
+
+    video_params = {
+        'key' : settings.YOUTUBE_KEY,
+        'id' : ','.join(video_ids),
+        'part' : 'snippet,contentDetails',
+        'maxResults' : 9
+    }
+
+    r = requests.get(video_url, params=video_params)
+    results = r.json()['items']
+    for result in results:
+        print(result)
+        print(" ")
+        video_data = {
+            'id' : result['id'],
+            'url' : f'https://www.youtube.com/watch?v={ result["id"] }',
+            'thumbnail' : result['snippet']['thumbnails']['high']['url'],
+            'duration' : int(parse_duration(result['contentDetails']['duration']).total_seconds() // 60),
+            'title' : result['snippet']['title'],
+            'channelName': result['snippet']['channelTitle'],
+        }
+        videos.append(video_data)
+    
+    return videos
+
+
+
 @login_required
 def videos(request):
     update_weekly_tasks(request)
+
+    more_videos = ''
+    if request.method == 'POST':
+        more_videos = get_youtube_videos(request.POST['query'])
 
     # Initializing points update message
     message_title = None
@@ -289,6 +354,7 @@ def videos(request):
         'coins_up': coins_up,
         'task_points': task_points,
         'task_name': task_name,
+        'more_videos': more_videos,
     }
 
     return render(request, 'pages/videos.html', context)
